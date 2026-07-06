@@ -1,0 +1,25 @@
+# CI-workflow för juridik_oversiktskurs.
+# Ansvar: vid push och pull request köra lint (ruff) och testsviten
+# (pytest) utan HF-token, dvs. i offlineläge. Inga deploy-steg här.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Installera beroenden
+        run: |
+          pip install -r requirements.txt
+          pip install pytest ruff
+      - name: Lint
+        run: ruff check .
+      - name: Tester
+        run: pytest -q

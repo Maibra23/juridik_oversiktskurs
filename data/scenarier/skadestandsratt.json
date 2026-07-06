@@ -1,0 +1,4 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen skadestandsratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
+  "scenarier": []
+}

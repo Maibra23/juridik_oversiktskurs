@@ -1,0 +1,6 @@
+# Körberoenden för Juridisk översiktskurs.
+# Ansvar: exakt det som behövs för att köra appen på Streamlit Cloud.
+# Testberoenden (pytest, ruff) ligger i CI-workflowen, inte här.
+streamlit>=1.37
+huggingface_hub>=0.24
+python-dotenv>=1.0

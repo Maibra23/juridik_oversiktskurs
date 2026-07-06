@@ -1,0 +1,6 @@
+# Ansvar: håll hemligheter, cache och lokal budgetdata utanför git.
+.streamlit/secrets.toml
+data/.llm_daily_usage.json
+__pycache__/
+*.pyc
+.env

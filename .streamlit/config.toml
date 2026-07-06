@@ -1,0 +1,9 @@
+# Streamlit-konfiguration för Juridisk översiktskurs.
+# Ansvar: tema (färger, typsnitt), serverinställningar och
+# telemetri-avstängning. Inga hemligheter här; de ligger i secrets.toml.
+
+[browser]
+gatherUsageStats = false
+
+[theme]
+# Fylls i när den visuella profilen är bestämd.

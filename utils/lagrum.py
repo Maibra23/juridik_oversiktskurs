@@ -4,12 +4,279 @@ Juridikappens motsvarighet till ekonomistyrnings verify_grounding, men
 för lagrum i stället för siffror. Ansvarar för:
 - Inläsning och validering av data/lagrum.json (SFS-nummer, lagnamn,
   vedertagen förkortning, paragrafer och kort beskrivning per lagrum)
-- extract_lagrum(text): parsa hänvisningar ur LLM-text, t.ex.
-  "36 § avtalslagen", "36 § AvtL", "3 kap. 1 § skadeståndslagen"
-  och normalisera till kanonisk form
-- verify_lagrum(text, expected): jämför citerade lagrum mot de
-  förväntade/tillåtna för scenariot och returnera
-  {"matched": [...], "missing": [...], "hallucinated": [...]}
-- Uppslag för UI:t: visa fulltextetikett och länk till lagen.nu/riksdagen
-  för varje verifierat lagrum
+- extrahera_lagrum(text): parsa hänvisningar ur text, t.ex.
+  "36 § AvtL", "3 kap. 1 § SkL", "28 till 30 §§ AvtL"
+- validera_lagrum(ref): slå upp mot registret och returnera en status
+  (VERIFIERAD, OKAND_PARAGRAF, OKAND_LAG)
+- lagen_nu_url(ref): bygg korrekt djuplänk till lagen.nu
+- verify_lagrum(text): helhetsrapport där varje träff klassificeras,
+  inklusive rättsfall (NJA) som markeras EJ_VALIDERBAR
+
+All juridisk verifiering sker deterministiskt mot registret, aldrig via
+LLM. Detta är appens hallucinationsskydd.
 """
+
+from __future__ import annotations
+
+import json
+import re
+from dataclasses import dataclass
+from functools import lru_cache
+from pathlib import Path
+
+# --- Statuskonstanter -------------------------------------------------------
+
+STATUS_VERIFIERAD = "VERIFIERAD"
+STATUS_OKAND_PARAGRAF = "OKAND_PARAGRAF"
+STATUS_OKAND_LAG = "OKAND_LAG"
+STATUS_EJ_VALIDERBAR = "EJ_VALIDERBAR"
+
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "lagrum.json"
+
+
+# --- Datamodeller (immutabla) ----------------------------------------------
+
+@dataclass(frozen=True)
+class Kursavsnitt:
+    """Ett paragrafintervall som ingår i kursen för en viss lag."""
+
+    beskrivning: str
+    kapitel: str | None
+    paragraf_fran: int
+    paragraf_till: int
+    lagen_nu_url: str
+    verifiera: bool
+
+
+@dataclass(frozen=True)
+class Lag:
+    """En lag i registret med sina kursrelevanta avsnitt."""
+
+    forkortning: str
+    namn: str
+    sfs: str
+    kapitelindelad: bool
+    lagen_nu_bas_url: str
+    kursavsnitt: tuple[Kursavsnitt, ...]
+
+
+@dataclass(frozen=True)
+class Lagrumsref:
+    """En parsad lagrumshänvisning på kanonisk form."""
+
+    forkortning: str
+    paragraf: str
+    kapitel: str | None = None
+    paragraf_till: str | None = None
+    ra: str = ""  # råtext som matchades i källan
+
+
+@dataclass(frozen=True)
+class Lagrumstraff:
+    """En klassificerad träff i en verifieringsrapport."""
+
+    ra: str
+    status: str
+    ref: Lagrumsref | None = None
+    url: str | None = None
+    beskrivning: str | None = None
+
+
+# --- Regex ------------------------------------------------------------------
+
+# Fångar svenska lagrumshänvisningar:
+#   "36 § AvtL", "3 kap. 1 § SkL", "7 kap 1 § ÄktB", "28 till 30 §§ AvtL"
+# Förkortningen måste börja på versal och bestå av bokstäver (t.ex. AvtL,
+# SkL, ÄktB, ÄB, KKöpL). Verifiering av att den finns i registret sker
+# separat i validera_lagrum.
+LAGRUM_PATTERN = re.compile(
+    r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
+    r"(?P<paragraf>\d+)\s*[a-z]?\s*"
+    r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
+    r"§{1,2}\s*"
+    r"(?P<forkortning>[A-ZÅÄÖ][A-Za-zÅÄÖåäö]+)"
+)
+
+# Rättsfallshänvisningar (NJA, RH, AD, MÖD) kan inte valideras lokalt i v1.
+RATTSFALL_PATTERN = re.compile(
+    r"(?P<ra>(?:NJA|RH|AD|MÖD)\s+\d{4}\s+s\.?\s*\d+)",
+    re.IGNORECASE,
+)
+
+
+# --- Registerinläsning ------------------------------------------------------
+
+def _validera_ra_lag(rad: dict) -> Lag:
+    """Validera en råpost ur lagrum.json och bygg en immutabel Lag.
+
+    Kastar ValueError vid saknade fält eller icke-numeriska paragrafer så
+    att fel i datafilen upptäcks direkt (fail fast).
+    """
+    for falt in ("forkortning", "namn", "sfs", "kapitelindelad", "lagen_nu_bas_url"):
+        if falt not in rad:
+            raise ValueError(f"Lagpost saknar fältet '{falt}': {rad!r}")
+
+    avsnitt: list[Kursavsnitt] = []
+    for a in rad.get("kursavsnitt", []):
+        fran = str(a.get("paragraf_fran", "")).strip()
+        till = str(a.get("paragraf_till", "")).strip()
+        if not fran.isdigit() or not till.isdigit():
+            raise ValueError(
+                f"Icke-numeriskt paragrafintervall i {rad['forkortning']}: {a!r}"
+            )
+        avsnitt.append(
+            Kursavsnitt(
+                beskrivning=a.get("beskrivning", ""),
+                kapitel=(str(a["kapitel"]) if a.get("kapitel") is not None else None),
+                paragraf_fran=int(fran),
+                paragraf_till=int(till),
+                lagen_nu_url=a.get("lagen_nu_url", ""),
+                verifiera=bool(a.get("verifiera", False)),
+            )
+        )
+
+    return Lag(
+        forkortning=rad["forkortning"],
+        namn=rad["namn"],
+        sfs=rad["sfs"],
+        kapitelindelad=bool(rad["kapitelindelad"]),
+        lagen_nu_bas_url=rad["lagen_nu_bas_url"],
+        kursavsnitt=tuple(avsnitt),
+    )
+
+
+@lru_cache(maxsize=1)
+def lagrum_register() -> dict[str, Lag]:
+    """Läs och cachea lagrumsregistret, nyckelat på förkortning."""
+    if not DATA_PATH.exists():
+        raise FileNotFoundError(f"Hittar inte lagrumsregistret: {DATA_PATH}")
+
+    with DATA_PATH.open(encoding="utf-8") as f:
+        data = json.load(f)
+
+    lagar = data.get("lagar")
+    if not isinstance(lagar, list) or not lagar:
+        raise ValueError("lagrum.json saknar en icke-tom lista 'lagar'.")
+
+    register: dict[str, Lag] = {}
+    for rad in lagar:
+        lag = _validera_ra_lag(rad)
+        register[lag.forkortning] = lag
+    return register
+
+
+def giltiga_forkortningar() -> frozenset[str]:
+    """Vitlistan av förkortningar som appen kan verifiera."""
+    return frozenset(lagrum_register().keys())
+
+
+# --- Extrahering ------------------------------------------------------------
+
+def extrahera_lagrum(text: str) -> tuple[Lagrumsref, ...]:
+    """Parsa alla lagrumshänvisningar ur en text till kanonisk form."""
+    if not text:
+        return ()
+
+    refs: list[Lagrumsref] = []
+    for m in LAGRUM_PATTERN.finditer(text):
+        refs.append(
+            Lagrumsref(
+                forkortning=m.group("forkortning"),
+                paragraf=m.group("paragraf"),
+                kapitel=m.group("kapitel"),
+                paragraf_till=m.group("paragraf_till"),
+                ra=m.group(0).strip(),
+            )
+        )
+    return tuple(refs)
+
+
+# --- Validering och länkning ------------------------------------------------
+
+def _som_ref(ref: Lagrumsref | str) -> Lagrumsref | None:
+    """Normalisera indata till en Lagrumsref, eller None om inget lagrum hittas."""
+    if isinstance(ref, Lagrumsref):
+        return ref
+    traffar = extrahera_lagrum(ref)
+    return traffar[0] if traffar else None
+
+
+def _matchande_avsnitt(lag: Lag, ref: Lagrumsref) -> Kursavsnitt | None:
+    """Hitta det kursavsnitt som täcker referensens paragraf (och kapitel)."""
+    if not ref.paragraf.isdigit():
+        return None
+    paragraf = int(ref.paragraf)
+
+    for avsnitt in lag.kursavsnitt:
+        if lag.kapitelindelad:
+            if ref.kapitel is None or avsnitt.kapitel != ref.kapitel:
+                continue
+        if avsnitt.paragraf_fran <= paragraf <= avsnitt.paragraf_till:
+            return avsnitt
+    return None
+
+
+def validera_lagrum(ref: Lagrumsref | str) -> str:
+    """Slå upp en referens mot registret och returnera en status."""
+    parsad = _som_ref(ref)
+    if parsad is None:
+        return STATUS_EJ_VALIDERBAR
+
+    lag = lagrum_register().get(parsad.forkortning)
+    if lag is None:
+        return STATUS_OKAND_LAG
+
+    return STATUS_VERIFIERAD if _matchande_avsnitt(lag, parsad) else STATUS_OKAND_PARAGRAF
+
+
+def lagen_nu_url(ref: Lagrumsref | str) -> str | None:
+    """Bygg en djuplänk till lagen.nu, eller None om lagen är okänd."""
+    parsad = _som_ref(ref)
+    if parsad is None:
+        return None
+
+    lag = lagrum_register().get(parsad.forkortning)
+    if lag is None:
+        return None
+
+    if lag.kapitelindelad:
+        if parsad.kapitel is None:
+            return lag.lagen_nu_bas_url
+        return f"{lag.lagen_nu_bas_url}#K{parsad.kapitel}P{parsad.paragraf}"
+    return f"{lag.lagen_nu_bas_url}#P{parsad.paragraf}"
+
+
+# --- Helhetsrapport ---------------------------------------------------------
+
+def verify_lagrum(text: str) -> tuple[Lagrumstraff, ...]:
+    """Klassificera samtliga lagrums- och rättsfallshänvisningar i en text.
+
+    Varje lagrum får status VERIFIERAD, OKAND_PARAGRAF eller OKAND_LAG.
+    Rättsfall (NJA m.fl.) kan inte valideras lokalt och markeras
+    EJ_VALIDERBAR så att UI:t kan varna i stället för att visa dem som fakta.
+    """
+    if not text:
+        return ()
+
+    traffar: list[Lagrumstraff] = []
+
+    for ref in extrahera_lagrum(text):
+        status = validera_lagrum(ref)
+        lag = lagrum_register().get(ref.forkortning)
+        avsnitt = _matchande_avsnitt(lag, ref) if lag else None
+        traffar.append(
+            Lagrumstraff(
+                ra=ref.ra,
+                status=status,
+                ref=ref,
+                url=lagen_nu_url(ref) if status == STATUS_VERIFIERAD else None,
+                beskrivning=avsnitt.beskrivning if avsnitt else None,
+            )
+        )
+
+    for m in RATTSFALL_PATTERN.finditer(text):
+        traffar.append(
+            Lagrumstraff(ra=m.group("ra").strip(), status=STATUS_EJ_VALIDERBAR)
+        )
+
+    return tuple(traffar)

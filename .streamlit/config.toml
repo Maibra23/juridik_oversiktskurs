@@ -6,4 +6,10 @@
 gatherUsageStats = false
 
 [theme]
-# Fylls i när den visuella profilen är bestämd.
+# Palett ur design_system.md avsnitt 1. Detaljerade komponentstilar ligger
+# i den centrala CSS-strängen i utils/ui.py.
+primaryColor = "#2C5F8A"
+backgroundColor = "#FAF7F2"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#1A2332"
+font = "serif"

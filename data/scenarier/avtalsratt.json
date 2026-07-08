@@ -1,4 +1,151 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen avtalsratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Avtalsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (AvtL). Nivå: Juridisk översiktskurs.",
+  "modul": "Avtalsrätt",
+  "case": [
+    {
+      "id": "avt-case-1",
+      "rubrik": "Det sena svaret",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 10,
+      "scenariotext": "Byggfirman Nordtak AB skickar den 3 mars ett skriftligt anbud till bostadsrättsföreningen Almen om att lägga om föreningens tak för 480 000 kr. I anbudet står att svar ska ha kommit Nordtak till handa senast den 10 mars. Föreningens styrelse sammanträder först den 12 mars och skickar då ett brev där de skriver 'Vi accepterar ert anbud och ser fram emot arbetet.' Nordtak har under tiden fått upp ögonen för ett mer lönsamt uppdrag och svarar att något avtal inte finns. Föreningen menar att den har tackat ja och att bindande avtal därför föreligger.",
+      "facit": {
+        "rattsfraga": "Har ett bindande avtal om takomläggning slutits mellan Nordtak AB och föreningen Almen?",
+        "lagrum": ["1 § AvtL", "4 § AvtL"],
+        "tillampningspunkter": [
+          "Nordtaks anbud är bindande enligt löftesprincipen och gäller under den utsatta acceptfristen till den 10 mars (1 § AvtL).",
+          "Föreningens accept avsänds den 12 mars och kommer alltså fram efter acceptfristens utgång.",
+          "En för sen accept räknas inte som en accept utan som ett nytt anbud (4 § första stycket AvtL).",
+          "Nordtak har inte accepterat detta nya anbud, utan tvärtom avvisat det, så någon bindande viljeförklaring från Nordtaks sida finns inte."
+        ],
+        "slutsats": "Något bindande avtal har inte slutits. Föreningens sena svar utgör ett nytt anbud som Nordtak var fritt att avböja. Alternativt: hade Nordtak insett att föreningen trodde sig svara i tid, kunde en reklamationsplikt enligt 4 § andra stycket AvtL ha aktualiserats, men inget i omständigheterna tyder på det."
+      }
+    },
+    {
+      "id": "avt-case-2",
+      "rubrik": "Fullmäktigen som gick för långt",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Grossisten Kök & Bar AB anställer Sara som inköpare och ger henne en skriftlig fullmakt att köpa in restaurangutrustning för bolagets räkning. Muntligt säger vd:n till henne att enskilda inköp aldrig får överstiga 100 000 kr utan hans godkännande. Sara träffar leverantören Stålproffsen AB och beställer diskmaskiner för 150 000 kr. Stålproffsen känner till att Sara är inköpare med fullmakt men vet ingenting om beloppsgränsen. När fakturan kommer vägrar Kök & Bar att betala och hänvisar till att Sara överskred sin gräns.",
+      "facit": {
+        "rattsfraga": "Är Kök & Bar AB bundet av det avtal Sara ingått med Stålproffsen AB trots att hon överskred den muntliga beloppsgränsen?",
+        "lagrum": ["10 § AvtL", "11 § AvtL"],
+        "tillampningspunkter": [
+          "Sara har en självständig fullmakt grundad på huvudmannens viljeförklaring till tredje man (10 § AvtL).",
+          "Man skiljer på behörigheten (vad fullmakten utåt ger sken av) och befogenheten (de inskränkande instruktioner huvudmannen gett).",
+          "Beloppsgränsen är en muntlig instruktion som bara påverkar befogenheten, inte den utåt synliga behörigheten.",
+          "Vid överskridande av befogenheten blir huvudmannen ändå bunden om tredje man var i god tro, det vill säga varken insåg eller borde ha insett inskränkningen (11 § första stycket AvtL).",
+          "Stålproffsen kände inte till och hade ingen anledning att känna till beloppsgränsen och var därför i god tro."
+        ],
+        "slutsats": "Kök & Bar AB är bundet av avtalet. Sara överskred sin befogenhet men höll sig inom behörigheten, och eftersom Stålproffsen var i god tro gäller avtalet mot huvudmannen enligt 11 § AvtL. Bolaget får i stället rikta anspråk mot Sara internt."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "avt-mc-1",
+      "fraga": "Vad innebär löftesprincipen i svensk avtalsrätt?",
+      "alternativ": [
+        {"text": "Ett anbud är bindande för anbudsgivaren under acceptfristen.", "korrekt": true, "forklaring": "Enligt löftesprincipen blir den som lämnar ett anbud bunden av det under acceptfristen.", "lagrum": "1 § AvtL"},
+        {"text": "Ett anbud blir bindande först när mottagaren har betalat.", "korrekt": false, "forklaring": "Bundenheten uppstår redan genom anbudet, inte genom betalning.", "lagrum": "1 § AvtL"},
+        {"text": "Anbudsgivaren kan alltid återkalla sitt anbud fram till leverans.", "korrekt": false, "forklaring": "Återkallelse måste nå mottagaren senast samtidigt med anbudet (7 § AvtL); därefter är anbudet bindande.", "lagrum": "7 § AvtL"},
+        {"text": "En accept måste alltid vara skriftlig för att binda.", "korrekt": false, "forklaring": "Avtalslagen ställer inget generellt formkrav på accepten.", "lagrum": "3 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-2",
+      "fraga": "Ett svar på ett anbud kommer fram efter acceptfristens utgång. Hur ska det bedömas?",
+      "alternativ": [
+        {"text": "Som ett nytt anbud.", "korrekt": true, "forklaring": "En för sen accept gäller som ett nytt anbud som den ursprungliga anbudsgivaren får ta ställning till.", "lagrum": "4 § AvtL"},
+        {"text": "Som en giltig accept som binder anbudsgivaren.", "korrekt": false, "forklaring": "Accepten är för sen och binder inte anbudsgivaren automatiskt.", "lagrum": "4 § AvtL"},
+        {"text": "Som en oren accept.", "korrekt": false, "forklaring": "En oren accept är ett svar som avviker innehållsmässigt (6 § AvtL); här är problemet att svaret är för sent.", "lagrum": "6 § AvtL"},
+        {"text": "Som en återkallelse av anbudet.", "korrekt": false, "forklaring": "Återkallelse regleras i 7 § AvtL och avser anbudsgivarens egen åtgärd, inte mottagarens sena svar.", "lagrum": "7 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-3",
+      "fraga": "En accept innehåller ett tillägg som avviker från anbudet. Vad gäller som huvudregel?",
+      "alternativ": [
+        {"text": "Svaret gäller som ett avslag i förening med ett nytt anbud.", "korrekt": true, "forklaring": "En oren accept behandlas som avslag och nytt anbud enligt huvudregeln.", "lagrum": "6 § AvtL"},
+        {"text": "Avtal sluts på anbudets ursprungliga villkor.", "korrekt": false, "forklaring": "Avvikelsen gör att svaret inte utgör en ren accept och avtal sluts inte automatiskt.", "lagrum": "6 § AvtL"},
+        {"text": "Avtal sluts alltid på acceptens villkor.", "korrekt": false, "forklaring": "Anbudsgivaren måste först ta ställning till det nya anbudet.", "lagrum": "1 § AvtL"},
+        {"text": "Svaret saknar rättslig verkan.", "korrekt": false, "forklaring": "Svaret har verkan som ett nytt anbud, det saknar inte betydelse.", "lagrum": "6 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-4",
+      "fraga": "Vad avser en fullmäktigs behörighet?",
+      "alternativ": [
+        {"text": "Vad fullmakten utåt ger tredje man befogad anledning att tro att fullmäktigen får göra.", "korrekt": true, "forklaring": "Behörigheten är fullmaktens yttre ram så som den framstår för tredje man.", "lagrum": "10 § AvtL"},
+        {"text": "De muntliga instruktioner huvudmannen gett fullmäktigen.", "korrekt": false, "forklaring": "Instruktioner som begränsar handlandet avser befogenheten, inte behörigheten.", "lagrum": "11 § AvtL"},
+        {"text": "Fullmäktigens personliga betalningsansvar.", "korrekt": false, "forklaring": "Behörighet handlar om rätten att binda huvudmannen, inte om eget betalningsansvar.", "lagrum": "10 § AvtL"},
+        {"text": "Rätten att själv ingå avtal i eget namn.", "korrekt": false, "forklaring": "En fullmäktig handlar i huvudmannens namn och för dennes räkning.", "lagrum": "10 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-5",
+      "fraga": "En fullmäktig överskrider sin befogenhet men håller sig inom behörigheten. När blir huvudmannen ändå bunden?",
+      "alternativ": [
+        {"text": "När tredje man var i god tro om befogenhetsöverskridandet.", "korrekt": true, "forklaring": "Huvudmannen blir bunden om tredje man varken insåg eller borde ha insett att befogenheten överskreds.", "lagrum": "11 § AvtL"},
+        {"text": "Aldrig, ett befogenhetsöverskridande gör alltid avtalet ogiltigt.", "korrekt": false, "forklaring": "Vid god tro hos tredje man gäller avtalet mot huvudmannen.", "lagrum": "11 § AvtL"},
+        {"text": "Endast om huvudmannen i efterhand godkänner avtalet.", "korrekt": false, "forklaring": "Godkännande behövs inte om tredje man var i god tro; bundenheten följer direkt av 11 § AvtL.", "lagrum": "11 § AvtL"},
+        {"text": "När fullmakten var muntlig.", "korrekt": false, "forklaring": "Fullmaktens form är inte avgörande för denna bedömning.", "lagrum": "10 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-6",
+      "fraga": "En part har förmåtts att ingå avtal genom att motparten medvetet lämnat vilseledande uppgifter. Vilken ogiltighetsgrund aktualiseras främst?",
+      "alternativ": [
+        {"text": "Svek.", "korrekt": true, "forklaring": "Att medvetet vilseleda motparten för att få till avtalet är svek.", "lagrum": "30 § AvtL"},
+        {"text": "Ocker.", "korrekt": false, "forklaring": "Ocker förutsätter att man utnyttjat någons trångmål eller oförstånd för ett uppenbart missförhållande i värde.", "lagrum": "31 § AvtL"},
+        {"text": "Råntvång.", "korrekt": false, "forklaring": "Tvång avser hot om våld eller annat otillbörligt tvingande, inte vilseledande.", "lagrum": "28 § AvtL"},
+        {"text": "Förklaringsmisstag.", "korrekt": false, "forklaring": "Förklaringsmisstag avser en parts eget misstag i sin viljeförklaring (32 § AvtL), inte motpartens vilseledande.", "lagrum": "32 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-7",
+      "fraga": "En näringsidkare utnyttjar en konsuments trångmål och får till ett avtal med ett pris långt över marknadsvärdet. Vilken ogiltighetsgrund passar bäst?",
+      "alternativ": [
+        {"text": "Ocker.", "korrekt": true, "forklaring": "Att utnyttja någons trångmål, oförstånd eller beroende för ett uppenbart missförhållande mellan prestationerna är ocker.", "lagrum": "31 § AvtL"},
+        {"text": "Svek.", "korrekt": false, "forklaring": "Svek förutsätter vilseledande, inte enbart utnyttjande av trångmål.", "lagrum": "30 § AvtL"},
+        {"text": "Strid mot tro och heder.", "korrekt": false, "forklaring": "33 § AvtL är en uppsamlande ogiltighetsgrund; för utnyttjande av trångmål med prismissförhållande är 31 § mer träffande.", "lagrum": "33 § AvtL"},
+        {"text": "Tvång.", "korrekt": false, "forklaring": "Något hot eller tvingande har inte förekommit.", "lagrum": "29 § AvtL"}
+      ]
+    },
+    {
+      "id": "avt-mc-8",
+      "fraga": "Ett avtalsvillkor framstår som oskäligt med hänsyn till avtalets innehåll och omständigheterna vid dess tillkomst. Vilken bestämmelse gör det möjligt att jämka eller åsidosätta villkoret?",
+      "alternativ": [
+        {"text": "Generalklausulen om oskäliga avtalsvillkor.", "korrekt": true, "forklaring": "36 § AvtL låter domstol jämka eller lämna ett oskäligt villkor utan avseende.", "lagrum": "36 § AvtL"},
+        {"text": "Regeln om svek.", "korrekt": false, "forklaring": "Svek kräver vilseledande vid avtalets ingående, inte oskälighet i villkoret som sådant.", "lagrum": "30 § AvtL"},
+        {"text": "Regeln om oren accept.", "korrekt": false, "forklaring": "6 § AvtL rör hur avtal sluts, inte jämkning av villkor.", "lagrum": "6 § AvtL"},
+        {"text": "Regeln om förklaringsmisstag.", "korrekt": false, "forklaring": "32 § AvtL avser misstag i en viljeförklaring, inte oskäliga villkor.", "lagrum": "32 § AvtL"}
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "avt-lj-1",
+      "situation": "En säljare har lämnat ett anbud med en angiven svarstid. Vilket lagrum slår fast att anbudet är bindande under denna tid?",
+      "facit_lagrum": ["1 § AvtL"],
+      "ledtrad": "Löftesprincipen och anbudets bindande verkan."
+    },
+    {
+      "id": "avt-lj-2",
+      "situation": "En köpare accepterar ett anbud, men svaret kommer fram efter acceptfristens utgång. Vilket lagrum reglerar hur en för sen accept ska behandlas?",
+      "facit_lagrum": ["4 § AvtL"],
+      "ledtrad": "En för sen accept blir något annat än en accept."
+    },
+    {
+      "id": "avt-lj-3",
+      "situation": "En fullmäktig överskrider sin befogenhet men håller sig inom behörigheten, och tredje man är i god tro. Vilket lagrum avgör om huvudmannen ändå blir bunden?",
+      "facit_lagrum": ["11 § AvtL"],
+      "ledtrad": "Gränsen mellan behörighet och befogenhet, och tredje mans goda tro."
+    },
+    {
+      "id": "avt-lj-4",
+      "situation": "En domstol vill jämka ett oskäligt villkor i ett konsumentavtal. Vilket lagrum ger den möjligheten?",
+      "facit_lagrum": ["36 § AvtL"],
+      "ledtrad": "Generalklausulen om oskäliga avtalsvillkor."
+    }
+  ]
 }

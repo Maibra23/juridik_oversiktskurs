@@ -1,4 +1,150 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen familje_och_arvsratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Familje- och successionsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (ÄktB och ÄB). Nivå: Juridisk översiktskurs.",
+  "modul": "Familje- och successionsrätt",
+  "case": [
+    {
+      "id": "fam-case-1",
+      "rubrik": "Efterlevande make, särkullbarn och testamentet",
+      "svarighetsgrad": "svar",
+      "uppskattad_tid_min": 18,
+      "scenariotext": "Gustav avlider och efterlämnar hustrun Anna samt två barn. Barnet Bo är gemensamt med Anna, medan barnet Cecilia är Gustavs särkullbarn från ett tidigare förhållande. Kvarlåtenskapen efter Gustav är 1 200 000 kr. Gustav har skrivit ett formenligt testamente där han förordnar att hela kvarlåtenskapen ska tillfalla Anna. Cecilia är missnöjd och menar att hon har rätt till en del av arvet redan nu, trots testamentet. Anna hävdar att testamentet ger henne allt.",
+      "facit": {
+        "rattsfraga": "Vad har särkullbarnet Cecilia rätt till trots testamentet till förmån för efterlevande maken Anna?",
+        "lagrum": ["2 kap. 1 § ÄB", "3 kap. 1 § ÄB", "7 kap. 1 § ÄB", "10 kap. 1 § ÄB"],
+        "tillampningspunkter": [
+          "Bröstarvingar ärver i första arvsklassen med lika lott (2 kap. 1 § ÄB); Bo och Cecilia har var sin arvslott.",
+          "Efterlevande make ärver framför gemensamma barn, men ett särkullbarn har rätt att få ut sin arvslott direkt (3 kap. 1 § ÄB).",
+          "Testamentet kan inte inskränka en bröstarvinges laglott, som är hälften av arvslotten (7 kap. 1 § ÄB); Cecilia kan påkalla jämkning av testamentet.",
+          "Testamentet är giltigt till sin form (10 kap. 1 § ÄB), men laglottsskyddet begränsar hur mycket som kan testamenteras bort från särkullbarnet."
+        ],
+        "slutsats": "Bo och Cecilia har var sin arvslott om 600 000 kr. Cecilia, som är särkullbarn, kan trots testamentet begära ut sin laglott om 300 000 kr direkt genom att påkalla jämkning enligt 7 kap. 1 § ÄB. Bos del omfattas av Annas arvsrätt enligt 3 kap. 1 § ÄB och faller ut först när Anna avlider."
+      }
+    },
+    {
+      "id": "fam-case-2",
+      "rubrik": "Sommarstugan som var enskild egendom",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Maria och Johan skiljer sig. Under äktenskapet fick Maria en sommarstuga i gåva av sina föräldrar, med ett gåvobrev där det uttryckligen står att stugan ska vara Marias enskilda egendom. I övrigt har makarna gemensamt sparande och en bostadsrätt som utgör giftorättsgods. Johan menar att sommarstugan ska ingå i bodelningen eftersom de varit gifta länge, medan Maria hävdar att stugan står helt utanför.",
+      "facit": {
+        "rattsfraga": "Ska sommarstugan ingå i bodelningen mellan Maria och Johan?",
+        "lagrum": ["7 kap. 1 § ÄktB", "7 kap. 2 § ÄktB", "9 kap. 1 § ÄktB", "11 kap. 3 § ÄktB"],
+        "tillampningspunkter": [
+          "Huvudregeln är att all egendom är giftorättsgods i den mån den inte är enskild egendom (7 kap. 1 § ÄktB).",
+          "Egendom kan bli enskild bland annat genom villkor i ett gåvobrev från annan än maken (7 kap. 2 § ÄktB); gåvobrevet gör stugan till Marias enskilda egendom.",
+          "Vid äktenskapsskillnad ska makarnas giftorättsgods fördelas genom bodelning (9 kap. 1 § ÄktB).",
+          "I bodelningen läggs bara giftorättsgodset samman och delas (11 kap. 3 § ÄktB); enskild egendom hålls utanför."
+        ],
+        "slutsats": "Sommarstugan är Marias enskilda egendom på grund av villkoret i gåvobrevet (7 kap. 2 § ÄktB) och ingår därför inte i bodelningen. Endast giftorättsgodset – sparandet och bostadsrätten – delas enligt 11 kap. 3 § ÄktB."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "fam-mc-1",
+      "fraga": "Vilka ärver i första arvsklassen enligt den legala arvsordningen?",
+      "alternativ": [
+        {"text": "Arvlåtarens bröstarvingar (barn), med lika lott.", "korrekt": true, "forklaring": "Första arvsklassen är bröstarvingarna, som delar lika.", "lagrum": "2 kap. 1 § ÄB"},
+        {"text": "Arvlåtarens föräldrar och syskon.", "korrekt": false, "forklaring": "Föräldrar och syskon tillhör andra arvsklassen.", "lagrum": "2 kap. 1 § ÄB"},
+        {"text": "Enbart den efterlevande maken.", "korrekt": false, "forklaring": "Makens arvsrätt regleras särskilt och utesluter inte bröstarvingarnas ställning i första arvsklassen.", "lagrum": "3 kap. 1 § ÄB"},
+        {"text": "Arvlåtarens mor- och farföräldrar.", "korrekt": false, "forklaring": "De tillhör tredje arvsklassen.", "lagrum": "2 kap. 1 § ÄB"}
+      ]
+    },
+    {
+      "id": "fam-mc-2",
+      "fraga": "Vad gäller för ett särkullbarn när arvlåtaren efterlämnar en make?",
+      "alternativ": [
+        {"text": "Särkullbarnet har rätt att få ut sin arvslott direkt.", "korrekt": true, "forklaring": "Till skillnad från gemensamma barn kan ett särkullbarn kräva ut sitt arv genast.", "lagrum": "3 kap. 1 § ÄB"},
+        {"text": "Särkullbarnet får aldrig något arv om det finns en make.", "korrekt": false, "forklaring": "Särkullbarnet har tvärtom rätt att få ut arvet direkt.", "lagrum": "3 kap. 1 § ÄB"},
+        {"text": "Särkullbarnet måste alltid vänta tills maken avlider.", "korrekt": false, "forklaring": "Det gäller gemensamma barn, inte särkullbarn.", "lagrum": "3 kap. 1 § ÄB"},
+        {"text": "Särkullbarnet ärver dubbelt så mycket som ett gemensamt barn.", "korrekt": false, "forklaring": "Arvslotterna är lika stora; skillnaden gäller när arvet faller ut.", "lagrum": "2 kap. 1 § ÄB"}
+      ]
+    },
+    {
+      "id": "fam-mc-3",
+      "fraga": "Hur stor är en bröstarvinges laglott?",
+      "alternativ": [
+        {"text": "Hälften av den arvslott som annars skulle tillfalla bröstarvingen.", "korrekt": true, "forklaring": "Laglotten utgör halva arvslotten och är skyddad mot testamente.", "lagrum": "7 kap. 1 § ÄB"},
+        {"text": "Hela arvslotten.", "korrekt": false, "forklaring": "Laglotten är hälften av arvslotten, inte hela.", "lagrum": "7 kap. 1 § ÄB"},
+        {"text": "En tredjedel av kvarlåtenskapen.", "korrekt": false, "forklaring": "Laglotten beräknas som halva arvslotten, inte som en fast andel av hela boet.", "lagrum": "7 kap. 1 § ÄB"},
+        {"text": "Ingenting om det finns ett testamente.", "korrekt": false, "forklaring": "Laglotten är just det som är skyddat trots testamente.", "lagrum": "7 kap. 1 § ÄB"}
+      ]
+    },
+    {
+      "id": "fam-mc-4",
+      "fraga": "Vad är utgångspunkten för vilken egendom som är giftorättsgods?",
+      "alternativ": [
+        {"text": "All egendom är giftorättsgods i den mån den inte är enskild egendom.", "korrekt": true, "forklaring": "Giftorättsgods är huvudregeln; enskild egendom är undantaget.", "lagrum": "7 kap. 1 § ÄktB"},
+        {"text": "Endast egendom som förvärvats gemensamt är giftorättsgods.", "korrekt": false, "forklaring": "Även egendom en make förvärvat ensam är giftorättsgods om den inte gjorts enskild.", "lagrum": "7 kap. 1 § ÄktB"},
+        {"text": "All egendom är enskild om inget annat avtalats.", "korrekt": false, "forklaring": "Det är tvärtom: giftorättsgods är huvudregeln.", "lagrum": "7 kap. 1 § ÄktB"},
+        {"text": "Endast fast egendom kan vara giftorättsgods.", "korrekt": false, "forklaring": "Giftorättsgods omfattar all slags egendom, inte bara fast egendom.", "lagrum": "7 kap. 1 § ÄktB"}
+      ]
+    },
+    {
+      "id": "fam-mc-5",
+      "fraga": "På vilket sätt kan egendom bli enskild egendom?",
+      "alternativ": [
+        {"text": "Genom villkor i äktenskapsförord, gåva eller testamente.", "korrekt": true, "forklaring": "Enskild egendom uppkommer bland annat genom äktenskapsförord eller villkor vid gåva och testamente.", "lagrum": "7 kap. 2 § ÄktB"},
+        {"text": "Endast genom ett domstolsbeslut.", "korrekt": false, "forklaring": "Domstol krävs inte; villkor i förord, gåva eller testamente räcker.", "lagrum": "7 kap. 2 § ÄktB"},
+        {"text": "Automatiskt efter tio års äktenskap.", "korrekt": false, "forklaring": "Det finns ingen sådan automatik.", "lagrum": "7 kap. 2 § ÄktB"},
+        {"text": "Genom att en make ensam köper egendomen.", "korrekt": false, "forklaring": "Egendom en make köper ensam blir giftorättsgods om den inte gjorts enskild.", "lagrum": "7 kap. 1 § ÄktB"}
+      ]
+    },
+    {
+      "id": "fam-mc-6",
+      "fraga": "Vad sker med makarnas egendom vid en äktenskapsskillnad?",
+      "alternativ": [
+        {"text": "Makarnas giftorättsgods fördelas genom bodelning.", "korrekt": true, "forklaring": "Vid äktenskapsskillnad ska en bodelning förrättas där giftorättsgodset delas.", "lagrum": "9 kap. 1 § ÄktB"},
+        {"text": "All egendom, även enskild, delas lika.", "korrekt": false, "forklaring": "Enskild egendom hålls utanför bodelningen.", "lagrum": "11 kap. 3 § ÄktB"},
+        {"text": "Ingen bodelning sker vid skilsmässa.", "korrekt": false, "forklaring": "Bodelning ska tvärtom ske när ett äktenskap upplöses.", "lagrum": "9 kap. 1 § ÄktB"},
+        {"text": "Den make som tjänar mest behåller allt.", "korrekt": false, "forklaring": "Giftorättsgodset delas oberoende av vem som förvärvat det.", "lagrum": "11 kap. 3 § ÄktB"}
+      ]
+    },
+    {
+      "id": "fam-mc-7",
+      "fraga": "Vad läggs samman och delas i själva bodelningen?",
+      "alternativ": [
+        {"text": "Makarnas andelar i giftorättsgodset, efter avdrag för skulder.", "korrekt": true, "forklaring": "I bodelningen beräknas andelarna i giftorättsgodset som sedan delas.", "lagrum": "11 kap. 3 § ÄktB"},
+        {"text": "Endast den ena makens egendom.", "korrekt": false, "forklaring": "Båda makarnas giftorättsgods ingår.", "lagrum": "11 kap. 3 § ÄktB"},
+        {"text": "All enskild egendom.", "korrekt": false, "forklaring": "Enskild egendom ingår inte i bodelningen.", "lagrum": "7 kap. 2 § ÄktB"},
+        {"text": "Endast fast egendom.", "korrekt": false, "forklaring": "Allt giftorättsgods ingår, inte bara fast egendom.", "lagrum": "7 kap. 1 § ÄktB"}
+      ]
+    },
+    {
+      "id": "fam-mc-8",
+      "fraga": "En arvlåtare vill upprätta ett giltigt testamente. Vilket lagrum reglerar formkraven?",
+      "alternativ": [
+        {"text": "Regeln om testamentes formkrav (skriftligt, bevittnat av två vittnen).", "korrekt": true, "forklaring": "Ett testamente måste vara skriftligt och bevittnat av två samtidigt närvarande vittnen.", "lagrum": "10 kap. 1 § ÄB"},
+        {"text": "Regeln om den legala arvsordningen.", "korrekt": false, "forklaring": "Arvsordningen avgör vem som ärver, inte formkraven för testamente.", "lagrum": "2 kap. 1 § ÄB"},
+        {"text": "Regeln om laglott.", "korrekt": false, "forklaring": "Laglotten skyddar bröstarvingar, men reglerar inte formen.", "lagrum": "7 kap. 1 § ÄB"},
+        {"text": "Regeln om efterlevande makes arvsrätt.", "korrekt": false, "forklaring": "Den handlar om makens arv, inte om testamentets form.", "lagrum": "3 kap. 1 § ÄB"}
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "fam-lj-1",
+      "situation": "Ett särkullbarn vill få ut sitt arv direkt trots att arvlåtaren efterlämnar en make. Vilket lagrum ger den rätten?",
+      "facit_lagrum": ["3 kap. 1 § ÄB"],
+      "ledtrad": "Efterlevande makes arvsrätt och undantaget för särkullbarn."
+    },
+    {
+      "id": "fam-lj-2",
+      "situation": "En bröstarvinge har gjorts arvlös genom testamente och vill ändå få ut sitt skyddade minimum. Vilket lagrum reglerar laglotten?",
+      "facit_lagrum": ["7 kap. 1 § ÄB"],
+      "ledtrad": "Hälften av arvslotten är skyddad."
+    },
+    {
+      "id": "fam-lj-3",
+      "situation": "Makar skiljer sig och giftorättsgodset ska fördelas. Vilket lagrum säger att en bodelning ska ske?",
+      "facit_lagrum": ["9 kap. 1 § ÄktB"],
+      "ledtrad": "Bodelning vid äktenskapets upplösning."
+    },
+    {
+      "id": "fam-lj-4",
+      "situation": "En make fick en fastighet i gåva med villkor om att den ska vara enskild egendom. Vilket lagrum anger att sådan egendom är enskild?",
+      "facit_lagrum": ["7 kap. 2 § ÄktB"],
+      "ledtrad": "Villkor i gåvobrev eller äktenskapsförord."
+    }
+  ]
 }

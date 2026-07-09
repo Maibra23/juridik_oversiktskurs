@@ -1,4 +1,150 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen skadestandsratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Skadeståndsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (SkL). Nivå: Juridisk översiktskurs.",
+  "modul": "Skadeståndsrätt",
+  "case": [
+    {
+      "id": "ska-case-1",
+      "rubrik": "Målaren och den krossade rutan",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Erik är anställd som målare hos Målericompaniet AB. Under ett arbete på en fasad ställer han slarvigt ifrån sig en burk färg på en stege, trots att förmannen sagt åt honom att alltid använda den avsedda hyllan. Burken faller ner och krossar ett stort skyltfönster hos butiken på bottenvåningen, som får en sakskada på 60 000 kr. Butiken kräver ersättning. Erik menar att han inte kan betala och hänvisar till att han var på arbetet, medan Målericompaniet menar att det var Eriks eget slarv.",
+      "facit": {
+        "rattsfraga": "Vem ansvarar för sakskadan på skyltfönstret – Erik personligen, hans arbetsgivare, eller båda?",
+        "lagrum": ["2 kap. 1 § SkL", "3 kap. 1 § SkL", "4 kap. 1 § SkL"],
+        "tillampningspunkter": [
+          "Grundregeln (culparegeln) är att den som uppsåtligen eller av vårdslöshet vållar en sakskada ska ersätta den (2 kap. 1 § SkL).",
+          "Erik har handlat vårdslöst genom att slarvigt ställa färgburken på stegen i strid med förmannens instruktion; culpa föreligger.",
+          "Skadan har vållats i tjänsten, och då bär arbetsgivaren principalansvar för arbetstagarens vållande (3 kap. 1 § SkL).",
+          "Arbetstagarens eget ansvar är starkt begränsat och inträder bara vid synnerliga skäl (4 kap. 1 § SkL); vanligt slarv räcker inte."
+        ],
+        "slutsats": "Butiken kan kräva ersättning av Målericompaniet AB enligt principalansvaret i 3 kap. 1 § SkL. Erik är i princip skyddad av 4 kap. 1 § SkL eftersom det inte finns synnerliga skäl att låta honom bära ansvaret personligen."
+      }
+    },
+    {
+      "id": "ska-case-2",
+      "rubrik": "Det felaktiga värderingsintyget",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 14,
+      "scenariotext": "Lisa ska köpa en bostadsrätt och litar på ett värderingsintyg som en granne, Karl, upprättat åt henne som en ren väntjänst. Karl har inte begått något brott, men han har varit oaktsam och kraftigt övervärderat lägenheten. Lisa betalar 200 000 kr för mycket och lider alltså en ekonomisk förlust utan att någon sak eller person skadats. Hon var samtidigt själv oförsiktig: hon struntade i att anlita en professionell värderare trots att banken rekommenderat det. Lisa kräver Karl på hela mellanskillnaden.",
+      "facit": {
+        "rattsfraga": "Kan Lisa få ersättning för sin rena förmögenhetsskada av Karl, och kan beloppet i så fall jämkas?",
+        "lagrum": ["2 kap. 2 § SkL", "6 kap. 1 § SkL"],
+        "tillampningspunkter": [
+          "Förlusten är en ren förmögenhetsskada: en ekonomisk skada utan samband med person- eller sakskada.",
+          "Utom kontraktsförhållanden ersätts ren förmögenhetsskada som huvudregel endast när den vållats genom brott (2 kap. 2 § SkL).",
+          "Karl har inte begått något brott, så huvudregeln talar mot ersättningsskyldighet på utomobligatorisk grund.",
+          "Även om ansvar hade förelegat kan ersättningen jämkas om den skadelidande själv medverkat till skadan genom eget vållande (6 kap. 1 § SkL); Lisa struntade i bankens råd."
+        ],
+        "slutsats": "Eftersom skadan är en ren förmögenhetsskada som inte vållats genom brott är utgångspunkten att Karl inte är skadeståndsskyldig enligt 2 kap. 2 § SkL. Skulle ansvar ändå anses föreligga på annan grund kan beloppet jämkas för Lisas medvållande enligt 6 kap. 1 § SkL."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "ska-mc-1",
+      "fraga": "Vad krävs enligt culparegeln för skadeståndsansvar vid person- och sakskada?",
+      "alternativ": [
+        {"text": "Att skadan vållats uppsåtligen eller av vårdslöshet.", "korrekt": true, "forklaring": "Culparegeln bygger på uppsåt eller oaktsamhet (vårdslöshet).", "lagrum": "2 kap. 1 § SkL"},
+        {"text": "Att skadevållaren är näringsidkare.", "korrekt": false, "forklaring": "Ansvaret förutsätter inte att skadevållaren är näringsidkare.", "lagrum": "2 kap. 1 § SkL"},
+        {"text": "Att skadan alltid vållats genom brott.", "korrekt": false, "forklaring": "Krav på brott gäller ren förmögenhetsskada, inte person- och sakskada.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Att den skadelidande har lidit en ekonomisk förlust utan fysisk skada.", "korrekt": false, "forklaring": "Det beskriver ren förmögenhetsskada, inte grunden för culparegeln.", "lagrum": "2 kap. 2 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-2",
+      "fraga": "En arbetstagare vållar av oaktsamhet en skada i tjänsten. Vem svarar som huvudregel gentemot den skadelidande?",
+      "alternativ": [
+        {"text": "Arbetsgivaren, genom principalansvaret.", "korrekt": true, "forklaring": "Arbetsgivaren ansvarar för skada som arbetstagaren vållar i tjänsten.", "lagrum": "3 kap. 1 § SkL"},
+        {"text": "Arbetstagaren personligen, fullt ut.", "korrekt": false, "forklaring": "Arbetstagarens eget ansvar är begränsat till fall med synnerliga skäl.", "lagrum": "4 kap. 1 § SkL"},
+        {"text": "Ingen, eftersom skador i arbetet aldrig ersätts.", "korrekt": false, "forklaring": "Skador i arbetet ersätts; frågan är bara vem som svarar.", "lagrum": "3 kap. 1 § SkL"},
+        {"text": "Den skadelidande själv får alltid stå för skadan.", "korrekt": false, "forklaring": "Den skadelidande behöver inte bära skadan när någon annan vållat den.", "lagrum": "2 kap. 1 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-3",
+      "fraga": "När ersätts en ren förmögenhetsskada utom kontraktsförhållanden som huvudregel?",
+      "alternativ": [
+        {"text": "När den har vållats genom brott.", "korrekt": true, "forklaring": "Huvudregeln är att ren förmögenhetsskada ersätts när den vållats genom brott.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Alltid när någon varit oaktsam.", "korrekt": false, "forklaring": "Enbart oaktsamhet räcker inte för ren förmögenhetsskada utom kontrakt.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Aldrig, ren förmögenhetsskada ersätts inte.", "korrekt": false, "forklaring": "Den ersätts, men huvudregeln kräver brott.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Endast om en sakskada också uppstått.", "korrekt": false, "forklaring": "Ren förmögenhetsskada definieras just av att den saknar samband med sak- eller personskada.", "lagrum": "2 kap. 2 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-4",
+      "fraga": "Den skadelidande har själv medverkat till sin skada genom eget vållande. Vad kan det leda till?",
+      "alternativ": [
+        {"text": "Att skadeståndet jämkas.", "korrekt": true, "forklaring": "Medvållande kan leda till att ersättningen jämkas.", "lagrum": "6 kap. 1 § SkL"},
+        {"text": "Att skadeståndet alltid fördubblas.", "korrekt": false, "forklaring": "Medvållande höjer inte ersättningen.", "lagrum": "6 kap. 1 § SkL"},
+        {"text": "Att skadevållaren helt befrias oavsett omständigheter.", "korrekt": false, "forklaring": "Medvållande leder till jämkning, inte automatiskt full befrielse.", "lagrum": "6 kap. 1 § SkL"},
+        {"text": "Att culpakravet bortfaller.", "korrekt": false, "forklaring": "Medvållande påverkar ersättningens storlek, inte grundkravet på culpa hos skadevållaren.", "lagrum": "2 kap. 1 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-5",
+      "fraga": "I vilken utsträckning bär en arbetstagare eget skadeståndsansvar för skada vållad i tjänsten?",
+      "alternativ": [
+        {"text": "Endast om synnerliga skäl föreligger.", "korrekt": true, "forklaring": "Arbetstagarens eget ansvar är starkt begränsat och kräver synnerliga skäl.", "lagrum": "4 kap. 1 § SkL"},
+        {"text": "Alltid fullt ut, precis som en utomstående.", "korrekt": false, "forklaring": "Arbetstagaren har ett väsentligt lindrigare ansvar än en utomstående.", "lagrum": "4 kap. 1 § SkL"},
+        {"text": "Aldrig, under några omständigheter.", "korrekt": false, "forklaring": "Vid synnerliga skäl kan ansvar ändå inträda.", "lagrum": "4 kap. 1 § SkL"},
+        {"text": "Endast om arbetsgivaren gått i konkurs.", "korrekt": false, "forklaring": "Bedömningen styrs av synnerliga skäl, inte av arbetsgivarens ekonomi.", "lagrum": "4 kap. 1 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-6",
+      "fraga": "Vad avses med adekvat kausalitet i skadeståndsrätten?",
+      "alternativ": [
+        {"text": "Att det finns ett tillräckligt näraliggande och påräkneligt orsakssamband mellan handlingen och skadan.", "korrekt": true, "forklaring": "Adekvat kausalitet begränsar ansvaret till skador som är en påräknelig följd av handlandet.", "lagrum": null},
+        {"text": "Att skadevållaren måste ha handlat med uppsåt.", "korrekt": false, "forklaring": "Adekvans handlar om orsakssamband, inte om uppsåt.", "lagrum": null},
+        {"text": "Att skadan alltid ska ha vållats genom brott.", "korrekt": false, "forklaring": "Det gäller ren förmögenhetsskada, inte kausalitetsläran.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Att den skadelidande varit medvållande.", "korrekt": false, "forklaring": "Medvållande är en separat fråga om jämkning.", "lagrum": "6 kap. 1 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-7",
+      "fraga": "En privatperson råkar av oaktsamhet backa in i en parkerad bil. Vilket lagrum reglerar grundansvaret för sakskadan?",
+      "alternativ": [
+        {"text": "Culparegeln om ansvar för sak- och personskada.", "korrekt": true, "forklaring": "Sakskada vållad av oaktsamhet ersätts enligt culparegeln.", "lagrum": "2 kap. 1 § SkL"},
+        {"text": "Regeln om ren förmögenhetsskada genom brott.", "korrekt": false, "forklaring": "Här är det en sakskada, inte en ren förmögenhetsskada.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Regeln om principalansvar.", "korrekt": false, "forklaring": "Principalansvar aktualiseras när en arbetstagare vållar skada i tjänsten.", "lagrum": "3 kap. 1 § SkL"},
+        {"text": "Regeln om jämkning vid medvållande.", "korrekt": false, "forklaring": "Jämkning gäller när den skadelidande medverkat, inte grundansvaret.", "lagrum": "6 kap. 1 § SkL"}
+      ]
+    },
+    {
+      "id": "ska-mc-8",
+      "fraga": "En kommun brister som arbetsgivare i tillsyn och en anställd vållar en tredje man en sakskada i tjänsten. På vilken grund kan tredje man rikta kravet mot kommunen?",
+      "alternativ": [
+        {"text": "Principalansvaret för arbetstagares vållande i tjänsten.", "korrekt": true, "forklaring": "Arbetsgivaren, även det allmänna, svarar för arbetstagarens vållande i tjänsten.", "lagrum": "3 kap. 1 § SkL"},
+        {"text": "Att den skadelidande varit medvållande.", "korrekt": false, "forklaring": "Medvållande gäller den skadelidandes egen medverkan.", "lagrum": "6 kap. 1 § SkL"},
+        {"text": "Att skadan är en ren förmögenhetsskada utan brott.", "korrekt": false, "forklaring": "En sakskada bedöms inte enligt regeln om ren förmögenhetsskada.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Att arbetstagaren alltid svarar ensam.", "korrekt": false, "forklaring": "Arbetstagarens eget ansvar är begränsat; arbetsgivaren bär principalansvaret.", "lagrum": "4 kap. 1 § SkL"}
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "ska-lj-1",
+      "situation": "En person vållar av oaktsamhet en sakskada. Vilket lagrum uttrycker culparegeln för sak- och personskada?",
+      "facit_lagrum": ["2 kap. 1 § SkL"],
+      "ledtrad": "Grundregeln om uppsåt eller vårdslöshet."
+    },
+    {
+      "id": "ska-lj-2",
+      "situation": "En arbetstagare vållar en skada i tjänsten och den skadelidande vill kräva arbetsgivaren. Vilket lagrum reglerar principalansvaret?",
+      "facit_lagrum": ["3 kap. 1 § SkL"],
+      "ledtrad": "Arbetsgivarens ansvar för anställdas vållande."
+    },
+    {
+      "id": "ska-lj-3",
+      "situation": "Någon har lidit en ren ekonomisk förlust utan person- eller sakskada. Vilket lagrum anger huvudregeln om att sådan skada ersätts när den vållats genom brott?",
+      "facit_lagrum": ["2 kap. 2 § SkL"],
+      "ledtrad": "Ren förmögenhetsskada och kravet på brott."
+    },
+    {
+      "id": "ska-lj-4",
+      "situation": "Den skadelidande har genom eget vållande medverkat till skadan. Vilket lagrum gör det möjligt att jämka skadeståndet?",
+      "facit_lagrum": ["6 kap. 1 § SkL"],
+      "ledtrad": "Jämkning på grund av medvållande."
+    }
+  ]
 }

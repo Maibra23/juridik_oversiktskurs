@@ -128,6 +128,15 @@ def inject_css() -> None:
         }}
         .jok-varning {{ background: var(--varn-bg); border: 1px solid var(--varn-fg); color: var(--bl); }}
         .jok-info {{ background: #EAF1F7; border: 1px solid var(--bla); }}
+        .jok-tutortext {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-left: 3px solid var(--bla); border-radius: 10px;
+            padding: .9rem 1.2rem; margin: .6rem 0; max-width: 46rem;
+            font-size: 16px; line-height: 1.6; color: var(--bl);
+        }}
+        .jok-tutortext p {{ margin: 0 0 .6rem 0; }}
+        .jok-tutortext p:last-child {{ margin-bottom: 0; }}
+        .jok-varning ul {{ margin: .4rem 0 .2rem 1.1rem; padding: 0; }}
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
@@ -197,7 +206,10 @@ def render_lagrum_chip(ref: str, url: str | None = None, verifierad: bool = True
     """Guldkantad pill för ett lagrum. Overifierad chip får varningsstil."""
     klass = "jok-chip" if verifierad else "jok-chip ovarifierad"
     prefix = "" if verifierad else "Ej verifierad: "
-    etikett = f"§ {prefix}{html.escape(ref)}"
+    # Refererna innehåller redan "§" (t.ex. "1 § AvtL"); lägg bara till
+    # paragraftecknet som prydnad för bara-nummer-referenser.
+    paragraf = "" if "§" in ref else "§ "
+    etikett = f"{paragraf}{prefix}{html.escape(ref)}"
     tooltip = f' title="{html.escape(titel)}"' if titel else ""
     if url:
         return (
@@ -210,6 +222,65 @@ def render_lagrum_chip(ref: str, url: str | None = None, verifierad: bool = True
 def render_varning(text: str) -> None:
     """Gult, handlingsorienterat varningskort."""
     st.html(f'<div class="jok-varning">{html.escape(text)}</div>')
+
+
+def _tutortext_html(text: str) -> tuple[str, tuple]:
+    """Bygg HTML för ett tutorsvar och returnera (html, overifierade träffar).
+
+    Ren funktion utan Streamlit-anrop så att den kan enhetstestas. Verifierade
+    lagrum byts ut mot klickbara lagen.nu-chips; overifierade referenser lämnas
+    kvar i texten och returneras separat för varningsrutan.
+    """
+    from utils.lagrum import STATUS_VERIFIERAD, verify_lagrum
+
+    traffar = verify_lagrum(text or "")
+    verifierade: dict[str, object] = {}
+    ovarifierade: list = []
+    for t in traffar:
+        if t.status == STATUS_VERIFIERAD and t.url:
+            verifierade.setdefault(t.ra, t)
+        else:
+            ovarifierade.append(t)
+
+    kropp = html.escape(text or "")
+    # Längsta råtext först så att "1 kap. 1 § SkL" inte delvis matchas av "1 § SkL".
+    for ra in sorted(verifierade, key=len, reverse=True):
+        t = verifierade[ra]
+        titel = getattr(t, "beskrivning", None) or ""
+        tooltip = f' title="{html.escape(titel)}"' if titel else ""
+        chip = (
+            f'<a class="jok-chip" href="{html.escape(t.url)}" target="_blank"'
+            f'{tooltip}>{html.escape(ra)}</a>'
+        )
+        kropp = kropp.replace(html.escape(ra), chip)
+
+    kropp = kropp.replace("\n\n", "</p><p>").replace("\n", "<br>")
+    return f'<div class="jok-tutortext"><p>{kropp}</p></div>', tuple(ovarifierade)
+
+
+def render_tutortext(text: str) -> None:
+    """Rendera ett tutorsvar med verifierade lagrumschips och varningsruta.
+
+    Verifierade lagrum blir klickbara lagen.nu-chips. Overifierade lagrum och
+    rättsfall (t.ex. påhittade paragrafer eller NJA-referenser) samlas i en gul
+    varningsruta så att studenten uppmanas kontrollera dem mot lagen.nu.
+    """
+    kropp_html, ovarifierade = _tutortext_html(text)
+    st.html(kropp_html)
+
+    if ovarifierade:
+        poster = "".join(
+            f"<li><strong>{html.escape(t.ra)}</strong></li>" for t in ovarifierade
+        )
+        st.html(
+            '<div class="jok-varning">'
+            "<strong>Kontrollera dessa referenser själv.</strong> Följande "
+            "hänvisningar kunde inte verifieras mot kursens lagrumslista och kan "
+            "vara felaktiga eller ligga utanför kursen:"
+            f"<ul>{poster}</ul>"
+            "Slå upp dem på lagen.nu innan du litar på dem."
+            "</div>"
+        )
 
 
 def render_info(text: str) -> None:

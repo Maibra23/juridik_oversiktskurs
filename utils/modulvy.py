@@ -31,10 +31,16 @@ from utils.quiz import (
 from utils.scenarier import Case, Flervalsfraga, Lagrumsjakt, Modulscenarier, ladda_modul
 from utils.tutor import tutorknapp
 from utils.ui import (
+    RNTS_STATUS_BEHOVER_MER,
+    RNTS_STATUS_EJ_PABORJAD,
+    RNTS_STATUS_GODKAND,
+    RNTS_STATUS_PAGAR,
     footer_note,
     hero,
     inject_css,
+    render_case,
     render_lagrum_chip,
+    render_rnts_steg,
     render_sidebar,
     render_varning,
 )
@@ -109,14 +115,22 @@ def _rendera_rattsfall(modul: Modulscenarier) -> None:
     case = next(c for c in modul.case if c.rubrik == val)
 
     st.html(
-        '<div class="jok-kort">'
-        f"<h3>{_esc(case.rubrik)}</h3>"
-        f'<div class="tag">Svårighetsgrad: {_esc(case.svarighetsgrad)} · '
-        f"ca {case.uppskattad_tid_min} min</div>"
-        f"<p>{_esc(case.scenariotext)}</p></div>"
+        render_case(
+            rubrik=case.rubrik,
+            metadata=(
+                f"Svårighetsgrad: {case.svarighetsgrad} · "
+                f"ca {case.uppskattad_tid_min} min"
+            ),
+            scenariotext=case.scenariotext,
+        )
     )
 
-    svar = _rnts_formular(case)
+    # Stepper till vänster om formuläret på bred skärm (design_system.md 4).
+    kol_stepper, kol_formular = st.columns([1, 3])
+    with kol_formular:
+        svar = _rnts_formular(case)
+    with kol_stepper:
+        st.html(render_rnts_steg(_rnts_statusar(svar)))
 
     st.caption(
         "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."
@@ -147,6 +161,29 @@ def _rnts_formular(case: Case) -> dict[str, str]:
         if nyckel == "norm":
             _norm_feedback(varde)
     return svar
+
+
+def _rnts_statusar(svar: dict[str, str]) -> tuple[tuple[str, str], ...]:
+    """Deterministisk status per RNTS-steg utifrån studentens ifyllda fält.
+
+    Tomt fält = ej påbörjad, ifyllt = under arbete. Normfältet bedöms
+    hårdare: alla lagrum verifierade = godkänd, annars behöver mer.
+    """
+    statusar = []
+    for nyckel, etikett, _hjalp in RNTS_FALT:
+        text = (svar.get(nyckel) or "").strip()
+        if not text:
+            status = RNTS_STATUS_EJ_PABORJAD
+        elif nyckel == "norm":
+            refs = extrahera_lagrum(text)
+            alla_ok = bool(refs) and all(
+                validera_lagrum(r) == STATUS_VERIFIERAD for r in refs
+            )
+            status = RNTS_STATUS_GODKAND if alla_ok else RNTS_STATUS_BEHOVER_MER
+        else:
+            status = RNTS_STATUS_PAGAR
+        statusar.append((etikett, status))
+    return tuple(statusar)
 
 
 def _norm_feedback(norm_text: str) -> None:

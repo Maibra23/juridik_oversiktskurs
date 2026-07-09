@@ -9,11 +9,10 @@ Ansvarar för allt visuellt som delas mellan sidorna:
   footer_note: HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
   informationskort när anropsbudgeten är slut
-- render_kort, render_lagrum_chip, render_varning, render_info:
-  återanvändbara block för scenarier, lagrum och meddelanden
-
-Detta är ett Dag 1-skelett. Den fulla komponentuppsättningen
-(render_rnts_steg, render_case, render_tutortext m.fl.) byggs ut i Dag 3.
+- render_kort, render_case, render_lagrum_chip, render_varning,
+  render_info: återanvändbara block för scenarier, lagrum och meddelanden
+- render_rnts_steg: fyrstegs vertikal stepper (Rättsfrågan, Norm,
+  Tillämpning, Slutsats) med statusikoner per design_system.md avsnitt 3
 """
 
 from __future__ import annotations
@@ -137,6 +136,32 @@ def inject_css() -> None:
         .jok-tutortext p {{ margin: 0 0 .6rem 0; }}
         .jok-tutortext p:last-child {{ margin-bottom: 0; }}
         .jok-varning ul {{ margin: .4rem 0 .2rem 1.1rem; padding: 0; }}
+        .jok-case {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-top: 3px solid var(--guld); border-radius: 12px;
+            padding: 1.1rem 1.3rem; margin: .6rem 0; max-width: 46rem;
+            box-shadow: 0 1px 3px rgba(26,35,50,.06);
+        }}
+        .jok-case h3 {{
+            font-family: Georgia, "Source Serif 4", serif; color: var(--bl);
+            font-size: 18px; margin: 0 0 .2rem 0;
+        }}
+        .jok-case .meta {{ font-size: 13px; color: #6B6459; margin-bottom: .5rem; }}
+        .jok-case p {{ font-size: 17px; line-height: 1.65; color: var(--bl); margin: 0; }}
+        .jok-rnts {{ margin: .4rem 0 .8rem 0; }}
+        .jok-rnts .steg {{
+            display: flex; align-items: center; gap: .55rem;
+            font-size: 14px; color: var(--bl); padding: .22rem 0;
+        }}
+        .jok-rnts .ikon {{
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 1.25rem; height: 1.25rem; border-radius: 999px;
+            font-size: 11px; line-height: 1; flex: 0 0 auto;
+            border: 2px solid var(--ram); background: var(--panel); color: transparent;
+        }}
+        .jok-rnts .steg.pagar .ikon {{ border-color: var(--bla); background: var(--bla); color: #fff; }}
+        .jok-rnts .steg.godkand .ikon {{ border-color: var(--gron); background: var(--gron); color: #fff; }}
+        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-fg); background: var(--varn-bg); color: var(--varn-fg); }}
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
@@ -179,6 +204,50 @@ def render_kort(titel: str, innehall: str, ikon: str = "") -> str:
         f'<div class="jok-kort"><h3>{prefix}{html.escape(titel)}</h3>'
         f"<div>{html.escape(innehall)}</div></div>"
     )
+
+
+def render_case(rubrik: str, metadata: str, scenariotext: str) -> str:
+    """Scenariokort med rubrik, metadatarad och tunn guldlinje överst."""
+    meta = f'<div class="meta">{html.escape(metadata)}</div>' if metadata else ""
+    return (
+        f'<div class="jok-case"><h3>{html.escape(rubrik)}</h3>{meta}'
+        f"<p>{html.escape(scenariotext)}</p></div>"
+    )
+
+
+# --- RNTS-stepper (design_system.md avsnitt 3) --------------------------------
+
+RNTS_STATUS_EJ_PABORJAD = "ej-paborjad"   # tom cirkel
+RNTS_STATUS_PAGAR = "pagar"               # blå: under arbete
+RNTS_STATUS_GODKAND = "godkand"           # grön bock
+RNTS_STATUS_BEHOVER_MER = "behover-mer"   # gul: behöver mer
+
+_RNTS_IKONER = {
+    RNTS_STATUS_EJ_PABORJAD: "",
+    RNTS_STATUS_PAGAR: "●",
+    RNTS_STATUS_GODKAND: "✓",
+    RNTS_STATUS_BEHOVER_MER: "!",
+}
+
+
+def render_rnts_steg(steg: tuple[tuple[str, str], ...]) -> str:
+    """Vertikal RNTS-stepper: (etikett, status) per steg.
+
+    Status måste vara en av RNTS_STATUS_*-konstanterna; annars ValueError
+    (fail fast så att en felstavad status inte renderas tyst som tom cirkel).
+    """
+    rader = []
+    for etikett, status in steg:
+        if status not in _RNTS_IKONER:
+            raise ValueError(
+                f"Okänd RNTS-status {status!r} för steget {etikett!r}. "
+                f"Tillåtna: {sorted(_RNTS_IKONER)}"
+            )
+        rader.append(
+            f'<div class="steg {status}"><span class="ikon">{_RNTS_IKONER[status]}</span>'
+            f"<span>{html.escape(etikett)}</span></div>"
+        )
+    return f'<div class="jok-rnts">{"".join(rader)}</div>'
 
 
 def module_map(nodes: list[dict[str, str]]) -> str:

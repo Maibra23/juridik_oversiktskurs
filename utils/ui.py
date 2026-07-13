@@ -32,8 +32,9 @@ BORDER = "#E5E0D8"      # Kortram
 BLUE = "#2C5F8A"        # Myndighetsblå: primär accent
 GOLD = "#B8860B"        # Paragrafguld: enbart lagrum
 GREEN = "#2E7D4F"       # Godkänd
-WARN_FG = "#C9971C"     # Varning, text
+WARN_FG = "#C9971C"     # Varning, ram och accent
 WARN_BG = "#FFF8E1"     # Varning, bakgrund
+WARN_DARK = "#8A6914"   # Varning, text/ikon på varningsbakgrund (WCAG ≥ 4.5:1)
 ERROR = "#B3402A"       # Fel
 
 
@@ -46,7 +47,7 @@ def inject_css() -> None:
             --bl: {BLACK}; --perg: {PARCHMENT}; --panel: {PANEL};
             --ram: {BORDER}; --bla: {BLUE}; --guld: {GOLD};
             --gron: {GREEN}; --varn-fg: {WARN_FG}; --varn-bg: {WARN_BG};
-            --fel: {ERROR};
+            --varn-mork: {WARN_DARK}; --fel: {ERROR};
         }}
         .jok-hero {{
             max-width: 46rem; margin: 0 0 1.5rem 0;
@@ -161,7 +162,7 @@ def inject_css() -> None:
         }}
         .jok-rnts .steg.pagar .ikon {{ border-color: var(--bla); background: var(--bla); color: #fff; }}
         .jok-rnts .steg.godkand .ikon {{ border-color: var(--gron); background: var(--gron); color: #fff; }}
-        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-fg); background: var(--varn-bg); color: var(--varn-fg); }}
+        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-fg); background: var(--varn-bg); color: var(--varn-mork); }}
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}

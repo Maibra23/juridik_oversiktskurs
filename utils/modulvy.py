@@ -21,6 +21,7 @@ from utils.lagrum import (
     lagen_nu_url,
     validera_lagrum,
 )
+from utils.export import registrera_case_genomford
 from utils.prompts import build_case_prompt, build_quiz_prompt
 from utils.quiz import (
     modulresultat,
@@ -131,6 +132,11 @@ def _rendera_rattsfall(modul: Modulscenarier) -> None:
         svar = _rnts_formular(case)
     with kol_stepper:
         st.html(render_rnts_steg(_rnts_statusar(svar)))
+
+    # Ett rättsfall räknas som genomfört när hela RNTS-analysen är ifylld
+    # (deterministiskt, ingen LLM krävs). Läses av framstegsvyn och exporten.
+    if all((svar.get(nyckel) or "").strip() for nyckel, _e, _h in RNTS_FALT):
+        registrera_case_genomford(modul.modul, case.id)
 
     st.caption(
         "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."

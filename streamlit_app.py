@@ -21,6 +21,12 @@ st.set_page_config(
     menu_items={"Get Help": None, "Report a bug": None},
 )
 
+from utils.export import (  # noqa: E402
+    bygg_excel_rapport,
+    bygg_markdown_rapport,
+    genomforda_case,
+)
+from utils.quiz import alla_resultat  # noqa: E402
 from utils.ui import (  # noqa: E402
     footer_note,
     hero,
@@ -166,6 +172,8 @@ def render_landing() -> None:
         )
     )
 
+    _render_framsteg()
+
     with st.expander("Om appen och metoden", expanded=False):
         st.markdown(
             """
@@ -183,6 +191,50 @@ def render_landing() -> None:
         )
 
     st.html(footer_note())
+
+
+def _render_framsteg() -> None:
+    """Framstegssektion: quizresultat och genomförda case, med export."""
+    st.html(section_heading("FRAMSTEG", "Dina resultat den här sessionen"))
+
+    resultat = alla_resultat()
+    case_bok = genomforda_case()
+    if not resultat and not case_bok:
+        st.info(
+            "Inga resultat ännu. Öppna en modul, besvara quizfrågor eller "
+            "fyll i en RNTS-analys så samlas dina framsteg här."
+        )
+        return
+
+    for modul, (ratt, besvarade) in sorted(resultat.items()):
+        andel = ratt / besvarade if besvarade else 0.0
+        st.progress(andel, text=f"{modul}: {ratt}/{besvarade} rätt på quiz")
+    for modul, case_ids in sorted(case_bok.items()):
+        st.markdown(f"- **{modul}**: {len(case_ids)} genomförda rättsfall")
+
+    kol_md, kol_xlsx = st.columns(2)
+    with kol_md:
+        st.download_button(
+            "Ladda ner rapport (Markdown)",
+            data=bygg_markdown_rapport(resultat_till_svar(), case_bok),
+            file_name="studierapport.md",
+            mime="text/markdown",
+        )
+    with kol_xlsx:
+        st.download_button(
+            "Ladda ner rapport (Excel)",
+            data=bygg_excel_rapport(resultat_till_svar(), case_bok),
+            file_name="studierapport.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+
+
+def resultat_till_svar() -> dict[str, dict[str, bool]]:
+    """Hämta rå quizresultatbok ur session_state för rapportbyggarna."""
+    try:
+        return dict(st.session_state.get("quiz_resultat", {}))
+    except Exception:
+        return {}
 
 
 render_landing()

@@ -22,6 +22,7 @@ from utils.lagrum import (
     validera_lagrum,
 )
 from utils.export import registrera_case_genomford
+from utils.obsidian import registrera_case_analys
 from utils.prompts import build_case_prompt, build_quiz_prompt
 from utils.quiz import (
     modulresultat,
@@ -137,6 +138,8 @@ def _rendera_rattsfall(modul: Modulscenarier) -> None:
     # (deterministiskt, ingen LLM krävs). Läses av framstegsvyn och exporten.
     if all((svar.get(nyckel) or "").strip() for nyckel, _e, _h in RNTS_FALT):
         registrera_case_genomford(modul.modul, case.id)
+        # Fånga hela analysen för Obsidianexporten (studentens RNTS-svar + facit).
+        registrera_case_analys(modul.modul, case, svar)
 
     st.caption(
         "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."

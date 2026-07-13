@@ -26,6 +26,7 @@ from utils.export import (  # noqa: E402
     bygg_markdown_rapport,
     genomforda_case,
 )
+from utils.obsidian import bygg_valv, hamta_case_analyser  # noqa: E402
 from utils.quiz import alla_resultat  # noqa: E402
 from utils.ui import (  # noqa: E402
     footer_note,
@@ -226,6 +227,21 @@ def _render_framsteg() -> None:
             data=bygg_excel_rapport(resultat_till_svar(), case_bok),
             file_name="studierapport.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+
+    analyser = hamta_case_analyser()
+    if analyser:
+        st.download_button(
+            "Ladda ner Obsidianvalv (zip)",
+            data=bygg_valv(analyser),
+            file_name="juridik_valv.zip",
+            mime="application/zip",
+        )
+        st.info(
+            "Packa upp zipen och öppna mappen **Juridik** som ett valv i Obsidian. "
+            "Varje lagrum blir en egen not — grafvyn och backlinks visar då alla "
+            "rättsfall där lagrummet tillämpats. Repetitionsavsnitten fungerar med "
+            "pluginen Spaced Repetition."
         )
 
 

@@ -20,6 +20,7 @@ verkliga Qwen-svar i Dag 3 (uppgift 3.3).
 from __future__ import annotations
 
 from collections.abc import Iterable
+from typing import cast
 
 from utils.lagrum import Lag, lagrum_register
 
@@ -159,7 +160,9 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
     """
     scenariotext = _hamta(scenario, "scenariotext")
     facit = _hamta(scenario, "facit")
-    facit_lagrum = tuple(_hamta(facit, "lagrum", default=()))
+    facit_lagrum = tuple(
+        str(x) for x in cast("Iterable[object]", _hamta(facit, "lagrum", default=()))
+    )
     rattsfraga = _hamta(facit, "rattsfraga", default="")
 
     vitlista = vitlista_block(_forkortningar_ur(facit_lagrum))
@@ -186,7 +189,7 @@ def build_quiz_prompt(fraga: object, valt_alternativ: object) -> tuple[str, str]
     är ett Alternativ-objekt, en dict eller en textsträng med studentens val.
     """
     fragetext = _hamta(fraga, "fraga", default=str(fraga))
-    alternativ = _hamta(fraga, "alternativ", default=())
+    alternativ = cast("Iterable[object]", _hamta(fraga, "alternativ", default=()))
 
     valt_text = _hamta(valt_alternativ, "text", default=str(valt_alternativ))
 

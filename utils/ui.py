@@ -300,11 +300,11 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
     lagrum byts ut mot klickbara lagen.nu-chips; overifierade referenser lämnas
     kvar i texten och returneras separat för varningsrutan.
     """
-    from utils.lagrum import STATUS_VERIFIERAD, verify_lagrum
+    from utils.lagrum import STATUS_VERIFIERAD, Lagrumstraff, verify_lagrum
 
     traffar = verify_lagrum(text or "")
-    verifierade: dict[str, object] = {}
-    ovarifierade: list = []
+    verifierade: dict[str, Lagrumstraff] = {}
+    ovarifierade: list[Lagrumstraff] = []
     for t in traffar:
         if t.status == STATUS_VERIFIERAD and t.url:
             verifierade.setdefault(t.ra, t)
@@ -318,7 +318,7 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
         titel = getattr(t, "beskrivning", None) or ""
         tooltip = f' title="{html.escape(titel)}"' if titel else ""
         chip = (
-            f'<a class="jok-chip" href="{html.escape(t.url)}" target="_blank"'
+            f'<a class="jok-chip" href="{html.escape(t.url or "")}" target="_blank"'
             f'{tooltip}>{html.escape(ra)}</a>'
         )
         kropp = kropp.replace(html.escape(ra), chip)

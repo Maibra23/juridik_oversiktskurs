@@ -1,4 +1,224 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen kop_och_konsumentratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Köp- och konsumenträtt (kap 8). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Köp- och konsumenträtt",
+  "case": [
+    {
+      "id": "kop-case-1",
+      "rubrik": "Diskmaskinen som läckte",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Amina köper en ny diskmaskin för 8 000 kr av Vitvarubutiken AB för att använda hemma i sin lägenhet. I butikens standardvillkor står att reklamation måste ske inom en vecka från köpet och att köparen aldrig kan häva köpet. Efter fem veckor börjar maskinen läcka vatten vid varje disk. Amina kontaktar butiken samma vecka som felet visar sig. Butiken hänvisar till villkoren: reklamationsfristen har gått ut och hävning är ändå utesluten. Amina undrar vad som gäller.",
+      "facit": {
+        "rattsfraga": "Kan Amina göra felpåföljder gällande trots butikens avtalsvillkor om enveckasfrist och hävningsförbud?",
+        "lagrum": [
+          "1 kap. 1 § KKöpL",
+          "4 kap. 1 § KKöpL",
+          "5 kap. 2 § KKöpL",
+          "5 kap. 1 § KKöpL"
+        ],
+        "tillampningspunkter": [
+          "Kvalificera avtalet: en näringsidkare säljer en vara till en konsument för huvudsakligen enskilt ändamål – konsumentköplagen är tillämplig (1 kap. 1 § KKöpL).",
+          "Konsumentköplagen är tvingande till konsumentens förmån; avtalsvillkor som är sämre för konsumenten än lagens regler är utan verkan mot henne.",
+          "En diskmaskin som läcker vid normal användning avviker från vad köparen med fog kunnat förutsätta – fel på varan föreligger (4 kap. 1 § KKöpL).",
+          "Amina reklamerade inom skälig tid efter att hon märkt felet; en avtalad frist på en vecka från köpet kan inte göras gällande mot henne (5 kap. 2 § KKöpL).",
+          "Vid fel kan konsumenten kräva avhjälpande, omleverans, prisavdrag eller häva köpet enligt lagens påföljdstrappa (5 kap. 1 § KKöpL); ett generellt hävningsförbud i villkoren gäller inte."
+        ],
+        "slutsats": "Butikens villkor är utan verkan mot Amina eftersom konsumentköplagen är tvingande till hennes förmån. Hon har reklamerat i tid och kan i första hand kräva avhjälpande eller omleverans, och vid utebliven rättelse prisavdrag eller hävning. Alternativt: hade köpet skett mellan två näringsidkare hade den dispositiva köplagen gällt och villkoren i utgångspunkten stått sig."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "kop-mc-1",
+      "fraga": "När är konsumentköplagen tillämplig?",
+      "alternativ": [
+        {
+          "text": "När en näringsidkare säljer en vara till en konsument för huvudsakligen enskilt ändamål.",
+          "korrekt": true,
+          "forklaring": "Lagen gäller köp av lösa saker som en näringsidkare säljer till en konsument.",
+          "lagrum": "1 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Vid alla köp av lös egendom, oavsett vilka parterna är.",
+          "korrekt": false,
+          "forklaring": "Köp mellan näringsidkare eller mellan privatpersoner faller i stället under köplagen.",
+          "lagrum": "1 § KöpL"
+        },
+        {
+          "text": "Endast vid köp av begagnade varor.",
+          "korrekt": false,
+          "forklaring": "Lagen gäller både nya och begagnade varor när parterna är näringsidkare och konsument."
+        },
+        {
+          "text": "Endast vid distansköp över internet.",
+          "korrekt": false,
+          "forklaring": "Lagen gäller oavsett försäljningskanal; butik eller nät spelar ingen roll för tillämpligheten.",
+          "lagrum": "1 kap. 1 § KKöpL"
+        }
+      ]
+    },
+    {
+      "id": "kop-mc-2",
+      "fraga": "Vilken är den viktigaste skillnaden i karaktär mellan köplagen och konsumentköplagen?",
+      "alternativ": [
+        {
+          "text": "Köplagen är dispositiv medan konsumentköplagen är tvingande till konsumentens förmån.",
+          "korrekt": true,
+          "forklaring": "Köplagen kan avtalas bort; konsumentköplagens skydd kan inte försämras genom avtal.",
+          "lagrum": "3 § KöpL"
+        },
+        {
+          "text": "Köplagen gäller bara fastigheter medan konsumentköplagen gäller lös egendom.",
+          "korrekt": false,
+          "forklaring": "Båda lagarna gäller lösa saker; fastighetsköp regleras i jordabalken.",
+          "lagrum": "1 § KöpL"
+        },
+        {
+          "text": "Konsumentköplagen saknar regler om fel i varan.",
+          "korrekt": false,
+          "forklaring": "Konsumentköplagen har utförliga felregler.",
+          "lagrum": "4 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Det finns ingen skillnad; lagarna har samma innehåll.",
+          "korrekt": false,
+          "forklaring": "Lagarna skiljer sig markant, framför allt i frågan om avtalsfrihet och skyddsnivå."
+        }
+      ]
+    },
+    {
+      "id": "kop-mc-3",
+      "fraga": "Vad krävs för att en köpare mellan näringsidkare ska få åberopa ett fel i varan?",
+      "alternativ": [
+        {
+          "text": "Att köparen reklamerar inom skälig tid efter att felet märkts eller borde ha märkts.",
+          "korrekt": true,
+          "forklaring": "Utan reklamation i tid förlorar köparen som huvudregel rätten att åberopa felet.",
+          "lagrum": "32 § KöpL"
+        },
+        {
+          "text": "Att köparen omedelbart häver köpet.",
+          "korrekt": false,
+          "forklaring": "Hävning är en av flera påföljder och kräver dessutom väsentligt avtalsbrott; först krävs reklamation.",
+          "lagrum": "32 § KöpL"
+        },
+        {
+          "text": "Att säljaren erkänner felet skriftligt.",
+          "korrekt": false,
+          "forklaring": "Reklamationsplikten ligger på köparen; säljarens erkännande krävs inte."
+        },
+        {
+          "text": "Att felet polisanmäls.",
+          "korrekt": false,
+          "forklaring": "Fel i vara är en civilrättslig fråga; polisanmälan har ingen plats i felreglerna."
+        }
+      ]
+    },
+    {
+      "id": "kop-mc-4",
+      "fraga": "När föreligger fel på en vara enligt konsumentköplagen?",
+      "alternativ": [
+        {
+          "text": "När varan avviker från avtalet eller från vad konsumenten med fog kunnat förutsätta.",
+          "korrekt": true,
+          "forklaring": "Felbedömningen utgår från avtalad och befogad förväntad egenskap hos varan.",
+          "lagrum": "4 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Bara när säljaren har lämnat en uttrycklig garanti.",
+          "korrekt": false,
+          "forklaring": "Garanti är inte en förutsättning för felansvar; lagens felregler gäller ändå.",
+          "lagrum": "4 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Bara om felet fanns synligt redan vid köpet.",
+          "korrekt": false,
+          "forklaring": "Även dolda fel omfattas; avgörande är avvikelsen, inte synligheten vid köpet."
+        },
+        {
+          "text": "När konsumenten har ångrat sig.",
+          "korrekt": false,
+          "forklaring": "Ånger är inte ett fel på varan; ångerrätt är en annan fråga än felansvar."
+        }
+      ]
+    },
+    {
+      "id": "kop-mc-5",
+      "fraga": "Vilka påföljder kan en konsument göra gällande vid fel på varan, i lagens tänkta ordning?",
+      "alternativ": [
+        {
+          "text": "I första hand avhjälpande eller omleverans, därefter prisavdrag eller hävning.",
+          "korrekt": true,
+          "forklaring": "Påföljdstrappan ger säljaren rätt att först försöka rätta felet innan pris­avdrag eller hävning blir aktuella.",
+          "lagrum": "5 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Endast skadestånd.",
+          "korrekt": false,
+          "forklaring": "Skadestånd kan tillkomma utöver övriga påföljder, men är inte den enda.",
+          "lagrum": "7 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Hävning direkt, utan att säljaren får försöka avhjälpa felet.",
+          "korrekt": false,
+          "forklaring": "Säljaren har som utgångspunkt rätt att avhjälpa eller omleverera först.",
+          "lagrum": "5 kap. 1 § KKöpL"
+        },
+        {
+          "text": "Byte till valfri dyrare vara utan mellanskillnad.",
+          "korrekt": false,
+          "forklaring": "Omleverans avser en vara av samma slag; någon rätt till uppgradering finns inte."
+        }
+      ]
+    },
+    {
+      "id": "kop-mc-6",
+      "fraga": "En säljare i näringsköp levererar varan tre veckor för sent utan grund. Vad kan köparen kräva?",
+      "alternativ": [
+        {
+          "text": "Fullgörelse eller hävning vid väsentligt dröjsmål, samt skadestånd enligt kontrollansvaret.",
+          "korrekt": true,
+          "forklaring": "Vid säljarens dröjsmål kan köparen kräva fullgörelse eller häva vid väsentlighet, och skadestånd om dröjsmålet inte ligger utanför säljarens kontroll.",
+          "lagrum": "27 § KöpL"
+        },
+        {
+          "text": "Ingenting, eftersom leverans ändå skedde till slut.",
+          "korrekt": false,
+          "forklaring": "Dröjsmål är ett avtalsbrott även om leverans sker senare.",
+          "lagrum": "22 § KöpL"
+        },
+        {
+          "text": "Alltid hävning, oavsett hur litet dröjsmålet är.",
+          "korrekt": false,
+          "forklaring": "Hävning kräver att dröjsmålet är av väsentlig betydelse för köparen.",
+          "lagrum": "25 § KöpL"
+        },
+        {
+          "text": "Att säljaren döms till böter.",
+          "korrekt": false,
+          "forklaring": "Kontraktsbrott är inte straffbart i sig; påföljderna är civilrättsliga."
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "kop-lj-1",
+      "situation": "En konsument köper en dammsugare av en elektronikkedja. Vilket lagrum avgör att konsumentköplagen är tillämplig på köpet?",
+      "facit_lagrum": ["1 kap. 1 § KKöpL"],
+      "ledtrad": "Konsumentköplagens inledande tillämpningsbestämmelse."
+    },
+    {
+      "id": "kop-lj-2",
+      "situation": "Ett grossistföretag vill åberopa att en levererad maskin avviker från avtalad kvalitet. Vilket lagrum i köplagen anger när varan är felaktig?",
+      "facit_lagrum": ["17 § KöpL"],
+      "ledtrad": "Köplagens grundregel om varans beskaffenhet."
+    },
+    {
+      "id": "kop-lj-3",
+      "situation": "En konsument upptäcker ett fel och vill veta inom vilken tid hon måste reklamera till säljaren. Vilket lagrum?",
+      "facit_lagrum": ["5 kap. 2 § KKöpL"],
+      "ledtrad": "Reklamationsregeln i konsumentköplagens påföljdskapitel."
+    }
+  ]
 }

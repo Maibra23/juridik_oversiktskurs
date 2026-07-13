@@ -82,6 +82,22 @@ def test_minst_tre_moduler_spelbara():
     assert spelbara >= 3, f"Endast {spelbara} moduler är fullt spelbara, kräver minst 3."
 
 
+def test_alla_atta_moduler_uppfyller_prd_minimum():
+    """PRD avsnitt 9: åtta P0-moduler med minst 1 case, 6 MC och 3 lagrumsjakt."""
+    kompletta = []
+    for fil in SCENARIOFILER:
+        modul = ladda_fil(fil)
+        if (
+            len(modul.case) >= 1
+            and len(modul.flervalsfragor) >= 6
+            and len(modul.lagrumsjakt) >= 3
+        ):
+            kompletta.append(fil.stem)
+    assert len(kompletta) >= 8, (
+        f"Endast {len(kompletta)} moduler uppfyller PRD-minimum: {kompletta}"
+    )
+
+
 def test_lagrum_facit_faktiskt_verifierade_status():
     """Stickprov: varje enskilt facit-lagrum ger status VERIFIERAD."""
     for fil in SCENARIOFILER:

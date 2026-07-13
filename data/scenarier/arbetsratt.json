@@ -1,4 +1,229 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen arbetsratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Arbetsrätt (kap 11). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Arbetsrätt",
+  "case": [
+    {
+      "id": "arb-case-1",
+      "rubrik": "Lagerarbetaren som kom för sent",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Jonas har varit tillsvidareanställd som lagerarbetare hos Logistik AB i sex år. Under det senaste halvåret har han kommit för sent till sitt pass vid fyra tillfällen, som mest tjugo minuter. Arbetsgivaren har inte tidigare påtalat problemet, men efter den fjärde förseningen får Jonas ett besked samma dag: han avskedas med omedelbar verkan och får lämna arbetsplatsen. Någon annan ledig tjänst diskuteras aldrig. Jonas undrar om arbetsgivaren fick göra så.",
+      "facit": {
+        "rattsfraga": "Fick Logistik AB skilja Jonas från anställningen genom avskedande, eller krävdes uppsägning med sakliga skäl – och vad kan Jonas göra nu?",
+        "lagrum": [
+          "18 § LAS",
+          "7 § LAS",
+          "34 § LAS",
+          "38 § LAS"
+        ],
+        "tillampningspunkter": [
+          "Avskedande förutsätter att arbetstagaren grovt har åsidosatt sina åligganden mot arbetsgivaren (18 § LAS); enstaka sena ankomster når normalt inte upp till den nivån.",
+          "Uppsägning från arbetsgivarens sida kräver sakliga skäl (7 § LAS), och vid personliga skäl vägs bl.a. in om arbetsgivaren påtalat misskötsamheten och gett arbetstagaren möjlighet att ändra sitt beteende.",
+          "Arbetsgivaren har inte varnat Jonas eller undersökt omplacering; en uppsägning är inte sakligt grundad om det är skäligt att kräva omplacering (7 § LAS).",
+          "Ett avskedande som saknar laga grund kan ogiltigförklaras på yrkande av arbetstagaren (34 § LAS jämförd med reglerna om avskedande).",
+          "Arbetstagaren kan därutöver kräva skadestånd för både ekonomisk skada och kränkning (38 § LAS)."
+        ],
+        "slutsats": "Avskedandet saknar laga grund: fyra sena ankomster utan tidigare tillsägelse är inte ett grovt åsidosättande, och inte heller sakliga skäl för uppsägning har visats. Jonas kan angripa avskedandet och kräva skadestånd. Alternativt: hade arbetsgivaren först varnat Jonas, prövat omplacering och misskötsamheten ändå fortsatt, hade en uppsägning av personliga skäl kunnat vara sakligt grundad."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "arb-mc-1",
+      "fraga": "Vilken anställningsform är huvudregel enligt anställningsskyddslagen?",
+      "alternativ": [
+        {
+          "text": "Tillsvidareanställning.",
+          "korrekt": true,
+          "forklaring": "Anställningar gäller tills vidare om inget annat avtalats.",
+          "lagrum": "4 § LAS"
+        },
+        {
+          "text": "Provanställning.",
+          "korrekt": false,
+          "forklaring": "Provanställning är ett tidsbegränsat undantag, inte huvudregeln.",
+          "lagrum": "6 § LAS"
+        },
+        {
+          "text": "Särskild visstidsanställning.",
+          "korrekt": false,
+          "forklaring": "Visstidsanställning kräver stöd i lag eller avtal; huvudregeln är tills vidare.",
+          "lagrum": "5 § LAS"
+        },
+        {
+          "text": "Timanställning.",
+          "korrekt": false,
+          "forklaring": "\"Timanställning\" är ingen anställningsform i lagen utan en löneform."
+        }
+      ]
+    },
+    {
+      "id": "arb-mc-2",
+      "fraga": "Vad krävs för att en arbetsgivare ska få säga upp en tillsvidareanställd?",
+      "alternativ": [
+        {
+          "text": "Sakliga skäl, antingen arbetsbrist eller personliga skäl.",
+          "korrekt": true,
+          "forklaring": "Uppsägning från arbetsgivarens sida ska grunda sig på sakliga skäl.",
+          "lagrum": "7 § LAS"
+        },
+        {
+          "text": "Endast att uppsägningstiden iakttas.",
+          "korrekt": false,
+          "forklaring": "Uppsägningstid ska iakttas, men den ersätter inte kravet på sakliga skäl.",
+          "lagrum": "11 § LAS"
+        },
+        {
+          "text": "Att arbetstagaren godkänner uppsägningen.",
+          "korrekt": false,
+          "forklaring": "Uppsägning är en ensidig rättshandling; samtycke krävs inte, däremot sakliga skäl.",
+          "lagrum": "7 § LAS"
+        },
+        {
+          "text": "Ingenting; arbetsgivaren kan alltid säga upp fritt.",
+          "korrekt": false,
+          "forklaring": "Fri uppsägningsrätt avskaffades genom anställningsskyddslagen.",
+          "lagrum": "7 § LAS"
+        }
+      ]
+    },
+    {
+      "id": "arb-mc-3",
+      "fraga": "Vad skiljer avskedande från uppsägning?",
+      "alternativ": [
+        {
+          "text": "Avskedande avslutar anställningen omedelbart och kräver att arbetstagaren grovt åsidosatt sina åligganden.",
+          "korrekt": true,
+          "forklaring": "Avskedande saknar uppsägningstid och är reserverat för de allvarligaste fallen.",
+          "lagrum": "18 § LAS"
+        },
+        {
+          "text": "Avskedande är en mildare åtgärd än uppsägning.",
+          "korrekt": false,
+          "forklaring": "Det är tvärtom den mest ingripande åtgärden i anställningsförhållandet.",
+          "lagrum": "18 § LAS"
+        },
+        {
+          "text": "Endast statliga arbetsgivare får avskeda.",
+          "korrekt": false,
+          "forklaring": "Reglerna gäller arbetsmarknaden i stort, inte bara staten."
+        },
+        {
+          "text": "Avskedande kan bara ske vid arbetsbrist.",
+          "korrekt": false,
+          "forklaring": "Arbetsbrist hanteras genom uppsägning; avskedande avser grov misskötsamhet.",
+          "lagrum": "7 § LAS"
+        }
+      ]
+    },
+    {
+      "id": "arb-mc-4",
+      "fraga": "Vad innebär turordningsreglerna vid uppsägning på grund av arbetsbrist?",
+      "alternativ": [
+        {
+          "text": "Arbetstagare med längre anställningstid har som utgångspunkt företräde att behålla arbetet.",
+          "korrekt": true,
+          "forklaring": "Huvudprincipen är sist in, först ut, med vissa undantagsmöjligheter.",
+          "lagrum": "22 § LAS"
+        },
+        {
+          "text": "Arbetsgivaren väljer helt fritt vilka som sägs upp.",
+          "korrekt": false,
+          "forklaring": "Turordningen begränsar arbetsgivarens valfrihet vid arbetsbrist.",
+          "lagrum": "22 § LAS"
+        },
+        {
+          "text": "Den med högst lön sägs alltid upp först.",
+          "korrekt": false,
+          "forklaring": "Lönen är inget turordningskriterium; anställningstiden är utgångspunkten.",
+          "lagrum": "22 § LAS"
+        },
+        {
+          "text": "Turordning gäller bara vid uppsägning av personliga skäl.",
+          "korrekt": false,
+          "forklaring": "Turordningen hör till arbetsbristsituationer, inte personliga skäl.",
+          "lagrum": "22 § LAS"
+        }
+      ]
+    },
+    {
+      "id": "arb-mc-5",
+      "fraga": "En arbetstagare sägs upp på grund av arbetsbrist. Vilken rätt kan hon ha om arbetsgivaren nyanställer kort därefter?",
+      "alternativ": [
+        {
+          "text": "Företrädesrätt till återanställning, om hon har tillräcklig anställningstid och anmält anspråk.",
+          "korrekt": true,
+          "forklaring": "Uppsagda på grund av arbetsbrist kan ha företrädesrätt till ny anställning hos arbetsgivaren.",
+          "lagrum": "25 § LAS"
+        },
+        {
+          "text": "Rätt att själv välja vilken tjänst hon vill ha i företaget.",
+          "korrekt": false,
+          "forklaring": "Företrädesrätten gäller nyanställningar hon har tillräckliga kvalifikationer för, inte fritt val.",
+          "lagrum": "25 § LAS"
+        },
+        {
+          "text": "Ingen rätt alls; anställningen är avslutad.",
+          "korrekt": false,
+          "forklaring": "Företrädesrätten är just ett efterverkande skydd efter arbetsbristuppsägning.",
+          "lagrum": "25 § LAS"
+        },
+        {
+          "text": "Automatisk återanställning utan ansökan.",
+          "korrekt": false,
+          "forklaring": "Företrädesrätt förutsätter bl.a. anmälan; den verkar inte automatiskt.",
+          "lagrum": "25 § LAS"
+        }
+      ]
+    },
+    {
+      "id": "arb-mc-6",
+      "fraga": "Vad kan en arbetstagare kräva om arbetsgivaren säger upp utan sakliga skäl?",
+      "alternativ": [
+        {
+          "text": "Att uppsägningen ogiltigförklaras och/eller skadestånd.",
+          "korrekt": true,
+          "forklaring": "Lagen ger både möjlighet till ogiltigförklaring och rätt till skadestånd.",
+          "lagrum": "34 § LAS"
+        },
+        {
+          "text": "Endast ett skriftligt arbetsbetyg.",
+          "korrekt": false,
+          "forklaring": "Betyg är ingen sanktion mot en felaktig uppsägning."
+        },
+        {
+          "text": "Att arbetsgivaren döms till fängelse.",
+          "korrekt": false,
+          "forklaring": "Sanktionerna i anställningsskyddslagen är civilrättsliga, inte straffrättsliga.",
+          "lagrum": "38 § LAS"
+        },
+        {
+          "text": "Ingenting, om uppsägningstiden är rätt beräknad.",
+          "korrekt": false,
+          "forklaring": "Rätt uppsägningstid läker inte bristen på sakliga skäl.",
+          "lagrum": "7 § LAS"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "arb-lj-1",
+      "situation": "En arbetsgivare vill säga upp en anställd och du behöver regeln om att uppsägning kräver sakliga skäl. Vilket lagrum?",
+      "facit_lagrum": ["7 § LAS"],
+      "ledtrad": "Anställningsskyddslagens centrala uppsägningsregel."
+    },
+    {
+      "id": "arb-lj-2",
+      "situation": "En anställd har stulit ur kassan och arbetsgivaren vill avsluta anställningen omedelbart. Vilket lagrum reglerar avskedande?",
+      "facit_lagrum": ["18 § LAS"],
+      "ledtrad": "Regeln om grovt åsidosättande av åligganden."
+    },
+    {
+      "id": "arb-lj-3",
+      "situation": "Vid en neddragning ska det avgöras vilka anställda som får stanna. Vilket lagrum anger turordningen vid arbetsbrist?",
+      "facit_lagrum": ["22 § LAS"],
+      "ledtrad": "Sist in, först ut."
+    }
+  ]
 }

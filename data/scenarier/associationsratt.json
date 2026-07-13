@@ -1,0 +1,226 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen Associationsrätt (kap 12). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Associationsrätt",
+  "case": [
+    {
+      "id": "ass-case-1",
+      "rubrik": "Kaféet som gick i konkurs",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Vännerna Lina och Omar driver sedan två år ett kafé tillsammans under firman 'Lina & Omar Kafé HB', registrerat som handelsbolag. Verksamheten går dåligt och bolaget har en obetald skuld på 300 000 kr till kaffegrossisten. Grossisten kräver nu Lina personligen på hela beloppet. Lina invänder att skulden är bolagets, att hon bara äger hälften och att grossisten i vart fall först borde kräva Omar, som skötte inköpen. Hon undrar också om det hade blivit någon skillnad om de i stället hade drivit kaféet som aktiebolag.",
+      "facit": {
+        "rattsfraga": "Kan kaffegrossisten kräva Lina personligen på hela bolagsskulden, och hade ett aktiebolag gett henne ett annat skydd?",
+        "lagrum": [
+          "1 kap. 1 § HBL",
+          "2 kap. 20 § HBL",
+          "1 kap. 3 § ABL"
+        ],
+        "tillampningspunkter": [
+          "Ett handelsbolag föreligger när två eller flera avtalat att gemensamt utöva näringsverksamhet i bolag och bolaget förts in i handelsregistret (1 kap. 1 § HBL).",
+          "Bolagsmännen svarar solidariskt med hela sin förmögenhet för bolagets förpliktelser (2 kap. 20 § HBL); ansvaret är primärt och grossisten kan vända sig direkt mot vem som helst av dem på hela beloppet.",
+          "Att Lina äger hälften och att Omar skötte inköpen påverkar bara deras inbördes regressförhållande, inte ansvaret utåt mot borgenären.",
+          "I ett aktiebolag har aktieägarna som huvudregel inget personligt betalningsansvar för bolagets förpliktelser (1 kap. 3 § ABL); borgenären hade då varit hänvisad till bolagets egna tillgångar."
+        ],
+        "slutsats": "Grossisten kan kräva Lina personligen på hela skulden; hon får därefter regressvis kräva Omar på hans andel. Alternativt: hade verksamheten drivits i aktiebolagsform hade Lina som aktieägare inte svarat personligen, om inte särskilda ansvarsgenombrotts- eller företrädaransvarsregler aktualiserats."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "ass-mc-1",
+      "fraga": "Vad kännetecknar bolagsmännens ansvar i ett handelsbolag?",
+      "alternativ": [
+        {
+          "text": "De svarar solidariskt och personligen för bolagets förpliktelser.",
+          "korrekt": true,
+          "forklaring": "En borgenär kan kräva vilken bolagsman som helst på hela skulden.",
+          "lagrum": "2 kap. 20 § HBL"
+        },
+        {
+          "text": "De svarar bara i förhållande till sin ägarandel.",
+          "korrekt": false,
+          "forklaring": "Andelen styr det inbördes regressansvaret, inte ansvaret mot borgenärerna.",
+          "lagrum": "2 kap. 20 § HBL"
+        },
+        {
+          "text": "De har inget personligt ansvar alls.",
+          "korrekt": false,
+          "forklaring": "Frihet från personligt ansvar gäller aktieägare i aktiebolag, inte bolagsmän i handelsbolag.",
+          "lagrum": "1 kap. 3 § ABL"
+        },
+        {
+          "text": "Endast den bolagsman som ingick avtalet ansvarar.",
+          "korrekt": false,
+          "forklaring": "Ansvaret är gemensamt för bolagets förpliktelser oavsett vem som handlade.",
+          "lagrum": "2 kap. 20 § HBL"
+        }
+      ]
+    },
+    {
+      "id": "ass-mc-2",
+      "fraga": "Vad är huvudregeln om aktieägares ansvar för aktiebolagets skulder?",
+      "alternativ": [
+        {
+          "text": "Aktieägarna har inget personligt betalningsansvar för bolagets förpliktelser.",
+          "korrekt": true,
+          "forklaring": "Aktiebolaget är en egen juridisk person; ägarna riskerar i princip bara insatt kapital.",
+          "lagrum": "1 kap. 3 § ABL"
+        },
+        {
+          "text": "Aktieägarna svarar alltid solidariskt för bolagets skulder.",
+          "korrekt": false,
+          "forklaring": "Solidariskt personligt ansvar gäller handelsbolag, inte aktiebolag.",
+          "lagrum": "2 kap. 20 § HBL"
+        },
+        {
+          "text": "Endast styrelseordföranden svarar personligen.",
+          "korrekt": false,
+          "forklaring": "Inte heller styrelsen svarar personligen som huvudregel; särskilda regler krävs för ansvar.",
+          "lagrum": "29 kap. 1 § ABL"
+        },
+        {
+          "text": "Aktieägare med mer än hälften av aktierna svarar personligen.",
+          "korrekt": false,
+          "forklaring": "Ägarandelens storlek ändrar inte huvudregeln om ansvarsfrihet.",
+          "lagrum": "1 kap. 3 § ABL"
+        }
+      ]
+    },
+    {
+      "id": "ass-mc-3",
+      "fraga": "Vad skiljer ett enkelt bolag från ett handelsbolag?",
+      "alternativ": [
+        {
+          "text": "Det enkla bolaget är inte en juridisk person och kan inte självt förvärva rättigheter eller ta på sig skyldigheter.",
+          "korrekt": true,
+          "forklaring": "Handelsbolaget är en juridisk person; det enkla bolaget är bara ett samarbetsavtal mellan bolagsmännen.",
+          "lagrum": "1 kap. 3 § HBL"
+        },
+        {
+          "text": "Det enkla bolaget måste ha minst tre bolagsmän.",
+          "korrekt": false,
+          "forklaring": "Två bolagsmän räcker i båda bolagsformerna."
+        },
+        {
+          "text": "Endast enkla bolag får driva näringsverksamhet.",
+          "korrekt": false,
+          "forklaring": "Det är närmast tvärtom: handelsbolagsformen är gjord för gemensam näringsverksamhet.",
+          "lagrum": "1 kap. 1 § HBL"
+        },
+        {
+          "text": "Det finns ingen skillnad sedan 2011.",
+          "korrekt": false,
+          "forklaring": "Skillnaden mellan bolagsformerna består och är central i associationsrätten."
+        }
+      ]
+    },
+    {
+      "id": "ass-mc-4",
+      "fraga": "Vilket organ i ett aktiebolag är det högsta beslutande organet?",
+      "alternativ": [
+        {
+          "text": "Bolagsstämman, där aktieägarna utövar sin beslutanderätt.",
+          "korrekt": true,
+          "forklaring": "Aktieägarnas rätt att besluta i bolagets angelägenheter utövas vid bolagsstämman.",
+          "lagrum": "7 kap. 1 § ABL"
+        },
+        {
+          "text": "Styrelsen.",
+          "korrekt": false,
+          "forklaring": "Styrelsen svarar för organisation och förvaltning men står under stämman.",
+          "lagrum": "8 kap. 4 § ABL"
+        },
+        {
+          "text": "Den verkställande direktören.",
+          "korrekt": false,
+          "forklaring": "VD sköter den löpande förvaltningen enligt styrelsens riktlinjer.",
+          "lagrum": "8 kap. 29 § ABL"
+        },
+        {
+          "text": "Revisorn.",
+          "korrekt": false,
+          "forklaring": "Revisorn granskar men beslutar inte i bolagets angelägenheter."
+        }
+      ]
+    },
+    {
+      "id": "ass-mc-5",
+      "fraga": "Vilken uppgift har den verkställande direktören i ett aktiebolag?",
+      "alternativ": [
+        {
+          "text": "Att sköta den löpande förvaltningen enligt styrelsens riktlinjer och anvisningar.",
+          "korrekt": true,
+          "forklaring": "VD ansvarar för den löpande förvaltningen; styrelsen står för organisationen och förvaltningen i stort.",
+          "lagrum": "8 kap. 29 § ABL"
+        },
+        {
+          "text": "Att ensam besluta om vinstutdelning.",
+          "korrekt": false,
+          "forklaring": "Utdelning beslutas av bolagsstämman.",
+          "lagrum": "7 kap. 1 § ABL"
+        },
+        {
+          "text": "Att granska styrelsens bokföring som oberoende part.",
+          "korrekt": false,
+          "forklaring": "Det är revisorns roll, inte VD:ns."
+        },
+        {
+          "text": "Att företräda aktieägarna vid stämman.",
+          "korrekt": false,
+          "forklaring": "Aktieägare företräds av sig själva eller ombud; VD:s roll är förvaltande.",
+          "lagrum": "8 kap. 29 § ABL"
+        }
+      ]
+    },
+    {
+      "id": "ass-mc-6",
+      "fraga": "En styrelseledamot skadar bolaget uppsåtligen eller av oaktsamhet när hon fullgör sitt uppdrag. Vad gäller?",
+      "alternativ": [
+        {
+          "text": "Hon kan bli skadeståndsskyldig mot bolaget.",
+          "korrekt": true,
+          "forklaring": "Stiftare, styrelseledamot och VD ansvarar för skada som de vållar bolaget i uppdraget.",
+          "lagrum": "29 kap. 1 § ABL"
+        },
+        {
+          "text": "Hon går alltid fri eftersom bolaget är en egen juridisk person.",
+          "korrekt": false,
+          "forklaring": "Bolagets rättssubjektivitet hindrar inte företrädaransvar enligt skadeståndsreglerna.",
+          "lagrum": "29 kap. 1 § ABL"
+        },
+        {
+          "text": "Endast aktieägarna kan bli ansvariga.",
+          "korrekt": false,
+          "forklaring": "Aktieägarnas ansvarsfrihet är huvudregeln; ledningens skadeståndsansvar är en annan sak.",
+          "lagrum": "1 kap. 3 § ABL"
+        },
+        {
+          "text": "Ansvar kräver att hon dömts för brott.",
+          "korrekt": false,
+          "forklaring": "Skadeståndsansvaret enligt aktiebolagslagen förutsätter culpa, inte brottmålsdom.",
+          "lagrum": "29 kap. 1 § ABL"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "ass-lj-1",
+      "situation": "En borgenär vill kräva en bolagsman i ett handelsbolag personligen på bolagets skuld. Vilket lagrum ger stöd för det solidariska ansvaret?",
+      "facit_lagrum": ["2 kap. 20 § HBL"],
+      "ledtrad": "Handelsbolagslagens kapitel om bolagsmännens förhållande till tredje man."
+    },
+    {
+      "id": "ass-lj-2",
+      "situation": "Du vill visa att aktieägare som huvudregel inte svarar personligen för aktiebolagets förpliktelser. Vilket lagrum?",
+      "facit_lagrum": ["1 kap. 3 § ABL"],
+      "ledtrad": "Aktiebolagslagens inledande kapitel."
+    },
+    {
+      "id": "ass-lj-3",
+      "situation": "Det är tvist om vilket organ som får besluta i aktieägarnas angelägenheter i bolaget. Vilket lagrum pekar ut bolagsstämman?",
+      "facit_lagrum": ["7 kap. 1 § ABL"],
+      "ledtrad": "Kapitlet om bolagsstämma."
+    }
+  ]
+}

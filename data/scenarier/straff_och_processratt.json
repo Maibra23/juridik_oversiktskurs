@@ -1,4 +1,222 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen straff_och_processratt. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Straff- och processrätt (kap 22). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Straff- och processrätt",
+  "case": [
+    {
+      "id": "str-case-1",
+      "rubrik": "Cykeln utanför biblioteket",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Sara ställer sin olåsta cykel utanför biblioteket. När hon kommer ut ser hon hur Viktor leder iväg cykeln mot busshållplatsen. Sara springer efter, tar tag i pakethållaren och rycker tillbaka cykeln, varvid Viktor tappar balansen och skrapar upp handflatorna. Viktor hävdar senare att han bara skulle 'låna' cykeln för att hinna till bussen och att han tänkte ställa tillbaka den på kvällen, och att Sara dessutom gjorde sig skyldig till misshandel när hon ryckte omkull honom. Åklagaren funderar på åtal.",
+      "facit": {
+        "rattsfraga": "Har Viktor gjort sig skyldig till stöld trots påståendet om lån, och kan Sara gå fri från ansvar för att hon brukade våld när hon tog tillbaka cykeln?",
+        "lagrum": [
+          "8 kap. 1 § BrB",
+          "1 kap. 2 § BrB",
+          "24 kap. 1 § BrB"
+        ],
+        "tillampningspunkter": [
+          "Stöld förutsätter olovligt tagande av annans sak med tillägnelseuppsåt och att tagandet innebär skada (8 kap. 1 § BrB).",
+          "Objektivt har Viktor olovligen tagit Saras cykel; den subjektiva sidan kräver uppsåt som täcker gärningsmomenten (1 kap. 2 § BrB).",
+          "Påståendet om tillfälligt lån ifrågasätter tillägnelseuppsåtet; utan tillägnelseuppsåt kan det i stället röra sig om egenmäktigt förfarande – bedöm bevisningen om hans avsikt.",
+          "Saras våldsanvändning skedde för att avvärja ett pågående angrepp på hennes egendom; nödvärnsrätt föreligger mot den som olovligen rubbar annans besittning på bar gärning (24 kap. 1 § BrB).",
+          "Nödvärnsvåldet får inte vara uppenbart oförsvarligt; att rycka tillbaka cykeln med lindriga skrapsår som följd ligger klart inom det försvarliga."
+        ],
+        "slutsats": "Om tillägnelseuppsåt kan styrkas har Viktor begått stöld; annars ligger egenmäktigt förfarande närmast till hands. Sara handlade i nödvärn och hennes våld var inte uppenbart oförsvarligt – hon går fri från ansvar. Alternativt: hade Sara fortsatt bruka våld efter att angreppet upphört hade nödvärnsrätten inte längre gällt."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "str-mc-1",
+      "fraga": "Vilka två huvudkrav måste vara uppfyllda för att en gärning ska vara ett brott?",
+      "alternativ": [
+        {
+          "text": "Att gärningen uppfyller brottsbeskrivningen (objektiv sida) och att gärningsmannen handlat med uppsåt eller, där det räcker, oaktsamhet (subjektiv sida).",
+          "korrekt": true,
+          "forklaring": "Brottsbegreppet har en objektiv och en subjektiv sida; uppsåt är huvudregeln om inget annat är föreskrivet.",
+          "lagrum": "1 kap. 2 § BrB"
+        },
+        {
+          "text": "Att gärningen är omoralisk och att någon blivit arg.",
+          "korrekt": false,
+          "forklaring": "Moralisk klandervärdhet räcker inte; gärningen måste vara straffbelagd i lag.",
+          "lagrum": "1 kap. 1 § BrB"
+        },
+        {
+          "text": "Att polisen bevittnat gärningen och att den skett dagtid.",
+          "korrekt": false,
+          "forklaring": "Hur brottet upptäcks saknar betydelse för om det är ett brott."
+        },
+        {
+          "text": "Att gärningsmannen erkänner och att målsäganden kräver straff.",
+          "korrekt": false,
+          "forklaring": "Varken erkännande eller målsägandens inställning är brottsrekvisit."
+        }
+      ]
+    },
+    {
+      "id": "str-mc-2",
+      "fraga": "Vad är den principiella skillnaden mellan uppsåt och oaktsamhet?",
+      "alternativ": [
+        {
+          "text": "Uppsåt innebär att gärningsmannen medvetet begår gärningen, oaktsamhet att han brister i aktsamhet utan att avse följden.",
+          "korrekt": true,
+          "forklaring": "Uppsåtet täcker vad gärningsmannen vill eller inser; oaktsamhet är ett klandervärt risktagande eller slarv.",
+          "lagrum": "1 kap. 2 § BrB"
+        },
+        {
+          "text": "Uppsåt gäller bara förmögenhetsbrott, oaktsamhet bara våldsbrott.",
+          "korrekt": false,
+          "forklaring": "Uppdelningen går inte efter brottstyp; de flesta brott kräver uppsåt.",
+          "lagrum": "1 kap. 2 § BrB"
+        },
+        {
+          "text": "Oaktsamhet är alltid straffri.",
+          "korrekt": false,
+          "forklaring": "Oaktsamhet bestraffas när det är särskilt föreskrivet, t.ex. vållande till annans död.",
+          "lagrum": "3 kap. 7 § BrB"
+        },
+        {
+          "text": "Det finns ingen skillnad i svensk rätt.",
+          "korrekt": false,
+          "forklaring": "Skillnaden är central för hela den subjektiva sidan av brottet."
+        }
+      ]
+    },
+    {
+      "id": "str-mc-3",
+      "fraga": "När föreligger rätt till nödvärn?",
+      "alternativ": [
+        {
+          "text": "Bland annat mot ett påbörjat eller överhängande brottsligt angrepp på person eller egendom.",
+          "korrekt": true,
+          "forklaring": "Nödvärnsrätten omfattar bl.a. påbörjade och överhängande brottsliga angrepp, förutsatt att våldet inte är uppenbart oförsvarligt.",
+          "lagrum": "24 kap. 1 § BrB"
+        },
+        {
+          "text": "Så snart någon känner sig kränkt av ett uttalande.",
+          "korrekt": false,
+          "forklaring": "Verbala kränkningar ger inte nödvärnsrätt.",
+          "lagrum": "24 kap. 1 § BrB"
+        },
+        {
+          "text": "Bara om polisen inte hinner fram inom en timme.",
+          "korrekt": false,
+          "forklaring": "Någon sådan tidsregel finns inte; det avgörande är angreppets karaktär."
+        },
+        {
+          "text": "Endast för väktare och poliser.",
+          "korrekt": false,
+          "forklaring": "Nödvärnsrätten gäller var och en.",
+          "lagrum": "24 kap. 1 § BrB"
+        }
+      ]
+    },
+    {
+      "id": "str-mc-4",
+      "fraga": "Vad krävs enligt brottsbalken för att ett tagande ska bedömas som stöld?",
+      "alternativ": [
+        {
+          "text": "Olovligt tagande av annans sak med uppsåt att tillägna sig den, när tagandet innebär skada.",
+          "korrekt": true,
+          "forklaring": "Samtliga rekvisit – olovligt tagande, tillägnelseuppsåt och skada – måste vara uppfyllda.",
+          "lagrum": "8 kap. 1 § BrB"
+        },
+        {
+          "text": "Att saken är värd mer än 1 000 kr.",
+          "korrekt": false,
+          "forklaring": "Värdet påverkar gränsdragningen mot ringa stöld, men är inte ett stöldrekvisit i sig.",
+          "lagrum": "8 kap. 1 § BrB"
+        },
+        {
+          "text": "Att gärningen sker nattetid genom inbrott.",
+          "korrekt": false,
+          "forklaring": "Inbrott kan göra brottet grovt men krävs inte för stöldansvar."
+        },
+        {
+          "text": "Att ägaren ser tagandet.",
+          "korrekt": false,
+          "forklaring": "Stöld begås oftast i smyg; ägarens iakttagelse saknar betydelse."
+        }
+      ]
+    },
+    {
+      "id": "str-mc-5",
+      "fraga": "Vad innebär bedrägeri enligt brottsbalken?",
+      "alternativ": [
+        {
+          "text": "Att genom vilseledande förmå någon till en handling eller underlåtenhet som innebär vinning för gärningsmannen och skada för den vilseledde.",
+          "korrekt": true,
+          "forklaring": "Vilseledande, disposition, förmögenhetsöverföring – bedrägeriets klassiska rekvisitkedja.",
+          "lagrum": "9 kap. 1 § BrB"
+        },
+        {
+          "text": "Att ta någon annans sak utan lov.",
+          "korrekt": false,
+          "forklaring": "Det beskriver tillgreppsbrotten, inte bedrägeri.",
+          "lagrum": "8 kap. 1 § BrB"
+        },
+        {
+          "text": "Att bryta ett muntligt avtal.",
+          "korrekt": false,
+          "forklaring": "Avtalsbrott är civilrättsligt och inte i sig brottsligt."
+        },
+        {
+          "text": "Att ljuga i största allmänhet.",
+          "korrekt": false,
+          "forklaring": "Lögnen måste leda till en disposition med vinning och skada för att bli bedrägeri.",
+          "lagrum": "9 kap. 1 § BrB"
+        }
+      ]
+    },
+    {
+      "id": "str-mc-6",
+      "fraga": "Vem väcker som huvudregel åtal för brott som hör under allmänt åtal?",
+      "alternativ": [
+        {
+          "text": "Åklagaren, som har åtalsplikt när bevisningen räcker.",
+          "korrekt": true,
+          "forklaring": "Åklagaren är skyldig att åtala för brott under allmänt åtal om inte annat är föreskrivet.",
+          "lagrum": "20 kap. 6 § RB"
+        },
+        {
+          "text": "Målsäganden, som alltid måste driva målet själv.",
+          "korrekt": false,
+          "forklaring": "Målsägandens åtalsrätt är subsidiär; huvudregeln är allmänt åtal genom åklagare.",
+          "lagrum": "20 kap. 6 § RB"
+        },
+        {
+          "text": "Polisen, genom förundersökningsledaren.",
+          "korrekt": false,
+          "forklaring": "Polisen utreder; åtalsbeslutet fattas av åklagare."
+        },
+        {
+          "text": "Domstolen på eget initiativ.",
+          "korrekt": false,
+          "forklaring": "Domstolen dömer men väcker inte åtal; det strider mot ackusationsprincipen."
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "str-lj-1",
+      "situation": "Du behöver lagstödet för att uppsåt är huvudregeln och att oaktsamhet bara straffas när det är särskilt föreskrivet. Vilket lagrum?",
+      "facit_lagrum": ["1 kap. 2 § BrB"],
+      "ledtrad": "Brottsbalkens inledande kapitel, direkt efter legalitetsprincipen."
+    },
+    {
+      "id": "str-lj-2",
+      "situation": "En person försvarar sig mot ett pågående överfall och frågan är om våldet var tillåtet. Vilket lagrum reglerar nödvärn?",
+      "facit_lagrum": ["24 kap. 1 § BrB"],
+      "ledtrad": "Kapitlet om allmänna grunder för ansvarsfrihet."
+    },
+    {
+      "id": "str-lj-3",
+      "situation": "Domstolen ska värdera bevisningen i ett brottmål och du vill hänvisa till principen om fri bevisprövning. Vilket lagrum?",
+      "facit_lagrum": ["35 kap. 1 § RB"],
+      "ledtrad": "Rättegångsbalkens allmänna bevisregel."
+    }
+  ]
 }

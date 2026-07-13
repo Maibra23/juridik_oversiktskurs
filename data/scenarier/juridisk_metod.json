@@ -1,4 +1,211 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen juridisk_metod. Läses av utils/scenarier.py och används som fallback när LLM saknas. Varje scenario anger relevanta lagrum som måste finnas i data/lagrum.json.",
-  "scenarier": []
+  "_beskrivning": "Deterministiska basscenarier för modulen Juridisk metod (kap 1). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Juridisk metod",
+  "case": [
+    {
+      "id": "jm-case-1",
+      "rubrik": "Avtalet som stred mot lagen",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 10,
+      "scenariotext": "Två byggföretag, Bygg AB och Grus AB, ingår ett avtal om köp av 40 ton makadam. I avtalet står att leverans ska ske senast den 1 mars och att Grus AB aldrig ansvarar för dröjsmål, oavsett orsak. Leveransen blir tre veckor försenad utan godtagbar förklaring och Bygg AB förlorar en entreprenad. Bygg AB:s vd har läst i köplagen att köparen kan ha rätt till skadestånd vid dröjsmål och undrar om lagens regel eller avtalets friskrivning gäller. En juriststudent får frågan och behöver först avgöra vilken rättskälla som styr.",
+      "facit": {
+        "rattsfraga": "Gäller avtalets friskrivning från dröjsmålsansvar eller köplagens regler, när avtalet och lagen pekar åt olika håll?",
+        "lagrum": [
+          "3 § KöpL",
+          "27 § KöpL"
+        ],
+        "tillampningspunkter": [
+          "Identifiera först vilken lag som är tillämplig: köp av lös egendom mellan två näringsidkare faller under köplagen.",
+          "Avgör lagens karaktär: köplagen är dispositiv, dvs. den gäller inte i den mån annat följer av avtalet (3 § KöpL).",
+          "Eftersom lagen är dispositiv har avtalets friskrivning i utgångspunkten företräde framför lagens dröjsmålsregler (bl.a. 27 § KöpL).",
+          "Metodpoängen: normhierarkin avgör inte allt – för dispositiv rätt går parternas avtal före lagens utfyllande regler, medan tvingande lagstiftning inte kan avtalas bort."
+        ],
+        "slutsats": "Friskrivningen gäller i utgångspunkten, eftersom köplagen är dispositiv och parterna har avtalat om annat (3 § KöpL). Alternativt: en långtgående friskrivning kan angripas med avtalsrättsliga ogiltighets- och jämkningsregler, men det är en annan rättsfråga än den rena metodfrågan om normernas inbördes ordning."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "jm-mc-1",
+      "fraga": "Vilken är den allmänt accepterade rangordningen mellan rättskällorna i svensk rätt?",
+      "alternativ": [
+        {
+          "text": "Lagtext, förarbeten, praxis, doktrin.",
+          "korrekt": true,
+          "forklaring": "Lagtexten är den främsta rättskällan; därefter beaktas förarbeten, domstolspraxis och sist doktrin."
+        },
+        {
+          "text": "Doktrin, praxis, förarbeten, lagtext.",
+          "korrekt": false,
+          "forklaring": "Detta är omvänd ordning – doktrin väger lättast, inte tyngst."
+        },
+        {
+          "text": "Praxis, lagtext, doktrin, förarbeten.",
+          "korrekt": false,
+          "forklaring": "Praxis är viktig men lagtexten står först i rättskälleläran."
+        },
+        {
+          "text": "Förarbeten, doktrin, lagtext, praxis.",
+          "korrekt": false,
+          "forklaring": "Förarbeten används för att tolka lagtexten, de står inte över den."
+        }
+      ]
+    },
+    {
+      "id": "jm-mc-2",
+      "fraga": "Vad innebär att en lag är dispositiv?",
+      "alternativ": [
+        {
+          "text": "Att lagen gäller endast om parterna inte har avtalat om något annat.",
+          "korrekt": true,
+          "forklaring": "Dispositiv rätt kan avtalas bort; köplagen är kursens tydligaste exempel.",
+          "lagrum": "3 § KöpL"
+        },
+        {
+          "text": "Att lagen alltid gäller oavsett vad parterna avtalat.",
+          "korrekt": false,
+          "forklaring": "Det beskriver tvingande (indispositiv) lagstiftning, t.ex. stora delar av konsumentskyddet."
+        },
+        {
+          "text": "Att lagen bara gäller näringsidkare.",
+          "korrekt": false,
+          "forklaring": "Dispositivitet handlar om avtalsfrihet, inte om vilka subjekt lagen gäller."
+        },
+        {
+          "text": "Att lagen har upphävts men fortfarande tillämpas.",
+          "korrekt": false,
+          "forklaring": "En upphävd lag tillämpas som huvudregel inte; det har inget med dispositivitet att göra."
+        }
+      ]
+    },
+    {
+      "id": "jm-mc-3",
+      "fraga": "Legalitetsprincipen inom straffrätten innebär att ...",
+      "alternativ": [
+        {
+          "text": "ingen får dömas för en gärning som inte var straffbelagd i lag när den begicks.",
+          "korrekt": true,
+          "forklaring": "Inget brott utan lag, inget straff utan lag – principen framgår av brottsbalkens inledning.",
+          "lagrum": "1 kap. 1 § BrB"
+        },
+        {
+          "text": "domstolen fritt får skapa nya brott genom analogisk tillämpning.",
+          "korrekt": false,
+          "forklaring": "Tvärtom: legalitetsprincipen förbjuder analogisk strafftillämpning till den tilltalades nackdel.",
+          "lagrum": "1 kap. 1 § BrB"
+        },
+        {
+          "text": "endast riksåklagaren får väcka åtal.",
+          "korrekt": false,
+          "forklaring": "Åtalsregler är en processrättslig fråga, inte legalitetsprincipens innehåll."
+        },
+        {
+          "text": "alla brott ska ge fängelse.",
+          "korrekt": false,
+          "forklaring": "Påföljdsvalet styrs av straffskalor och påföljdsregler, inte av legalitetsprincipen."
+        }
+      ]
+    },
+    {
+      "id": "jm-mc-4",
+      "fraga": "Vad är en generalklausul?",
+      "alternativ": [
+        {
+          "text": "En allmänt hållen lagregel som ger domstolen utrymme för skälighetsbedömning i det enskilda fallet.",
+          "korrekt": true,
+          "forklaring": "Generalklausulen i avtalslagen om jämkning av oskäliga avtalsvillkor är kursens standardexempel.",
+          "lagrum": "36 § AvtL"
+        },
+        {
+          "text": "En regel som bara gäller generaler och andra höga befattningshavare.",
+          "korrekt": false,
+          "forklaring": "Namnet syftar på regelns generella utformning, inte på personkretsen."
+        },
+        {
+          "text": "En klausul som parterna alltid måste ta in i sina avtal.",
+          "korrekt": false,
+          "forklaring": "Generalklausuler är lagregler, inte obligatoriska avtalsvillkor."
+        },
+        {
+          "text": "En övergångsbestämmelse till en ny lag.",
+          "korrekt": false,
+          "forklaring": "Övergångsbestämmelser reglerar ikraftträdande, vilket är något annat."
+        }
+      ]
+    },
+    {
+      "id": "jm-mc-5",
+      "fraga": "Vad innebär principen om fri bevisprövning i svensk processrätt?",
+      "alternativ": [
+        {
+          "text": "Parterna får som utgångspunkt lägga fram vilken bevisning som helst, och domstolen värderar den fritt.",
+          "korrekt": true,
+          "forklaring": "Rättegångsbalken utgår från fri bevisföring och fri bevisvärdering.",
+          "lagrum": "35 kap. 1 § RB"
+        },
+        {
+          "text": "Endast skriftliga bevis är tillåtna i domstol.",
+          "korrekt": false,
+          "forklaring": "Det motsvarar en legal bevisteori som svensk rätt har övergett."
+        },
+        {
+          "text": "Domstolen måste alltid följa ett vittnes utsaga.",
+          "korrekt": false,
+          "forklaring": "Domstolen värderar all bevisning fritt, även vittnesutsagor.",
+          "lagrum": "35 kap. 1 § RB"
+        },
+        {
+          "text": "Bevisning är gratis för parterna.",
+          "korrekt": false,
+          "forklaring": "Principen handlar om bevisföring och bevisvärdering, inte om kostnader."
+        }
+      ]
+    },
+    {
+      "id": "jm-mc-6",
+      "fraga": "Vad menas med att Högsta domstolens avgöranden är prejudikat?",
+      "alternativ": [
+        {
+          "text": "De är vägledande för hur liknande fall ska bedömas i framtiden.",
+          "korrekt": true,
+          "forklaring": "Prejudikat är vägledande praxis; underrätterna följer dem i praktiken även om de inte är formellt bindande som lag."
+        },
+        {
+          "text": "De är formellt bindande lagar som riksdagen antagit.",
+          "korrekt": false,
+          "forklaring": "Endast riksdagen stiftar lag; domstolsavgöranden är praxis, inte lagstiftning."
+        },
+        {
+          "text": "De gäller bara parterna i det avgjorda målet och saknar all betydelse för andra.",
+          "korrekt": false,
+          "forklaring": "Domens rättskraft gäller parterna, men prejudikatvärdet sträcker sig längre som vägledning."
+        },
+        {
+          "text": "De måste fastställas av regeringen för att gälla.",
+          "korrekt": false,
+          "forklaring": "Domstolarna är självständiga; regeringen fastställer inte domar."
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "jm-lj-1",
+      "situation": "Du vill visa att köplagen är dispositiv och att parternas avtal därför går före lagens regler. Vilket lagrum stödjer du dig på?",
+      "facit_lagrum": ["3 § KöpL"],
+      "ledtrad": "Lagens inledande bestämmelser om avtalsfrihet."
+    },
+    {
+      "id": "jm-lj-2",
+      "situation": "Du behöver lagstödet för legalitetsprincipen: brott är endast en gärning som är beskriven i lag med straff föreskrivet. Vilket lagrum?",
+      "facit_lagrum": ["1 kap. 1 § BrB"],
+      "ledtrad": "Brottsbalkens allra första paragraf."
+    },
+    {
+      "id": "jm-lj-3",
+      "situation": "Du vill peka på den generalklausul som låter domstolen jämka oskäliga avtalsvillkor. Vilket lagrum?",
+      "facit_lagrum": ["36 § AvtL"],
+      "ledtrad": "Avtalslagens mest kända paragraf om oskälighet."
+    }
+  ]
 }

@@ -71,20 +71,28 @@ MODULER = [
         "sida": "pages/4_Skadestandsratt.py",
     },
     {
-        "roll": "Familj & arv",
-        "titel": "Familje- och successionsrätt",
-        "tag": "Kap. 18–21",
-        "beskrivning": "Giftorättsgods mot enskild egendom, bodelning, "
-        "arvsordning, laglott, testamente och särkullbarn.",
-        "sida": "pages/5_Familje_och_arvsratt.py",
-    },
-    {
         "roll": "Arbete",
         "titel": "Arbetsrätt",
         "tag": "Kap. 11",
         "beskrivning": "Anställningsformer, uppsägning mot avsked (LAS) och "
         "diskriminering.",
-        "sida": "pages/6_Arbetsratt.py",
+        "sida": "pages/5_Arbetsratt.py",
+    },
+    {
+        "roll": "Bolag",
+        "titel": "Associationsrätt",
+        "tag": "Kap. 12",
+        "beskrivning": "Bolagsformerna, personligt ansvar i handelsbolag mot "
+        "aktiebolag och aktiebolagets organisation.",
+        "sida": "pages/6_Associationsratt.py",
+    },
+    {
+        "roll": "Familj & arv",
+        "titel": "Familje- och successionsrätt",
+        "tag": "Kap. 18–21",
+        "beskrivning": "Giftorättsgods mot enskild egendom, bodelning, "
+        "arvsordning, laglott, testamente och särkullbarn.",
+        "sida": "pages/7_Familje_och_arvsratt.py",
     },
     {
         "roll": "Straff & process",
@@ -92,7 +100,7 @@ MODULER = [
         "tag": "Kap. 22",
         "beskrivning": "Brottsbegreppets objektiva och subjektiva sida, uppsåt "
         "mot oaktsamhet och ansvarsfrihetsgrunder.",
-        "sida": "pages/7_Straff_och_processratt.py",
+        "sida": "pages/8_Straff_och_processratt.py",
     },
     {
         "roll": "Pröva",
@@ -100,7 +108,7 @@ MODULER = [
         "tag": "Alla moduler",
         "beskrivning": "Blandade scenariofrågor som rättas deterministiskt och "
         "verifieras mot lagrumslistan.",
-        "sida": "pages/8_Kunskapstest.py",
+        "sida": "pages/9_Kunskapstest.py",
     },
 ]
 

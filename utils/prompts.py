@@ -32,7 +32,9 @@ MAX_SVARSLANGD_ORD = 400
 RNTS_RUBRIKER = ("Rättsfrågan", "Norm", "Tillämpning", "Slutsats")
 
 
-SYSTEM_PROMPT_BASE = f"""Du är en svensk juridiktutor för studenter på Juridisk översiktskurs (JÖK).
+SYSTEM_PROMPT_BASE = f"""Du är en svensk juridisk expert med över 30 års erfarenhet av att undervisa \
+juridik på alla nivåer, från introduktionskurser till avancerad juristutbildning.
+Du handleder just nu en student på Juridisk översiktskurs (JÖK).
 Ditt uppdrag är att träna studenten i juridisk metod, inte att lösa uppgiften åt hen.
 
 SPRÅK
@@ -53,9 +55,12 @@ ABSOLUT FÖRBUD MOT PÅHITT
   i stället för att gissa. Att gissa ett paragrafnummer är ett allvarligt fel.
 - Hänvisa inte till rättsfall (t.ex. NJA) om de inte redan finns i underlaget.
 
-LAGRUMSFORMAT
-- Skriv lagrum antingen som "N § FÖRK" (t.ex. "36 § AvtL") eller, för
-  kapitelindelade lagar, som "N kap. M § FÖRK" (t.ex. "2 kap. 1 § SkL").
+LAGRUMSFORMAT (följ exakt – annars går verifieringen inte att göra)
+- Skriv ALLTID paragrafnumret FÖRST och förkortningen SIST: "36 § AvtL".
+  Skriv ALDRIG förkortningen först: "AvtL 36 §" är FEL.
+- För kapitelindelade lagar: "N kap. M § FÖRK", t.ex. "2 kap. 1 § SkL"
+  (ALDRIG "SkL 2 kap. 1 §").
+- För intervall: "28–30 §§ AvtL" (paragrafnumren först, förkortningen sist).
 - Använd endast de förkortningar som står i LAGRUMSVITLISTAN.
 
 TUTORROLL (viktigast)
@@ -217,6 +222,54 @@ def build_quiz_prompt(fraga: object, valt_alternativ: object) -> tuple[str, str]
         "Förklara kort om studentens val är rätt eller fel och varför, med "
         "hänvisning till rätt lagrum ur vitlistan. Följ RNTS-strukturen men "
         "håll det kort – detta är en flervalsfråga, inte ett fullt rättsfall."
+    )
+    return SYSTEM_PROMPT_BASE, user_prompt
+
+
+def build_generate_prompt(
+    modul_namn: str,
+    forkortningar: Iterable[str] | None = None,
+    striktare: bool = False,
+) -> tuple[str, str]:
+    """Bygg (system, user) för att generera ett nytt fiktivt rättsfall.
+
+    Modellen ombeds returnera ett JSON-scenario som ENDAST använder lagrum ur
+    den bifogade vitlistan. ``striktare`` läggs på vid omförsök efter att ett
+    genererat lagrum inte kunnat verifieras.
+    """
+    vitlista = vitlista_block(forkortningar)
+
+    skarpning = ""
+    if striktare:
+        skarpning = (
+            "\n\nVIKTIGT: Ditt förra försök innehöll ett lagrum som inte fanns i "
+            "vitlistan eller hade fel paragrafnummer. Använd nu ENBART exakta "
+            "lagrum ur vitlistan ovan. Dubbelkolla varje paragrafnummer."
+        )
+
+    user_prompt = (
+        f"{vitlista}\n\n"
+        f"Skapa ETT nytt, fiktivt och realistiskt rättsfall för modulen "
+        f"\"{modul_namn}\" på JÖK-nivå. Fallet ska gå att lösa med juridisk metod "
+        "och de lagrum som finns i vitlistan ovan.\n\n"
+        "Svara med ENBART giltig JSON (ingen kod-markdown, ingen text runt om) "
+        "enligt exakt detta schema:\n"
+        "{\n"
+        '  "id": "gen-<kort-slug>",\n'
+        '  "rubrik": "<kort fallrubrik>",\n'
+        '  "svarighetsgrad": "grund" | "medel" | "avancerad",\n'
+        '  "uppskattad_tid_min": <heltal>,\n'
+        '  "scenariotext": "<fiktiva omständigheter, 4-8 meningar>",\n'
+        '  "facit": {\n'
+        '    "rattsfraga": "<den rättsliga frågan>",\n'
+        '    "lagrum": ["<lagrum i formatet N § FÖRK ur vitlistan>"],\n'
+        '    "tillampningspunkter": ["<punkt>", "<punkt>"],\n'
+        '    "slutsats": "<motiverad slutsats>"\n'
+        "  }\n"
+        "}\n\n"
+        "Alla lagrum i facit.lagrum MÅSTE finnas i vitlistan och skrivas som "
+        "\"N § FÖRK\" eller \"N kap. M § FÖRK\" (paragrafnummer först). Använd "
+        "aldrig påhittade paragrafer." + skarpning
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 

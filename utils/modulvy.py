@@ -116,6 +116,16 @@ def _rendera_rattsfall(modul: Modulscenarier) -> None:
     val = st.selectbox("Välj rättsfall", options=rubriker, key=f"case_val_{modul.modul}")
     case = next(c for c in modul.case if c.rubrik == val)
 
+    rendera_case_ovning(modul.modul, case)
+
+
+def rendera_case_ovning(modul: str, case: Case) -> None:
+    """Rendera ett rättsfall som RNTS-övning: kort, formulär, tutor och facit.
+
+    Delas av modulsidorna och Kunskapsutmaningen (utils.generator) så att både
+    kuraterade och genererade fall får exakt samma flöde och verifiering.
+    ``modul`` är modulens visningsnamn (används för framsteg och Obsidianexport).
+    """
     st.html(
         render_case(
             rubrik=case.rubrik,
@@ -137,16 +147,16 @@ def _rendera_rattsfall(modul: Modulscenarier) -> None:
     # Ett rättsfall räknas som genomfört när hela RNTS-analysen är ifylld
     # (deterministiskt, ingen LLM krävs). Läses av framstegsvyn och exporten.
     if all((svar.get(nyckel) or "").strip() for nyckel, _e, _h in RNTS_FALT):
-        registrera_case_genomford(modul.modul, case.id)
+        registrera_case_genomford(modul, case.id)
         # Fånga hela analysen för Obsidianexporten (studentens RNTS-svar + facit).
-        registrera_case_analys(modul.modul, case, svar)
+        registrera_case_analys(modul, case, svar)
 
     st.caption(
         "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."
     )
     system_prompt, user_prompt = build_case_prompt(case, svar)
     tutorknapp(
-        nyckel=f"case_{modul.modul}_{case.id}",
+        nyckel=f"case_{modul}_{case.id}",
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         etikett="Be tutorn granska min analys",

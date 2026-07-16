@@ -97,6 +97,19 @@ LAGRUM_PATTERN = re.compile(
     r"(?P<forkortning>[A-ZÅÄÖ][A-Za-zÅÄÖåäö]+)"
 )
 
+# Omvänd ordning där modellen skriver förkortningen först, t.ex.
+# "AvtL 36 §", "AvtL 28–30 §§", "SkL 3 kap. 1 §". Denna form är tvetydig
+# (vilket versalinlett ord som helst kan föregå ett paragrafnummer), så
+# träffar accepteras endast om förkortningen finns i registret. Se
+# extrahera_lagrum för den filtreringen.
+LAGRUM_PATTERN_OMVAND = re.compile(
+    r"(?P<forkortning>[A-ZÅÄÖ][A-Za-zÅÄÖåäö]+)\s+"
+    r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
+    r"(?P<paragraf>\d+)\s*[a-z]?\s*"
+    r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
+    r"§{1,2}"
+)
+
 # Rättsfallshänvisningar (NJA, RH, AD, MÖD) kan inte valideras lokalt i v1.
 RATTSFALL_PATTERN = re.compile(
     r"(?P<ra>(?:NJA|RH|AD|MÖD)\s+\d{4}\s+s\.?\s*\d+)",
@@ -172,23 +185,47 @@ def giltiga_forkortningar() -> frozenset[str]:
 
 # --- Extrahering ------------------------------------------------------------
 
+def _ref_fran_match(m: re.Match[str]) -> Lagrumsref:
+    """Bygg en Lagrumsref ur en regexträff (samma grupper i båda mönstren)."""
+    return Lagrumsref(
+        forkortning=m.group("forkortning"),
+        paragraf=m.group("paragraf"),
+        kapitel=m.group("kapitel"),
+        paragraf_till=m.group("paragraf_till"),
+        ra=m.group(0).strip(),
+    )
+
+
 def extrahera_lagrum(text: str) -> tuple[Lagrumsref, ...]:
-    """Parsa alla lagrumshänvisningar ur en text till kanonisk form."""
+    """Parsa alla lagrumshänvisningar ur en text till kanonisk form.
+
+    Fångar både kanonisk ordning ("36 § AvtL") och omvänd ordning där
+    förkortningen står först ("AvtL 36 §"). Kanoniska träffar har företräde:
+    en omvänd träff hoppas över om den överlappar en kanonisk, och accepteras
+    bara om förkortningen finns i registret (skydd mot falska positiva som
+    "Bestämmelsen 5 §").
+    """
     if not text:
         return ()
 
-    refs: list[Lagrumsref] = []
+    traffar: list[tuple[int, Lagrumsref]] = []
+    upptagna: list[tuple[int, int]] = []
+
     for m in LAGRUM_PATTERN.finditer(text):
-        refs.append(
-            Lagrumsref(
-                forkortning=m.group("forkortning"),
-                paragraf=m.group("paragraf"),
-                kapitel=m.group("kapitel"),
-                paragraf_till=m.group("paragraf_till"),
-                ra=m.group(0).strip(),
-            )
-        )
-    return tuple(refs)
+        traffar.append((m.start(), _ref_fran_match(m)))
+        upptagna.append((m.start(), m.end()))
+
+    kanda = giltiga_forkortningar()
+    for m in LAGRUM_PATTERN_OMVAND.finditer(text):
+        if m.group("forkortning") not in kanda:
+            continue
+        start, slut = m.start(), m.end()
+        if any(start < o_slut and o_start < slut for o_start, o_slut in upptagna):
+            continue  # överlappar en kanonisk träff
+        traffar.append((start, _ref_fran_match(m)))
+
+    traffar.sort(key=lambda t: t[0])
+    return tuple(ref for _start, ref in traffar)
 
 
 # --- Validering och länkning ------------------------------------------------

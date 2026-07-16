@@ -82,6 +82,61 @@ def test_extrahera_fangar_inte_nja():
     assert extrahera_lagrum("Se NJA 2015 s. 1040.") == ()
 
 
+# --- Omvänd ordning (FÖRK först) --------------------------------------------
+
+def test_extrahera_omvand_enkel_paragraf():
+    # Modellen skriver ofta förkortningen först: "AvtL 18 §".
+    (ref,) = extrahera_lagrum("Detta regleras i AvtL 18 §.")
+    assert ref.forkortning == "AvtL"
+    assert ref.paragraf == "18"
+    assert ref.kapitel is None
+
+
+def test_extrahera_omvand_intervall():
+    (ref,) = extrahera_lagrum("Ogiltighet enligt AvtL 28–30 §§.")
+    assert ref.forkortning == "AvtL"
+    assert ref.paragraf == "28"
+    assert ref.paragraf_till == "30"
+
+
+def test_extrahera_omvand_kapitelform():
+    (ref,) = extrahera_lagrum("Principalansvaret i SkL 3 kap. 1 §.")
+    assert ref.forkortning == "SkL"
+    assert ref.kapitel == "3"
+    assert ref.paragraf == "1"
+
+
+def test_extrahera_omvand_ignorerar_okand_forkortning():
+    # "Bestämmelsen" är ett versalinlett vanligt ord, inte en känd lag.
+    # Utan registerspärr skulle detta felaktigt bli en träff.
+    assert extrahera_lagrum("Bestämmelsen 5 § är tydlig.") == ()
+
+
+def test_extrahera_omvand_ignorerar_vanligt_versalord():
+    assert extrahera_lagrum("Paragrafen 5 § reglerar detta.") == ()
+
+
+def test_extrahera_blandad_ordning_i_samma_text():
+    refs = extrahera_lagrum("Jämför 1 § AvtL med AvtL 36 §.")
+    assert len(refs) == 2
+    assert [r.paragraf for r in refs] == ["1", "36"]
+
+
+def test_validera_omvand_verifierad():
+    assert validera_lagrum("AvtL 36 §") == STATUS_VERIFIERAD
+
+
+def test_validera_omvand_okand_paragraf_pa_kand_lag():
+    # Känd lag i omvänd ordning men paragraf utanför kursavsnitt ska flaggas.
+    assert validera_lagrum("AvtL 999 §") == STATUS_OKAND_PARAGRAF
+
+
+def test_verify_lagrum_fangar_omvand_ordning():
+    (traff,) = verify_lagrum("Enligt AvtL 36 § är avtalsvillkoret oskäligt.")
+    assert traff.status == STATUS_VERIFIERAD
+    assert traff.url == "https://lagen.nu/1915:218#P36"
+
+
 # --- Validering -------------------------------------------------------------
 
 def test_validera_verifierad_paragraflag():

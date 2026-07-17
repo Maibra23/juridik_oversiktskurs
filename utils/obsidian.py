@@ -218,7 +218,7 @@ def modulnot(
 
 
 def _startnot(moduler: tuple[str, ...]) -> str:
-    """Bygg valvets startnot (MOC över moduler)."""
+    """Bygg valvets startnot (MOC över moduler och rättskartan)."""
     frontmatter = _frontmatter({"titel": "Juridik"}, taggar=("juridik",))
     rader = [
         frontmatter,
@@ -226,6 +226,12 @@ def _startnot(moduler: tuple[str, ...]) -> str:
         "# Juridik – mitt kunskapsvalv",
         "",
         f"Exporterat {date.today().isoformat()} från Juridisk översiktskurs.",
+        "",
+        "## Rättskartan",
+        "",
+        "Börja i [[Rättskartan]] – en klickbar, hopfällbar karta över det "
+        "svenska rättssystemet som visar vilka lagar som hör till vilket "
+        "område och när de ska övervägas.",
         "",
         "## Moduler",
         "",
@@ -278,6 +284,10 @@ def bygg_valv(poster: Iterable[CaseAnalys]) -> bytes:
     for ref in alla_lagrum:
         filer[f"Juridik/Lagrum/{notnamn(ref)}.md"] = lagrumsnot(ref)
 
+    # Rättskartan följer alltid med: karta, områdesnoter och lagnoter.
+    from utils.rattskarta import rattskarta_filer
+
+    filer.update(rattskarta_filer())
     filer["Juridik/Start.md"] = _startnot(tuple(moduler))
 
     buffert = BytesIO()

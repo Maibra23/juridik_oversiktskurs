@@ -56,7 +56,17 @@ ANALYS = CaseAnalys(modul="Avtalsrätt", case=CASE, svar=SVAR)
 
 
 def _wikilankar(text: str) -> set[str]:
-    return set(re.findall(r"\[\[([^\]]+)\]\]", text))
+    """Länkmål ur [[...]], normaliserade som Obsidian slår upp dem.
+
+    "[[Not#Rubrik|alias]]" pekar på noten "Not"; rubrik- och aliasdelarna
+    påverkar inte vilken fil länken leder till.
+    """
+    mal = set()
+    for rå in re.findall(r"\[\[([^\]]+)\]\]", text):
+        not_del = rå.split("#", 1)[0].split("|", 1)[0].strip()
+        if not_del:
+            mal.add(not_del)
+    return mal
 
 
 # --- notnamn ----------------------------------------------------------------

@@ -28,6 +28,7 @@ from utils.export import (  # noqa: E402
 )
 from utils.obsidian import bygg_valv, hamta_case_analyser  # noqa: E402
 from utils.quiz import alla_resultat  # noqa: E402
+from utils.texter import antal_med_enhet  # noqa: E402
 from utils.ui import (  # noqa: E402
     footer_note,
     hero,
@@ -113,8 +114,8 @@ MODULER = [
         "roll": "Pröva",
         "titel": "Kunskapstest",
         "tag": "Alla moduler",
-        "beskrivning": "Blandade scenariofrågor som rättas deterministiskt och "
-        "verifieras mot lagrumslistan.",
+        "beskrivning": "Samlad resultatöversikt över dina quiz per modul, med "
+        "genvägar vidare till modulernas övningar.",
         "sida": "pages/9_Kunskapstest.py",
     },
 ]
@@ -205,44 +206,52 @@ def _render_framsteg() -> None:
             "Inga resultat ännu. Öppna en modul, besvara quizfrågor eller "
             "fyll i en RNTS-analys så samlas dina framsteg här."
         )
-        return
+    else:
+        for modul, (ratt, besvarade) in sorted(resultat.items()):
+            andel = ratt / besvarade if besvarade else 0.0
+            st.progress(andel, text=f"{modul}: {ratt}/{besvarade} rätt på quiz")
+        for modul, case_ids in sorted(case_bok.items()):
+            st.markdown(
+                f"- **{modul}**: "
+                + antal_med_enhet(
+                    len(case_ids), "genomfört rättsfall", "genomförda rättsfall"
+                )
+            )
 
-    for modul, (ratt, besvarade) in sorted(resultat.items()):
-        andel = ratt / besvarade if besvarade else 0.0
-        st.progress(andel, text=f"{modul}: {ratt}/{besvarade} rätt på quiz")
-    for modul, case_ids in sorted(case_bok.items()):
-        st.markdown(f"- **{modul}**: {len(case_ids)} genomförda rättsfall")
+        kol_md, kol_xlsx = st.columns(2)
+        with kol_md:
+            st.download_button(
+                "Ladda ner rapport (Markdown)",
+                data=bygg_markdown_rapport(resultat_till_svar(), case_bok),
+                file_name="studierapport.md",
+                mime="text/markdown",
+            )
+        with kol_xlsx:
+            st.download_button(
+                "Ladda ner rapport (Excel)",
+                data=bygg_excel_rapport(resultat_till_svar(), case_bok),
+                file_name="studierapport.xlsx",
+                mime="application/vnd.openxmlformats-officedocument."
+                "spreadsheetml.sheet",
+            )
 
-    kol_md, kol_xlsx = st.columns(2)
-    with kol_md:
-        st.download_button(
-            "Ladda ner rapport (Markdown)",
-            data=bygg_markdown_rapport(resultat_till_svar(), case_bok),
-            file_name="studierapport.md",
-            mime="text/markdown",
-        )
-    with kol_xlsx:
-        st.download_button(
-            "Ladda ner rapport (Excel)",
-            data=bygg_excel_rapport(resultat_till_svar(), case_bok),
-            file_name="studierapport.xlsx",
-            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        )
-
-    analyser = hamta_case_analyser()
-    if analyser:
-        st.download_button(
-            "Ladda ner Obsidianvalv (zip)",
-            data=bygg_valv(analyser),
-            file_name="juridik_valv.zip",
-            mime="application/zip",
-        )
-        st.info(
-            "Packa upp zipen och öppna mappen **Juridik** som ett valv i Obsidian. "
-            "Varje lagrum blir en egen not — grafvyn och backlinks visar då alla "
-            "rättsfall där lagrummet tillämpats. Repetitionsavsnitten fungerar med "
-            "pluginen Spaced Repetition."
-        )
+    # Obsidianvalvet är värdefullt redan utan analyser: Rättskartan – en
+    # klickbar, hopfällbar karta över rättssystemet – följer alltid med.
+    st.download_button(
+        "Ladda ner Obsidianvalv med Rättskartan (zip)",
+        data=bygg_valv(hamta_case_analyser()),
+        file_name="juridik_valv.zip",
+        mime="application/zip",
+    )
+    st.info(
+        "Packa upp zipen och öppna mappen **Juridik** som ett valv i Obsidian. "
+        "**Rättskartan** ger en hopfällbar, klickbar karta över hela "
+        "rättssystemet med en not per lag: vad den täcker, när den ska "
+        "övervägas och hur den hänger ihop med andra lagar. Varje genomförd "
+        "RNTS-analys blir dessutom en egen not — grafvyn och backlinks visar "
+        "alla rättsfall där ett lagrum tillämpats. Repetitionsavsnitten "
+        "fungerar med pluginen Spaced Repetition."
+    )
 
 
 def resultat_till_svar() -> dict[str, dict[str, bool]]:

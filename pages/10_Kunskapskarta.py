@@ -24,6 +24,7 @@ st.set_page_config(
 from utils.graf import bygg_graf  # noqa: E402
 from utils.graf_ui import render_kunskapsgraf  # noqa: E402
 from utils.obsidian import hamta_case_analyser  # noqa: E402
+from utils.texter import antal_med_enhet  # noqa: E402
 from utils.ui import (  # noqa: E402
     footer_note,
     hero,
@@ -62,8 +63,8 @@ else:
     graf = bygg_graf(analyser)
     antal_lagrum = sum(1 for n in graf["noder"] if n["grupp"] == "lagrum")
     st.caption(
-        f"{len(analyser)} genomförda rättsfall · {antal_lagrum} lagrum. "
-        "Guld = lagrum, blå = rättsfall, mörkblå = modul."
+        antal_med_enhet(len(analyser), "genomfört rättsfall", "genomförda rättsfall")
+        + f" · {antal_lagrum} lagrum. Guld = lagrum, blå = rättsfall, mörkblå = modul."
     )
     render_kunskapsgraf(graf)
 

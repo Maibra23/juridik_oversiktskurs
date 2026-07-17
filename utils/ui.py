@@ -18,6 +18,7 @@ Ansvarar för allt visuellt som delas mellan sidorna:
 from __future__ import annotations
 
 import html
+import re
 
 import streamlit as st
 
@@ -53,11 +54,11 @@ def inject_css() -> None:
             max-width: 46rem; margin: 0 0 1.5rem 0;
         }}
         .jok-hero .eyebrow {{
-            font-family: "IBM Plex Mono", monospace; font-size: 14px;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px;
             letter-spacing: .12em; color: var(--bla); text-transform: uppercase;
         }}
         .jok-hero h1 {{
-            font-family: Georgia, "Source Serif 4", serif; color: var(--bl);
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--bl);
             font-size: 28px; line-height: 1.2; margin: .3rem 0 .6rem 0;
         }}
         .jok-hero p {{
@@ -65,11 +66,11 @@ def inject_css() -> None:
         }}
         .jok-section {{ margin: 1.8rem 0 .6rem 0; }}
         .jok-section .eyebrow {{
-            font-family: "IBM Plex Mono", monospace; font-size: 14px;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px;
             letter-spacing: .12em; color: var(--bla); text-transform: uppercase;
         }}
         .jok-section h2 {{
-            font-family: Georgia, "Source Serif 4", serif; color: var(--bl);
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--bl);
             font-size: 22px; margin: .2rem 0 0 0;
         }}
         .jok-summary {{
@@ -98,7 +99,7 @@ def inject_css() -> None:
             padding: 1rem 1.2rem;
         }}
         .jok-modulkort .roll {{
-            font-family: "IBM Plex Mono", monospace; font-size: 13px;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px;
             color: var(--bla); text-transform: uppercase; letter-spacing: .08em;
         }}
         .jok-modulkort h3 {{
@@ -114,19 +115,19 @@ def inject_css() -> None:
         }}
         .jok-chip {{
             display: inline-flex; align-items: center; gap: .3rem;
-            font-family: "IBM Plex Mono", monospace; font-size: 14px;
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 14px;
             border: 1px solid var(--guld); border-radius: 999px;
             padding: .15rem .6rem; color: var(--bl); text-decoration: none;
             background: #FFFDF7;
         }}
         .jok-chip.ovarifierad {{
-            border-color: var(--varn-fg); background: var(--varn-bg);
+            border-color: var(--varn-mork); background: var(--varn-bg);
         }}
         .jok-varning, .jok-info {{
             border-radius: 10px; padding: .8rem 1rem; margin: .6rem 0;
             font-size: 15px; line-height: 1.55; max-width: 46rem;
         }}
-        .jok-varning {{ background: var(--varn-bg); border: 1px solid var(--varn-fg); color: var(--bl); }}
+        .jok-varning {{ background: var(--varn-bg); border: 1px solid var(--varn-mork); color: var(--bl); }}
         .jok-info {{ background: #EAF1F7; border: 1px solid var(--bla); }}
         .jok-tutortext {{
             background: var(--panel); border: 1px solid var(--ram);
@@ -136,6 +137,10 @@ def inject_css() -> None:
         }}
         .jok-tutortext p {{ margin: 0 0 .6rem 0; }}
         .jok-tutortext p:last-child {{ margin-bottom: 0; }}
+        .jok-tutortext .rnts-rubrik {{
+            font-variant: small-caps; letter-spacing: .05em;
+            color: var(--bla); font-weight: 700;
+        }}
         .jok-varning ul {{ margin: .4rem 0 .2rem 1.1rem; padding: 0; }}
         .jok-case {{
             background: var(--panel); border: 1px solid var(--ram);
@@ -144,7 +149,7 @@ def inject_css() -> None:
             box-shadow: 0 1px 3px rgba(26,35,50,.06);
         }}
         .jok-case h3 {{
-            font-family: Georgia, "Source Serif 4", serif; color: var(--bl);
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--bl);
             font-size: 18px; margin: 0 0 .2rem 0;
         }}
         .jok-case .meta {{ font-size: 13px; color: #6B6459; margin-bottom: .5rem; }}
@@ -162,7 +167,7 @@ def inject_css() -> None:
         }}
         .jok-rnts .steg.pagar .ikon {{ border-color: var(--bla); background: var(--bla); color: #fff; }}
         .jok-rnts .steg.godkand .ikon {{ border-color: var(--gron); background: var(--gron); color: #fff; }}
-        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-fg); background: var(--varn-bg); color: var(--varn-mork); }}
+        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-mork); background: var(--varn-bg); color: var(--varn-mork); }}
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
@@ -194,7 +199,7 @@ def section_heading(eyebrow: str, title: str) -> str:
 
 
 def summary_box(text: str) -> str:
-    """Ingресstext i löpande maxbredd."""
+    """Ingresstext i löpande maxbredd."""
     return f'<div class="jok-summary">{html.escape(text)}</div>'
 
 
@@ -294,12 +299,41 @@ def render_varning(text: str) -> None:
     st.html(f'<div class="jok-varning">{html.escape(text)}</div>')
 
 
+# Tutorsvaren kommer som lättviktig markdown från modellen (fetstil, kursiv,
+# ###-rubriker). Utan konvertering skulle studenten se råa asterisker.
+_MD_RUBRIK = re.compile(r"^#{1,4}\s*(.+?)\s*$", re.MULTILINE)
+_MD_FET = re.compile(r"\*\*(.+?)\*\*")
+_MD_KURSIV = re.compile(r"(?<!\*)\*([^*\n]+)\*(?!\*)")
+_RNTS_RUBRIKTITLAR = ("Rättsfrågan", "Norm", "Tillämpning", "Slutsats")
+
+
+def _md_till_html(kropp: str) -> str:
+    """Konvertera modellens markdown (i redan HTML-escapad text) till HTML.
+
+    RNTS-rubriker ("**1. Rättsfrågan**", "### Norm") får klassen rnts-rubrik
+    och renderas som kapitäler i myndighetsblått (design_system.md avsnitt 3);
+    övrig fetstil/kursiv blir vanlig <strong>/<em>.
+    """
+    kropp = _MD_RUBRIK.sub(lambda m: f"**{m.group(1)}**", kropp)
+
+    def _ersatt_fet(m: re.Match[str]) -> str:
+        inre = m.group(1).strip()
+        rubrik = re.sub(r"^\d+\s*[.)]\s*", "", inre).rstrip(".:").strip()
+        if rubrik in _RNTS_RUBRIKTITLAR:
+            return f'<span class="rnts-rubrik">{inre}</span>'
+        return f"<strong>{inre}</strong>"
+
+    kropp = _MD_FET.sub(_ersatt_fet, kropp)
+    return _MD_KURSIV.sub(r"<em>\1</em>", kropp)
+
+
 def _tutortext_html(text: str) -> tuple[str, tuple]:
     """Bygg HTML för ett tutorsvar och returnera (html, overifierade träffar).
 
-    Ren funktion utan Streamlit-anrop så att den kan enhetstestas. Verifierade
-    lagrum byts ut mot klickbara lagen.nu-chips; overifierade referenser lämnas
-    kvar i texten och returneras separat för varningsrutan.
+    Ren funktion utan Streamlit-anrop så att den kan enhetstestas. Modellens
+    markdown konverteras till HTML (aldrig råa asterisker i UI:t), verifierade
+    lagrum byts ut mot klickbara lagen.nu-chips och overifierade referenser
+    lämnas kvar i texten och returneras separat för varningsrutan.
     """
     from utils.lagrum import STATUS_VERIFIERAD, Lagrumstraff, verify_lagrum
 
@@ -312,7 +346,7 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
         else:
             ovarifierade.append(t)
 
-    kropp = html.escape(text or "")
+    kropp = _md_till_html(html.escape(text or ""))
     # Längsta råtext först så att "1 kap. 1 § SkL" inte delvis matchas av "1 § SkL".
     for ra in sorted(verifierade, key=len, reverse=True):
         t = verifierade[ra]

@@ -30,9 +30,20 @@ def test_systemprompt_forbjuder_pahitt():
 
 
 def test_systemprompt_anger_lagrumsformat_och_langd():
-    assert "N § FÖRK" in SYSTEM_PROMPT_BASE
+    # Konkret exempel på kanonisk ordning och kapitelform ska finnas.
+    assert "36 § AvtL" in SYSTEM_PROMPT_BASE
     assert "N kap. M § FÖRK" in SYSTEM_PROMPT_BASE
     assert str(MAX_SVARSLANGD_ORD) in SYSTEM_PROMPT_BASE
+
+
+def test_systemprompt_forbjuder_omvand_lagrumsordning():
+    # Skärpning: modellen ska aldrig skriva förkortningen först ("AvtL 36 §").
+    assert "AvtL 36 §" in SYSTEM_PROMPT_BASE  # visas som FEL-exempel
+    assert "FEL" in SYSTEM_PROMPT_BASE
+
+
+def test_systemprompt_expertpersona():
+    assert "30 års erfarenhet" in SYSTEM_PROMPT_BASE
 
 
 def test_systemprompt_instruerar_granskning_ej_omskrivning():

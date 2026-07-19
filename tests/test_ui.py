@@ -101,3 +101,54 @@ def test_render_lagrum_chip_ovarifierad():
     html_ut = render_lagrum_chip("99 § PåhittL", verifierad=False)
     assert "ovarifierad" in html_ut
     assert "Ej verifierad" in html_ut
+
+
+# --- Tutortext: markdown från modellen renderas, aldrig råa asterisker ---------
+
+def test_tutortext_fetstil_blir_strong_utan_asterisker():
+    from utils.ui import _tutortext_html
+
+    html_ut, _ = _tutortext_html("Detta är **viktigt** att förstå.")
+    assert "<strong>viktigt</strong>" in html_ut
+    assert "**" not in html_ut
+
+
+def test_tutortext_kursiv_blir_em():
+    from utils.ui import _tutortext_html
+
+    html_ut, _ = _tutortext_html("Frågan är *om avtal slutits* här.")
+    assert "<em>om avtal slutits</em>" in html_ut
+    assert "*om avtal slutits*" not in html_ut
+
+
+def test_tutortext_rnts_rubrik_far_stilklass():
+    from utils.ui import _tutortext_html
+
+    svar = "**1. Rättsfrågan**\nHar ett bindande avtal slutits?"
+    html_ut, _ = _tutortext_html(svar)
+    assert "rnts-rubrik" in html_ut
+    assert "**" not in html_ut
+
+
+def test_tutortext_hashtag_rubrik_renderas_som_rubrik():
+    from utils.ui import _tutortext_html
+
+    html_ut, _ = _tutortext_html("### Norm\nRätt lagrum är 1 § AvtL.")
+    assert "###" not in html_ut
+    assert "rnts-rubrik" in html_ut
+
+
+def test_tutortext_lagrum_i_fetstil_blir_chip():
+    from utils.ui import _tutortext_html
+
+    html_ut, _ = _tutortext_html("Se **36 § AvtL** om oskälighet.")
+    assert "jok-chip" in html_ut
+    assert "lagen.nu" in html_ut
+    assert "**" not in html_ut
+
+
+def test_tutortext_escapar_html_fran_modellen():
+    from utils.ui import _tutortext_html
+
+    html_ut, _ = _tutortext_html("Farligt <script>alert(1)</script> svar.")
+    assert "<script>" not in html_ut

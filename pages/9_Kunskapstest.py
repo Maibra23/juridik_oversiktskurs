@@ -36,7 +36,7 @@ render_sidebar("kunskapstest")
 st.html(
     hero(
         eyebrow="KUNSKAPSTEST",
-        title="Din framgång per modul",
+        title="Dina resultat per modul",
         lead=(
             "Här samlas resultaten från de quizfrågor du besvarat i modulerna. "
             "Öppna en modul för att öva vidare – varje quiz rättas deterministiskt "

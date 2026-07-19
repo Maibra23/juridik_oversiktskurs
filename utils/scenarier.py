@@ -115,6 +115,16 @@ def _bygg_case(rad: dict) -> Case:
     )
 
 
+def bygg_case_fran_dict(rad: dict) -> Case:
+    """Publik case-byggare med samma strukturvalidering som filinläsningen.
+
+    Används av utils.generator för att coerca ett LLM-genererat JSON-scenario
+    till ett Case (och därmed återanvända befintlig validering och fail fast).
+    Kastar ValueError/KeyError vid trasig struktur.
+    """
+    return _bygg_case(rad)
+
+
 def _bygg_fraga(rad: dict) -> Flervalsfraga:
     _krav(isinstance(rad, dict), f"Fråga måste vara ett objekt: {rad!r}")
     alternativ = tuple(

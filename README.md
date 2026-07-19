@@ -21,8 +21,16 @@ citerat lagrum mot kursens lagrumsregister.
   hash av inputs och skyddas av sessionstak (40 anrop) och delat dagstak
   (300 anrop). Utan token fungerar allt deterministiskt innehåll ändå.
 - **Deterministisk rättning**: quiz och lagrumsjakt rättas helt utan LLM.
+- **Kunskapsutmaning**: LLM-genererade, fiktiva rättsfall som grundas mot
+  lagrumsregistret innan de visas – med kuraterat fall som fallback.
+- **Kunskapskarta**: interaktiv graf i appen över genomförda rättsfall och
+  de lagrum de bygger på.
 - **Export**: quizresultat och genomförda rättsfall kan laddas ner som
   Markdownrapport eller Excelfil från startsidans framstegssektion.
+- **Obsidianvalv med Rättskartan**: en zip med en hopfällbar, klickbar
+  karta över det svenska rättssystemet (en not per lag: vad den täcker,
+  när den övervägs, relaterade lagar) plus en not per genomförd
+  RNTS-analys, sammanlänkade via wikilänkar och backlinks.
 
 ## Installation
 
@@ -61,7 +69,8 @@ HF_TOKEN = "hf_..."
 
 ```
 streamlit_app.py          Startsida: modulkarta, framsteg, export
-pages/                    En tunn sida per modul (1–8) + Kunskapstest (9)
+pages/                    En tunn sida per modul (1–8), Kunskapstest (9),
+  │                       Kunskapskarta (10) och Kunskapsutmaning (11)
   └── anropar utils/modulvy.rendera_modulsida(...)
 utils/
   modulvy.py              Delad modulvy: RNTS-formulär, quiz, lagrumsjakt
@@ -69,14 +78,21 @@ utils/
   scenarier.py            Schema (frozen dataclasses) + inläsning/validering
   prompts.py              Systemprompt (RNTS, vitlista, anti-hallucination)
   tutor.py                On demand-generering, cache på inputhash, stale-flagg
+  generator.py            LLM-genererade rättsfall med grundning + fallback
   llm.py / llm_budget.py  HF InferenceClient, sessions- och dagstak
   quiz.py                 Deterministisk rättning + resultat i session_state
   export.py               Markdown-/Excelrapporter, genomförda case
+  obsidian.py             Obsidianvalv: analyser som sammanlänkade noter
+  rattskarta.py           Rättskartan: hopfällbar karta över rättssystemet
+  graf.py / graf_ui.py    Kunskapsgrafen i appen (vis-network i iframe)
+  texter.py               Central texthjälp (svensk kongruensböjning m.m.)
   ui.py                   Designsystem: CSS, chips, RNTS-stepper, statuspanel
 data/
   lagrum.json             Lagrumsregistret – appens enda sanningskälla
+  rattssystem.json        Rättskartans hierarki (grundas mot lagrum.json)
   scenarier/*.json        Case, flervalsfrågor och lagrumsjakt per modul
-tests/                    142+ pytest-tester (lagrum, quiz, prompts, smoke)
+tests/                    340+ pytest-tester (lagrum, quiz, prompts,
+                          generator, rättskarta, språk-QA, smoke)
 ```
 
 Flödet för hallucinationsskyddet: studentens normfält valideras direkt

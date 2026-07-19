@@ -12,7 +12,7 @@ Definieras i .streamlit/config.toml och i en central CSS sträng i utils/ui.py.
 * **Myndighetsblå** `#2C5F8A` : primär accent, knappar, länkar, aktiva flikar.
 * **Paragrafguld** `#B8860B` : sekundär accent, används uteslutande för lagrumschips och paragrafsymboler. Att guld alltid betyder lagrum ger snabb visuell igenkänning.
 * **Godkänd** `#2E7D4F` : korrekt svar, verifierade referenser.
-* **Varning** `#C9971C` bakgrund `#FFF8E1` : overifierade lagrum, stale förklaringar.
+* **Varning** accent `#C9971C`, bakgrund `#FFF8E1`, ram och text `#8A6914` : overifierade lagrum, stale förklaringar. Ramar och text på varningsbakgrund använder den mörka nyansen så att kontrasten klarar WCAG (ram ≥ 3:1, text ≥ 4.5:1).
 * **Fel** `#B3402A` : felaktiga svar. Röd med varm ton, inte alarmröd.
 
 Kontrastkrav: all brödtext minst 7:1 mot bakgrund, accentfärger minst 4.5:1 (WCAG AA).
@@ -29,9 +29,9 @@ font = "serif"
 
 ## 2. Typografi
 
-* **Rubriker**: Source Serif 4 eller systemserif (Georgia fallback). Serif för rubriker ger den juridiska, bokliga karaktären.
-* **Brödtext och UI**: Inter eller system sans (som referensrepot, woff2 filer i static/fonts, ingen CDN).
-* **Lagrum och kod**: IBM Plex Mono. Monospace för lagrum gör dem lätta att skanna och kopiera.
+* **Rubriker**: systemserif – Georgia, "Iowan Old Style", "Times New Roman". Serif för rubriker ger den juridiska, bokliga karaktären. Inga typsnittsfiler skeppas och ingen CDN används; stackarna är rena systemstackar så att appen ser likadan ut lokalt och på Streamlit Cloud.
+* **Brödtext och UI**: system sans (Streamlits standard).
+* **Lagrum och kod**: systemmonospace – ui-monospace, "SF Mono", Menlo, Consolas. Monospace för lagrum gör dem lätta att skanna och kopiera.
 * Storlekar: brödtext 17px med radavstånd 1.65 (långläsning), rubriknivåer 28/22/18px, chips och metadata 14px.
 * Maxbredd för löptext: 46rem. Scenariotext får aldrig löpa över hela skärmbredden.
 

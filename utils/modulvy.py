@@ -1,7 +1,7 @@
 """Delad modulsidevy: Rättsfall, Quiz och Lagrumsjakt.
 
-Varje modulsida i pages/ är ett tunt skal som sätter st.set_page_config och
-anropar rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
+Varje modulsida i pages/ är ett tunt skal som bara anropar
+rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
 formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
 åtta moduler delar exakt samma flöde.
 
@@ -39,11 +39,9 @@ from utils.ui import (
     RNTS_STATUS_PAGAR,
     footer_note,
     hero,
-    inject_css,
     render_case,
     render_lagrum_chip,
     render_rnts_steg,
-    render_sidebar,
     render_varning,
 )
 
@@ -62,11 +60,9 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
     """Rendera en komplett modulsida från en scenariofil.
 
     ``filnamn`` är scenariofilens namn utan suffix, t.ex. "avtalsratt".
-    ``titel``/``undertitel`` visas i sidhuvudet.
+    ``titel``/``undertitel`` visas i sidhuvudet. CSS och sidopanel injiceras
+    centralt av streamlit_app.py och upprepas inte här.
     """
-    inject_css()
-    render_sidebar(filnamn)
-
     st.html(hero(eyebrow=undertitel or "MODUL", title=titel, lead=_ingress(filnamn)))
 
     try:

@@ -13,28 +13,16 @@ import dataclasses
 
 import streamlit as st
 
-st.set_page_config(
-    page_title="Kunskapsutmaning · Juridisk översiktskurs",
-    page_icon="⚖️",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-from utils.generator import generera_case, valj_slumpmodul  # noqa: E402
-from utils.modulvy import rendera_case_ovning  # noqa: E402
-from utils.scenarier import ladda_modul, lista_moduler  # noqa: E402
-from utils.ui import (  # noqa: E402
+from utils.generator import generera_case, valj_slumpmodul
+from utils.modulvy import rendera_case_ovning
+from utils.scenarier import ladda_modul, lista_moduler
+from utils.ui import (
     footer_note,
     hero,
-    inject_css,
     render_info,
     render_varning,
-    render_sidebar,
     section_heading,
 )
-
-inject_css()
-render_sidebar("kunskapsutmaning")
 
 st.html(
     hero(
@@ -48,7 +36,6 @@ st.html(
     )
 )
 
-
 @st.cache_data(show_spinner=False)
 def _visningsnamn() -> dict[str, str]:
     """Karta från filnamn (stem) till modulens visningsnamn."""
@@ -59,7 +46,6 @@ def _visningsnamn() -> dict[str, str]:
         except Exception:  # noqa: BLE001 (hoppa över trasig fil, visa stem)
             namn[stem] = stem
     return namn
-
 
 visningsnamn = _visningsnamn()
 moduler = list(visningsnamn)

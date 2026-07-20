@@ -13,26 +13,14 @@ from __future__ import annotations
 
 import streamlit as st
 
-st.set_page_config(
-    page_title="Kunskapstest · Juridisk översiktskurs",
-    page_icon="⚖️",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-from utils.quiz import alla_resultat  # noqa: E402
-from utils.scenarier import ladda_modul, lista_moduler  # noqa: E402
-from utils.texter import antal_med_enhet  # noqa: E402
-from utils.ui import (  # noqa: E402
+from utils.quiz import alla_resultat
+from utils.scenarier import ladda_modul, lista_moduler
+from utils.texter import antal_med_enhet
+from utils.ui import (
     footer_note,
     hero,
-    inject_css,
-    render_sidebar,
     section_heading,
 )
-
-inject_css()
-render_sidebar("kunskapstest")
 
 st.html(
     hero(
@@ -58,7 +46,6 @@ else:
     for modul, (ratt, besvarade) in sorted(resultat.items()):
         andel = f"{ratt}/{besvarade}"
         st.markdown(f"**{modul}**: {andel} rätt")
-
 
 st.html(section_heading("MODULER", "Öva vidare"))
 for namn in lista_moduler():

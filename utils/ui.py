@@ -468,13 +468,12 @@ def _render_model_selector() -> None:
         st.session_state[MODEL_SESSION_KEY] = val
 
 
-def render_sidebar(active_page: str = "hem") -> None:
-    """Sidopanelens innehåll under Streamlits egen sidnavigering.
+def render_sidebar() -> None:
+    """Sidopanelens innehåll under sidnavigeringen.
 
-    Streamlit renderar själv länklistan över pages/ högst upp i panelen.
-    Den här funktionen lägger till rubrik, LLM-status och modellväljare
-    under den. ``active_page`` markerar anropande sida och är reserverad
-    för kommande markering av aktiv länk; den påverkar inget i dag.
+    Navigeringslistan byggs av st.navigation i streamlit_app.py. Den här
+    funktionen lägger rubrik, LLM-status och modellväljare under den och
+    anropas en gång per körning från ingångspunkten.
     """
     with st.sidebar:
         st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')

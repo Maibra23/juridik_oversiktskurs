@@ -14,28 +14,16 @@ from __future__ import annotations
 
 import streamlit as st
 
-st.set_page_config(
-    page_title="Kunskapskarta · Juridisk översiktskurs",
-    page_icon="⚖️",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-from utils.graf import bygg_graf  # noqa: E402
-from utils.graf_ui import render_kunskapsgraf  # noqa: E402
-from utils.obsidian import hamta_case_analyser  # noqa: E402
-from utils.texter import antal_med_enhet  # noqa: E402
-from utils.ui import (  # noqa: E402
+from utils.graf import bygg_graf
+from utils.graf_ui import render_kunskapsgraf
+from utils.obsidian import hamta_case_analyser
+from utils.texter import antal_med_enhet
+from utils.ui import (
     footer_note,
     hero,
-    inject_css,
     render_info,
-    render_sidebar,
     section_heading,
 )
-
-inject_css()
-render_sidebar("kunskapskarta")
 
 st.html(
     hero(

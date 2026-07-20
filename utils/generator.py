@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Protocol
 
 from utils.lagrum import STATUS_VERIFIERAD, validera_lagrum
-from utils.llm import LLMUnavailableError
+from utils.llm import LLMDailyCapError, LLMSessionCapError, LLMUnavailableError
 from utils.prompts import build_generate_prompt
 from utils.scenarier import (
     Case,
@@ -163,12 +163,20 @@ def generera_case(
             _fallback_case(modul, rng), "fallback", LLM_EJ_TILLGANGLIG_NOTIS
         )
 
+    # Nytt frö per anrop: annars är prompten identisk för en given modul och
+    # cachen i utils.llm.cached_chat returnerar samma rättsfall varje gång.
+    variation = rng.randrange(1_000_000)
+
     for forsok in range(MAX_FORSOK):
         system_prompt, user_prompt = build_generate_prompt(
-            modul_namn, forkortningar, striktare=forsok > 0
+            modul_namn, forkortningar, striktare=forsok > 0, variation=variation + forsok
         )
         try:
             svar = klient.chat(system_prompt, user_prompt)
+        except (LLMSessionCapError, LLMDailyCapError) as exc:
+            # Budgettaken är inte samma sak som att LLM:en saknas. Visa det
+            # riktiga budgetbeskedet i stället för "inte tillgänglig".
+            return GenereratResultat(_fallback_case(modul, rng), "fallback", str(exc))
         except LLMUnavailableError:
             return GenereratResultat(
                 _fallback_case(modul, rng), "fallback", LLM_EJ_TILLGANGLIG_NOTIS

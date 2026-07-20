@@ -230,14 +230,29 @@ def build_generate_prompt(
     modul_namn: str,
     forkortningar: Iterable[str] | None = None,
     striktare: bool = False,
+    variation: int | None = None,
 ) -> tuple[str, str]:
     """Bygg (system, user) för att generera ett nytt fiktivt rättsfall.
 
     Modellen ombeds returnera ett JSON-scenario som ENDAST använder lagrum ur
     den bifogade vitlistan. ``striktare`` läggs på vid omförsök efter att ett
     genererat lagrum inte kunnat verifieras.
+
+    ``variation`` är ett frö som gör varje förfrågan unik. Det behövs av två
+    skäl: det ber modellen om ett annat scenario, och det gör prompten till en
+    ny cachenyckel i utils.llm.cached_chat. Utan fröet returnerar cachen samma
+    rättsfall vid varje knapptryck, eftersom prompten annars är identisk för
+    en given modul.
     """
     vitlista = vitlista_block(forkortningar)
+
+    variationsrad = ""
+    if variation is not None:
+        variationsrad = (
+            f"\n\nVariationsfrö {variation}: hitta på ett scenario som tydligt "
+            "skiljer sig från tidigare fall i samma modul. Variera parter, "
+            "bransch, belopp och vilken tvistefråga som ställs på sin spets."
+        )
 
     skarpning = ""
     if striktare:
@@ -269,7 +284,7 @@ def build_generate_prompt(
         "}\n\n"
         "Alla lagrum i facit.lagrum MÅSTE finnas i vitlistan och skrivas som "
         "\"N § FÖRK\" eller \"N kap. M § FÖRK\" (paragrafnummer först). Använd "
-        "aldrig påhittade paragrafer." + skarpning
+        "aldrig påhittade paragrafer." + variationsrad + skarpning
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 

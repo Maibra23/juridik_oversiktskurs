@@ -151,3 +151,62 @@ def test_standardklienten_ar_none_utan_token(monkeypatch):
 
     monkeypatch.setattr(llm_modul, "is_llm_available", lambda: False)
     assert gen._standardklient() is None
+
+
+# --- Unika fall och korrekta budgetbesked -----------------------------------
+
+def test_varje_generering_ger_unik_prompt():
+    """Två genereringar av samma modul får inte skicka identisk prompt.
+
+    Regression: generatorn går genom utils.llm.cached_chat, som cachar på
+    promptinnehåll. Utan variationsfrö blev prompten identisk för en given
+    modul, cachen svarade med samma rättsfall vid varje knapptryck och
+    studenten fick aldrig något nytt fall.
+    """
+    from utils.generator import generera_case
+
+    prompts: list[str] = []
+
+    class Spion:
+        def chat(self, system_prompt: str, user_prompt: str) -> str:
+            prompts.append(user_prompt)
+            return "inte json"
+
+    generera_case("avtalsratt", klient=Spion())
+    generera_case("avtalsratt", klient=Spion())
+    assert len(set(prompts)) == len(prompts), (
+        "Samma prompt skickades flera gånger; cachen ger då samma rättsfall."
+    )
+
+
+def test_sessionstak_ger_budgetbesked_inte_otillganglig():
+    """Ett fullt budgettak är inte samma sak som att LLM:en saknas.
+
+    Regression: LLMSessionCapError ärver LLMUnavailableError, så taket
+    fångades av det generella grenen och studenten fick beskedet
+    "LLM är inte tillgänglig just nu" utan att förstå att det var budgeten.
+    """
+    from utils.generator import generera_case, LLM_EJ_TILLGANGLIG_NOTIS
+    from utils.llm import SESSION_CAP_MESSAGE, LLMSessionCapError
+
+    class TaketSlut:
+        def chat(self, system_prompt: str, user_prompt: str) -> str:
+            raise LLMSessionCapError(SESSION_CAP_MESSAGE)
+
+    resultat = generera_case("avtalsratt", klient=TaketSlut())
+    assert resultat.kalla == "fallback"
+    assert resultat.notis == SESSION_CAP_MESSAGE
+    assert resultat.notis != LLM_EJ_TILLGANGLIG_NOTIS
+
+
+def test_dagsbudget_ger_budgetbesked():
+    from utils.generator import generera_case
+    from utils.llm import LLMDailyCapError
+    from utils.llm_budget import DAILY_CAP_MESSAGE
+
+    class DagenSlut:
+        def chat(self, system_prompt: str, user_prompt: str) -> str:
+            raise LLMDailyCapError(DAILY_CAP_MESSAGE)
+
+    resultat = generera_case("avtalsratt", klient=DagenSlut())
+    assert resultat.notis == DAILY_CAP_MESSAGE

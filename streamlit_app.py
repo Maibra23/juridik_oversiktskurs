@@ -32,30 +32,18 @@ from utils.ui import inject_css, render_sidebar  # noqa: E402
 # Titeln är etiketten i sidopanelen och i webbläsarfliken. Sökvägen måste
 # matcha filnamnet i pages/ exakt.
 SIDOR = [
-    st.Page("pages/0_Hem.py", title="Hem", icon="🏛️", default=True),
-    st.Page("pages/1_Juridisk_metod.py", title="Juridisk metod", icon="📘"),
-    st.Page("pages/2_Avtalsratt.py", title="Avtalsrätt", icon="🤝"),
-    st.Page(
-        "pages/3_Kop_och_konsumentratt.py",
-        title="Köp- och konsumenträtt",
-        icon="🛒",
-    ),
-    st.Page("pages/4_Skadestandsratt.py", title="Skadeståndsrätt", icon="⚠️"),
-    st.Page("pages/5_Arbetsratt.py", title="Arbetsrätt", icon="💼"),
-    st.Page("pages/6_Associationsratt.py", title="Associationsrätt", icon="🏢"),
-    st.Page(
-        "pages/7_Familje_och_arvsratt.py",
-        title="Familje- och successionsrätt",
-        icon="👪",
-    ),
-    st.Page(
-        "pages/8_Straff_och_processratt.py",
-        title="Straff- och processrätt",
-        icon="⚖️",
-    ),
-    st.Page("pages/9_Kunskapstest.py", title="Kunskapstest", icon="📊"),
-    st.Page("pages/10_Kunskapskarta.py", title="Kunskapskarta", icon="🕸️"),
-    st.Page("pages/11_Kunskapsutmaning.py", title="Kunskapsutmaning", icon="🎲"),
+    st.Page("pages/0_Hem.py", title="Hem", default=True),
+    st.Page("pages/1_Juridisk_metod.py", title="Juridisk metod"),
+    st.Page("pages/2_Avtalsratt.py", title="Avtalsrätt"),
+    st.Page("pages/3_Kop_och_konsumentratt.py", title="Köp- och konsumenträtt"),
+    st.Page("pages/4_Skadestandsratt.py", title="Skadeståndsrätt"),
+    st.Page("pages/5_Arbetsratt.py", title="Arbetsrätt"),
+    st.Page("pages/6_Associationsratt.py", title="Associationsrätt"),
+    st.Page("pages/7_Familje_och_arvsratt.py", title="Familje- och successionsrätt"),
+    st.Page("pages/8_Straff_och_processratt.py", title="Straff- och processrätt"),
+    st.Page("pages/9_Kunskapstest.py", title="Kunskapstest"),
+    st.Page("pages/10_Kunskapskarta.py", title="Kunskapskarta"),
+    st.Page("pages/11_Kunskapsutmaning.py", title="Kunskapsutmaning"),
 ]
 
 inject_css()

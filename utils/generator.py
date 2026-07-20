@@ -4,7 +4,7 @@ Studenten kan be om ett färskt, fiktivt rättsfall att testa sin förmåga på.
 Fallet genereras av LLM men grundas deterministiskt: varje lagrum i facit
 måste verifieras mot lagrumsregistret innan scenariot visas. Klarar inte
 modellen det (påhitt, trasig JSON eller otillgänglig LLM) faller vi tillbaka
-på ett kuraterat statiskt case ur modulen – appen är alltid användbar.
+på ett kuraterat statiskt case ur modulen, så appen är alltid användbar.
 
 LLM-klienten injiceras (Protocol ChatKlient) så att logiken kan enhetstestas
 helt utan nätverk.
@@ -32,10 +32,10 @@ from utils.scenarier import (
 MAX_FORSOK = 2
 
 LLM_EJ_TILLGANGLIG_NOTIS = (
-    "LLM är inte tillgänglig just nu – här är ett kuraterat rättsfall i stället."
+    "LLM är inte tillgänglig just nu. Här är ett kuraterat rättsfall i stället."
 )
 GRUNDNING_MISSLYCKADES_NOTIS = (
-    "Kunde inte generera ett grundat fall den här gången – här är ett kuraterat "
+    "Kunde inte generera ett grundat fall den här gången. Här är ett kuraterat "
     "rättsfall i stället."
 )
 
@@ -83,7 +83,7 @@ def _extrahera_json(svar: str) -> str:
 
 
 def _case_ar_grundat(case: Case) -> bool:
-    """Alla lagrum i facit måste verifieras – och minst ett måste finnas."""
+    """Alla lagrum i facit måste verifieras, och minst ett måste finnas."""
     if not case.facit.lagrum:
         return False
     return all(validera_lagrum(ref) == STATUS_VERIFIERAD for ref in case.facit.lagrum)

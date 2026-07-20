@@ -133,7 +133,7 @@ def tutorknapp(
             render_info(
                 "Tutorn är inte tillgänglig just nu (ingen modell konfigurerad "
                 "eller tillfälligt fel). Rättning, quiz, lagrumslänkar och facit "
-                "fungerar som vanligt – prova tutorn igen om en stund."
+                "fungerar som vanligt. Prova tutorn igen om en stund."
             )
             return
 

@@ -3,7 +3,7 @@
 Ren Python utan Streamlit. Omvandlar registrerade rättsfallsanalyser
 (``CaseAnalys`` från utils.obsidian) till en graf
 ``{"noder": [...], "kanter": [...]}`` där varje lagrum binder ihop de rättsfall
-som tillämpat det — samma lagrum-till-rättsfall-länkar som Obsidianexporten
+som tillämpat det, samma lagrum-till-rättsfall-länkar som Obsidianexporten
 räknar fram (lagrummen extraheras med utils.obsidian så graf och valv aldrig
 divergerar). Deterministisk, inget LLM, så den fungerar även när budgettaket
 är nått.
@@ -58,7 +58,7 @@ def bygg_graf(poster: Iterable[CaseAnalys]) -> Graf:
     Varje modul, rättsfall och lagrum blir en unik nod (dedupliceras på id).
     Kanter går modul → rättsfall och rättsfall → lagrum. Ett lagrum som
     förekommer i flera rättsfall blir därför en enda nod med kanter från alla
-    fall — det är den delningen som gör grafen pedagogiskt värdefull.
+    fall. Det är den delningen som gör grafen pedagogiskt värdefull.
     """
     noder: dict[str, Nod] = {}
     kanter: list[Kant] = []

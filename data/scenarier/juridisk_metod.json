@@ -18,7 +18,7 @@
           "Identifiera först vilken lag som är tillämplig: köp av lös egendom mellan två näringsidkare faller under köplagen.",
           "Avgör lagens karaktär: köplagen är dispositiv, dvs. den gäller inte i den mån annat följer av avtalet (3 § KöpL).",
           "Eftersom lagen är dispositiv har avtalets friskrivning i utgångspunkten företräde framför lagens dröjsmålsregler (bl.a. 27 § KöpL).",
-          "Metodpoängen: normhierarkin avgör inte allt – för dispositiv rätt går parternas avtal före lagens utfyllande regler, medan tvingande lagstiftning inte kan avtalas bort."
+          "Metodpoängen: normhierarkin avgör inte allt. För dispositiv rätt går parternas avtal före lagens utfyllande regler, medan tvingande lagstiftning inte kan avtalas bort."
         ],
         "slutsats": "Friskrivningen gäller i utgångspunkten, eftersom köplagen är dispositiv och parterna har avtalat om annat (3 § KöpL). Alternativt: en långtgående friskrivning kan angripas med avtalsrättsliga ogiltighets- och jämkningsregler, men det är en annan rättsfråga än den rena metodfrågan om normernas inbördes ordning."
       }
@@ -37,7 +37,7 @@
         {
           "text": "Doktrin, praxis, förarbeten, lagtext.",
           "korrekt": false,
-          "forklaring": "Detta är omvänd ordning – doktrin väger lättast, inte tyngst."
+          "forklaring": "Detta är omvänd ordning: doktrin väger lättast, inte tyngst."
         },
         {
           "text": "Praxis, lagtext, doktrin, förarbeten.",
@@ -85,7 +85,7 @@
         {
           "text": "ingen får dömas för en gärning som inte var straffbelagd i lag när den begicks.",
           "korrekt": true,
-          "forklaring": "Inget brott utan lag, inget straff utan lag – principen framgår av brottsbalkens inledning.",
+          "forklaring": "Inget brott utan lag, inget straff utan lag. Principen framgår av brottsbalkens inledning.",
           "lagrum": "1 kap. 1 § BrB"
         },
         {

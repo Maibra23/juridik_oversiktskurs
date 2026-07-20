@@ -8,7 +8,7 @@ vid hovring via kärnpluginen Page preview).
 
 Grundningsprincipen gäller även här: varje lag i data/rattssystem.json måste
 finnas i lagrumsregistret (data/lagrum.json), annars vägrar inläsningen.
-Namn och SFS-nummer hämtas alltid ur registret – de dupliceras aldrig i
+Namn och SFS-nummer hämtas alltid ur registret och dupliceras aldrig i
 kartdatat. Ren modul utan Streamlit-beroende.
 """
 
@@ -83,7 +83,7 @@ def _bygg_lagpost(rad: dict) -> LagPost:
     if lag.forkortning not in register:
         raise ValueError(
             f"Rättskartan nämner {lag.forkortning!r} som inte finns i "
-            "lagrumsregistret – kartan får aldrig peka på okända lagar."
+            "lagrumsregistret. Kartan får aldrig peka på okända lagar."
         )
     for rel in lag.relaterade:
         if rel not in register:
@@ -175,7 +175,7 @@ def lagnot(forkortning: str) -> str:
     rader = [
         frontmatter,
         "",
-        f"# {forkortning} – {info.namn}",
+        f"# {forkortning}: {info.namn}",
         "",
         f"> [!{omrade.farg}] I korthet",
         f"> {lag.beskrivning}",
@@ -189,7 +189,7 @@ def lagnot(forkortning: str) -> str:
         rader += ["## Relaterade lagar", ""]
         for rel in lag.relaterade:
             rel_info = register[rel]
-            rader.append(f"- [[{rel}]] – {rel_info.namn}")
+            rader.append(f"- [[{rel}]]: {rel_info.namn}")
         rader.append("")
     rader += [
         "## Läs lagen",
@@ -237,7 +237,7 @@ def omradesnot(omrade: Omrade) -> str:
         ]
         if under.lagar:
             for lag in under.lagar:
-                rader.append(f"- [[{lag.forkortning}]] – {lag.beskrivning}")
+                rader.append(f"- [[{lag.forkortning}]]: {lag.beskrivning}")
         else:
             rader.append("*Inga lagar ur kursens lagrumslista i detta underområde.*")
         rader.append("")
@@ -253,8 +253,8 @@ _FALLTYPSGUIDE: tuple[tuple[str, str], ...] = (
     ("Oklart om ett bindande avtal alls har ingåtts", "[[AvtL]]"),
     ("Person eller egendom har skadats utan avtalsband", "[[SkL]]"),
     ("Någon har sagts upp eller avskedats", "[[LAS]]"),
-    ("Skilsmässa eller separation – vad ska delas?", "[[ÄktB]] eller [[SamboL]]"),
-    ("Dödsfall – vem ärver och vad säger testamentet?", "[[ÄB]]"),
+    ("Skilsmässa eller separation: vad ska delas?", "[[ÄktB]] eller [[SamboL]]"),
+    ("Dödsfall: vem ärver och vad säger testamentet?", "[[ÄB]]"),
     ("Misstanke om brott", "[[BrB]]"),
     ("Dom finns men gäldenären betalar inte", "[[UB]]"),
     ("Företaget kan inte betala sina skulder", "[[KonkL]]"),
@@ -270,19 +270,19 @@ _FALLTYPSGUIDE: tuple[tuple[str, str], ...] = (
 def _tradgren(omrade: Omrade) -> list[str]:
     """Rendera ett toppområde som hopfällbar, färgkodad callout-gren."""
     rader = [
-        f"> [!{omrade.farg}]- **[[{omrade.namn}]]** — {omrade.beskrivning}",
+        f"> [!{omrade.farg}]- **[[{omrade.namn}]]**: {omrade.beskrivning}",
         f"> *När:* {omrade.nar}",
         ">",
     ]
     for under in omrade.underomraden:
         lank = f"[[{omrade.namn}#{under.namn}|{under.namn}]]"
-        rader.append(f"> > [!{omrade.farg}]- **{lank}** — {under.beskrivning}")
+        rader.append(f"> > [!{omrade.farg}]- **{lank}**: {under.beskrivning}")
         rader.append(f"> > *När:* {under.nar}")
         if under.lagar:
             rader.append("> >")
             for lag in under.lagar:
                 rader.append(
-                    f"> > - [[{lag.forkortning}]] — {lag.beskrivning} "
+                    f"> > - [[{lag.forkortning}]]: {lag.beskrivning} "
                     f"*När:* {lag.nar}"
                 )
         rader.append(">")
@@ -301,7 +301,7 @@ def rattskarta_not() -> str:
     rader = [
         frontmatter,
         "",
-        "# Rättskartan – det svenska rättssystemet",
+        "# Rättskartan: det svenska rättssystemet",
         "",
         "Svensk rätt delas traditionellt i **civilrätt** (förhållanden mellan "
         "enskilda) och **offentlig rätt** (förhållandet mellan enskilda och det "
@@ -313,7 +313,7 @@ def rattskarta_not() -> str:
         "> [!question]- Så använder du kartan",
         "> - **Fäll ut** en gren genom att klicka på pilen i rutans vänsterkant.",
         "> - **Klicka** på en länk för att öppna områdes- eller lagnoten.",
-        "> - **Hovra** över en länk för en förhandsvisning – aktivera "
+        "> - **Hovra** över en länk för en förhandsvisning. Aktivera "
         "kärnpluginen *Sidförhandsvisning* (Page preview) i Obsidian.",
         "> - **Färgerna** skiljer områdena åt: blå = civilrätt, turkos = familj "
         "och arv, orange = straffrätt, lila = process och exekution, grå = "
@@ -337,7 +337,7 @@ def rattskarta_not() -> str:
     rader += [f"| {situation} | {lag} |" for situation, lag in _FALLTYPSGUIDE]
     rader += [
         "",
-        "Fler än en lag kan vara tillämplig samtidigt – ett avskedande kan "
+        "Fler än en lag kan vara tillämplig samtidigt. Ett avskedande kan "
         "t.ex. väcka både [[LAS]]-frågor och skadeståndsfrågor enligt [[SkL]]. "
         "Följ länkarna *Relaterade lagar* i varje lagnot för att se kopplingarna.",
         "",

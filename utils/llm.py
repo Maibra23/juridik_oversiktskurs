@@ -306,7 +306,7 @@ def cached_chat(
     Cachen nyckas på promptinnehåll så att identiska inputs träffar cachen.
 
     Räkningen är centraliserad här: varje distinkt prompt debiteras
-    sessionstaket exakt en gång — på den körning som faktiskt når API:t.
+    sessionstaket exakt en gång, på den körning som faktiskt når API:t.
     Cacheträffar och tillfälliga reruns återanvänder det lagrade svaret
     utan att förbruka taket. Anroparna ska därför INTE själva anropa
     increment_session_calls.

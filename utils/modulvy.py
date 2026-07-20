@@ -1,8 +1,8 @@
 """Delad modulsidevy: Rättsfall, Quiz och Lagrumsjakt.
 
 Varje modulsida i pages/ är ett tunt skal som sätter st.set_page_config och
-anropar rendera_modulsida(...). Själva innehållet – tre flikar med RNTS-
-formulär, deterministiskt rättad quiz och lagrumsjakt – bor här så att alla
+anropar rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
+formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
 åtta moduler delar exakt samma flöde.
 
 Verifieringsprincip: Normfältet och lagrumsjakten rättas deterministiskt med
@@ -71,7 +71,7 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
 
     try:
         modul = ladda_modul(filnamn)
-    except Exception as exc:  # noqa: BLE001 – vi vill visa ett vänligt fel i UI:t
+    except Exception as exc:  # noqa: BLE001 (vi vill visa ett vänligt fel i UI:t)
         render_varning(
             f"Kunde inte läsa övningsinnehållet för modulen ({exc}). "
             "Kontrollera scenariofilen."
@@ -152,7 +152,7 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         registrera_case_analys(modul, case, svar)
 
     st.caption(
-        "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."
+        "Tutorn granskar din analys steg för steg. Den skriver inte lösningen åt dig."
     )
     system_prompt, user_prompt = build_case_prompt(case, svar)
     tutorknapp(

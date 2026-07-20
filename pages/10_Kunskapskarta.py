@@ -3,7 +3,7 @@
 Visar en interaktiv kunskapsgraf över de rättsfall studenten genomfört den här
 sessionen och de lagrum de bygger på. Lagrum som återkommer i flera fall blir
 gemensamma noder, så grafen synliggör hur samma paragraf tillämpas i olika
-situationer — samma sammanlänkning som Obsidianexporten ger, men live i appen.
+situationer, samma sammanlänkning som Obsidianexporten ger men live i appen.
 
 Datat kommer från session_state (utils.obsidian.hamta_case_analyser) och byggs
 deterministiskt utan LLM. Kartan växer allteftersom studenten fyller i fler
@@ -44,7 +44,7 @@ st.html(
         lead=(
             "Varje rättsfall du fyllt i en RNTS-analys för visas här tillsammans "
             "med de lagrum det bygger på. Lagrum som återkommer i flera fall blir "
-            "gemensamma noder – dra i grafen och se hur paragraferna binder ihop "
+            "gemensamma noder. Dra i grafen och se hur paragraferna binder ihop "
             "situationerna."
         ),
     )

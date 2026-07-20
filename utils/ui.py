@@ -441,8 +441,8 @@ def render_statuspanel() -> None:
         '<div class="jok-status">'
         f'<div class="rad"><span>LLM-tutor</span><span class="prick">{prick}</span></div>'
         f'<div class="rad"><span>Modell</span><span>{html.escape(modell)}</span></div>'
-        f'<div class="rad"><span>Anrop kvar (session)</span><span>{sess}/{SESSION_CALL_CAP}</span></div>'
-        f'<div class="rad"><span>Dagsbudget kvar</span><span>{dag}/{get_daily_cap()}</span></div>'
+        f'<div class="rad"><span>Anrop kvar i sessionen</span><span>{sess}/{SESSION_CALL_CAP}</span></div>'
+        f'<div class="rad"><span>Anrop kvar i dag</span><span>{dag}/{get_daily_cap()}</span></div>'
         "</div>"
     )
 
@@ -456,7 +456,7 @@ def _render_model_selector() -> None:
         get_active_model,
     )
 
-    with st.expander("Modell", expanded=False):
+    with st.expander("Byt modell", expanded=False):
         val = st.radio(
             "Välj modell",
             options=(DEFAULT_MODEL, ALTERNATIVE_MODEL),
@@ -469,7 +469,13 @@ def _render_model_selector() -> None:
 
 
 def render_sidebar(active_page: str = "hem") -> None:
-    """Sidopanel: navigering överst, statuspanel och modellväljare nederst."""
+    """Sidopanelens innehåll under Streamlits egen sidnavigering.
+
+    Streamlit renderar själv länklistan över pages/ högst upp i panelen.
+    Den här funktionen lägger till rubrik, LLM-status och modellväljare
+    under den. ``active_page`` markerar anropande sida och är reserverad
+    för kommande markering av aktiv länk; den påverkar inget i dag.
+    """
     with st.sidebar:
         st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')
         st.caption("Fallbaserad träning med RNTS-metoden.")

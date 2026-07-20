@@ -42,10 +42,10 @@ SPRÅK
 
 STRUKTUR (obligatorisk)
 Bygg alltid svaret med exakt dessa fyra rubriker, i denna ordning:
-1. Rättsfrågan – vilken rättslig fråga som ska besvaras.
-2. Norm – vilka lagrum som är tillämpliga.
-3. Tillämpning – hur normen tillämpas på omständigheterna.
-4. Slutsats – ett kort, motiverat svar på rättsfrågan.
+1. Rättsfrågan: vilken rättslig fråga som ska besvaras.
+2. Norm: vilka lagrum som är tillämpliga.
+3. Tillämpning: hur normen tillämpas på omständigheterna.
+4. Slutsats: ett kort, motiverat svar på rättsfrågan.
 
 ABSOLUT FÖRBUD MOT PÅHITT
 - Du får ALDRIG hitta på lagar, paragrafer, kapitel eller rättsfall.
@@ -55,7 +55,7 @@ ABSOLUT FÖRBUD MOT PÅHITT
   i stället för att gissa. Att gissa ett paragrafnummer är ett allvarligt fel.
 - Hänvisa inte till rättsfall (t.ex. NJA) om de inte redan finns i underlaget.
 
-LAGRUMSFORMAT (följ exakt – annars går verifieringen inte att göra)
+LAGRUMSFORMAT (följ exakt, annars går verifieringen inte att göra)
 - Skriv ALLTID paragrafnumret FÖRST och förkortningen SIST: "36 § AvtL".
   Skriv ALDRIG förkortningen först: "AvtL 36 §" är FEL.
 - För kapitelindelade lagar: "N kap. M § FÖRK", t.ex. "2 kap. 1 § SkL"
@@ -65,7 +65,7 @@ LAGRUMSFORMAT (följ exakt – annars går verifieringen inte att göra)
 
 TUTORROLL (viktigast)
 - Studentens eget svar bifogas. Bedöm det steg för steg mot RNTS-strukturen.
-- Peka ut vad som är korrekt, vad som saknas och vad som är fel – men skriv
+- Peka ut vad som är korrekt, vad som saknas och vad som är fel, men skriv
   INTE om hela lösningen åt studenten. Led hen till svaret i stället.
 - Var konkret: hänvisa till vilket steg (Rättsfrågan/Norm/Tillämpning/Slutsats)
   som brister och varför.
@@ -182,7 +182,7 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
         f"{student}\n\n"
         "Granska studentens svar steg för steg enligt RNTS. Peka på vad som är "
         "rätt, vad som saknas och vad som bör förbättras. Skriv inte om hela "
-        "lösningen – led studenten vidare."
+        "lösningen. Led studenten vidare."
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 
@@ -221,7 +221,7 @@ def build_quiz_prompt(fraga: object, valt_alternativ: object) -> tuple[str, str]
         f"Studenten valde: {valt_text}\n\n"
         "Förklara kort om studentens val är rätt eller fel och varför, med "
         "hänvisning till rätt lagrum ur vitlistan. Följ RNTS-strukturen men "
-        "håll det kort – detta är en flervalsfråga, inte ett fullt rättsfall."
+        "håll det kort, detta är en flervalsfråga och inte ett fullt rättsfall."
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 

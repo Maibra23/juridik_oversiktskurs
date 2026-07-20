@@ -38,7 +38,6 @@ from utils.ui import (  # noqa: E402
     render_info,
     render_sidebar,
     section_heading,
-    summary_box,
 )
 
 inject_css()
@@ -51,71 +50,63 @@ MODULER = [
         "roll": "Grund",
         "titel": "Juridisk metod",
         "tag": "Kap. 1",
-        "beskrivning": "Rättskälleläran, lagtolkning och RNTS-strukturen. "
-        "Grunden som allt annat vilar på.",
+        "beskrivning": "Rättskälleläran, lagtolkning och RNTS-strukturen.",
         "sida": "pages/1_Juridisk_metod.py",
     },
     {
         "roll": "Avtal",
         "titel": "Avtalsrätt",
         "tag": "Kap. 7",
-        "beskrivning": "Anbud och accept, fullmakt (behörighet mot befogenhet), "
-        "ogiltighet och 36 § AvtL.",
+        "beskrivning": "Anbud och accept, fullmakt, ogiltighet och 36 § AvtL.",
         "sida": "pages/2_Avtalsratt.py",
     },
     {
         "roll": "Köp",
         "titel": "Köp- och konsumenträtt",
         "tag": "Kap. 8",
-        "beskrivning": "KöpL mot KKöpL, dröjsmål, fel, påföljder och reklamation.",
+        "beskrivning": "KöpL mot KKöpL, dröjsmål, fel och påföljder.",
         "sida": "pages/3_Kop_och_konsumentratt.py",
     },
     {
         "roll": "Skadestånd",
         "titel": "Skadeståndsrätt",
         "tag": "Kap. 10",
-        "beskrivning": "Culparegeln, adekvat kausalitet, principalansvar och "
-        "ren förmögenhetsskada.",
+        "beskrivning": "Culparegeln, adekvat kausalitet och principalansvar.",
         "sida": "pages/4_Skadestandsratt.py",
     },
     {
         "roll": "Arbete",
         "titel": "Arbetsrätt",
         "tag": "Kap. 11",
-        "beskrivning": "Anställningsformer, uppsägning mot avsked (LAS) och "
-        "diskriminering.",
+        "beskrivning": "Anställningsformer, uppsägning mot avsked och diskriminering.",
         "sida": "pages/5_Arbetsratt.py",
     },
     {
         "roll": "Bolag",
         "titel": "Associationsrätt",
         "tag": "Kap. 12",
-        "beskrivning": "Bolagsformerna, personligt ansvar i handelsbolag mot "
-        "aktiebolag och aktiebolagets organisation.",
+        "beskrivning": "Bolagsformerna och personligt ansvar i olika bolag.",
         "sida": "pages/6_Associationsratt.py",
     },
     {
         "roll": "Familj & arv",
         "titel": "Familje- och successionsrätt",
         "tag": "Kap. 18–21",
-        "beskrivning": "Giftorättsgods mot enskild egendom, bodelning, "
-        "arvsordning, laglott, testamente och särkullbarn.",
+        "beskrivning": "Bodelning, arvsordning, laglott och testamente.",
         "sida": "pages/7_Familje_och_arvsratt.py",
     },
     {
         "roll": "Straff & process",
         "titel": "Straff- och processrätt",
         "tag": "Kap. 22",
-        "beskrivning": "Brottsbegreppets objektiva och subjektiva sida, uppsåt "
-        "mot oaktsamhet och ansvarsfrihetsgrunder.",
+        "beskrivning": "Brottsbegreppet, uppsåt mot oaktsamhet och ansvarsfrihet.",
         "sida": "pages/8_Straff_och_processratt.py",
     },
     {
         "roll": "Pröva",
         "titel": "Kunskapstest",
         "tag": "Alla moduler",
-        "beskrivning": "Samlad resultatöversikt över dina quiz per modul, med "
-        "genvägar vidare till modulernas övningar.",
+        "beskrivning": "Samlad resultatöversikt över dina quiz per modul.",
         "sida": "pages/9_Kunskapstest.py",
     },
 ]
@@ -128,32 +119,18 @@ def render_landing() -> None:
             eyebrow="JURIDISK ÖVERSIKTSKURS",
             title="Träna att tänka juridiskt, inte att läsa passivt",
             lead=(
-                "Kursboken är bred, men tentan mäter förmågan att tillämpa "
-                "juridisk metod på konkreta fall. Här övar du fallbaserat: "
-                "identifiera rättsfrågan, hitta rätt lagrum, tillämpa normen "
-                "och dra en slutsats — med en tutor som granskar ditt eget "
-                "resonemang och kvalitetssäkrar varje lagrum."
+                "Öva fallbaserat: identifiera rättsfrågan, hitta rätt lagrum, "
+                "tillämpa normen och dra en slutsats."
             ),
         )
     )
 
     # Disclaimer högt upp: appen ger inte juridisk rådgivning (PRD 4).
     render_info(
-        "Detta är ett studieverktyg, inte juridisk rådgivning. Använd inte "
-        "appen för verkliga rättsliga beslut och mata inte in personuppgifter."
+        "Ett studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
     )
 
-    st.html(
-        section_heading("PARETOURVALET", "Åtta moduler som ger 80 % av tentanyttan")
-    )
-    st.html(
-        summary_box(
-            "Kursen har 22 kapitel, men fallfrågorna återkommer inom ett fåtal "
-            "områden. Vi tränar de åtta där juridisk metod ger mest utdelning: "
-            "från avtal och köp till skadestånd, familj och arv, arbetsrätt och "
-            "straffrätt — allt med samma RNTS-struktur så att metoden blir vana."
-        )
-    )
+    st.html(section_heading("MODULER", "Åtta områden där juridisk metod ger mest"))
     st.html(module_map(MODULER))
 
     # Riktiga navigeringslänkar under kartan (modulkorten är inte klickbara).
@@ -175,22 +152,6 @@ def render_landing() -> None:
     )
 
     _render_framsteg()
-
-    with st.expander("Om appen och metoden", expanded=False):
-        st.markdown(
-            """
-            **RNTS** står för Rättsfrågan, Norm, Tillämpning, Slutsats — den
-            struktur som juridisk metod bygger på. Tutorn förklarar dina egna
-            svar steg för steg i stället för att lösa fallet åt dig.
-
-            **Hallucinationsskydd:** varje lagrum i ett tutorsvar kontrolleras
-            mot kursens lagrumslista. Verifierade lagrum blir klickbara länkar
-            till lagen.nu; övriga markeras med en varning så att du kan
-            kontrollera dem själv.
-
-            Alla scenarier är fiktiva. Appen ger ingen juridisk rådgivning.
-            """
-        )
 
     st.html(footer_note())
 
@@ -235,8 +196,8 @@ def _render_framsteg() -> None:
                 "spreadsheetml.sheet",
             )
 
-    # Obsidianvalvet är värdefullt redan utan analyser: Rättskartan – en
-    # klickbar, hopfällbar karta över rättssystemet – följer alltid med.
+    # Obsidianvalvet är värdefullt redan utan analyser: Rättskartan, en
+    # klickbar och hopfällbar karta över rättssystemet, följer alltid med.
     st.download_button(
         "Ladda ner Obsidianvalv med Rättskartan (zip)",
         data=bygg_valv(hamta_case_analyser()),
@@ -245,12 +206,8 @@ def _render_framsteg() -> None:
     )
     st.info(
         "Packa upp zipen och öppna mappen **Juridik** som ett valv i Obsidian. "
-        "**Rättskartan** ger en hopfällbar, klickbar karta över hela "
-        "rättssystemet med en not per lag: vad den täcker, när den ska "
-        "övervägas och hur den hänger ihop med andra lagar. Varje genomförd "
-        "RNTS-analys blir dessutom en egen not — grafvyn och backlinks visar "
-        "alla rättsfall där ett lagrum tillämpats. Repetitionsavsnitten "
-        "fungerar med pluginen Spaced Repetition."
+        "**Rättskartan** är en klickbar karta över rättssystemet, och varje "
+        "genomförd RNTS-analys blir en egen not."
     )
 
 

@@ -104,6 +104,16 @@
                 "UB",
                 "KonkL"
               ]
+            },
+            {
+              "forkortning": "PreskL",
+              "beskrivning": "Preskription av fordringar: tio år som huvudregel men tre år mot konsument, och vad som avbryter preskriptionen.",
+              "nar": "Fordran är gammal och gäldenären invänder att den inte längre kan göras gällande. Avgör först om gäldenären är konsument.",
+              "relaterade": [
+                "SkbrL",
+                "KonkL",
+                "UB"
+              ]
             }
           ]
         },

@@ -99,9 +99,17 @@ Tillkom efter helhetsgranskningen: Paretourvalet startade på Avtalsrätt (kap 7
 
 Lagrumsregistret utökades samtidigt med 9 kap. FB, lagen (1986:796) om godtrosförvärv av lösöre och lagen (2017:310) om framtidsfullmakter. Paragrafintervallen är kontrollerade mot rkrattsbaser.gov.se respektive lagen.nu. Rättskartan fick ett nytt underområde så att varje registrerad lag har en plats i kartan.
 
-### 3.4 (UI) Hierarkisk sidopanel
+### 3.4 (INN) Civilrättens sista luckor: Fastighetsrätt och Fordringsrätt
 
-Sidopanelen ritas av utils.ui.render_sidopanel ur trädet i utils/navigation.py och följer bokens avdelningar i stället för en platt sidlista. Streamlits egen sidlista är avstängd med st.navigation(..., position="hidden"). Planerade men ej byggda moduler visas gråtonade med "(kommer)". tests/test_navigation.py vaktar att varje modul pekar på en befintlig fil eller är märkt som planerad, och att ingen sida i pages/ hamnar utanför trädet.
+Sidopanelen visade kap 9 och kap 15 till 17 som planerade. Båda är nu byggda enligt samma schema, så att civilrätten inte har några tomma sidor kvar. Lagrumsregistret utökades med 2 kap. JB (tillbehör) och preskriptionslagen (1981:130), kontrollerade mot lagen.nu. Kvar som planerade är endast konstitutionell rätt och förvaltningsrätt, alltså den offentliga rätten.
+
+### 3.5 (LLM) Genererade rättsfall i varje modul
+
+Rättsfallsfliken i varje modul kan nu generera ett nytt, fiktivt fall inom modulens rättsområde via utils.generator, med samma verifiering och fallback som Kunskapsutmaningen. Syftet är att studenten inte ska kunna memorera de kuraterade fallen. Generering sker endast på knapptryck enligt PRD 5.3: Streamlit kör om skriptet vid varje tangenttryck i RNTS-fälten, så automatisk generering vid rerun skulle byta ut fallet mitt i skrivandet. Knappen "Visa kursens rättsfall" tar tillbaka de kuraterade fallen.
+
+### 3.6 (UI) Hierarkisk sidopanel
+
+Sidopanelen ritas av utils.ui.render_sidopanel ur trädet i utils/navigation.py och följer bokens avdelningar i stället för en platt sidlista. Streamlits egen sidlista är avstängd med st.navigation(..., position="hidden"). Hela trädet visas samtidigt utan hopfällbara sektioner. Planerade men ej byggda moduler visas gråtonade med "(kommer)". tests/test_navigation.py vaktar att varje modul pekar på en befintlig fil eller är märkt som planerad, och att ingen sida i pages/ hamnar utanför trädet.
 
 ### 3.3 (PE) Promptjustering mot verklig modell
 Prompt:

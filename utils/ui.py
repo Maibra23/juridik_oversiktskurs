@@ -23,7 +23,7 @@ import re
 
 import streamlit as st
 
-from utils.navigation import NAV_TRAD, Modul, Nod, byggda_namn
+from utils.navigation import NAV_TRAD, Modul, Nod
 
 APP_VERSION = "0.1.0"
 APP_UPDATED = "2026-07-08"
@@ -179,6 +179,12 @@ def inject_css() -> None:
            Nivåerna skiljs åt med indrag, storlek och färgstyrka, inte med
            ikoner: huvudkategori (versaler, blå) > underkategori (bläck)
            > undergren (grå) > modul (st.page_link). */
+        .jok-nav-kategori {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--bla); font-weight: 700;
+            margin: 1.1rem 0 .2rem 0;
+        }}
         .jok-nav-under {{
             font-size: 13px; font-weight: 600; color: var(--bl);
             margin: .5rem 0 .15rem 0;
@@ -510,19 +516,20 @@ def _render_nod(nod: "Nod", niva: int) -> None:
 
 
 def render_sidopanel() -> None:
-    """Rita navigeringsträdet: en hopfällbar sektion per huvudkategori.
+    """Rita hela navigeringsträdet som en sammanhållen lista.
 
     Speglar svensk rätts systematik enligt utils.navigation.NAV_TRAD i
-    stället för en platt sidlista. Sektionen som innehåller den öppna sidan
-    fälls ut automatiskt, övriga hålls ihopfällda så att panelen inte blir
-    för lång.
+    stället för en platt sidlista. Allt visas samtidigt: inga hopfällbara
+    sektioner per huvudkategori, eftersom en panel som måste öppnas döljer
+    kursens struktur i stället för att visa den. Nivåerna skiljs åt med
+    indrag och färgstyrka enligt design_system.md 4.1.
     """
-    aktiv = st.session_state.get("_jok_aktiv_sida", "")
     for kategori in NAV_TRAD:
-        namn = byggda_namn((kategori,))
-        with st.expander(kategori.namn, expanded=(aktiv in namn)):
-            for barn in kategori.barn:
-                _render_nod(barn, niva=1)
+        st.html(
+            f'<div class="jok-nav-kategori">{html.escape(kategori.namn)}</div>'
+        )
+        for barn in kategori.barn:
+            _render_nod(barn, niva=1)
 
 
 def render_sidebar() -> None:

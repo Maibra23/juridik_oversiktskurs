@@ -32,7 +32,7 @@ Syftet med appen är att ge fallbaserad träning med en LLM tutor som förklarar
 
 ### 5.1 Moduler (Paretourvalet, P0)
 
-Paretourvalet omfattar tio moduler. Personrätt och allmän förmögenhetsrätt (kap 5 och 6) tillkom efter att en granskning visade att RNTS analysen i senare moduler förutsätter begrepp därifrån: fullmaktsläran i avtalsrätten bygger på rättshandlingsförmåga, och köprättens felregler förutsätter att äganderättsfrågan är avgjord.
+Paretourvalet omfattar tolv moduler. Personrätt och allmän förmögenhetsrätt (kap 5 och 6) tillkom efter att en granskning visade att RNTS analysen i senare moduler förutsätter begrepp därifrån: fullmaktsläran i avtalsrätten bygger på rättshandlingsförmåga, och köprättens felregler förutsätter att äganderättsfrågan är avgjord.
 
 Urvalet bygger på bokens innehållsförteckning och vad som typiskt examineras med fallfrågor på JÖK:
 
@@ -41,13 +41,15 @@ Urvalet bygger på bokens innehållsförteckning och vad som typiskt examineras 
 3. **Allmän förmögenhetsrätt** (kap 6): äganderättens övergång till lös egendom, godtrosförvärv och undantaget för olovligen tagen egendom, lösningsrätt och hävd. Förutsättningen för köprätten: vem äger saken?
 4. **Avtalsrätt** (kap 7): anbud och accept, fullmakt (behörighet mot befogenhet), ogiltighet, 36 § AvtL.
 5. **Köprätt** (kap 8): KöpL mot KKöpL, dröjsmål, fel, påföljder, reklamation.
-6. **Skadeståndsrätt** (kap 10): culparegeln, adekvat kausalitet, principalansvar, ren förmögenhetsskada.
-7. **Arbetsrätt** (kap 11): anställningsformer, uppsägning mot avsked (LAS), diskriminering.
-8. **Associationsrätt** (kap 12): bolagsformer, personligt ansvar, aktiebolagets organisation.
-9. **Familjerätt och successionsrätt** (kap 18 till 21): giftorättsgods mot enskild egendom, bodelning, arvsordning, laglott, testamente, särkullbarn.
-10. **Straffrätt och processrätt** (kap 22): brottsbegreppets objektiva och subjektiva sida, uppsåt mot oaktsamhet, ansvarsfrihetsgrunder.
+6. **Fastighetsrätt** (kap 9): fastighets- och byggnadstillbehör (2 kap. JB), formkravet vid köp av fast egendom, felbegreppet och den stränga undersökningsplikten (4 kap. 19 § JB), panträtt genom inteckning.
+7. **Skadeståndsrätt** (kap 10): culparegeln, adekvat kausalitet, principalansvar, ren förmögenhetsskada.
+8. **Arbetsrätt** (kap 11): anställningsformer, uppsägning mot avsked (LAS), diskriminering.
+9. **Associationsrätt** (kap 12): bolagsformer, personligt ansvar, aktiebolagets organisation.
+10. **Fordringsrätt** (kap 15 till 17): löpande mot enkla skuldebrev och gäldenärens invändningar mot ny borgenär, preskription och preskriptionsavbrott, obeståndsbegreppet, utmätning och exekutionstitel.
+11. **Familjerätt och successionsrätt** (kap 18 till 21): giftorättsgods mot enskild egendom, bodelning, arvsordning, laglott, testamente, särkullbarn.
+12. **Straffrätt och processrätt** (kap 22): brottsbegreppets objektiva och subjektiva sida, uppsåt mot oaktsamhet, ansvarsfrihetsgrunder.
 
-P1 moduler: Fastighetsrätt (kap 9), Fordringsrätt (kap 15 till 17). P2: övriga kapitel.
+P1 moduler: konstitutionell rätt (kap 2 till 3) och förvaltningsrätt (kap 4). De visas i sidopanelen som planerade med texten "(kommer)". P2: övriga kapitel.
 
 ### 5.2 Scenariotyper (P0)
 

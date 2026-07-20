@@ -61,7 +61,7 @@ Sidopanelen speglar svensk rätts systematik i stället för filordningen i page
 
 | Nivå | Exempel | Komponent | Typografi och färg |
 |---|---|---|---|
-| Huvudkategori | CIVILRÄTT | `st.expander` | Versaler, expanderns egen etikett. Hopfälld som standard, utfälld när den öppna sidan ligger i sektionen. |
+| Huvudkategori | CIVILRÄTT | `.jok-nav-kategori` | 12 px monospace, versaler, teckenmellanrum 0.1 em, myndighetsblå (`--bla`), fet. |
 | Underkategori | Förmögenhetsrätt | `.jok-nav-under` | 13 px, halvfet, bläck (`--bl`). Marginal ovanför för att gruppera. |
 | Undergren | Kontraktsrätt | `.jok-nav-gren` | 12 px, halvfet, grå `#6B6459`, indrag 0.6 rem. |
 | Modul (byggd) | Avtalsrätt | `st.page_link` | Streamlits länkstil, ärver appens accentfärg. |
@@ -70,7 +70,7 @@ Sidopanelen speglar svensk rätts systematik i stället för filordningen i page
 Regler:
 
 * Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att kursens omfattning syns utan att ge trasiga länkar.
-* Huvudkategorier hålls hopfällda som standard. Endast sektionen som innehåller den öppna sidan fälls ut, så att panelen inte växer okontrollerat.
+* Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer kursens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång.
 * Paragrafguld (`--guld`) används aldrig i navigeringen. Guld är reserverat för lagrum enligt avsnitt 1.
 * Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag och färgstyrka.
 

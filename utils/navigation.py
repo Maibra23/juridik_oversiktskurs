@@ -90,7 +90,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
                                 "Köp- och konsumenträtt",
                                 "pages/3_Kop_och_konsumentratt.py",
                             ),  # kap 8
-                            Modul("Fastighetsrätt"),  # kap 9, ej byggd
+                            Modul(
+                                "Fastighetsrätt", "pages/14_Fastighetsratt.py"
+                            ),  # kap 9
                         ),
                     ),
                     Grupp(
@@ -112,7 +114,11 @@ NAV_TRAD: tuple[Grupp, ...] = (
                     ),
                     Grupp(
                         "Kredit- och obeståndsrätt",
-                        (Modul("Fordringsrätt"),),  # kap 15-17, ej byggd
+                        (
+                            Modul(
+                                "Fordringsrätt", "pages/15_Fordringsratt.py"
+                            ),
+                        ),  # kap 15-17
                     ),
                 ),
             ),

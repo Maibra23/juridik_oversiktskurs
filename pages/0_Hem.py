@@ -27,7 +27,7 @@ from utils.ui import (
     section_heading,
 )
 
-# Paretourvalet: åtta P0-moduler (PRD avsnitt 5.1) och sidfilerna de länkar
+# Paretourvalet: tolv P0-moduler (PRD avsnitt 5.1) och sidfilerna de länkar
 # till. Ordningen speglar bokens kapitelföljd.
 MODULER = [
     {
@@ -66,6 +66,13 @@ MODULER = [
         "sida": "pages/3_Kop_och_konsumentratt.py",
     },
     {
+        "roll": "Fastighet",
+        "titel": "Fastighetsrätt",
+        "tag": "Kap. 9",
+        "beskrivning": "Tillbehör, formkrav vid köp och undersökningsplikt.",
+        "sida": "pages/14_Fastighetsratt.py",
+    },
+    {
         "roll": "Skadestånd",
         "titel": "Skadeståndsrätt",
         "tag": "Kap. 10",
@@ -85,6 +92,13 @@ MODULER = [
         "tag": "Kap. 12",
         "beskrivning": "Bolagsformerna och personligt ansvar i olika bolag.",
         "sida": "pages/6_Associationsratt.py",
+    },
+    {
+        "roll": "Fordringar",
+        "titel": "Fordringsrätt",
+        "tag": "Kap. 15-17",
+        "beskrivning": "Löpande mot enkla skuldebrev, preskription och obestånd.",
+        "sida": "pages/15_Fordringsratt.py",
     },
     {
         "roll": "Familj & arv",
@@ -128,7 +142,7 @@ def render_landing() -> None:
         "Ett studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
     )
 
-    st.html(section_heading("MODULER", "Tio moduler där juridisk metod ger mest"))
+    st.html(section_heading("MODULER", "Tolv moduler där juridisk metod ger mest"))
     st.html(module_map(MODULER))
 
     # Riktiga navigeringslänkar under kartan (modulkorten är inte klickbara).

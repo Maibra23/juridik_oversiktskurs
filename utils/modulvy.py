@@ -3,7 +3,10 @@
 Varje modulsida i pages/ är ett tunt skal som bara anropar
 rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
 formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
-åtta moduler delar exakt samma flöde.
+moduler delar exakt samma flöde.
+
+Rättsfallsfliken kan visa antingen kursens kuraterade fall eller ett
+nygenererat fall från utils.generator, på studentens knapptryck.
 
 Verifieringsprincip: Normfältet och lagrumsjakten rättas deterministiskt med
 utils.lagrum INNAN någon LLM alls anropas. Tutorn (utils.tutor) körs endast
@@ -11,6 +14,8 @@ på uttryckligt knapptryck och dess svar renderas med verifierade lagrumschips.
 """
 
 from __future__ import annotations
+
+import dataclasses
 
 import streamlit as st
 
@@ -22,6 +27,7 @@ from utils.lagrum import (
     validera_lagrum,
 )
 from utils.export import registrera_case_genomford
+from utils.generator import generera_case
 from utils.obsidian import registrera_case_analys
 from utils.prompts import build_case_prompt, build_quiz_prompt
 from utils.quiz import (
@@ -84,7 +90,7 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
 
     flik_case, flik_quiz, flik_jakt = st.tabs(["Rättsfall", "Quiz", "Lagrumsjakt"])
     with flik_case:
-        _rendera_rattsfall(modul)
+        _rendera_rattsfall(filnamn, modul)
     with flik_quiz:
         _rendera_quiz(modul)
     with flik_jakt:
@@ -103,9 +109,71 @@ def _ingress(filnamn: str) -> str:
 # --- Flik 1: Rättsfall (RNTS-formulär) --------------------------------------
 
 
-def _rendera_rattsfall(modul: Modulscenarier) -> None:
+def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
+    """Rättsfallsfliken: ett nygenererat fall, eller kursens kuraterade.
+
+    Studenten kan begära ett helt nytt, fiktivt rättsfall inom modulens
+    rättsområde. Varje lagrum i facit verifieras mot lagrumsregistret innan
+    fallet visas; misslyckas det faller vi tillbaka på ett kuraterat fall
+    (utils.generator). Generering sker endast på knapptryck, aldrig
+    automatiskt vid rerun (PRD 5.3): Streamlit kör om skriptet vid varje
+    tangenttryck i RNTS-fälten, och ett fall som bytts ut mitt i skrivandet
+    vore obrukbart.
+    """
     if not modul.case:
         st.info("Inga rättsfall i den här modulen ännu.")
+        return
+
+    n_case = f"gen_case_{filnamn}"
+    n_notis = f"gen_notis_{filnamn}"
+    n_kalla = f"gen_kalla_{filnamn}"
+    n_raknare = f"gen_raknare_{filnamn}"
+
+    kol_ny, kol_kuraterat = st.columns(2)
+    with kol_ny:
+        generera = st.button(
+            "Generera nytt rättsfall",
+            key=f"gen_knapp_{filnamn}",
+            type="primary",
+            use_container_width=True,
+            help="Skapar ett nytt, fiktivt fall inom modulens rättsområde. "
+            "Varje lagrum i facit kontrolleras mot kursens lagrumslista.",
+        )
+    with kol_kuraterat:
+        tillbaka = st.button(
+            "Visa kursens rättsfall",
+            key=f"kur_knapp_{filnamn}",
+            use_container_width=True,
+            disabled=n_case not in st.session_state,
+        )
+
+    if tillbaka:
+        for nyckel in (n_case, n_notis, n_kalla):
+            st.session_state.pop(nyckel, None)
+
+    if generera:
+        with st.spinner("Genererar ett nytt rättsfall och kontrollerar lagrummen …"):
+            resultat = generera_case(filnamn)
+        # Unikt id per generering så att RNTS-formuläret börjar tomt.
+        raknare = st.session_state.get(n_raknare, 0) + 1
+        st.session_state[n_raknare] = raknare
+        st.session_state[n_case] = dataclasses.replace(
+            resultat.case, id=f"{filnamn}-gen-{raknare}"
+        )
+        st.session_state[n_kalla] = resultat.kalla
+        st.session_state[n_notis] = resultat.notis
+
+    genererat = st.session_state.get(n_case)
+    if genererat is not None:
+        notis = st.session_state.get(n_notis)
+        if notis:
+            render_varning(notis)
+        elif st.session_state.get(n_kalla) == "genererad":
+            st.success(
+                "Nytt rättsfall genererat och grundat mot kursens lagrum. "
+                "Skriv din RNTS-analys och be tutorn granska den."
+            )
+        rendera_case_ovning(modul.modul, genererat)
         return
 
     rubriker = [c.rubrik for c in modul.case]

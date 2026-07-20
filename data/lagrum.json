@@ -5,7 +5,7 @@
     "kapitelindelad": "https://lagen.nu/SFS#K<kapitel>P<paragraf>",
     "not": "lagen_nu_url per avsnitt pekar på avsnittets första paragraf. Paragrafbokstäver (t.ex. 7 a §) utelämnas ur ankaret eftersom lagen.nu ankrar på grundparagrafen."
   },
-  "antal_lagar": 20,
+  "antal_lagar": 21,
   "lagar": [
     {
       "forkortning": "AvtL",
@@ -210,6 +210,14 @@
           "paragraf_fran": "1",
           "paragraf_till": "5",
           "lagen_nu_url": "https://lagen.nu/1970:994#K1P1",
+          "verifiera": true
+        },
+        {
+          "beskrivning": "Fastighetstillbehör, byggnadstillbehör och industritillbehör: gränsen mot lös egendom",
+          "kapitel": "2",
+          "paragraf_fran": "1",
+          "paragraf_till": "7",
+          "lagen_nu_url": "https://lagen.nu/1970:994#K2P1",
           "verifiera": true
         },
         {
@@ -994,6 +1002,39 @@
           "paragraf_fran": "9",
           "paragraf_till": "30",
           "lagen_nu_url": "https://lagen.nu/2017:310#P9",
+          "verifiera": false
+        }
+      ]
+    },
+    {
+      "forkortning": "PreskL",
+      "namn": "Preskriptionslag",
+      "sfs": "1981:130",
+      "kapitelindelad": false,
+      "lagen_nu_bas_url": "https://lagen.nu/1981:130",
+      "kursavsnitt": [
+        {
+          "beskrivning": "Preskriptionstid: tio år, men tre år för konsumentfordringar",
+          "kapitel": null,
+          "paragraf_fran": "1",
+          "paragraf_till": "4",
+          "lagen_nu_url": "https://lagen.nu/1981:130#P1",
+          "verifiera": false
+        },
+        {
+          "beskrivning": "Preskriptionsavbrott och verkan av avbrott",
+          "kapitel": null,
+          "paragraf_fran": "5",
+          "paragraf_till": "8",
+          "lagen_nu_url": "https://lagen.nu/1981:130#P5",
+          "verifiera": false
+        },
+        {
+          "beskrivning": "Preskriptionens verkningar och borgensmans ansvar",
+          "kapitel": null,
+          "paragraf_fran": "9",
+          "paragraf_till": "13",
+          "lagen_nu_url": "https://lagen.nu/1981:130#P9",
           "verifiera": false
         }
       ]

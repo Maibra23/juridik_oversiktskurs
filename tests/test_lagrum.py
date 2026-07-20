@@ -25,14 +25,19 @@ from utils.lagrum import (
 
 # --- Register ---------------------------------------------------------------
 
-def test_register_laddas_med_18_lagar():
+def test_register_laddas_med_20_lagar():
+    """Antalet höjdes från 18 till 20 när kap 5 och 6 fick egna moduler.
+
+    GFL och LFF tillkom med Personrätt och Allmän förmögenhetsrätt. Testet
+    är ett skydd mot att lagar tappas bort vid redigering av lagrum.json.
+    """
     reg = lagrum_register()
-    assert len(reg) == 18
+    assert len(reg) == 20
 
 
 def test_register_innehaller_forvantade_forkortningar():
     fk = giltiga_forkortningar()
-    for forkortning in ("AvtL", "SkL", "ÄktB", "ÄB", "KöpL", "LAS"):
+    for forkortning in ("AvtL", "SkL", "ÄktB", "ÄB", "KöpL", "LAS", "GFL", "LFF"):
         assert forkortning in fk
 
 

@@ -9,6 +9,33 @@
       "nar": "Tvisten står mellan enskilda parter och gäller pengar, avtal eller egendom, inte straff eller myndighetsutövning.",
       "underomraden": [
         {
+          "id": "personratt",
+          "namn": "Personrätt och allmän förmögenhetsrätt",
+          "beskrivning": "Grundbegreppen: vem som kan handla rättsligt bindande och hur äganderätt till lös egendom övergår.",
+          "nar": "Frågan gäller partens förmåga att binda sig, eller om en förvärvare fick äganderätt trots att säljaren inte ägde saken.",
+          "lagar": [
+            {
+              "forkortning": "LFF",
+              "beskrivning": "Framtidsfullmakt: hur någon i förväg utser den som ska sköta ens angelägenheter vid framtida beslutsoförmåga, med krav på skriftlighet och två vittnen.",
+              "nar": "En person vill i förväg bestämma vem som ska företräda hen, eller en upprättad framtidsfullmakt ska prövas mot formkraven.",
+              "relaterade": [
+                "FB",
+                "AvtL"
+              ]
+            },
+            {
+              "forkortning": "GFL",
+              "beskrivning": "Godtrosförvärv av lösöre: när en godtroende köpare som fått saken i sin besittning blir ägare, och undantaget för olovligen tagen egendom.",
+              "nar": "Säljaren visar sig inte ha varit ägare. Skilj anförtrodd egendom från stöldgods.",
+              "relaterade": [
+                "KöpL",
+                "JB",
+                "BrB"
+              ]
+            }
+          ]
+        },
+        {
           "id": "avtalsratt",
           "namn": "Avtalsrätt",
           "beskrivning": "Hur avtal uppstår, vem som kan ingå dem och när de kan angripas.",
@@ -18,7 +45,12 @@
               "forkortning": "AvtL",
               "beskrivning": "Hur avtal ingås genom anbud och accept, fullmakt (behörighet och befogenhet) samt när avtal kan ogiltigförklaras eller jämkas, t.ex. enligt 36 §.",
               "nar": "Frågan gäller om ett bindande avtal finns, vem som kunde binda någon annan eller om ett avtal kan angripas som ogiltigt eller oskäligt.",
-              "relaterade": ["KöpL", "KKöpL", "SkbrL", "HBL"]
+              "relaterade": [
+                "KöpL",
+                "KKöpL",
+                "SkbrL",
+                "HBL"
+              ]
             }
           ]
         },
@@ -32,19 +64,28 @@
               "forkortning": "KöpL",
               "beskrivning": "Köp av lös egendom mellan näringsidkare eller mellan privatpersoner: dröjsmål, fel i varan och påföljder. Dispositiv, så parternas avtal går före lagen.",
               "nar": "Köparen är inte konsument. Är köparen konsument gäller i stället konsumentköplagen.",
-              "relaterade": ["KKöpL", "AvtL"]
+              "relaterade": [
+                "KKöpL",
+                "AvtL"
+              ]
             },
             {
               "forkortning": "KKöpL",
               "beskrivning": "Konsumentskydd när en privatperson köper varor av ett företag: fel, reklamation och påföljder. Tvingande till konsumentens förmån.",
               "nar": "En privatperson har köpt en vara av en näringsidkare. Avtalsvillkor som är sämre för konsumenten än lagen gäller inte.",
-              "relaterade": ["KöpL", "MFL", "AvtL"]
+              "relaterade": [
+                "KöpL",
+                "MFL",
+                "AvtL"
+              ]
             },
             {
               "forkortning": "MFL",
               "beskrivning": "Regler mot vilseledande och aggressiv marknadsföring, riktade mot företags säljmetoder.",
               "nar": "Frågan gäller reklamen eller säljmetoden i sig, inte det enskilda köpeavtalet.",
-              "relaterade": ["KKöpL"]
+              "relaterade": [
+                "KKöpL"
+              ]
             }
           ]
         },
@@ -58,7 +99,11 @@
               "forkortning": "SkbrL",
               "beskrivning": "Skuldebrev, löpande och enkla: vad som händer när de överlåts och vilka invändningar gäldenären får behålla mot en ny borgenär.",
               "nar": "En dokumenterad penningfordran har bytt ägare eller ska drivas in. Skilj löpande från enkla skuldebrev.",
-              "relaterade": ["AvtL", "UB", "KonkL"]
+              "relaterade": [
+                "AvtL",
+                "UB",
+                "KonkL"
+              ]
             }
           ]
         },
@@ -72,7 +117,11 @@
               "forkortning": "SkL",
               "beskrivning": "Utomobligatoriskt skadestånd: culparegeln, person- och sakskada, ren förmögenhetsskada och arbetsgivares principalansvar.",
               "nar": "Någon har vållat en skada utan avtalsband. Pröva culpa, adekvat kausalitet och vilken skadetyp det gäller.",
-              "relaterade": ["BrB", "KöpL", "LAS"]
+              "relaterade": [
+                "BrB",
+                "KöpL",
+                "LAS"
+              ]
             }
           ]
         },
@@ -86,7 +135,10 @@
               "forkortning": "JB",
               "beskrivning": "Jordabalken reglerar fast egendom: formkrav vid fastighetsköp, fel i fastighet, hyra, servitut och panträtt.",
               "nar": "Frågan rör köp av fastighet (formkraven i 4 kap.), fel i fastighet eller rättigheter som belastar fastigheten.",
-              "relaterade": ["AvtL", "ÄktB"]
+              "relaterade": [
+                "AvtL",
+                "ÄktB"
+              ]
             }
           ]
         },
@@ -100,13 +152,19 @@
               "forkortning": "ABL",
               "beskrivning": "Aktiebolag: bildande, aktiekapital, bolagets organ (stämma, styrelse, VD) och huvudregeln att aktieägare inte svarar personligen för bolagets skulder.",
               "nar": "Frågan rör ett aktiebolags organisation, vem som får företräda bolaget eller aktieägarnas ansvarsfrihet.",
-              "relaterade": ["HBL", "KonkL"]
+              "relaterade": [
+                "HBL",
+                "KonkL"
+              ]
             },
             {
               "forkortning": "HBL",
               "beskrivning": "Handelsbolag, kommanditbolag och enkla bolag: bolagsmännens inbördes förhållanden och deras personliga, solidariska ansvar för bolagets skulder.",
               "nar": "Flera driver verksamhet tillsammans utan aktiebolag. Då svarar bolagsmännen personligen och solidariskt.",
-              "relaterade": ["ABL", "AvtL"]
+              "relaterade": [
+                "ABL",
+                "AvtL"
+              ]
             }
           ]
         },
@@ -120,7 +178,10 @@
               "forkortning": "LAS",
               "beskrivning": "Anställningsskydd: anställningsformer, krav på sakliga skäl för uppsägning, avsked vid grovt åsidosättande samt turordningsregler.",
               "nar": "Någon sägs upp, avskedas eller visstidsanställs. Skilj alltid uppsägning från avsked.",
-              "relaterade": ["SkL", "AvtL"]
+              "relaterade": [
+                "SkL",
+                "AvtL"
+              ]
             }
           ]
         }
@@ -143,13 +204,20 @@
               "forkortning": "ÄktB",
               "beskrivning": "Äktenskapsbalken: giftorättsgods och enskild egendom, bodelning vid skilsmässa och dödsfall samt makars underhåll.",
               "nar": "Makars egendom ska delas eller skyddas. Skilj giftorättsgods från enskild egendom.",
-              "relaterade": ["SamboL", "ÄB", "JB"]
+              "relaterade": [
+                "SamboL",
+                "ÄB",
+                "JB"
+              ]
             },
             {
               "forkortning": "SamboL",
               "beskrivning": "Sambolagen: bodelning av gemensam bostad och gemensamt bohag när ett samboförhållande upphör.",
               "nar": "Ogifta partner separerar. Bara samboegendom (gemensam bostad och bohag skaffat för gemensamt bruk) ingår.",
-              "relaterade": ["ÄktB", "ÄB"]
+              "relaterade": [
+                "ÄktB",
+                "ÄB"
+              ]
             }
           ]
         },
@@ -163,7 +231,11 @@
               "forkortning": "FB",
               "beskrivning": "Föräldrabalken: faderskap och föräldraskap, vårdnad och umgänge, förmynderskap samt underårigas begränsade rättshandlingsförmåga.",
               "nar": "En omyndig har ingått avtal, eller frågan gäller vårdnad och vem som företräder barnet.",
-              "relaterade": ["ÄB", "ÄktB", "AvtL"]
+              "relaterade": [
+                "ÄB",
+                "ÄktB",
+                "AvtL"
+              ]
             }
           ]
         },
@@ -177,7 +249,11 @@
               "forkortning": "ÄB",
               "beskrivning": "Ärvdabalken: arvsordningen (arvsklasserna), efterlevande makes rätt, särkullbarn, laglott och formkraven för testamente.",
               "nar": "Någon har avlidit. Vem ärver enligt lag, vad kan testamenteras bort och vad skyddar laglotten?",
-              "relaterade": ["ÄktB", "FB", "SamboL"]
+              "relaterade": [
+                "ÄktB",
+                "FB",
+                "SamboL"
+              ]
             }
           ]
         }
@@ -200,7 +276,10 @@
               "forkortning": "BrB",
               "beskrivning": "Brottsbalken: de centrala brotten (stöld, misshandel, bedrägeri m.fl.), kravet på uppsåt eller oaktsamhet samt ansvarsfrihetsgrunder som nödvärn.",
               "nar": "Frågan gäller om ett brott har begåtts. Börja i den objektiva sidan och pröva sedan den subjektiva.",
-              "relaterade": ["SkL", "RB"]
+              "relaterade": [
+                "SkL",
+                "RB"
+              ]
             }
           ]
         }
@@ -223,7 +302,10 @@
               "forkortning": "RB",
               "beskrivning": "Rättegångsbalken: domstolarna, rättegången i tvistemål och brottmål, bevisning och rättegångskostnader.",
               "nar": "Processuella frågor: behörig domstol, bevisbörda, hur ett mål drivs.",
-              "relaterade": ["BrB", "UB"]
+              "relaterade": [
+                "BrB",
+                "UB"
+              ]
             }
           ]
         },
@@ -237,13 +319,22 @@
               "forkortning": "UB",
               "beskrivning": "Utsökningsbalken: verkställighet av domar och andra exekutionstitlar genom Kronofogden, framför allt utmätning.",
               "nar": "Borgenären har redan en exekutionstitel och vill få betalt ur gäldenärens egendom.",
-              "relaterade": ["KonkL", "SkbrL", "RB"]
+              "relaterade": [
+                "KonkL",
+                "SkbrL",
+                "RB"
+              ]
             },
             {
               "forkortning": "KonkL",
               "beskrivning": "Konkurslagen: obeståndsbegreppet, konkursförfarandet, förvaltarens roll och återvinning av vissa transaktioner.",
               "nar": "Gäldenären kan inte betala sina skulder i takt med att de förfaller och oförmågan är inte tillfällig.",
-              "relaterade": ["UB", "ABL", "HBL", "SkbrL"]
+              "relaterade": [
+                "UB",
+                "ABL",
+                "HBL",
+                "SkbrL"
+              ]
             }
           ]
         }

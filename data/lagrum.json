@@ -5,7 +5,7 @@
     "kapitelindelad": "https://lagen.nu/SFS#K<kapitel>P<paragraf>",
     "not": "lagen_nu_url per avsnitt pekar på avsnittets första paragraf. Paragrafbokstäver (t.ex. 7 a §) utelämnas ur ankaret eftersom lagen.nu ankrar på grundparagrafen."
   },
-  "antal_lagar": 18,
+  "antal_lagar": 20,
   "lagar": [
     {
       "forkortning": "AvtL",
@@ -637,6 +637,14 @@
           "verifiera": true
         },
         {
+          "beskrivning": "Underårigs omyndighet, rättshandlingsförmåga och återgång av avtal som ingåtts utan samtycke",
+          "kapitel": "9",
+          "paragraf_fran": "1",
+          "paragraf_till": "8",
+          "lagen_nu_url": "https://lagen.nu/1949:381#K9P1",
+          "verifiera": true
+        },
+        {
           "beskrivning": "Vårdnad, boende och umgänge (barnets bästa)",
           "kapitel": "6",
           "paragraf_fran": "1",
@@ -931,6 +939,64 @@
         }
       ],
       "not": "Ersatte konsumentköplagen (1990:932) från 2022-05-01. Kapitelindelad."
+    },
+    {
+      "forkortning": "GFL",
+      "namn": "Lag om godtrosförvärv av lösöre",
+      "sfs": "1986:796",
+      "kapitelindelad": false,
+      "lagen_nu_bas_url": "https://lagen.nu/1986:796",
+      "kursavsnitt": [
+        {
+          "beskrivning": "Godtrosförvärv av lösöre: överlåtelse från icke-ägare, besittning och god tro",
+          "kapitel": null,
+          "paragraf_fran": "1",
+          "paragraf_till": "2",
+          "lagen_nu_url": "https://lagen.nu/1986:796#P1",
+          "verifiera": false
+        },
+        {
+          "beskrivning": "Undantaget för olovligen tagen egendom och hävd efter tio år",
+          "kapitel": null,
+          "paragraf_fran": "3",
+          "paragraf_till": "4",
+          "lagen_nu_url": "https://lagen.nu/1986:796#P3",
+          "verifiera": false
+        },
+        {
+          "beskrivning": "Lösningsrätt, lösenbelopp och godtrosförvärv av panträtt",
+          "kapitel": null,
+          "paragraf_fran": "5",
+          "paragraf_till": "8",
+          "lagen_nu_url": "https://lagen.nu/1986:796#P5",
+          "verifiera": false
+        }
+      ]
+    },
+    {
+      "forkortning": "LFF",
+      "namn": "Lag om framtidsfullmakter",
+      "sfs": "2017:310",
+      "kapitelindelad": false,
+      "lagen_nu_bas_url": "https://lagen.nu/2017:310",
+      "kursavsnitt": [
+        {
+          "beskrivning": "Vad en framtidsfullmakt är, vem som får upprätta en och formkraven",
+          "kapitel": null,
+          "paragraf_fran": "1",
+          "paragraf_till": "8",
+          "lagen_nu_url": "https://lagen.nu/2017:310#P1",
+          "verifiera": false
+        },
+        {
+          "beskrivning": "När framtidsfullmakten träder i kraft och fullmaktshavarens uppdrag",
+          "kapitel": null,
+          "paragraf_fran": "9",
+          "paragraf_till": "30",
+          "lagen_nu_url": "https://lagen.nu/2017:310#P9",
+          "verifiera": false
+        }
+      ]
     }
   ]
 }

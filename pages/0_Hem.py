@@ -38,6 +38,20 @@ MODULER = [
         "sida": "pages/1_Juridisk_metod.py",
     },
     {
+        "roll": "Person",
+        "titel": "Personrätt",
+        "tag": "Kap. 5",
+        "beskrivning": "Rättskapacitet, underårigas avtal och framtidsfullmakt.",
+        "sida": "pages/12_Personratt.py",
+    },
+    {
+        "roll": "Egendom",
+        "titel": "Allmän förmögenhetsrätt",
+        "tag": "Kap. 6",
+        "beskrivning": "Äganderättens övergång, godtrosförvärv och lösningsrätt.",
+        "sida": "pages/13_Allman_formogenhetsratt.py",
+    },
+    {
         "roll": "Avtal",
         "titel": "Avtalsrätt",
         "tag": "Kap. 7",
@@ -114,7 +128,7 @@ def render_landing() -> None:
         "Ett studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
     )
 
-    st.html(section_heading("MODULER", "Åtta områden där juridisk metod ger mest"))
+    st.html(section_heading("MODULER", "Tio moduler där juridisk metod ger mest"))
     st.html(module_map(MODULER))
 
     # Riktiga navigeringslänkar under kartan (modulkorten är inte klickbara).

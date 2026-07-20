@@ -3,8 +3,9 @@
 Ansvarar för allt visuellt som delas mellan sidorna:
 - inject_css: appens gemensamma stilar (palett ur design_system.md,
   varningsbadge för overifierade lagrum, lagrumschips)
-- render_sidebar / render_statuspanel: navigering, modellväljare och
-  räknare för återstående LLM-anrop (session + dagsbudget)
+- render_sidebar / render_sidopanel / render_statuspanel: navigeringsträdet
+  ur utils.navigation, modellväljare och räknare för återstående LLM-anrop
+  (session + dagsbudget)
 - hero, section_heading, summary_box, module_map, pipeline_steps,
   footer_note: HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
@@ -21,6 +22,8 @@ import html
 import re
 
 import streamlit as st
+
+from utils.navigation import NAV_TRAD, Modul, Nod, byggda_namn
 
 APP_VERSION = "0.1.0"
 APP_UPDATED = "2026-07-08"
@@ -171,6 +174,22 @@ def inject_css() -> None:
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
+
+        /* Navigeringshierarki i sidopanelen (design_system.md 4.1).
+           Nivåerna skiljs åt med indrag, storlek och färgstyrka, inte med
+           ikoner: huvudkategori (versaler, blå) > underkategori (bläck)
+           > undergren (grå) > modul (st.page_link). */
+        .jok-nav-under {{
+            font-size: 13px; font-weight: 600; color: var(--bl);
+            margin: .5rem 0 .15rem 0;
+        }}
+        .jok-nav-gren {{
+            font-size: 12px; font-weight: 600; color: #6B6459;
+            letter-spacing: .02em; margin: .4rem 0 .15rem .6rem;
+        }}
+        .jok-nav-kommer {{
+            font-size: 13px; color: #9A9384; margin: .1rem 0 .1rem .6rem;
+        }}
         .jok-footer {{
             margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ram);
             font-size: 13px; color: #6B6459; max-width: 46rem;
@@ -468,16 +487,56 @@ def _render_model_selector() -> None:
         st.session_state[MODEL_SESSION_KEY] = val
 
 
-def render_sidebar() -> None:
-    """Sidopanelens innehåll under sidnavigeringen.
+def _render_nod(nod: "Nod", niva: int) -> None:
+    """Rita en nod i navigeringsträdet rekursivt.
 
-    Navigeringslistan byggs av st.navigation i streamlit_app.py. Den här
-    funktionen lägger rubrik, LLM-status och modellväljare under den och
-    anropas en gång per körning från ingångspunkten.
+    ``niva`` är djupet under huvudkategorin: 1 = underkategori, 2 och nedåt
+    = undergren. Moduler ritas som länkar, planerade moduler som gråtonad
+    text med "(kommer)".
+    """
+    if isinstance(nod, Modul):
+        if nod.sida is None:
+            st.html(
+                f'<div class="jok-nav-kommer">{html.escape(nod.namn)} (kommer)</div>'
+            )
+        else:
+            st.page_link(nod.sida, label=nod.namn)
+        return
+
+    klass = "jok-nav-under" if niva <= 1 else "jok-nav-gren"
+    st.html(f'<div class="{klass}">{html.escape(nod.namn)}</div>')
+    for barn in nod.barn:
+        _render_nod(barn, niva + 1)
+
+
+def render_sidopanel() -> None:
+    """Rita navigeringsträdet: en hopfällbar sektion per huvudkategori.
+
+    Speglar svensk rätts systematik enligt utils.navigation.NAV_TRAD i
+    stället för en platt sidlista. Sektionen som innehåller den öppna sidan
+    fälls ut automatiskt, övriga hålls ihopfällda så att panelen inte blir
+    för lång.
+    """
+    aktiv = st.session_state.get("_jok_aktiv_sida", "")
+    for kategori in NAV_TRAD:
+        namn = byggda_namn((kategori,))
+        with st.expander(kategori.namn, expanded=(aktiv in namn)):
+            for barn in kategori.barn:
+                _render_nod(barn, niva=1)
+
+
+def render_sidebar() -> None:
+    """Sidopanelens innehåll: navigeringsträd, LLM-status och modellväljare.
+
+    Anropas en gång per körning från streamlit_app.py, som registrerar
+    samma sidor i st.navigation med position="hidden" så att Streamlits
+    egen platta sidlista inte ritas parallellt med trädet.
     """
     with st.sidebar:
         st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')
         st.caption("Fallbaserad träning med RNTS-metoden.")
+        st.divider()
+        render_sidopanel()
         st.divider()
         render_statuspanel()
         _render_model_selector()

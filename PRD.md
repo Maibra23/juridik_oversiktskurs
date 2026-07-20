@@ -32,18 +32,22 @@ Syftet med appen är att ge fallbaserad träning med en LLM tutor som förklarar
 
 ### 5.1 Moduler (Paretourvalet, P0)
 
+Paretourvalet omfattar tio moduler. Personrätt och allmän förmögenhetsrätt (kap 5 och 6) tillkom efter att en granskning visade att RNTS analysen i senare moduler förutsätter begrepp därifrån: fullmaktsläran i avtalsrätten bygger på rättshandlingsförmåga, och köprättens felregler förutsätter att äganderättsfrågan är avgjord.
+
 Urvalet bygger på bokens innehållsförteckning och vad som typiskt examineras med fallfrågor på JÖK:
 
 1. **Juridisk metod och rättskällor** (kap 1): rättskälleläran, lagtolkning, RNTS strukturen. Grunden för allt annat.
-2. **Avtalsrätt** (kap 7): anbud och accept, fullmakt (behörighet mot befogenhet), ogiltighet, 36 § AvtL.
-3. **Köprätt** (kap 8): KöpL mot KKöpL, dröjsmål, fel, påföljder, reklamation.
-4. **Skadeståndsrätt** (kap 10): culparegeln, adekvat kausalitet, principalansvar, ren förmögenhetsskada.
-5. **Arbetsrätt** (kap 11): anställningsformer, uppsägning mot avsked (LAS), diskriminering.
-6. **Associationsrätt** (kap 12): bolagsformer, personligt ansvar, aktiebolagets organisation.
-7. **Familjerätt och successionsrätt** (kap 18 till 21): giftorättsgods mot enskild egendom, bodelning, arvsordning, laglott, testamente, särkullbarn.
-8. **Straffrätt och processrätt** (kap 22): brottsbegreppets objektiva och subjektiva sida, uppsåt mot oaktsamhet, ansvarsfrihetsgrunder.
+2. **Personrätt** (kap 5): rättskapacitet och rättshandlingsförmåga, underårigas omyndighet och avtalsbundenhet (9 kap. FB), framtidsfullmakt, god man och förvaltare. Förutsättningen för avtalsrätten: vem kan över huvud taget binda sig?
+3. **Allmän förmögenhetsrätt** (kap 6): äganderättens övergång till lös egendom, godtrosförvärv och undantaget för olovligen tagen egendom, lösningsrätt och hävd. Förutsättningen för köprätten: vem äger saken?
+4. **Avtalsrätt** (kap 7): anbud och accept, fullmakt (behörighet mot befogenhet), ogiltighet, 36 § AvtL.
+5. **Köprätt** (kap 8): KöpL mot KKöpL, dröjsmål, fel, påföljder, reklamation.
+6. **Skadeståndsrätt** (kap 10): culparegeln, adekvat kausalitet, principalansvar, ren förmögenhetsskada.
+7. **Arbetsrätt** (kap 11): anställningsformer, uppsägning mot avsked (LAS), diskriminering.
+8. **Associationsrätt** (kap 12): bolagsformer, personligt ansvar, aktiebolagets organisation.
+9. **Familjerätt och successionsrätt** (kap 18 till 21): giftorättsgods mot enskild egendom, bodelning, arvsordning, laglott, testamente, särkullbarn.
+10. **Straffrätt och processrätt** (kap 22): brottsbegreppets objektiva och subjektiva sida, uppsåt mot oaktsamhet, ansvarsfrihetsgrunder.
 
-P1 moduler: Fastighetsrätt (kap 9), Fordringsrätt (kap 15). P2: övriga kapitel.
+P1 moduler: Fastighetsrätt (kap 9), Fordringsrätt (kap 15 till 17). P2: övriga kapitel.
 
 ### 5.2 Scenariotyper (P0)
 

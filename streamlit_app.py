@@ -29,11 +29,14 @@ st.set_page_config(
 
 from utils.ui import inject_css, render_sidebar  # noqa: E402
 
-# Titeln är etiketten i sidopanelen och i webbläsarfliken. Sökvägen måste
-# matcha filnamnet i pages/ exakt.
+# Titeln är etiketten i webbläsarfliken. Sökvägen måste matcha filnamnet i
+# pages/ exakt. Ordningen här saknar betydelse för sidopanelen: den ritas av
+# utils.ui.render_sidopanel ur navigeringsträdet i utils.navigation.
 SIDOR = [
     st.Page("pages/0_Hem.py", title="Hem", default=True),
     st.Page("pages/1_Juridisk_metod.py", title="Juridisk metod"),
+    st.Page("pages/12_Personratt.py", title="Personrätt"),
+    st.Page("pages/13_Allman_formogenhetsratt.py", title="Allmän förmögenhetsrätt"),
     st.Page("pages/2_Avtalsratt.py", title="Avtalsrätt"),
     st.Page("pages/3_Kop_och_konsumentratt.py", title="Köp- och konsumenträtt"),
     st.Page("pages/4_Skadestandsratt.py", title="Skadeståndsrätt"),
@@ -47,6 +50,9 @@ SIDOR = [
 ]
 
 inject_css()
-aktiv_sida = st.navigation(SIDOR)
+# position="hidden": Streamlits egen platta sidlista ritas inte, så att den
+# inte konkurrerar med det hierarkiska trädet i sidopanelen.
+aktiv_sida = st.navigation(SIDOR, position="hidden")
+st.session_state["_jok_aktiv_sida"] = aktiv_sida.title
 render_sidebar()
 aktiv_sida.run()

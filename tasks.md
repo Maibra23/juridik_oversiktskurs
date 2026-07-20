@@ -90,6 +90,19 @@ Prompt:
 ### 3.2 (INN) Resterande fem P0 moduler
 Prompt (en per modul, samma schema): Juridisk metod (kap 1), Köprätt (kap 8), Arbetsrätt (kap 11), Associationsrätt (kap 12), Straffrätt (kap 22). Minst 1 case, 6 MC, 3 lagrumsjakt per modul.
 
+### 3.3 (INN) Förkunskapsmodulerna Personrätt och Allmän förmögenhetsrätt
+
+Tillkom efter helhetsgranskningen: Paretourvalet startade på Avtalsrätt (kap 7) och hoppade därmed över de begrepp som avtals- och köprätten vilar på. Åtgärdat med två moduler enligt samma schema (minst 1 case, 6 MC, 3 lagrumsjakt):
+
+* **Personrätt** (kap 5): underårigs omyndighet och avtalsbundenhet (9 kap. FB), framtidsfullmakt (LFF), god man och förvaltare (11 kap. FB).
+* **Allmän förmögenhetsrätt** (kap 6): godtrosförvärv av lösöre (GFL), undantaget för olovligen tagen egendom, lösningsrätt och hävd.
+
+Lagrumsregistret utökades samtidigt med 9 kap. FB, lagen (1986:796) om godtrosförvärv av lösöre och lagen (2017:310) om framtidsfullmakter. Paragrafintervallen är kontrollerade mot rkrattsbaser.gov.se respektive lagen.nu. Rättskartan fick ett nytt underområde så att varje registrerad lag har en plats i kartan.
+
+### 3.4 (UI) Hierarkisk sidopanel
+
+Sidopanelen ritas av utils.ui.render_sidopanel ur trädet i utils/navigation.py och följer bokens avdelningar i stället för en platt sidlista. Streamlits egen sidlista är avstängd med st.navigation(..., position="hidden"). Planerade men ej byggda moduler visas gråtonade med "(kommer)". tests/test_navigation.py vaktar att varje modul pekar på en befintlig fil eller är märkt som planerad, och att ingen sida i pages/ hamnar utanför trädet.
+
 ### 3.3 (PE) Promptjustering mot verklig modell
 Prompt:
 > "Här är fem verkliga tutorsvar från Qwen (klistras in). Identifiera avvikelser från RNTS strukturen, engelska ord, ej verifierbara lagrum och överlånga svar. Föreslå konkreta ändringar i systemprompten och regenerera prompts.py."

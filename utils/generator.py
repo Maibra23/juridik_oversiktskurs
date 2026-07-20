@@ -109,14 +109,28 @@ def _fallback_case(modul: Modulscenarier, rng: random.Random) -> Case:
     return rng.choice(modul.case)
 
 
-def _standardklient() -> ChatKlient | None:
-    """Skapa en riktig LLM-klient, eller None om ingen token finns."""
-    try:
-        from utils.llm import LLMClient
+class _BudgeteradKlient:
+    """Adapter som skickar generatorns anrop genom utils.llm.cached_chat.
 
-        return LLMClient()
-    except LLMUnavailableError:
+    Generatorn får INTE tala med LLMClient direkt. cached_chat äger cachen,
+    sessionsräknaren och den gemensamma dagsbudgeten (PRD 5.5); ett anrop
+    förbi den skulle förbruka HF-token utan att debiteras och utan att
+    stoppas när taken är slut.
+    """
+
+    def chat(self, system_prompt: str, user_prompt: str) -> str:
+        from utils.llm import cached_chat
+
+        return cached_chat(system_prompt, user_prompt)
+
+
+def _standardklient() -> ChatKlient | None:
+    """Budgeterad LLM-klient, eller None om ingen token är konfigurerad."""
+    from utils.llm import is_llm_available
+
+    if not is_llm_available():
         return None
+    return _BudgeteradKlient()
 
 
 # --- Publikt API ------------------------------------------------------------

@@ -60,7 +60,14 @@ Du handleder just nu en student på Juridisk översiktskurs (JÖK).
 Ditt uppdrag är att träna studenten i juridisk metod, inte att lösa uppgiften åt hen."""
 
 _SPRAK = """SPRÅK
-- Skriv uteslutande på svenska juridisk facksvenska. Använd inga engelska ord."""
+- Skriv uteslutande på svenska juridisk facksvenska. Använd inga engelska ord.
+- Svara på svenska även om studentens svar är skrivet på ett annat språk.
+- Använd endast vedertagna svenska juridiska termer. Översätt ALDRIG en
+  utländsk term till något svenskliknande, och hitta aldrig på en term.
+  Skriv "adekvat kausalitet", aldrig "proxim meningskausalitet"; skriv
+  "oaktsamhet", aldrig "negligens".
+- Är du osäker på den vedertagna termen: beskriv begreppet med vanliga ord
+  i stället för att konstruera en term som ser juridisk ut."""
 
 _STRUKTUR_RNTS = """STRUKTUR (obligatorisk)
 Bygg alltid svaret med exakt dessa fyra rubriker, i denna ordning:
@@ -229,6 +236,17 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
     ``scenario`` är ett Case-objekt (utils.scenarier) eller en dict med
     fälten scenariotext och facit. ``studentens_svar`` är en mapping med
     RNTS-nycklar eller en färdig text.
+
+    Hela facit injiceras som sanningsunderlag, inte bara rättsfrågan. Skälet
+    är mätt: utan facit måste modellen härleda svensk rätt ur sina egna
+    vikter, och en 8B-modell gör det dåligt. Med kursens lösning i prompten
+    blir uppgiften jämförelse i stället för återgivning, vilket är avsevärt
+    lättare. Mätt mot Qwen3-8B över fyra fall gick träffbilden från 2 av 9
+    korrekta lagrum till 9 av 9, och modellen slutade intyga påhittade
+    paragrafer som rätt norm.
+
+    Facit är samtidigt en lösningsnyckel som studenten inte ska få. Prompten
+    förbjuder därför uttryckligen att den nämns eller lämnas ut.
     """
     scenariotext = _hamta(scenario, "scenariotext")
     facit = _hamta(scenario, "facit")
@@ -236,20 +254,49 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
         str(x) for x in cast("Iterable[object]", _hamta(facit, "lagrum", default=()))
     )
     rattsfraga = _hamta(facit, "rattsfraga", default="")
+    punkter = tuple(
+        str(x)
+        for x in cast(
+            "Iterable[object]", _hamta(facit, "tillampningspunkter", default=())
+        )
+    )
+    slutsats = _hamta(facit, "slutsats", default="")
 
     vitlista = vitlista_block(_forkortningar_ur(facit_lagrum))
     student = _formatera_studentsvar(studentens_svar)
+
+    punktrader = "\n".join(f"- {p}" for p in punkter) or "- (inga angivna)"
+    lagrumsrad = ", ".join(facit_lagrum) if facit_lagrum else "(inga angivna)"
 
     user_prompt = (
         f"{vitlista}\n\n"
         "RÄTTSFALL:\n"
         f"{scenariotext}\n\n"
-        f"RÄTTSFRÅGA (facit, till din vägledning): {rattsfraga}\n\n"
+        "KURSENS LÖSNING (ditt sanningsunderlag, endast för din bedömning):\n"
+        f"Rättsfråga: {rattsfraga}\n"
+        f"Tillämpliga lagrum: {lagrumsrad}\n"
+        f"Tillämpning:\n{punktrader}\n"
+        f"Slutsats: {slutsats}\n\n"
+        "SÅ ANVÄNDER DU KURSENS LÖSNING:\n"
+        "- Lösningen är korrekt. Avviker studentens svar från den är det "
+        "studenten som har fel.\n"
+        "- Anger studenten andra lagrum än lösningens: säg att de inte är "
+        "tillämpliga här, och ange vilka lagrum som är det.\n"
+        "- Nämner studenten ett lagrum som varken står i lösningen eller i "
+        "LAGRUMSVITLISTAN: slå fast att det inte är tillämpligt. Gissa aldrig "
+        "på vad ett sådant lagrum innehåller.\n"
+        "- Nämn ALDRIG ordet facit, lösningsnyckel eller att en färdig lösning "
+        "finns. Skriv som om bedömningen vore ditt eget omdöme.\n"
+        "- Servera inte ut lösningen. Studenten ska ledas fram till svaret. "
+        "Avslöja de lagrum som behövs för att peka i rätt riktning, men skriv "
+        "inte tillämpningen och slutsatsen åt studenten.\n"
+        "- Svara alltid på svenska, även om studentens svar är på ett annat "
+        "språk eller innehåller engelska uttryck.\n\n"
         "STUDENTENS EGET SVAR (RNTS):\n"
         f"{student}\n\n"
         "Granska studentens svar steg för steg enligt RNTS. Peka på vad som är "
-        "rätt, vad som saknas och vad som bör förbättras. Skriv inte om hela "
-        "lösningen. Led studenten vidare."
+        "rätt, vad som saknas och vad som är fel. Led studenten vidare i "
+        "stället för att skriva om lösningen."
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 

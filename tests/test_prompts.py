@@ -103,3 +103,58 @@ def test_build_quiz_prompt_markerar_valt_alternativ():
     assert valt.text in user
     assert "→" in user
     assert "LAGRUMSVITLISTA" in user
+
+
+# --- Facit som sanningsunderlag i fallgranskningen ---------------------------
+#
+# Utan facit måste modellen härleda svensk rätt ur sina egna vikter. Mätt mot
+# Qwen3-8B träffade den då 2 av 9 korrekta lagrum, hänvisade 8 gånger till
+# lagrum utanför facit och intygade en gång att ett påhittat "87 § AvtL" var
+# rätt norm. Med facit i prompten blev det 9 av 9 och noll påhitt.
+
+
+def test_case_prompt_injicerar_hela_facit():
+    """Lagrum, tillämpningspunkter och slutsats ska alla med, inte bara frågan."""
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "4 § AvtL"})
+
+    for lagrum in case.facit.lagrum:
+        assert lagrum in user, f"{lagrum} saknas i prompten"
+    for punkt in case.facit.tillampningspunkter:
+        assert punkt[:40] in user, "tillämpningspunkterna saknas"
+    assert case.facit.slutsats[:40] in user, "facits slutsats saknas"
+
+
+def test_case_prompt_forbjuder_ordet_facit_i_svaret():
+    """Studenten ska aldrig få veta att en lösningsnyckel finns.
+
+    Observerat i skarpt läge innan förbudet: "Fyll i rättsfrågan enligt facit."
+    """
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    lag = user.lower()
+    assert "aldrig ordet facit" in lag, "förbudet mot att nämna facit saknas"
+    # Underlaget ska finnas med, men bara som modellens egen bedömning.
+    assert "eget omdöme" in lag or "din egen bedömning" in lag
+
+
+def test_case_prompt_kraver_svenska():
+    """Svaret ska alltid vara på svenska, oavsett vad studenten skriver."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "The contract is void"})
+    assert "svenska" in user.lower()
+
+
+def test_case_prompt_ber_modellen_peka_ut_fel_lagrum():
+    """Kärnan i förbättringen: säg till när studentens lagrum inte är facits."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "36 § AvtL"})
+    assert "inte tillämpligt" in user or "inte är tillämpliga" in user
+
+
+def test_case_prompt_haller_igen_pa_hur_mycket_som_avslojas():
+    """Facit får vägleda granskningen, inte serveras som lösning."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    assert "inte ut lösningen" in user or "inte lösningen" in user

@@ -8,6 +8,8 @@ verify_lagrum-klassificering i matched/missing/hallucinated.
 
 from __future__ import annotations
 
+import pytest
+
 from utils.lagrum import (
     STATUS_EJ_VALIDERBAR,
     STATUS_OKAND_LAG,
@@ -165,6 +167,34 @@ def test_validera_okand_lag_pahittad_forkortning():
 def test_validera_kapitellag_utan_kapitel_ger_okand_paragraf():
     # ÄB är kapitelindelad; en referens utan kapitel kan inte verifieras.
     assert validera_lagrum("1 § ÄB") == STATUS_OKAND_PARAGRAF
+
+
+@pytest.mark.parametrize(
+    "ref",
+    [
+        "12 kap. 4 § AvtL",
+        "99 kap. 1 § AvtL",
+        "3 kap. 36 § AvtL",
+        "7 kap. 2 § KöpL",
+    ],
+)
+def test_validera_avvisar_kapitel_pa_lag_utan_kapitel(ref):
+    """En lag utan kapitelindelning får aldrig verifieras med ett kapitel.
+
+    Kapitelledet ignorerades tidigare helt när lagen saknade kapitel, så
+    "99 kap. 1 § AvtL" verifierades på styrkan av att AvtL har en 1 §. Ett
+    påhittat kapitel gick därmed igenom garden och renderades som ett
+    grönt, klickbart chip. Observerat när tutorn granskade ett studentsvar
+    som citerade "12 kap. 4 § AvtL".
+    """
+    assert validera_lagrum(ref) == STATUS_OKAND_PARAGRAF
+
+
+def test_validera_slapper_fortfarande_igenom_ratt_kapitellag():
+    """Regressionsvakt: skärpningen får inte träffa kapitelindelade lagar."""
+    assert validera_lagrum("2 kap. 1 § SkL") == STATUS_VERIFIERAD
+    assert validera_lagrum("3 kap. 1 § SkL") == STATUS_VERIFIERAD
+    assert validera_lagrum("36 § AvtL") == STATUS_VERIFIERAD
 
 
 def test_validera_accepterar_lagrumsref_objekt():

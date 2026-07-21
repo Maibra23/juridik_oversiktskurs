@@ -72,3 +72,50 @@ def test_render_tom_text():
     html_ut, ovarifierade = _tutortext_html("")
     assert ovarifierade == ()
     assert "jok-tutortext" in html_ut
+
+
+# --- Vad "verifierad" faktiskt betyder --------------------------------------
+
+
+def test_verifieringsnot_visas_nar_svaret_har_verifierade_lagrum():
+    """Ett grönt chip betyder att lagrummet finns, inte att det är rätt.
+
+    Verifieringen slår upp paragrafen i kursens lagrumslista. Den säger
+    ingenting om huruvida paragrafen är den tillämpliga för studentens fall.
+    Observerat i skarpt läge: tutorn hänvisade en korrekt löst uppgift vidare
+    till 36 § AvtL med påståendet att den "reglerar avtalens bildande", vilket
+    är fel. Chipet var ändå grönt och klickbart. Noten sätter den gränsen i
+    ord för studenten.
+    """
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, _ = _tutortext_html("Rätt norm är 36 § AvtL i det här fallet.")
+    assert _har_verifierade_lagrum(html_ut) is True
+
+
+def test_verifieringsnot_uteblir_utan_lagrum():
+    """Ingen not när svaret inte hänvisar till något lagrum alls."""
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, _ = _tutortext_html("Din struktur är tydlig, men utveckla slutsatsen.")
+    assert _har_verifierade_lagrum(html_ut) is False
+
+
+def test_verifieringsnot_uteblir_nar_alla_lagrum_ar_ovarifierade():
+    """Overifierade lagrum har redan sin egen, starkare varningsruta."""
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, ovarifierade = _tutortext_html("Se 87 § AvtL om acceptfrist.")
+    assert ovarifierade, "87 § AvtL ska vara overifierad"
+    assert _har_verifierade_lagrum(html_ut) is False
+
+
+def test_verifieringsnoten_lovar_inte_att_lagrummet_ar_ratt():
+    """Noten måste säga att den bara intygar existens, inte relevans."""
+    from utils.ui import VERIFIERINGSNOT
+
+    assert "finns" in VERIFIERINGSNOT.lower()
+    assert "inte" in VERIFIERINGSNOT.lower()
+    # Får aldrig formuleras som ett kvalitetsintyg.
+    for forbjudet in ("korrekt lagrum", "rätt lagrum", "garanterar"):
+        assert forbjudet not in VERIFIERINGSNOT.lower()

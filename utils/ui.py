@@ -452,15 +452,43 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
     return f'<div class="jok-tutortext"><p>{kropp}</p></div>', tuple(ovarifierade)
 
 
+# Vad ett grönt chip betyder, och inte betyder. Verifieringen slår upp
+# paragrafen i kursens lagrumslista: den intygar att lagrummet FINNS, aldrig
+# att det är det tillämpliga för studentens fall. Tutorn har observerats
+# hänvisa till existerande men irrelevanta paragrafer med självsäker och
+# felaktig beskrivning, och de renderas då som vanliga guldchips.
+VERIFIERINGSNOT = (
+    "Guldmarkerade lagrum finns i kursens lagrumslista och går att öppna på "
+    "lagen.nu. Det betyder inte att lagrummet är rätt för just ditt fall: läs "
+    "paragrafen och bedöm själv om den är tillämplig."
+)
+
+
+def _har_verifierade_lagrum(kropp_html: str) -> bool:
+    """Sant om tutorsvaret innehåller minst ett verifierat lagrumschip.
+
+    Läser den renderade HTML:en i stället för att köra verify_lagrum en gång
+    till: chipsen sätts bara in för träffar med status VERIFIERAD och egen URL.
+    """
+    return 'class="jok-chip"' in kropp_html
+
+
 def render_tutortext(text: str) -> None:
     """Rendera ett tutorsvar med verifierade lagrumschips och varningsruta.
 
     Verifierade lagrum blir klickbara lagen.nu-chips. Overifierade lagrum och
     rättsfall (t.ex. påhittade paragrafer eller NJA-referenser) samlas i en gul
     varningsruta så att studenten uppmanas kontrollera dem mot lagen.nu.
+
+    Finns det verifierade lagrum följer dessutom en kort not om vad
+    verifieringen faktiskt intygar. Overifierade lagrum får ingen not: de har
+    redan sin egen, starkare varningsruta.
     """
     kropp_html, ovarifierade = _tutortext_html(text)
     st.html(kropp_html)
+
+    if _har_verifierade_lagrum(kropp_html):
+        st.caption(VERIFIERINGSNOT)
 
     if ovarifierade:
         poster = "".join(

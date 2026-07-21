@@ -268,8 +268,14 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
     punktrader = "\n".join(f"- {p}" for p in punkter) or "- (inga angivna)"
     lagrumsrad = ", ".join(facit_lagrum) if facit_lagrum else "(inga angivna)"
 
+    # Lagtext för facits lagrum OCH studentens egna. Studentens tas med för
+    # att tutorn ska kunna säga *varför* en felaktig paragraf inte passar,
+    # i stället för att bara konstatera att den saknas i underlaget.
+    lagtext = _lagtext_for(facit_lagrum, _studentens_lagrum(student))
+
     user_prompt = (
         f"{vitlista}\n\n"
+        f"{lagtext}"
         "RÄTTSFALL:\n"
         f"{scenariotext}\n\n"
         "KURSENS LÖSNING (ditt sanningsunderlag, endast för din bedömning):\n"
@@ -324,9 +330,11 @@ def build_quiz_prompt(fraga: object, valt_alternativ: object) -> tuple[str, str]
         alt_rader.append(f"{markor}{a_text}")
 
     vitlista = vitlista_block(_forkortningar_ur(alt_lagrum))
+    lagtext = _lagtext_for(alt_lagrum)
 
     user_prompt = (
         f"{vitlista}\n\n"
+        f"{lagtext}"
         "FLERVALSFRÅGA:\n"
         f"{fragetext}\n\n"
         "SVARSALTERNATIV (studentens val markerat med →):\n"
@@ -430,6 +438,11 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
     vitlista = vitlista_block(_forkortningar_ur(lagrum))
     lagrumsrad = ", ".join(lagrum) if lagrum else "(inga angivna)"
 
+    # Begreppsfördjupningen saknade all faktagrund innan lagtexten kom in.
+    # Den är den enda LLM-ytan utan facit, så paragrafernas ordalydelse är
+    # det närmaste ett sanningsunderlag den kan få.
+    lagtext = _lagtext_for(lagrum)
+
     if las == LAS_OVNING:
         uppdrag = (
             "Skriv ETT kort, fiktivt övningsscenario (4-6 meningar) där just "
@@ -447,6 +460,7 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
 
     user_prompt = (
         f"{vitlista}\n\n"
+        f"{lagtext}"
         "BEGREPPETS GRUNDDATA (kursens verifierade underlag, får inte "
         "motsägas):\n"
         f"Term: {term}\n"
@@ -469,6 +483,30 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
     # RNTS-rubriker och förutsätter ett bifogat studentsvar, vilket skulle
     # säga emot uppdraget ovan.
     return SYSTEM_PROMPT_BEGREPP, user_prompt
+
+
+def _studentens_lagrum(text: str) -> tuple[str, ...]:
+    """Plocka ut de lagrum studenten själv skrivit, i den ordning de står."""
+    from utils.lagrum import extrahera_lagrum
+
+    return tuple(ref.ra for ref in extrahera_lagrum(text or ""))
+
+
+def _lagtext_for(*grupper: Iterable[str]) -> str:
+    """Bygg lagtextblocket för flera grupper av lagrum, med avslutande radbryt.
+
+    Returnerar tom sträng när ingen av referenserna har lagtext, så att
+    prompten inte får en rubrik utan innehåll. Grunden är utils.lagtext, som
+    hellre utelämnar en paragraf än gissar dess innehåll.
+    """
+    from utils.lagtext import lagtext_block
+
+    refs: list[str] = []
+    for grupp in grupper:
+        refs.extend(grupp)
+
+    block = lagtext_block(refs)
+    return f"{block}\n\n" if block else ""
 
 
 def _hamta(obj: object, namn: str, default: object = "") -> object:

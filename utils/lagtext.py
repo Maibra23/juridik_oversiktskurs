@@ -128,7 +128,8 @@ def lagtext_block(refs: Iterable[Lagrumsref | str]) -> str:
         "LAGTEXT (ordagrann, hämtad ur författningen):\n"
         + "\n\n".join(rader)
         + "\n\nBygg din bedömning på lagtexten ovan. Påstå aldrig något om vad "
-        "en paragraf innehåller som inte står i texten."
+        "en paragraf innehåller som inte står i texten. Skriv lagrummen exakt "
+        "som rubrikerna ovan, med paragrafnumret först."
     )
 
 

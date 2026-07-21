@@ -12,6 +12,7 @@ from utils.prompts import (
     MAX_SVARSLANGD_ORD,
     RNTS_RUBRIKER,
     SYSTEM_PROMPT_BASE,
+    build_begrepp_prompt,
     build_case_prompt,
     build_quiz_prompt,
     vitlista_block,
@@ -158,3 +159,68 @@ def test_case_prompt_haller_igen_pa_hur_mycket_som_avslojas():
     modul = ladda_modul("avtalsratt")
     _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
     assert "inte ut lösningen" in user or "inte lösningen" in user
+
+
+# --- Lagtext i prompten (fas 2) ---------------------------------------------
+#
+# Facit säger VILKA lagrum som gäller. Lagtexten säger vad de innehåller.
+# Utan den senare gissar modellen, och gissade fel: "36 § AvtL reglerar
+# avtals ingående" när paragrafen är generalklausulen om jämkning.
+
+
+def test_case_prompt_injicerar_lagtext_for_facits_lagrum():
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "4 § AvtL"})
+
+    assert "LAGTEXT" in user
+    # 4 § AvtL handlar om sen accept som nytt anbud.
+    assert "nytt anbud" in user
+
+
+def test_case_prompt_injicerar_lagtext_for_studentens_egna_lagrum():
+    """Tutorn ska kunna säga VARFÖR studentens paragraf inte passar.
+
+    Utan textens innehåll kan den bara konstatera att lagrummet saknas i
+    facit, vilket är en svagare och mindre lärorik invändning.
+    """
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "Jag tror 36 § AvtL gäller."})
+
+    assert "36 § AvtL" in user
+    # 36 § är jämkningsparagrafen, och det ska framgå av texten i prompten.
+    assert "oskäl" in user.lower() or "jämka" in user.lower()
+
+
+def test_case_prompt_utan_lagtext_kraschar_inte():
+    """Saknad lagtext ska ge en prompt utan lagtextblock, inte ett fel."""
+    _, user = build_case_prompt(
+        {
+            "scenariotext": "Ett scenario.",
+            "facit": {"rattsfraga": "En fråga?", "lagrum": ["87 § AvtL"]},
+        },
+        {"norm": "87 § AvtL"},
+    )
+    assert "LAGTEXT" not in user
+    assert "En fråga?" in user
+
+
+def test_begrepp_prompt_injicerar_lagtext():
+    """Begreppsfördjupningen saknade helt sanningsunderlag före fas 2."""
+    from utils.nyckelbegrepp import hamta_begrepp
+
+    b = hamta_begrepp("behorighet-och-befogenhet")
+    _, user = build_begrepp_prompt(b)
+
+    assert "LAGTEXT" in user
+    # Begreppet hänger på 10 och 11 §§ AvtL om fullmakt.
+    assert "fullmakt" in user.lower()
+
+
+def test_lagtexten_markeras_som_ordagrann():
+    """Modellen måste veta att blocket är källtext, inte en parafras."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    assert "ordagrann" in user.lower()
+    assert "som inte står i texten" in user

@@ -59,6 +59,7 @@ NAV_TRAD: tuple[Grupp, ...] = (
         (
             Modul("Hem", "pages/0_Hem.py"),
             Modul("Juridisk metod", "pages/1_Juridisk_metod.py"),  # kap 1
+            Modul("Rättskartan", "pages/16_Rattskartan.py"),
         ),
     ),
     Grupp(

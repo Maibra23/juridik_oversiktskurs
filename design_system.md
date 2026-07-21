@@ -74,6 +74,36 @@ Regler:
 * Paragrafguld (`--guld`) används aldrig i navigeringen. Guld är reserverat för lagrum enligt avsnitt 1.
 * Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag och färgstyrka.
 
+## 4.2 Rättskartan: appens orienteringssida
+
+Rättskartan (`pages/16_Rattskartan.py`) är kursens karta över rättssystemet och är fullständig på dag noll: den kräver varken tutor eller genomförda övningar. Den ska inte förväxlas med **Kunskapskartan**, som är studentens personliga graf och växer med de egna rättsfallen.
+
+Sidan har tre flikar i fast ordning:
+
+| Flik | Innehåll | Datakälla |
+|---|---|---|
+| Systemet | Taxonomigraf + områdesträd med ett kort per lag | `utils/rattssystem_graf.py` ur `data/rattssystem.json` + lagrumsregistret |
+| Falltypsguide | Sökbar tabell "vilken lag gäller för mitt fall?" | `utils.rattskarta.falltypsguide()` |
+| Nyckelbegrepp | Begreppsbank grupperad per delområde | `data/nyckelbegrepp.json` |
+
+**Taxonomigrafens visuella kanaler.** Hierarkin bärs av tre oberoende kanaler, aldrig av ikoner:
+
+* **Färg = avdelning.** Bokens fyra avdelningar har var sin färg ur paletten. Nyckeln `avdelning` per område i `data/rattssystem.json` är källan; färgerna definieras i `utils/taxonomi_ui.py`.
+* **Storlek = nivå.** Roten störst (26 px), lagarna minst (13 px).
+* **Form = grupp.** Lagar är cirklar, strukturnoder rutor.
+
+Paragrafguld används **enbart** för lagnoder, aldrig för någon strukturnivå. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum eller lag, och den kopplingen får inte brytas av navigeringsfärger. Färglegenden ritas som riktiga färgrutor (`.jok-swatch`), aldrig som prosa i en caption.
+
+**Klickbarhet.** Endast noder med `url` är klickbara, och `url` sätts bara på lagnoder. Klick öppnar lagen.nu i ny flik; strukturnoder är inerta genom konstruktion, inte genom ett villkor i klickhanteraren.
+
+**Begreppskort.** Varje begrepp visas med fyra fasta fält i denna ordning: Definition, Varför det spelar roll, Exempel, och Så känner du igen det i ett scenario. Det sista fältet får guldstreckad ram eftersom det kopplar begreppet till RNTS-steget Rättsfrågan: det är signalorden i scenariot som ska få studenten att välja rätt norm. Kontrastpar (behörighet vs befogenhet och liknande) får dessutom en framhävd `skillnaden`-rad direkt under definitionen.
+
+**Deterministiskt först.** Flikarnas grunddata är verifierad mot lagrumsregistret och fungerar utan LLM. Endast knappen "Förklara djupare med tutorn" anropar modellen, och den ligger i en popover (inte en expander, eftersom korten redan ligger i områdesexpanders och Streamlit inte tillåter nästlade expanders). LLM-svaret läggs alltid **under** grunddatan och ersätter den aldrig.
+
+## 4.3 Sidhjälp
+
+Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("Så använder du den här sidan")` med 3–5 korta, handlingsorienterade punkter. Stängd som standard så att den inte konkurrerar med innehållet för den som redan vet. Kompletteras av `help=` på de kontroller vars beteende inte framgår av etiketten.
+
 ## 5. Presentationsriktlinjer för juridiskt innehåll
 
 * Lagrum skrivs alltid i standardform ("36 § AvtL", "3 kap. 1 § ÄB") och alltid som chip, aldrig som ren text, så att varje norm är ett klick från källan.

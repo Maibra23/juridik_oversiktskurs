@@ -4,6 +4,7 @@
     {
       "id": "civilratt",
       "namn": "Civilrätt",
+      "avdelning": "avd3_civilratt",
       "farg": "info",
       "beskrivning": "Rättsförhållanden mellan enskilda, alltså personer och företag: avtal, köp, skadestånd, egendom, bolag och arbete.",
       "nar": "Tvisten står mellan enskilda parter och gäller pengar, avtal eller egendom, inte straff eller myndighetsutövning.",
@@ -200,6 +201,7 @@
     {
       "id": "familje_och_successionsratt",
       "namn": "Familje- och successionsrätt",
+      "avdelning": "avd3_civilratt",
       "farg": "tip",
       "beskrivning": "Familjens ekonomiska rätt: äktenskap, samboende, barn och arv. Formellt en del av civilrätten men med egna balkar och egen systematik.",
       "nar": "Frågan rör makars eller sambors egendom, barn, eller vad som händer med egendomen när någon dör.",
@@ -272,6 +274,7 @@
     {
       "id": "straffratt",
       "namn": "Straffrätt",
+      "avdelning": "avd4_straff_process",
       "farg": "warning",
       "beskrivning": "Vilka gärningar som är brott och vilka påföljder de kan leda till. Staten, inte den skadelidande, är motpart.",
       "nar": "Frågan är om någon kan straffas. Pröva gärningens objektiva sida, den subjektiva sidan (uppsåt eller oaktsamhet) och ansvarsfrihetsgrunderna.",
@@ -298,6 +301,7 @@
     {
       "id": "process_och_exekutionsratt",
       "namn": "Process- och exekutionsrätt",
+      "avdelning": "avd4_straff_process",
       "farg": "example",
       "beskrivning": "Hur tvister prövas i domstol och hur domar tvingas igenom: rättegång, verkställighet och konkurs.",
       "nar": "Den materiella frågan är bedömd eller löper parallellt. Nu gäller förfarandet: stämma, bevisa, verkställa eller hantera obestånd.",
@@ -353,6 +357,7 @@
     {
       "id": "offentlig_ratt",
       "namn": "Offentlig rätt i övrigt",
+      "avdelning": "avd2_offentlig_ratt",
       "farg": "quote",
       "beskrivning": "Statsrätt och förvaltningsrätt: grundlagarna, myndigheternas verksamhet och förhållandet mellan stat och enskild. Områdets lagar ligger utanför kursens lagrumslista.",
       "nar": "Motparten är en myndighet eller frågan rör grundläggande fri- och rättigheter. Läs vidare i grundlagarna och förvaltningslagen utanför kursen.",

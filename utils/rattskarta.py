@@ -267,6 +267,79 @@ _FALLTYPSGUIDE: tuple[tuple[str, str], ...] = (
 )
 
 
+# Sökord per falltyp. Situationstexterna är skrivna som meningar ("Någon har
+# sagts upp eller avskedats"), medan studenten söker på grundformen
+# ("uppsagd", "arv", "konkurs"). Ren delsträngsmatchning missar därför de
+# mest naturliga sökningarna, och därför bär varje rad sina egna sökord.
+# Vault-markdownen använder _FALLTYPSGUIDE direkt och påverkas inte.
+_SOKORD: dict[str, str] = {
+    "Privatperson har köpt en felaktig vara av ett företag":
+        "konsument konsumentköp fel reklamation garanti retur vara handla",
+    "Köp mellan företag eller mellan privatpersoner":
+        "köp köplag näringsidkare begagnat blocket handel avtal vara",
+    "Oklart om ett bindande avtal alls har ingåtts":
+        "avtal anbud accept offert bindande överenskommelse muntligt",
+    "Person eller egendom har skadats utan avtalsband":
+        "skada skadestånd skadad olycka vårdslös oaktsam ersättning",
+    "Någon har sagts upp eller avskedats":
+        "uppsagd uppsägning avsked avskedad sparken anställning arbete "
+        "arbetsbrist turordning jobb",
+    "Skilsmässa eller separation: vad ska delas?":
+        "skilsmässa separation bodelning gift sambo makar delning "
+        "giftorätt äktenskap",
+    "Dödsfall: vem ärver och vad säger testamentet?":
+        "arv ärva arvinge dödsfall testamente laglott bröstarvinge "
+        "kvarlåtenskap död",
+    "Misstanke om brott": "brott straff åtal misstänkt stöld misshandel "
+        "bedrägeri uppsåt polis brottslig",
+    "Dom finns men gäldenären betalar inte":
+        "utmätning kronofogden verkställighet indrivning skuld obetald "
+        "exekutionstitel betalningsföreläggande",
+    "Företaget kan inte betala sina skulder":
+        "konkurs obestånd insolvent betalningsoförmåga återvinning "
+        "skulder likvidation",
+    "Vem svarar för bolagets skulder?":
+        "bolag aktiebolag handelsbolag ansvar personligt betalningsansvar "
+        "ägare styrelse företagsform",
+    "Köp eller fel som rör en fastighet":
+        "fastighet hus tomt husköp dolt fel besiktning undersökningsplikt "
+        "tillbehör mark villa",
+    "Ett skuldebrev har överlåtits":
+        "skuldebrev fordran överlåtelse denuntiation löpande enkelt "
+        "lån kredit invändning",
+    "Vilseledande reklam eller aggressiva säljmetoder":
+        "reklam marknadsföring vilseledande säljmetod telefonförsäljning "
+        "konsumentskydd",
+    "En omyndig har ingått ett avtal":
+        "omyndig underårig barn minderårig ålder förmyndare "
+        "rättshandlingsförmåga god man förvaltare",
+    "Hur och var prövas tvisten?":
+        "domstol tingsrätt process rättegång tvistemål brottmål forum "
+        "bevisning rättegångskostnad stämning",
+}
+
+
+def falltypsguide() -> tuple[tuple[str, str, str], ...]:
+    """Falltypsguiden som (situation, lag, sökord) utan wikilänkhakar.
+
+    Publik ingång för appens Rättskarta-sida, så att den slipper importera
+    den privata konstanten. Markdownbyggarna använder _FALLTYPSGUIDE direkt
+    eftersom de vill ha wikilänkarna kvar.
+
+    Sökorden visas aldrig i UI:t utan används bara för filtrering, så att
+    en sökning på "uppsagd" hittar raden "Någon har sagts upp eller
+    avskedats".
+    """
+    return tuple(
+        (
+            situation,
+            lag.replace("[[", "").replace("]]", ""),
+            _SOKORD.get(situation, ""),
+        )
+        for situation, lag in _FALLTYPSGUIDE
+    )
+
+
 def _tradgren(omrade: Omrade) -> list[str]:
     """Rendera ett toppområde som hopfällbar, färgkodad callout-gren."""
     rader = [

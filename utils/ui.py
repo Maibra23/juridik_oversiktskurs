@@ -196,6 +196,71 @@ def inject_css() -> None:
         .jok-nav-kommer {{
             font-size: 13px; color: #9A9384; margin: .1rem 0 .1rem .6rem;
         }}
+        /* Färglegend för taxonomigrafen: riktiga färgrutor, inte prosa. */
+        .jok-legend {{
+            display: flex; flex-wrap: wrap; gap: .5rem 1.1rem;
+            margin: .6rem 0 1rem 0; font-size: 14px; color: var(--bl);
+        }}
+        .jok-legend-post {{ display: inline-flex; align-items: center; gap: .4rem; }}
+        .jok-swatch {{
+            display: inline-block; width: .85rem; height: .85rem;
+            border-radius: 3px; border: 1px solid rgba(26,35,50,.25);
+            flex: 0 0 auto;
+        }}
+
+        /* Lagkort i områdesträdet (flik Systemet). */
+        .jok-lagkort {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-left: 3px solid var(--guld); border-radius: 10px;
+            padding: .8rem 1rem; margin: .5rem 0; max-width: 46rem;
+        }}
+        .jok-lagkort h4 {{
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+            font-size: 16px; color: var(--bl); margin: 0 0 .1rem 0;
+        }}
+        .jok-lagkort .sfs {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; color: #6B6459;
+        }}
+        .jok-lagkort p {{ font-size: 15px; line-height: 1.55; margin: .45rem 0 0 0; }}
+        .jok-lagkort .nar {{ font-size: 14px; color: #4A453D; margin-top: .4rem; }}
+        .jok-lagkort .nar strong {{ color: var(--bla); }}
+
+        /* Begreppskort (flik Nyckelbegrepp). */
+        .jok-begrepp {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-radius: 12px; padding: 1rem 1.2rem; margin: .5rem 0 .2rem 0;
+            max-width: 46rem; box-shadow: 0 1px 3px rgba(26,35,50,.06);
+        }}
+        .jok-begrepp h3 {{
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+            font-size: 19px; color: var(--bl); margin: 0 0 .1rem 0;
+        }}
+        .jok-begrepp .kapitel {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+            color: var(--bla);
+        }}
+        .jok-begrepp .falt {{ margin: .7rem 0 0 0; }}
+        .jok-begrepp .falt .etikett {{
+            font-variant: small-caps; letter-spacing: .05em; font-weight: 700;
+            color: var(--bla); font-size: 14px; display: block;
+            margin-bottom: .15rem;
+        }}
+        .jok-begrepp .falt p {{
+            font-size: 16px; line-height: 1.6; color: var(--bl); margin: 0;
+        }}
+        /* Skillnadsraden för kontrastpar: en enda framhävd rad. */
+        .jok-begrepp .skillnad {{
+            background: #F5F1EA; border-left: 3px solid var(--bla);
+            border-radius: 0 6px 6px 0; padding: .5rem .8rem; margin: .7rem 0 0 0;
+            font-size: 15px; line-height: 1.5;
+        }}
+        .jok-begrepp .igenkanning {{
+            background: #FFFDF7; border: 1px dashed var(--guld);
+            border-radius: 8px; padding: .6rem .8rem; margin-top: .7rem;
+        }}
+
         .jok-footer {{
             margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ram);
             font-size: 13px; color: #6B6459; max-width: 46rem;
@@ -415,6 +480,90 @@ def render_tutortext(text: str) -> None:
 def render_info(text: str) -> None:
     """Blått informationskort (t.ex. disclaimer)."""
     st.html(f'<div class="jok-info">{html.escape(text)}</div>')
+
+
+def render_sidhjalp(punkter: tuple[str, ...], rubrik: str = "Så använder du den här sidan") -> None:
+    """Kollapsad hjälpruta överst på en sida.
+
+    Samma mönster på alla sidor: en hopfälld expander med 3-5 korta,
+    handlingsorienterade punkter. Stängd som standard så att den inte
+    konkurrerar med sidans innehåll för den som redan vet.
+    """
+    with st.expander(rubrik, expanded=False):
+        for punkt in punkter:
+            st.markdown(f"- {punkt}")
+
+
+def render_lagkort(
+    forkortning: str,
+    namn: str,
+    sfs: str,
+    beskrivning: str,
+    nar: str,
+    url: str,
+    relaterade: tuple[str, ...] = (),
+) -> str:
+    """Kort för en lag i områdesträdet: vad den täcker och när den övervägs."""
+    rel = ""
+    if relaterade:
+        rel = (
+            '<div class="nar"><strong>Relaterade lagar:</strong> '
+            f"{html.escape(', '.join(relaterade))}</div>"
+        )
+    return (
+        '<div class="jok-lagkort">'
+        f"<h4>{html.escape(forkortning)}: {html.escape(namn)}</h4>"
+        f'<div class="sfs">SFS {html.escape(sfs)}</div>'
+        f"<p>{html.escape(beskrivning)}</p>"
+        f'<div class="nar"><strong>När övervägs den?</strong> {html.escape(nar)}</div>'
+        f"{rel}"
+        f'<div class="nar"><a href="{html.escape(url)}" target="_blank">'
+        f"Öppna {html.escape(forkortning)} på lagen.nu</a></div>"
+        "</div>"
+    )
+
+
+def render_begreppskort(
+    term: str,
+    kapitel: str,
+    definition: str,
+    forklaring: str,
+    exempel: str,
+    igenkanning: str,
+    skillnaden: str = "",
+    lagrum_chips: str = "",
+) -> str:
+    """Begreppskort med de fyra fasta fälten.
+
+    Igenkänningsfältet får guldstreckad ram eftersom det är den del som
+    kopplar begreppet till RNTS-steget Rättsfrågan: det är signalorden i
+    scenariot som ska få studenten att tänka på begreppet.
+    """
+    kap = f'<div class="kapitel">{html.escape(kapitel)}</div>' if kapitel else ""
+    skillnad = (
+        f'<div class="skillnad">{html.escape(skillnaden)}</div>' if skillnaden else ""
+    )
+    chips = (
+        f'<div class="falt"><span class="etikett">Lagrum</span>{lagrum_chips}</div>'
+        if lagrum_chips
+        else ""
+    )
+    return (
+        '<div class="jok-begrepp">'
+        f"{kap}<h3>{html.escape(term)}</h3>"
+        f'<div class="falt"><span class="etikett">Definition</span>'
+        f"<p>{html.escape(definition)}</p></div>"
+        f"{skillnad}"
+        f'<div class="falt"><span class="etikett">Varför det spelar roll</span>'
+        f"<p>{html.escape(forklaring)}</p></div>"
+        f'<div class="falt"><span class="etikett">Exempel</span>'
+        f"<p>{html.escape(exempel)}</p></div>"
+        f'<div class="falt igenkanning"><span class="etikett">'
+        f"Så känner du igen det i ett scenario</span>"
+        f"<p>{html.escape(igenkanning)}</p></div>"
+        f"{chips}"
+        "</div>"
+    )
 
 
 def footer_note(version: str = APP_VERSION, updated: str = APP_UPDATED) -> str:

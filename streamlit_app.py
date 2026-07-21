@@ -35,6 +35,7 @@ from utils.ui import inject_css, render_sidebar  # noqa: E402
 SIDOR = [
     st.Page("pages/0_Hem.py", title="Hem", default=True),
     st.Page("pages/1_Juridisk_metod.py", title="Juridisk metod"),
+    st.Page("pages/16_Rattskartan.py", title="Rättskartan"),
     st.Page("pages/12_Personratt.py", title="Personrätt"),
     st.Page("pages/13_Allman_formogenhetsratt.py", title="Allmän förmögenhetsrätt"),
     st.Page("pages/2_Avtalsratt.py", title="Avtalsrätt"),

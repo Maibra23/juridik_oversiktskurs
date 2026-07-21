@@ -7,7 +7,7 @@ pedagogiken. Ingen av dem berättar vad som faktiskt händer när du klickar.
 Allt som påstås här är kontrollerat mot koden eller mätt i skarp körning mot
 `Qwen/Qwen3-8B`. Där en siffra anges är den uppmätt, inte uppskattad.
 
-Senast verifierad: 2026-07-21, mot 540 gröna tester. (Dokumentet du läser
+Senast verifierad: 2026-07-21, mot 628 gröna tester. (Dokumentet du läser
 räknas in i den siffran: `tests/test_sprak.py` kontrollerar teckenkodning och
 frånvaro av kyrilliska tecken i varje markdownfil i roten, så den här filen
 lade till två tester.)
@@ -276,7 +276,10 @@ verifiera.
 
 - Alla 52 begreppskort byggs vid varje rerun, även i hopfällda expandrar. Det
   ger 107 widgets på sidan och gör den till den tyngsta i appen.
-- Begreppsfördjupningen har **inget sanningsunderlag** — se nedan.
+- Begreppsfördjupningen saknar facit i den mening ett rättsfall har det, men
+  är sedan 2026-07-21 inte längre ogrundad: begreppets grunddata och
+  paragrafernas **ordagranna lagtext** injiceras, och svaret granskas mot
+  begreppets egna lagrum.
 
 ---
 
@@ -294,6 +297,45 @@ just det.
 Verifieringen skärptes samma dag: tidigare godkändes `99 kap. 1 § AvtL`
 eftersom kapitelledet ignorerades för lagar utan kapitelindelning. Ett
 påhittat kapitel gick alltså rakt igenom garden.
+
+### Lagtextkorpusen — vad modellen läser i stället för att minnas
+
+`data/lagtext/` innehåller **1 010 paragrafer ur 21 lagar**, hämtade med
+`scripts/hamta_lagtext.py`. Endast författningstext, som är undantagen
+upphovsrätt enligt 9 § upphovsrättslagen. lagen.nu:s egna kommentarer hämtas
+aldrig — de är författade verk, och kursen ska lära studenten läsa lagtext.
+
+Korpusen ligger i git, så appen fungerar offline och belastar inte lagen.nu
+vid varje tutorsvar. Tjugo lagar kom från lagen.nu; UB (1981:774) hämtades
+från Riksdagens öppna data eftersom lagen.nu:s sida bara renderade
+kapitelrubriker och gav 2 av 39 paragrafer.
+
+**Ordagrann lagtext injiceras nu i samtliga fyra promptbyggare** — rättsfall,
+quiz, begrepp och generering. Modellen behöver därför inte minnas vad en
+paragraf säger; den har den framför sig.
+
+### Granskningen — sista ledet före studenten
+
+`utils/granskning.granska_tutorsvar` avgör om ett svar över huvud taget får
+visas. Den avgörande insikten är att det inte räcker att leta efter
+overifierade lagrum, för **det bästa tutorsvaret innehåller ofta ett
+påhittat lagrum** — nämligen studentens eget, korrekt avvisat:
+
+> "87 § AvtL finns inte i lagrumslistan. Detta är ett allvarligt fel."
+
+En gard som bara letade efter påhitt hade stoppat exakt det svaret och
+släppt igenom det sämre som påstod "Rätt norm är 87 § AvtL". Avgörande är
+alltså inte OM ett lagrum nämns, utan i vilken **roll**: ett lagrum utanför
+uppgiftens underlag måste avvisas i texten för att svaret ska godkännas.
+
+Underkänns ett svar görs **ett** omförsök med skärpt instruktion. Underkänns
+även det visas inget svar alls, utan en varning som pekar mot sidans
+deterministiska underlag ("Öppna *Visa facit* nedan"). Den underkända texten
+sparas medvetet inte. Hellre inget svar än felaktig juridik: studenten kan
+inte skilja dem åt.
+
+Vid tveksamhet godkänns svaret. Ett tveksamt svar som släpps igenom kostar
+en varningsruta; ett korrekt svar som stoppas kostar undervisning.
 
 ### Tutorn
 
@@ -360,6 +402,19 @@ Orsaken var att `build_case_prompt` bara injicerade facits *rättsfråga*.
 Lagrum, tillämpningspunkter och slutsats hölls tillbaka, så modellen fick
 härleda svensk rätt ur sina egna vikter. Hela facit injiceras nu.
 
+### Granskningen, skarp körning
+
+Två fall replikerade mot Qwen3-8B efter att granskningen kopplats in:
+
+| Fall | Utfall |
+|---|---|
+| Studenten citerar påhittade `87 § AvtL` | Tutorn avvisar paragrafen uttryckligen och pekar ut 1 § och 4 § AvtL. Godkänt på **första** anropet — avvisningen känns igen som avvisning, inte som påhitt |
+| Studenten svarar **helt korrekt** | Tutorn drev svaret mot `3 § AvtL`, utanför facit. **Granskningen stoppade svaret**, omförsöket gav ett rent svar utan drift |
+
+Det andra fallet är samma felmönster som `36 § AvtL`-incidenten ovan, och
+det är nu fångat i produktion och inte bara i test. Ett godkänt svar kostar
+fortfarande exakt ett anrop; omförsöket betalas bara när det behövs.
+
 ### Begreppsfördjupningen
 
 Sex körningar: **0 overifierade lagrum**, 0 engelska ord. Men modellen
@@ -384,15 +439,18 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
    normfält, facit.
 4. **En källa per sak.** Rättskartan i appen och i Obsidianvalvet bygger på
    samma data sedan 2026-07-21.
-5. **540 tester**, ruff och mypy rena.
+5. **Tre lager mellan modellen och studenten:** ordagrann lagtext i prompten,
+   facit som sanningsunderlag, och en granskning som hellre visar inget än
+   fel juridik.
+6. **628 tester**, ruff och mypy rena.
 
 ### Svagheter
 
 1. **Persistensen.** Allt framsteg försvinner vid omladdning. Störst problem
    i appen.
-2. **Begreppsfördjupningen saknar sanningsunderlag.** Fallgranskningen fick
-   facit; begreppen har inget motsvarande, så det är nu den svagaste
-   LLM-ytan.
+2. **Begreppsfördjupningen är fortfarande den svagaste LLM-ytan.** Den har
+   nu grunddata, lagtext och granskning, men inget kurskontrollerat facit
+   med gränsfall och kontrastpar.
 3. **Tunt innehåll i fem moduler** — ett rättsfall vardera.
 4. **Kunskapstest är ingen test**, bara en resultatvy.
 5. **`use_container_width` är deprecerad** i 5 anrop i 3 filer; borttagningen
@@ -415,13 +473,17 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 | 6 | **Städa `use_container_width` och råa statuskomponenter** | 2 h | Svagheterna 5, 6 |
 | 7 | **Rätta "Tolv moduler" till 13**, eller räkna listan i koden | 5 min | Svaghet 7 |
 | 8 | **Lat rendering av begreppskort** — bygg bara utfällt område | 3 h | Svaghet 8 |
-| 9 | **Injicera lagtext** för vitlistade paragrafer | dagar | Tar bort beroendet av modellens minne av vad en paragraf säger |
-| 10 | **Större modell för tutorn** | konfig + kostnad | Sänker felfrekvensen, men gör 3 och 9 först — de är billigare |
+| 9 | **Logga granskningens utfall** så andelen stoppade svar går att mäta över tid | 3 h | Gör LLM-kvaliteten mätbar i stället för anekdotisk |
+| 10 | **Större modell för tutorn** | konfig + kostnad | Sänker felfrekvensen, men gör 3 först — den är billigare |
 
 Ordningen är avsiktlig: 1 och 2 skyddar studentens arbete, 3 höjer den
 svagaste LLM-ytan med ett grepp som redan är mätt och bevisat, och 10 kommer
 sist eftersom de billigare åtgärderna bör prövas innan pengar läggs på
 modellstorlek.
+
+**Genomfört 2026-07-21:** lagtextinjektion (tidigare punkt 9) och
+granskningen av tutorsvar. Båda är beskrivna i avsnitt 9 och mätta i
+avsnitt 10.
 
 ---
 

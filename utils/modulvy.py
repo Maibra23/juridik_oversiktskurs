@@ -224,6 +224,8 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         etikett="Be tutorn granska min analys",
+        underlag=tuple(case.facit.lagrum),
+        reservhanvisning="Öppna **Visa facit (utan tutor)** nedan så länge.",
     )
 
     with st.expander("Visa facit (utan tutor)"):
@@ -379,12 +381,19 @@ def _rendera_quizfraga(modul: str, nr: int, fraga: Flervalsfraga) -> None:
             _lagrum_chip_rad(alt.lagrum)
 
         system_prompt, user_prompt = build_quiz_prompt(fraga, alt)
+        # Underlaget är alternativens egna lagrum: de är kursens facit för
+        # frågan och det enda tutorn ska röra sig inom.
+        underlag = tuple(
+            str(a.lagrum) for a in fraga.alternativ if getattr(a, "lagrum", None)
+        )
         tutorknapp(
             nyckel=f"quiz_{modul}_{fraga.id}",
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             etikett="Förklara med tutorn",
             knappnyckel=f"quiz_forklara_{modul}_{fraga.id}",
+            underlag=underlag,
+            reservhanvisning="Förklaringen till rätt svar står ovan.",
         )
 
 

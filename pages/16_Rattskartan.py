@@ -251,6 +251,8 @@ def _rendera_begrepp(b, namn_for: dict[str, str]) -> None:
                 user_prompt=user_prompt,
                 etikett="Förklara djupare",
                 knappnyckel=f"begrepp_knapp_{b.id}_{las}",
+                underlag=b.lagrum,
+                reservhanvisning="Begreppets grunddata står kvar ovan.",
             )
 
     if b.se_aven:

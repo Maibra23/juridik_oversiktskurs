@@ -4,11 +4,13 @@
 
 ### 1.1 Paretoprincipen 80/20
 
-Kursboken omfattar 22 kapitel men tentamen på Juridisk översiktskurs prövar nästan alltid samma kärnförmågor: juridisk metod tillämpad på avtal, köp, skadestånd, arbetsliv, bolag, familj/arv och brott. Appen väljer därför medvetet bort bredd till förmån för djup i åtta moduler. Urvalskriterier:
+Kursboken omfattar 22 kapitel men tentamen på Juridisk översiktskurs prövar nästan alltid samma kärnförmågor: juridisk metod tillämpad på avtal, köp, skadestånd, arbetsliv, bolag, familj/arv och brott. Appen väljer därför medvetet bort bredd till förmån för djup i tolv moduler, samtliga inom civilrätten och straff- och processrätten. Urvalskriterier:
 
 * Områden som examineras med fallfrågor (högst poängvikt).
 * Områden med tydliga, tränbara regelstrukturer (rekvisit som kan bockas av).
 * Områden studenter erfarenhetsmässigt blandar ihop (behörighet mot befogenhet, uppsägning mot avsked, giftorättsgods mot enskild egendom, uppsåt mot oaktsamhet). Förväxlingspar är extra värdefulla att träna eftersom de ger flest fel per nedlagd studietimme.
+
+Ett fjärde kriterium tillkom efter granskningen av innehållet: områden som senare moduler *förutsätter*, även när de sällan examineras för egen del. Personrätt (kap 5) och allmän förmögenhetsrätt (kap 6) valdes in på den grunden. Utan rättshandlingsförmåga går fullmaktsläran i avtalsrätten inte att motivera, och utan äganderättens övergång saknar köprättens felregler sitt föremål. Ett förkunskapsområde som bär flera senare moduler ger hög avkastning även med låg egen tentavikt.
 
 Inom varje modul gäller samma princip: hellre fem rekvisit som studenten verkligen kan tillämpa än tjugo som bara känns igen.
 

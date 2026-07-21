@@ -1,0 +1,328 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen Fordringsrätt (kap 15 till 17). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
+  "modul": "Fordringsrätt",
+  "case": [
+    {
+      "id": "for-case-1",
+      "rubrik": "Skuldebrevet som såldes vidare",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Nadia lånar 150 000 kr av Petter och skriver under ett skuldebrev som är ställt till Petter eller order. Kort därefter upptäcker Nadia att Petter lurat henne om villkoren för det bakomliggande köpet, och hon anser sig ha rätt att hålla inne betalningen. Innan hon hinner göra något överlåter Petter skuldebrevet till Oskar, som betalar 140 000 kr för det och får handlingen i sin hand. Oskar känner inte till något om tvisten mellan Nadia och Petter och har ingen anledning att misstänka något. När Oskar kräver betalning invänder Nadia att hon blivit lurad av Petter och att hon därför inte ska behöva betala.",
+      "facit": {
+        "rattsfraga": "Kan Nadia rikta sina invändningar mot Petter även mot den nye borgenären Oskar?",
+        "lagrum": [
+          "11 § SkbrL",
+          "15 § SkbrL",
+          "27 § SkbrL"
+        ],
+        "tillampningspunkter": [
+          "Först ska skuldebrevet kvalificeras. Det är ställt till Petter eller order och är därmed ett löpande skuldebrev (11 § SkbrL). Det är denna kvalifikation som styr hela bedömningen.",
+          "För löpande skuldebrev gäller att förvärvaren i god tro skyddas mot gäldenärens invändningar. Nadia förlorar därför rätten att mot Oskar åberopa sådana invändningar som grundar sig på förhållandet till Petter (15 § SkbrL).",
+          "Oskar fick handlingen i sin besittning och var i god tro om tvisten. Det som krävs för godtrosskyddet är alltså uppfyllt.",
+          "Hade skuldebrevet i stället varit enkelt, alltså ställt till viss man, hade utgången blivit den motsatta: förvärvaren av ett enkelt skuldebrev får inte bättre rätt än överlåtaren hade, och Nadia hade fått behålla sina invändningar (27 § SkbrL).",
+          "Vissa invändningar består ändå även vid löpande skuldebrev, exempelvis att handlingen är förfalskad eller att gäldenären var omyndig. Sådana omständigheter är inte för handen här."
+        ],
+        "slutsats": "Nadia måste betala Oskar. Eftersom skuldebrevet är löpande enligt 11 § SkbrL och Oskar förvärvade det i god tro med handlingen i sin hand, avskärs Nadias invändningar om Petters svek enligt 15 § SkbrL. Nadia får i stället rikta sitt anspråk mot Petter. Om skuldebrevet varit enkelt hade 27 § SkbrL låtit henne behålla invändningen även mot Oskar. Skillnaden mellan löpande och enkla skuldebrev är därför avgörande för utgången."
+      }
+    },
+    {
+      "id": "for-case-2",
+      "rubrik": "Fakturan som glömdes bort",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Byggfirman Stomme AB utförde en tillbyggnad åt privatpersonen Rolf och skickade en slutfaktura på 85 000 kr i mars 2021. Rolf betalade aldrig. Stomme AB skickade en skriftlig påminnelse i september 2023, men gjorde sedan ingenting mer. I november 2026 kommer en ny ekonomichef till Stomme AB, hittar den obetalda fordran och skickar ett kravbrev. Rolf svarar att fordran är preskriberad eftersom det gått mer än fem år sedan fakturan.",
+      "facit": {
+        "rattsfraga": "Är Stomme AB:s fordran mot Rolf preskriberad, och vilken preskriptionstid gäller?",
+        "lagrum": [
+          "2 § PreskL",
+          "5 § PreskL",
+          "6 § PreskL"
+        ],
+        "tillampningspunkter": [
+          "Först ska rätt preskriptionstid bestämmas. Rolf är konsument och tjänsten har tillhandahållits av en näringsidkare i yrkesmässig verksamhet för Rolfs enskilda bruk. Då gäller den korta preskriptionstiden om tre år, inte huvudregelns tio år (2 § PreskL).",
+          "Fordran uppkom i mars 2021. Utan avbrott hade den preskriberats i mars 2024.",
+          "Den skriftliga påminnelsen i september 2023 skickades inom treårsfristen och utgör ett preskriptionsavbrott genom krav eller erinran (5 § PreskL).",
+          "Efter ett avbrott löper en ny preskriptionstid enligt 2 § från dagen för avbrottet (6 § PreskL). En ny treårsfrist började alltså löpa i september 2023 och gick ut i september 2026.",
+          "Kravbrevet i november 2026 kom därmed efter det att den nya fristen löpt ut. Rolfs invändning om att det gått mer än fem år träffar visserligen fel tidsgräns, men slutsatsen han landar i är riktig."
+        ],
+        "slutsats": "Fordran är preskriberad. Eftersom Rolf är konsument gäller treårig preskription enligt 2 § PreskL. Påminnelsen i september 2023 avbröt preskriptionen enligt 5 § PreskL och startade en ny treårsfrist enligt 6 § PreskL, men den löpte ut i september 2026, alltså innan kravbrevet skickades. Stomme AB kan inte längre göra fordran gällande. Hade Rolf varit näringsidkare hade tioårsregeln gällt och fordran varit fullt möjlig att driva in."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "for-mc-1",
+      "fraga": "Vad kännetecknar ett löpande skuldebrev?",
+      "alternativ": [
+        {
+          "text": "Det är ställt till innehavaren eller till viss man eller order",
+          "korrekt": true,
+          "forklaring": "Löpande skuldebrev är avsedda att kunna omsättas.",
+          "lagrum": "11 § SkbrL"
+        },
+        {
+          "text": "Det är ställt till viss namngiven person utan orderklausul",
+          "korrekt": false,
+          "forklaring": "Det är definitionen av ett enkelt skuldebrev.",
+          "lagrum": "26 § SkbrL"
+        },
+        {
+          "text": "Det saknar förfallodag",
+          "korrekt": false,
+          "forklaring": "Förfallodagen har inget att göra med indelningen.",
+          "lagrum": "11 § SkbrL"
+        },
+        {
+          "text": "Det måste vara bevittnat",
+          "korrekt": false,
+          "forklaring": "Något bevittningskrav gäller inte för skuldebrev.",
+          "lagrum": "1 § SkbrL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-2",
+      "fraga": "En godtroende förvärvare av ett löpande skuldebrev möts av gäldenärens invändning om svek från den ursprunglige borgenären. Vad gäller?",
+      "alternativ": [
+        {
+          "text": "Invändningen avskärs, gäldenären måste betala den nye borgenären",
+          "korrekt": true,
+          "forklaring": "Godtrosskyddet är hela poängen med löpande skuldebrev.",
+          "lagrum": "15 § SkbrL"
+        },
+        {
+          "text": "Invändningen består, eftersom den avser det bakomliggande förhållandet",
+          "korrekt": false,
+          "forklaring": "Det gäller enkla skuldebrev, inte löpande.",
+          "lagrum": "27 § SkbrL"
+        },
+        {
+          "text": "Invändningen består om gäldenären reklamerar inom en månad",
+          "korrekt": false,
+          "forklaring": "Någon sådan reklamationsregel finns inte.",
+          "lagrum": "15 § SkbrL"
+        },
+        {
+          "text": "Skuldebrevet blir ogiltigt",
+          "korrekt": false,
+          "forklaring": "Sveket mellan de ursprungliga parterna gör inte handlingen ogiltig.",
+          "lagrum": "15 § SkbrL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-3",
+      "fraga": "Vilken rätt får förvärvaren av ett enkelt skuldebrev?",
+      "alternativ": [
+        {
+          "text": "Inte bättre rätt än överlåtaren hade",
+          "korrekt": true,
+          "forklaring": "Enkla skuldebrev ger inget godtrosskydd mot gäldenärens invändningar.",
+          "lagrum": "27 § SkbrL"
+        },
+        {
+          "text": "Samma godtrosskydd som vid löpande skuldebrev",
+          "korrekt": false,
+          "forklaring": "Det är just här de två typerna skiljer sig åt.",
+          "lagrum": "15 § SkbrL"
+        },
+        {
+          "text": "Bättre rätt om han underrättat gäldenären",
+          "korrekt": false,
+          "forklaring": "Underrättelsen skyddar mot dubbelöverlåtelse och betalning till fel person, men läker inte invändningar.",
+          "lagrum": "31 § SkbrL"
+        },
+        {
+          "text": "Ingen rätt alls förrän gäldenären godkänt överlåtelsen",
+          "korrekt": false,
+          "forklaring": "Gäldenärens godkännande krävs inte för att överlåta en fordran.",
+          "lagrum": "27 § SkbrL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-4",
+      "fraga": "Vilken preskriptionstid gäller för en näringsidkares fordran mot en konsument?",
+      "alternativ": [
+        {
+          "text": "Tre år",
+          "korrekt": true,
+          "forklaring": "Konsumentfordringar preskriberas efter tre år, ett viktigt undantag från huvudregeln.",
+          "lagrum": "2 § PreskL"
+        },
+        {
+          "text": "Tio år",
+          "korrekt": false,
+          "forklaring": "Tio år är huvudregeln, som gäller när konsumentundantaget inte är tillämpligt.",
+          "lagrum": "2 § PreskL"
+        },
+        {
+          "text": "Fem år",
+          "korrekt": false,
+          "forklaring": "Någon femårig preskriptionstid finns inte i preskriptionslagen.",
+          "lagrum": "2 § PreskL"
+        },
+        {
+          "text": "Ett år från förfallodagen",
+          "korrekt": false,
+          "forklaring": "Ettårsfrister förekommer i andra sammanhang, inte som allmän preskriptionstid.",
+          "lagrum": "2 § PreskL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-5",
+      "fraga": "Vad avbryter preskription?",
+      "alternativ": [
+        {
+          "text": "Gäldenärens betalning eller erkännande, borgenärens skriftliga krav, eller att talan väcks",
+          "korrekt": true,
+          "forklaring": "Lagen räknar upp tre huvudsakliga former av preskriptionsavbrott.",
+          "lagrum": "5 § PreskL"
+        },
+        {
+          "text": "Endast att talan väcks i domstol",
+          "korrekt": false,
+          "forklaring": "Ett skriftligt krav räcker.",
+          "lagrum": "5 § PreskL"
+        },
+        {
+          "text": "Att borgenären bokför fordran",
+          "korrekt": false,
+          "forklaring": "Bokföring är en intern åtgärd och avbryter inte preskription.",
+          "lagrum": "5 § PreskL"
+        },
+        {
+          "text": "Ett muntligt påpekande vid ett möte",
+          "korrekt": false,
+          "forklaring": "Kravet eller erinran ska vara skriftlig.",
+          "lagrum": "5 § PreskL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-6",
+      "fraga": "Vad händer när preskriptionen avbrutits genom ett skriftligt krav?",
+      "alternativ": [
+        {
+          "text": "En ny preskriptionstid börjar löpa från dagen för avbrottet",
+          "korrekt": true,
+          "forklaring": "Avbrottet nollställer klockan, det utsläcker inte preskriptionen för gott.",
+          "lagrum": "6 § PreskL"
+        },
+        {
+          "text": "Fordran kan aldrig mer preskriberas",
+          "korrekt": false,
+          "forklaring": "En ny frist börjar löpa och kan löpa ut.",
+          "lagrum": "6 § PreskL"
+        },
+        {
+          "text": "Preskriptionstiden förlängs med sex månader",
+          "korrekt": false,
+          "forklaring": "Det är en helt ny frist av samma längd, inte en förlängning.",
+          "lagrum": "6 § PreskL"
+        },
+        {
+          "text": "Fordran övergår till tioårig preskription oavsett gäldenär",
+          "korrekt": false,
+          "forklaring": "Den nya fristen bestäms enligt 2 §, alltså tre år mot konsument.",
+          "lagrum": "2 § PreskL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-7",
+      "fraga": "Vad innebär obestånd enligt konkurslagen?",
+      "alternativ": [
+        {
+          "text": "Att gäldenären inte kan betala sina skulder allteftersom de förfaller, och att oförmågan inte är endast tillfällig",
+          "korrekt": true,
+          "forklaring": "Obestånd är en varaktig betalningsoförmåga, inte tillfällig likviditetsbrist.",
+          "lagrum": "1 kap. 2 § KonkL"
+        },
+        {
+          "text": "Att skulderna överstiger tillgångarna i balansräkningen",
+          "korrekt": false,
+          "forklaring": "Insufficiens är inte samma sak som insolvens.",
+          "lagrum": "1 kap. 2 § KonkL"
+        },
+        {
+          "text": "Att gäldenären har fler än tre obetalda fakturor",
+          "korrekt": false,
+          "forklaring": "Någon sådan schablon finns inte.",
+          "lagrum": "1 kap. 2 § KonkL"
+        },
+        {
+          "text": "Att Kronofogden gjort ett misslyckat utmätningsförsök",
+          "korrekt": false,
+          "forklaring": "Det kan vara ett bevis för obestånd, men är inte definitionen.",
+          "lagrum": "1 kap. 2 § KonkL"
+        }
+      ]
+    },
+    {
+      "id": "for-mc-8",
+      "fraga": "Vad krävs för att Kronofogden ska kunna utmäta egendom?",
+      "alternativ": [
+        {
+          "text": "En exekutionstitel, exempelvis en dom eller ett utslag",
+          "korrekt": true,
+          "forklaring": "Verkställighet förutsätter alltid en exekutionstitel.",
+          "lagrum": "1 kap. 1 § UB"
+        },
+        {
+          "text": "Endast att borgenären skickat tre påminnelser",
+          "korrekt": false,
+          "forklaring": "Påminnelser ger ingen verkställbarhet.",
+          "lagrum": "1 kap. 1 § UB"
+        },
+        {
+          "text": "Att gäldenären försatts i konkurs",
+          "korrekt": false,
+          "forklaring": "Konkurs är ett annat förfarande än utmätning.",
+          "lagrum": "1 kap. 1 § UB"
+        },
+        {
+          "text": "Ett skriftligt medgivande från gäldenären vid varje tillfälle",
+          "korrekt": false,
+          "forklaring": "Verkställighet sker tvångsvis och kräver inte gäldenärens medgivande.",
+          "lagrum": "1 kap. 1 § UB"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "for-lj-1",
+      "situation": "Frågan gäller om ett skuldebrev ställt till viss man eller order ger den nye borgenären skydd mot gäldenärens invändningar.",
+      "facit_lagrum": [
+        "15 § SkbrL"
+      ],
+      "ledtrad": "Godtrosskyddet vid löpande skuldebrev."
+    },
+    {
+      "id": "for-lj-2",
+      "situation": "En näringsidkare vill driva in en fyra år gammal obetald faktura mot en privatperson som aldrig kravats.",
+      "facit_lagrum": [
+        "2 § PreskL"
+      ],
+      "ledtrad": "Vilken preskriptionstid gäller mot en konsument?"
+    },
+    {
+      "id": "for-lj-3",
+      "situation": "Borgenären vill veta om ett skriftligt kravbrev räcker för att hindra att fordran preskriberas.",
+      "facit_lagrum": [
+        "5 § PreskL"
+      ],
+      "ledtrad": "Formerna för preskriptionsavbrott."
+    },
+    {
+      "id": "for-lj-4",
+      "situation": "Ett bolag kan varaktigt inte betala sina skulder när de förfaller och en borgenär överväger konkursansökan.",
+      "facit_lagrum": [
+        "1 kap. 2 § KonkL"
+      ],
+      "ledtrad": "Obeståndsbegreppet."
+    }
+  ]
+}

@@ -12,6 +12,7 @@ from utils.prompts import (
     MAX_SVARSLANGD_ORD,
     RNTS_RUBRIKER,
     SYSTEM_PROMPT_BASE,
+    build_begrepp_prompt,
     build_case_prompt,
     build_quiz_prompt,
     vitlista_block,
@@ -103,3 +104,123 @@ def test_build_quiz_prompt_markerar_valt_alternativ():
     assert valt.text in user
     assert "→" in user
     assert "LAGRUMSVITLISTA" in user
+
+
+# --- Facit som sanningsunderlag i fallgranskningen ---------------------------
+#
+# Utan facit måste modellen härleda svensk rätt ur sina egna vikter. Mätt mot
+# Qwen3-8B träffade den då 2 av 9 korrekta lagrum, hänvisade 8 gånger till
+# lagrum utanför facit och intygade en gång att ett påhittat "87 § AvtL" var
+# rätt norm. Med facit i prompten blev det 9 av 9 och noll påhitt.
+
+
+def test_case_prompt_injicerar_hela_facit():
+    """Lagrum, tillämpningspunkter och slutsats ska alla med, inte bara frågan."""
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "4 § AvtL"})
+
+    for lagrum in case.facit.lagrum:
+        assert lagrum in user, f"{lagrum} saknas i prompten"
+    for punkt in case.facit.tillampningspunkter:
+        assert punkt[:40] in user, "tillämpningspunkterna saknas"
+    assert case.facit.slutsats[:40] in user, "facits slutsats saknas"
+
+
+def test_case_prompt_forbjuder_ordet_facit_i_svaret():
+    """Studenten ska aldrig få veta att en lösningsnyckel finns.
+
+    Observerat i skarpt läge innan förbudet: "Fyll i rättsfrågan enligt facit."
+    """
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    lag = user.lower()
+    assert "aldrig ordet facit" in lag, "förbudet mot att nämna facit saknas"
+    # Underlaget ska finnas med, men bara som modellens egen bedömning.
+    assert "eget omdöme" in lag or "din egen bedömning" in lag
+
+
+def test_case_prompt_kraver_svenska():
+    """Svaret ska alltid vara på svenska, oavsett vad studenten skriver."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "The contract is void"})
+    assert "svenska" in user.lower()
+
+
+def test_case_prompt_ber_modellen_peka_ut_fel_lagrum():
+    """Kärnan i förbättringen: säg till när studentens lagrum inte är facits."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "36 § AvtL"})
+    assert "inte tillämpligt" in user or "inte är tillämpliga" in user
+
+
+def test_case_prompt_haller_igen_pa_hur_mycket_som_avslojas():
+    """Facit får vägleda granskningen, inte serveras som lösning."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    assert "inte ut lösningen" in user or "inte lösningen" in user
+
+
+# --- Lagtext i prompten (fas 2) ---------------------------------------------
+#
+# Facit säger VILKA lagrum som gäller. Lagtexten säger vad de innehåller.
+# Utan den senare gissar modellen, och gissade fel: "36 § AvtL reglerar
+# avtals ingående" när paragrafen är generalklausulen om jämkning.
+
+
+def test_case_prompt_injicerar_lagtext_for_facits_lagrum():
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "4 § AvtL"})
+
+    assert "LAGTEXT" in user
+    # 4 § AvtL handlar om sen accept som nytt anbud.
+    assert "nytt anbud" in user
+
+
+def test_case_prompt_injicerar_lagtext_for_studentens_egna_lagrum():
+    """Tutorn ska kunna säga VARFÖR studentens paragraf inte passar.
+
+    Utan textens innehåll kan den bara konstatera att lagrummet saknas i
+    facit, vilket är en svagare och mindre lärorik invändning.
+    """
+    modul = ladda_modul("avtalsratt")
+    case = modul.case[0]
+    _, user = build_case_prompt(case, {"norm": "Jag tror 36 § AvtL gäller."})
+
+    assert "36 § AvtL" in user
+    # 36 § är jämkningsparagrafen, och det ska framgå av texten i prompten.
+    assert "oskäl" in user.lower() or "jämka" in user.lower()
+
+
+def test_case_prompt_utan_lagtext_kraschar_inte():
+    """Saknad lagtext ska ge en prompt utan lagtextblock, inte ett fel."""
+    _, user = build_case_prompt(
+        {
+            "scenariotext": "Ett scenario.",
+            "facit": {"rattsfraga": "En fråga?", "lagrum": ["87 § AvtL"]},
+        },
+        {"norm": "87 § AvtL"},
+    )
+    assert "LAGTEXT" not in user
+    assert "En fråga?" in user
+
+
+def test_begrepp_prompt_injicerar_lagtext():
+    """Begreppsfördjupningen saknade helt sanningsunderlag före fas 2."""
+    from utils.nyckelbegrepp import hamta_begrepp
+
+    b = hamta_begrepp("behorighet-och-befogenhet")
+    _, user = build_begrepp_prompt(b)
+
+    assert "LAGTEXT" in user
+    # Begreppet hänger på 10 och 11 §§ AvtL om fullmakt.
+    assert "fullmakt" in user.lower()
+
+
+def test_lagtexten_markeras_som_ordagrann():
+    """Modellen måste veta att blocket är källtext, inte en parafras."""
+    modul = ladda_modul("avtalsratt")
+    _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
+    assert "ordagrann" in user.lower()
+    assert "som inte står i texten" in user

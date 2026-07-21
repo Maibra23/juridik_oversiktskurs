@@ -1,0 +1,330 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen Allmän förmögenhetsrätt (kap 6). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
+  "modul": "Allmän förmögenhetsrätt",
+  "case": [
+    {
+      "id": "afr-case-1",
+      "rubrik": "Den stulna racercykeln",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Maria ser en annons på en begagnadsajt för en racercykel av välkänt märke. Priset, 18 000 kr, ligger på normal marknadsnivå för en begagnad cykel av den modellen. Hon möter säljaren Kalle på en parkeringsplats, provar cykeln, betalar med Swish och tar med sig cykeln hem. Två månader senare kontaktas Maria av polisen. Cykeln visar sig ha blivit stulen ur ett låst cykelförråd hos Erik tre veckor innan Maria köpte den. Erik anmälde stölden samma dag den upptäcktes och kräver nu tillbaka cykeln. Maria hade ingen som helst anledning att misstänka att något var fel.",
+      "facit": {
+        "rattsfraga": "Har Maria gjort ett godtrosförvärv av racercykeln, eller kan Erik som ursprunglig ägare få tillbaka den?",
+        "lagrum": [
+          "1 § GFL",
+          "2 § GFL",
+          "3 § GFL"
+        ],
+        "tillampningspunkter": [
+          "Cykeln är lösöre och frågan gäller förvärv från någon som inte var ägare, alltså tillämpas lagen om godtrosförvärv av lösöre (1 § GFL).",
+          "De tre förutsättningarna i 2 § GFL är i och för sig uppfyllda: överlåtelsen skedde från en icke-ägare, Maria fick cykeln i sin besittning, och hon var i god tro. Att priset låg på marknadsnivå och att köpet skedde på vanligt sätt talar för att godtrosrekvisitet är uppfyllt.",
+          "Avgörande är dock undantaget i 3 § GFL: egendom som olovligen tagits kan inte godtrosförvärvas. Cykeln stals ur ett låst förråd.",
+          "Eftersom cykeln är stöldgods behåller Erik sin äganderätt oavsett Marias goda tro. Erik kan kräva tillbaka cykeln utan att betala lösen, förutsatt att han gör det inom sex månader från det att han fick veta vem som innehar den (3 § GFL).",
+          "Marias skydd ligger i stället i förhållandet till säljaren Kalle, mot vilken hon får rikta anspråk på grund av köpet."
+        ],
+        "slutsats": "Maria har inte gjort något godtrosförvärv. Trots att samtliga förutsättningar i 2 § GFL är uppfyllda hindrar undantaget i 3 § GFL godtrosförvärv av olovligen tagen egendom. Erik får tillbaka cykeln utan lösen. Maria får i stället vända sig mot Kalle. Utgången hade blivit den motsatta om Erik frivilligt anförtrott cykeln åt Kalle, exempelvis genom utlåning, eftersom undantaget i 3 § GFL då inte gäller."
+      }
+    },
+    {
+      "id": "afr-case-2",
+      "rubrik": "Trumsetet som lånades ut",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Lars äger ett trumset värt cirka 30 000 kr. Han lånar frivilligt ut det till sin vän Petter, som ska använda det under en turné. Efter turnén hör Petter inte av sig. I stället säljer Petter trumsetet vidare till Sanna för 28 000 kr. Sanna hämtar trumsetet hemma hos Petter, betalar kontant och har ingen anledning att tro annat än att Petter är ägare. När Lars till slut får tag på Petter är trumsetet redan hos Sanna. Lars vill ha tillbaka sitt trumset och menar att han aldrig sålt det till någon.",
+      "facit": {
+        "rattsfraga": "Har Sanna gjort ett godtrosförvärv av trumsetet, och vilken möjlighet har Lars i så fall att få tillbaka det?",
+        "lagrum": [
+          "2 § GFL",
+          "3 § GFL",
+          "5 § GFL",
+          "6 § GFL"
+        ],
+        "tillampningspunkter": [
+          "Förutsättningarna i 2 § GFL prövas: Petter var inte ägare, Sanna fick trumsetet i sin besittning när hon hämtade det, och hon var i god tro eftersom priset var marknadsmässigt och inget talade emot Petters rådighet.",
+          "Undantaget i 3 § GFL är inte tillämpligt. Trumsetet har inte olovligen tagits från Lars, utan Lars har frivilligt anförtrott det åt Petter. Detta är den avgörande skillnaden mot stöldgodsfallet.",
+          "Sanna har därmed gjort ett godtrosförvärv och blivit ägare till trumsetet.",
+          "Lars förlorar dock inte allt. Som tidigare ägare har han lösningsrätt och kan få tillbaka trumsetet mot lösen, om han begär det inom sex månader från det att han fick kännedom om Sannas innehav (5 § GFL).",
+          "Lösenbeloppet motsvarar Sannas kostnader för förvärvet och eventuella förbättringar, dock högst egendomens marknadsvärde (6 § GFL).",
+          "Oavsett vilken väg Lars väljer kvarstår hans anspråk mot Petter."
+        ],
+        "slutsats": "Sanna har gjort ett godtrosförvärv enligt 2 § GFL och är ägare till trumsetet, eftersom undantaget för olovligen tagen egendom i 3 § GFL inte träffar egendom som ägaren frivilligt anförtrott åt någon annan. Lars kan dock utnyttja sin lösningsrätt enligt 5 § GFL och få tillbaka trumsetet mot lösen enligt 6 § GFL, om han agerar inom sexmånadersfristen. Jämförelsen med det stulna godset visar principen: det är hur egendomen lämnade ägarens besittning som avgör, inte förvärvarens goda tro."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "afr-mc-1",
+      "fraga": "Vilka tre förutsättningar måste vara uppfyllda för ett godtrosförvärv av lösöre?",
+      "alternativ": [
+        {
+          "text": "Överlåtelse från någon som inte var ägare, besittning hos förvärvaren och god tro",
+          "korrekt": true,
+          "forklaring": "Samtliga tre rekvisit måste vara uppfyllda samtidigt.",
+          "lagrum": "2 § GFL"
+        },
+        {
+          "text": "Skriftligt avtal, marknadsmässigt pris och kvitto",
+          "korrekt": false,
+          "forklaring": "Dessa omständigheter kan vara bevisning för god tro, men är inte rekvisiten.",
+          "lagrum": "2 § GFL"
+        },
+        {
+          "text": "God tro och betalning, oavsett om saken överlämnats",
+          "korrekt": false,
+          "forklaring": "Besittningen är ett självständigt och nödvändigt rekvisit.",
+          "lagrum": "2 § GFL"
+        },
+        {
+          "text": "Registrering och offentliggörande av förvärvet",
+          "korrekt": false,
+          "forklaring": "Något registreringskrav gäller inte för lösöre.",
+          "lagrum": "2 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-2",
+      "fraga": "Kan man göra ett godtrosförvärv av egendom som har stulits?",
+      "alternativ": [
+        {
+          "text": "Nej, olovligen tagen egendom kan inte godtrosförvärvas",
+          "korrekt": true,
+          "forklaring": "Detta är huvudundantaget och skiljer stöldgods från anförtrodd egendom.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Ja, om förvärvaren var i god tro och betalade marknadspris",
+          "korrekt": false,
+          "forklaring": "God tro räcker inte när egendomen tagits olovligen.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Ja, men bara om stölden inte polisanmälts",
+          "korrekt": false,
+          "forklaring": "Undantaget är inte beroende av om anmälan gjorts.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Ja, om det gått mer än sex månader sedan stölden",
+          "korrekt": false,
+          "forklaring": "Sexmånadersfristen gäller ägarens krav sedan han fått veta vem som innehar egendomen, inte tiden sedan stölden.",
+          "lagrum": "3 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-3",
+      "fraga": "Vad är den avgörande skillnaden mellan stöldgods och egendom som ägaren lånat ut?",
+      "alternativ": [
+        {
+          "text": "Utlånad egendom kan godtrosförvärvas, stöldgods kan det inte",
+          "korrekt": true,
+          "forklaring": "Det avgörande är hur egendomen lämnade ägarens besittning, inte förvärvarens goda tro.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Ingen skillnad, båda kan godtrosförvärvas vid god tro",
+          "korrekt": false,
+          "forklaring": "Undantaget för olovligen tagen egendom gör skillnaden avgörande.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Ingen skillnad, ingendera kan godtrosförvärvas",
+          "korrekt": false,
+          "forklaring": "Anförtrodd egendom kan godtrosförvärvas enligt huvudregeln.",
+          "lagrum": "2 § GFL"
+        },
+        {
+          "text": "Skillnaden gäller bara vid fast egendom",
+          "korrekt": false,
+          "forklaring": "Lagen om godtrosförvärv gäller lösöre.",
+          "lagrum": "1 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-4",
+      "fraga": "En ägare har förlorat sin rätt genom någon annans godtrosförvärv. Vilken möjlighet har han kvar?",
+      "alternativ": [
+        {
+          "text": "Lösningsrätt: han kan få tillbaka egendomen mot lösen",
+          "korrekt": true,
+          "forklaring": "Lösningsrätten måste utnyttjas inom sex månader från kännedom om innehavet.",
+          "lagrum": "5 § GFL"
+        },
+        {
+          "text": "Ingen möjlighet alls, äganderätten är slutligt förlorad",
+          "korrekt": false,
+          "forklaring": "Lösningsrätten kvarstår under en begränsad tid.",
+          "lagrum": "5 § GFL"
+        },
+        {
+          "text": "Han kan alltid kräva tillbaka egendomen utan lösen",
+          "korrekt": false,
+          "forklaring": "Det gäller vid olovligen tagen egendom, inte efter ett giltigt godtrosförvärv.",
+          "lagrum": "3 § GFL"
+        },
+        {
+          "text": "Han kan begära att köpet jämkas som oskäligt",
+          "korrekt": false,
+          "forklaring": "36 § AvtL reglerar avtalsvillkor mellan parterna, inte sakrättsliga anspråk mot en tredje man.",
+          "lagrum": "36 § AvtL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-5",
+      "fraga": "Vad omfattar lösenbeloppet när en tidigare ägare löser tillbaka egendom?",
+      "alternativ": [
+        {
+          "text": "Förvärvarens kostnader för förvärvet och för förbättringar, dock högst marknadsvärdet",
+          "korrekt": true,
+          "forklaring": "Beloppet ska hålla förvärvaren skadeslös utan att överstiga egendomens värde.",
+          "lagrum": "6 § GFL"
+        },
+        {
+          "text": "Alltid exakt det pris förvärvaren betalade, utan justering",
+          "korrekt": false,
+          "forklaring": "Även förbättringskostnader beaktas, och marknadsvärdet utgör ett tak.",
+          "lagrum": "6 § GFL"
+        },
+        {
+          "text": "Egendomens nyanskaffningsvärde",
+          "korrekt": false,
+          "forklaring": "Nyanskaffningsvärdet är inte måttet.",
+          "lagrum": "6 § GFL"
+        },
+        {
+          "text": "En symbolisk summa, eftersom förvärvaren inte var ägare",
+          "korrekt": false,
+          "forklaring": "Förvärvaren har gjort ett giltigt godtrosförvärv och ska hållas skadeslös.",
+          "lagrum": "6 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-6",
+      "fraga": "Vad gäller om någon innehaft lös egendom med besittning och god tro i tio år?",
+      "alternativ": [
+        {
+          "text": "Han blir ägare genom hävd, om han inte fått anledning till misstanke under tiden",
+          "korrekt": true,
+          "forklaring": "Hävd kan ge äganderätt även när ett godtrosförvärv inte kunde ske från början.",
+          "lagrum": "4 § GFL"
+        },
+        {
+          "text": "Ingenting, tiden saknar betydelse för äganderätten till lösöre",
+          "korrekt": false,
+          "forklaring": "Lagen innehåller en uttrycklig hävdregel för lösöre.",
+          "lagrum": "4 § GFL"
+        },
+        {
+          "text": "Han blir ägare efter tre år",
+          "korrekt": false,
+          "forklaring": "Hävdetiden är tio år.",
+          "lagrum": "4 § GFL"
+        },
+        {
+          "text": "Han blir ägare först efter tjugo år",
+          "korrekt": false,
+          "forklaring": "Hävdetiden är tio år.",
+          "lagrum": "4 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-7",
+      "fraga": "Gäller reglerna om godtrosförvärv även vid förvärv av panträtt?",
+      "alternativ": [
+        {
+          "text": "Ja, bestämmelserna tillämpas även på godtrosförvärv av panträtt",
+          "korrekt": true,
+          "forklaring": "Lagen omfattar inte bara äganderätt utan även panträtt.",
+          "lagrum": "8 § GFL"
+        },
+        {
+          "text": "Nej, lagen gäller uteslutande äganderätt",
+          "korrekt": false,
+          "forklaring": "Panträtten omfattas uttryckligen.",
+          "lagrum": "8 § GFL"
+        },
+        {
+          "text": "Endast om panten registrerats",
+          "korrekt": false,
+          "forklaring": "Någon registrering krävs inte för lösöre.",
+          "lagrum": "8 § GFL"
+        },
+        {
+          "text": "Endast vid pant mellan näringsidkare",
+          "korrekt": false,
+          "forklaring": "Någon sådan begränsning uppställs inte.",
+          "lagrum": "8 § GFL"
+        }
+      ]
+    },
+    {
+      "id": "afr-mc-8",
+      "fraga": "Vilken egendomstyp träffas av lagen om godtrosförvärv?",
+      "alternativ": [
+        {
+          "text": "Lösöre",
+          "korrekt": true,
+          "forklaring": "Lagen gäller lösöre, alltså flyttbara fysiska saker.",
+          "lagrum": "1 § GFL"
+        },
+        {
+          "text": "Fast egendom",
+          "korrekt": false,
+          "forklaring": "Förvärv av fast egendom regleras i jordabalken.",
+          "lagrum": "4 kap. 1 § JB"
+        },
+        {
+          "text": "Endast fordringar och skuldebrev",
+          "korrekt": false,
+          "forklaring": "Skuldebrev har egna regler i skuldebrevslagen.",
+          "lagrum": "1 § GFL"
+        },
+        {
+          "text": "All slags egendom utan undantag",
+          "korrekt": false,
+          "forklaring": "Lagen är begränsad till lösöre och viker för särskilda regler på andra områden.",
+          "lagrum": "1 § GFL"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "afr-lj-1",
+      "situation": "En köpare i god tro har fått en tavla i sin besittning från en säljare som visar sig inte ha varit ägare.",
+      "facit_lagrum": [
+        "2 § GFL"
+      ],
+      "ledtrad": "Leta efter huvudregeln med de tre förutsättningarna."
+    },
+    {
+      "id": "afr-lj-2",
+      "situation": "Egendomen som köparen förvärvat i god tro visar sig ha tagits olovligen från ägaren.",
+      "facit_lagrum": [
+        "3 § GFL"
+      ],
+      "ledtrad": "Undantaget som gör god tro verkningslös."
+    },
+    {
+      "id": "afr-lj-3",
+      "situation": "Den ursprunglige ägaren vill mot betalning få tillbaka egendom som någon annan godtrosförvärvat.",
+      "facit_lagrum": [
+        "5 § GFL"
+      ],
+      "ledtrad": "Ägaren har en rätt kvar även efter ett giltigt godtrosförvärv."
+    },
+    {
+      "id": "afr-lj-4",
+      "situation": "Någon har innehaft ett föremål med besittning och i god tro i mer än tio år utan att misstanke uppkommit.",
+      "facit_lagrum": [
+        "4 § GFL"
+      ],
+      "ledtrad": "Tidens verkan på äganderätten till lösöre."
+    }
+  ]
+}

@@ -24,10 +24,17 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Tutorsvar:
-    """Ett cachat tutorsvar med hashen av de inputs som skapade det."""
+    """Ett cachat tutorsvar med hashen av de inputs som skapade det.
+
+    ``godkand=False`` betyder att granskningen stoppade svaret. ``text`` är då
+    tom: den underkända texten sparas medvetet inte, så att den inte kan
+    renderas av misstag längre fram.
+    """
 
     text: str
     input_hash: str
+    godkand: bool = True
+    skal: str = ""
 
 
 def _hash_inputs(system_prompt: str, user_prompt: str) -> str:
@@ -67,20 +74,49 @@ def _spara(nyckel: str, svar: Tutorsvar) -> None:
         pass
 
 
+# Skärpning vid omförsök. Samma mönster som utils.generator använder när ett
+# genererat lagrum inte kunnat verifieras.
+SKARPNING = (
+    "\n\nVIKTIGT: Ditt förra svar hänvisade till ett lagrum som inte kunde "
+    "verifieras eller som inte hör till uppgiften, och framhöll det som "
+    "gällande rätt. Använd ENDAST lagrum ur underlaget ovan. Nämner du ett "
+    "annat lagrum måste du uttryckligen skriva att det INTE är tillämpligt."
+)
+
+
 def generera_tutorsvar(
     nyckel: str,
     system_prompt: str,
     user_prompt: str,
+    underlag: tuple[str, ...] = (),
 ) -> Tutorsvar:
-    """Anropa LLM:en och cachea svaret under ``nyckel``.
+    """Anropa LLM:en, granska svaret och cachea det under ``nyckel``.
 
     Anropas endast när studenten uttryckligen begär en förklaring (knapptryck).
     Kastar vidare LLM-felhierarkin så att anroparen kan visa rätt infokort.
+
+    Svaret granskas av utils.granskning innan det cachas. Underkänns det görs
+    ETT omförsök med skärpt instruktion. Underkänns även det returneras ett
+    Tutorsvar med tom text och ``godkand=False``, och anroparen visar
+    uppgiftens deterministiska underlag i stället. Hellre inget svar än
+    felaktig juridik: studenten kan inte skilja dem åt.
     """
+    from utils.granskning import granska_tutorsvar
     from utils.llm import cached_chat
 
     text = cached_chat(system_prompt, user_prompt)
-    svar = Tutorsvar(text=text, input_hash=_hash_inputs(system_prompt, user_prompt))
+    granskning = granska_tutorsvar(text, underlag)
+
+    if not granskning.godkand:
+        text = cached_chat(system_prompt, user_prompt + SKARPNING)
+        granskning = granska_tutorsvar(text, underlag)
+
+    svar = Tutorsvar(
+        text=text if granskning.godkand else "",
+        input_hash=_hash_inputs(system_prompt, user_prompt),
+        godkand=granskning.godkand,
+        skal=granskning.skal,
+    )
     _spara(nyckel, svar)
     return svar
 
@@ -91,8 +127,10 @@ def tutorknapp(
     user_prompt: str,
     etikett: str = "Be tutorn granska min analys",
     knappnyckel: str | None = None,
+    underlag: tuple[str, ...] = (),
+    reservhanvisning: str = "",
 ) -> None:
-    """Rita tutorknappen, hantera generering, cache och rendering.
+    """Rita tutorknappen, hantera generering, granskning, cache och rendering.
 
     Beteende:
     - Utan cachat svar: en knapp med ``etikett``. Genererar vid tryck.
@@ -100,6 +138,11 @@ def tutorknapp(
     - Med inaktuellt svar (inputs ändrade): visa det gamla svaret plus en
       knapp "Uppdatera förklaringen".
     - Fångar LLM-felhierarkin och visar svenska infokort i stället för att krascha.
+
+    ``underlag`` är uppgiftens kända korrekta lagrum. Anges det granskas
+    svaret före visning, och underkända svar visas inte alls.
+    ``reservhanvisning`` pekar studenten mot det deterministiska underlag som
+    redan finns på sidan, t.ex. "Öppna *Visa facit* nedan".
     """
     import streamlit as st
 
@@ -109,6 +152,7 @@ def tutorknapp(
         render_info,
         render_session_cap_card,
         render_tutortext,
+        render_varning,
     )
 
     cachat = hamta_cachat(nyckel)
@@ -121,7 +165,9 @@ def tutorknapp(
     if tryckt:
         try:
             with st.spinner("Tutorn läser ditt svar …"):
-                cachat = generera_tutorsvar(nyckel, system_prompt, user_prompt)
+                cachat = generera_tutorsvar(
+                    nyckel, system_prompt, user_prompt, underlag
+                )
                 inaktuell = False
         except LLMSessionCapError:
             render_session_cap_card()
@@ -133,14 +179,30 @@ def tutorknapp(
             render_info(
                 "Tutorn är inte tillgänglig just nu (ingen modell konfigurerad "
                 "eller tillfälligt fel). Rättning, quiz, lagrumslänkar och facit "
-                "fungerar som vanligt – prova tutorn igen om en stund."
+                "fungerar som vanligt. Prova tutorn igen om en stund."
             )
             return
 
-    if cachat is not None:
-        if inaktuell:
-            render_info(
-                "Ditt svar har ändrats sedan förklaringen skapades. Tryck på "
-                "\"Uppdatera förklaringen\" för en ny granskning."
-            )
-        render_tutortext(cachat.text)
+    if cachat is None:
+        return
+
+    if not cachat.godkand:
+        # Svaret stoppades av granskningen och finns inte ens sparat. Studenten
+        # ska aldrig se juridik som appen inte kan stå för, och det
+        # deterministiska underlaget ligger redan på sidan.
+        hanvisning = (
+            f" {reservhanvisning}" if reservhanvisning else ""
+        )
+        render_varning(
+            "Tutorn kunde inte ge ett svar som går att verifiera mot kursens "
+            "lagrumslista, inte heller efter ett omförsök. Förklaringen visas "
+            f"därför inte.{hanvisning} Du kan också trycka på knappen igen."
+        )
+        return
+
+    if inaktuell:
+        render_info(
+            "Ditt svar har ändrats sedan förklaringen skapades. Tryck på "
+            "\"Uppdatera förklaringen\" för en ny granskning."
+        )
+    render_tutortext(cachat.text)

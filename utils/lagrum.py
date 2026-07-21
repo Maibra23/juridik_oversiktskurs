@@ -244,6 +244,12 @@ def _matchande_avsnitt(lag: Lag, ref: Lagrumsref) -> Kursavsnitt | None:
         return None
     paragraf = int(ref.paragraf)
 
+    # En lag utan kapitelindelning har inga kapitel att träffa. Ett angivet
+    # kapitel är då alltid påhittat, och kapitelledet får inte tyst ignoreras:
+    # då skulle "99 kap. 1 § AvtL" verifieras på styrkan av att AvtL har en 1 §.
+    if not lag.kapitelindelad and ref.kapitel is not None:
+        return None
+
     for avsnitt in lag.kursavsnitt:
         if lag.kapitelindelad:
             if ref.kapitel is None or avsnitt.kapitel != ref.kapitel:

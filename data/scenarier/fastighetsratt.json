@@ -1,0 +1,327 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen Fastighetsrätt (kap 9). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
+  "modul": "Fastighetsrätt",
+  "case": [
+    {
+      "id": "fas-case-1",
+      "rubrik": "Diskmaskinen, dieseltanken och det muntliga löftet",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Ingrid säljer sin villa till Hassan. Under visningen kommer de muntligen överens om att den inbyggda diskmaskinen och den fastmonterade braskaminen ska följa med, men att Ingrids fristående växthus i trädgården och hennes verktygsskåp i garaget ska hon ta med sig. Köpekontraktet skrivs under av båda parter och innehåller uppgift om fastigheten, priset och en överlåtelseförklaring. Diskmaskinen och kaminen nämns inte i kontraktet. När Hassan flyttar in har Ingrid tagit med sig både växthuset, verktygsskåpet, diskmaskinen och braskaminen. Hassan blir upprörd och menar att åtminstone diskmaskinen och kaminen skulle ha följt med.",
+      "facit": {
+        "rattsfraga": "Vilka av föremålen utgör tillbehör till fastigheten och skulle därmed ha följt med i köpet, och har det muntliga löftet någon betydelse?",
+        "lagrum": [
+          "2 kap. 1 § JB",
+          "2 kap. 2 § JB",
+          "4 kap. 1 § JB"
+        ],
+        "tillampningspunkter": [
+          "Frågan avgörs av tillbehörsreglerna, inte av vad parterna sagt muntligt. Utgångspunkten är vad som hör till fastigheten enligt 2 kap. 1 § JB: byggnader, ledningar, stängsel och andra anläggningar som anbragts för stadigvarande bruk.",
+          "Den fastmonterade braskaminen och den inbyggda diskmaskinen är fast inredning avsedd för stadigvarande bruk i byggnaden och utgör därmed byggnadstillbehör enligt 2 kap. 2 § JB. De ingår i köpet.",
+          "Det fristående växthuset kräver en bedömning enligt 2 kap. 1 § JB av om det anbragts för stadigvarande bruk. Ett verktygsskåp som bara står i garaget är däremot lös egendom och följer inte med.",
+          "Det muntliga löftet om att diskmaskinen och kaminen skulle följa med saknar självständig betydelse, eftersom de ändå ingår som tillbehör.",
+          "Det muntliga undantaget för växthuset är mer problematiskt. Köp av fast egendom är ett formalavtal: skriftlig handling med köpeskilling, överlåtelseförklaring och båda parters underskrifter enligt 4 kap. 1 § JB. Villkor som inte tagits in i köpehandlingen kan därför inte utan vidare åberopas."
+        ],
+        "slutsats": "Braskaminen och den inbyggda diskmaskinen är byggnadstillbehör enligt 2 kap. 2 § JB och skulle ha följt med fastigheten. Ingrid har därmed fört bort egendom som tillhörde Hassan. Verktygsskåpet är lös egendom och fick hon ta med sig. Växthuset avgörs av om det anbragts för stadigvarande bruk enligt 2 kap. 1 § JB. Den muntliga överenskommelsen kan Hassan inte grunda någon rätt på, eftersom formkravet i 4 kap. 1 § JB innebär att villkor om köpet ska framgå av köpehandlingen."
+      }
+    },
+    {
+      "id": "fas-case-2",
+      "rubrik": "Fuktskadan bakom panelen",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Familjen Ek köper ett hus byggt 1974. Vid visningen noterar de en svag lukt i källaren och en missfärgning på en vägg. Mäklaren säger att det nog bara är gammal fukt i betongen. Familjen anlitar ingen besiktningsman och ställer inga följdfrågor. Ett halvår efter tillträdet river de panelen i källaren och finner omfattande fuktskador med mögelpåväxt bakom. Åtgärden kostar 400 000 kr. Säljaren, som ägt huset i tolv år, säger sig inte ha känt till skadan. Familjen Ek vill ha prisavdrag och menar att felet var dolt.",
+      "facit": {
+        "rattsfraga": "Utgör fuktskadan ett fel som köparna kan åberopa mot säljaren, eller omfattas den av köparnas undersökningsplikt?",
+        "lagrum": [
+          "4 kap. 19 § JB",
+          "4 kap. 17 § JB"
+        ],
+        "tillampningspunkter": [
+          "Utgångspunkten är att fastigheten inte stämmer överens med vad köparen med fog kunnat förutsätta vid köpet (4 kap. 19 § JB). En omfattande fuktskada i ett hus avviker i och för sig från normal standard.",
+          "Köparen får dock inte åberopa fel som han borde ha upptäckt vid en sådan undersökning som varit påkallad med hänsyn till fastighetens skick, den normala beskaffenheten hos jämförliga fastigheter och omständigheterna vid köpet (4 kap. 19 § andra stycket JB). Undersökningsplikten vid fastighetsköp är sträng.",
+          "Här fanns tydliga varningssignaler: lukt i källaren och synlig missfärgning i ett hus från 1974. Sådana symtom utvidgar undersökningsplikten och kräver att köparen går vidare, exempelvis genom att anlita en besiktningsman eller undersöka bakom panelen.",
+          "Att mäklaren tonade ned symtomen befriar inte köparen. Mäklaren är inte säljarens ställföreträdare för att lämna utfästelser om skicket, och ett lugnande allmänt uttalande är ingen garanti.",
+          "Att säljaren inte kände till skadan saknar betydelse för felansvaret. Ansvaret för dolda fel är strikt, men förutsätter just att felet var dolt, alltså inte upptäckbart vid en påkallad undersökning."
+        ],
+        "slutsats": "Familjen Ek kan sannolikt inte åberopa fuktskadan som fel. Lukten och missfärgningen utgjorde symtom som utvidgade undersökningsplikten enligt 4 kap. 19 § JB, och genom att varken anlita besiktningsman eller undersöka bakom panelen har de brustit i den. Utgången hade blivit en annan om inga symtom funnits, eller om säljaren lämnat en uttrycklig utfästelse om att källaren var torr, eftersom en utfästelse begränsar undersökningsplikten."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "fas-mc-1",
+      "fraga": "Vad krävs för att ett köp av fast egendom ska vara giltigt?",
+      "alternativ": [
+        {
+          "text": "Skriftlig köpehandling med köpeskilling, överlåtelseförklaring och båda parters underskrifter",
+          "korrekt": true,
+          "forklaring": "Köp av fast egendom är ett formalavtal. Brister i formen gör köpet ogiltigt.",
+          "lagrum": "4 kap. 1 § JB"
+        },
+        {
+          "text": "Muntlig överenskommelse räcker om två vittnen kan intyga den",
+          "korrekt": false,
+          "forklaring": "Muntliga avtal om fast egendom är inte bindande.",
+          "lagrum": "4 kap. 1 § JB"
+        },
+        {
+          "text": "Skriftlig handling som registrerats hos Lantmäteriet innan den blir giltig",
+          "korrekt": false,
+          "forklaring": "Lagfart söks efter köpet och är ingen giltighetsförutsättning för avtalet.",
+          "lagrum": "4 kap. 1 § JB"
+        },
+        {
+          "text": "Anbud och accept enligt avtalslagens vanliga regler",
+          "korrekt": false,
+          "forklaring": "Avtalslagens huvudregler viker för jordabalkens formkrav vid fast egendom.",
+          "lagrum": "1 § AvtL"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-2",
+      "fraga": "En fastmonterad braskamin i ett bostadshus är:",
+      "alternativ": [
+        {
+          "text": "Byggnadstillbehör, och följer med fastigheten",
+          "korrekt": true,
+          "forklaring": "Fast inredning avsedd för stadigvarande bruk i byggnaden är byggnadstillbehör.",
+          "lagrum": "2 kap. 2 § JB"
+        },
+        {
+          "text": "Lös egendom, som säljaren alltid får ta med sig",
+          "korrekt": false,
+          "forklaring": "Fast monterad inredning har blivit tillbehör till byggnaden.",
+          "lagrum": "2 kap. 2 § JB"
+        },
+        {
+          "text": "Industritillbehör",
+          "korrekt": false,
+          "forklaring": "Industritillbehör avser maskiner i industriell verksamhet.",
+          "lagrum": "2 kap. 3 § JB"
+        },
+        {
+          "text": "Tillbehör endast om det skrivits in i köpekontraktet",
+          "korrekt": false,
+          "forklaring": "Tillbehörsegenskapen följer av lagen, inte av kontraktstexten.",
+          "lagrum": "2 kap. 2 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-3",
+      "fraga": "Vad blir följden av att köparen brustit i sin undersökningsplikt?",
+      "alternativ": [
+        {
+          "text": "Köparen får inte åberopa fel som han borde ha upptäckt",
+          "korrekt": true,
+          "forklaring": "Undersökningsplikten vid fastighetsköp är sträng och avgränsar vad som är dolt fel.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Köpet blir ogiltigt i sin helhet",
+          "korrekt": false,
+          "forklaring": "Bristande undersökning påverkar felansvaret, inte köpets giltighet.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Köparen får halva prisavdraget",
+          "korrekt": false,
+          "forklaring": "Någon sådan schablonfördelning finns inte.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Säljaren blir ändå ansvarig om han var i god tro",
+          "korrekt": false,
+          "forklaring": "Säljarens goda tro saknar betydelse. Avgörande är om felet var upptäckbart.",
+          "lagrum": "4 kap. 19 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-4",
+      "fraga": "Vad händer med undersökningsplikten om säljaren lämnat en uttrycklig utfästelse om fastighetens skick?",
+      "alternativ": [
+        {
+          "text": "Den begränsas i motsvarande mån, köparen får lita på utfästelsen",
+          "korrekt": true,
+          "forklaring": "En konkret utfästelse gör att köparen inte behöver kontrollera just det förhållandet.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Den påverkas inte alls",
+          "korrekt": false,
+          "forklaring": "Utfästelser är just det som förskjuter gränsen för vad köparen med fog kunnat förutsätta.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Den utvidgas, eftersom köparen bör kontrollera påståendet",
+          "korrekt": false,
+          "forklaring": "Det är tvärtom: utfästelsen minskar behovet av egen undersökning.",
+          "lagrum": "4 kap. 19 § JB"
+        },
+        {
+          "text": "Den upphör helt för hela fastigheten",
+          "korrekt": false,
+          "forklaring": "Begränsningen gäller det som utfästelsen avser, inte fastigheten i stort.",
+          "lagrum": "4 kap. 19 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-5",
+      "fraga": "Vad räknas som fast egendom?",
+      "alternativ": [
+        {
+          "text": "Jord, som indelas i fastigheter",
+          "korrekt": true,
+          "forklaring": "Jordabalkens inledande bestämmelse definierar fast egendom.",
+          "lagrum": "1 kap. 1 § JB"
+        },
+        {
+          "text": "All egendom som inte kan flyttas utan skada",
+          "korrekt": false,
+          "forklaring": "Flyttbarheten är inte det legala kriteriet.",
+          "lagrum": "1 kap. 1 § JB"
+        },
+        {
+          "text": "Byggnader, men inte marken de står på",
+          "korrekt": false,
+          "forklaring": "Byggnaden är tillbehör till fastigheten, inte fast egendom i sig.",
+          "lagrum": "2 kap. 1 § JB"
+        },
+        {
+          "text": "Endast bebyggd mark",
+          "korrekt": false,
+          "forklaring": "Även obebyggd mark är fast egendom.",
+          "lagrum": "1 kap. 1 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-6",
+      "fraga": "Maskiner som tillförts en fastighet för industriell verksamhet är:",
+      "alternativ": [
+        {
+          "text": "Industritillbehör, om inte ägaren avgett förklaring om undantag",
+          "korrekt": true,
+          "forklaring": "Huvudregeln är att de hör till fastigheten, men undantag kan förklaras.",
+          "lagrum": "2 kap. 3 § JB"
+        },
+        {
+          "text": "Alltid lös egendom",
+          "korrekt": false,
+          "forklaring": "Huvudregeln är den motsatta.",
+          "lagrum": "2 kap. 3 § JB"
+        },
+        {
+          "text": "Byggnadstillbehör",
+          "korrekt": false,
+          "forklaring": "Byggnadstillbehör avser fast inredning för byggnadens eget bruk.",
+          "lagrum": "2 kap. 2 § JB"
+        },
+        {
+          "text": "Tillbehör endast om de är fastskruvade i golvet",
+          "korrekt": false,
+          "forklaring": "Avgörande är att de tillförts för den industriella verksamheten.",
+          "lagrum": "2 kap. 3 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-7",
+      "fraga": "Vad krävs för att en panträtt i fast egendom ska uppkomma?",
+      "alternativ": [
+        {
+          "text": "Inteckning i fastigheten och att pantbrevet överlämnas till borgenären",
+          "korrekt": true,
+          "forklaring": "Panträtt i fast egendom bygger på inteckning och pantsättning.",
+          "lagrum": "6 kap. 1 § JB"
+        },
+        {
+          "text": "Enbart ett skriftligt låneavtal",
+          "korrekt": false,
+          "forklaring": "Ett låneavtal skapar en fordran, inte en panträtt.",
+          "lagrum": "6 kap. 1 § JB"
+        },
+        {
+          "text": "Att fastigheten överlämnas i borgenärens besittning",
+          "korrekt": false,
+          "forklaring": "Besittningsövergång är pantregeln för lösöre, inte för fast egendom.",
+          "lagrum": "6 kap. 1 § JB"
+        },
+        {
+          "text": "Att lagfart söks för borgenären",
+          "korrekt": false,
+          "forklaring": "Lagfart avser äganderätten, inte panträtten.",
+          "lagrum": "6 kap. 1 § JB"
+        }
+      ]
+    },
+    {
+      "id": "fas-mc-8",
+      "fraga": "Ett fristående växthus som ägaren ställt i trädgården utan att fästa det i marken:",
+      "alternativ": [
+        {
+          "text": "Är tillbehör om det anbragts för stadigvarande bruk",
+          "korrekt": true,
+          "forklaring": "Bedömningen görs mot syftet med anbringandet, inte enbart mot fastsättningen.",
+          "lagrum": "2 kap. 1 § JB"
+        },
+        {
+          "text": "Är alltid lös egendom eftersom det inte är fastskruvat",
+          "korrekt": false,
+          "forklaring": "Fastsättningen är ett moment i bedömningen, men inte ensamt avgörande.",
+          "lagrum": "2 kap. 1 § JB"
+        },
+        {
+          "text": "Är byggnadstillbehör",
+          "korrekt": false,
+          "forklaring": "Byggnadstillbehör avser inredning inuti en byggnad.",
+          "lagrum": "2 kap. 2 § JB"
+        },
+        {
+          "text": "Blir tillbehör först när det står i köpekontraktet",
+          "korrekt": false,
+          "forklaring": "Tillbehörsegenskapen följer av lagen.",
+          "lagrum": "2 kap. 1 § JB"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "fas-lj-1",
+      "situation": "Parterna har muntligen kommit överens om köp av en tomt och vill veta om avtalet binder.",
+      "facit_lagrum": [
+        "4 kap. 1 § JB"
+      ],
+      "ledtrad": "Köp av fast egendom är ett formalavtal."
+    },
+    {
+      "id": "fas-lj-2",
+      "situation": "Tvist om huruvida den inbyggda ugnen och köksfläkten följde med huset.",
+      "facit_lagrum": [
+        "2 kap. 2 § JB"
+      ],
+      "ledtrad": "Fast inredning inuti en byggnad."
+    },
+    {
+      "id": "fas-lj-3",
+      "situation": "Köparen upptäcker en skada efter tillträdet och frågan är om han borde ha undersökt bättre.",
+      "facit_lagrum": [
+        "4 kap. 19 § JB"
+      ],
+      "ledtrad": "Felbegreppet och undersökningsplikten vid fastighetsköp."
+    },
+    {
+      "id": "fas-lj-4",
+      "situation": "En bank vill ha säkerhet i en villa för ett bolån.",
+      "facit_lagrum": [
+        "6 kap. 1 § JB"
+      ],
+      "ledtrad": "Panträtt genom inteckning."
+    }
+  ]
+}

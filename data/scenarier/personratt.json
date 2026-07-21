@@ -1,0 +1,330 @@
+{
+  "_beskrivning": "Deterministiska basscenarier för modulen Personrätt (kap 5). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
+  "modul": "Personrätt",
+  "case": [
+    {
+      "id": "per-case-1",
+      "rubrik": "Sjuttonåringen och elgitarren",
+      "svarighetsgrad": "grund",
+      "uppskattad_tid_min": 12,
+      "scenariotext": "Jonas är 17 år. Utan att säga något till sina föräldrar går han in i en musikaffär och köper en elgitarr för 12 000 kr på avbetalning, 500 kr i månaden i två år. Han skriver under avtalet med eget namn. Tre veckor senare upptäcker föräldrarna avtalet och hör av sig till butiken och säger att de aldrig gått med på köpet. Butiken svarar att Jonas skrivit under själv och att avtalet därför gäller. Jonas har gitarren kvar och har hunnit betala en avbetalning.",
+      "facit": {
+        "rattsfraga": "Är avbetalningsavtalet bindande för Jonas trots att han är underårig och saknade föräldrarnas samtycke, och vad händer med prestationerna om det inte är bindande?",
+        "lagrum": [
+          "9 kap. 1 § FB",
+          "9 kap. 6 § FB",
+          "9 kap. 7 § FB"
+        ],
+        "tillampningspunkter": [
+          "Jonas är 17 år och därmed underårig och omyndig. Han får inte själv råda över sin egendom eller åta sig förbindelser (9 kap. 1 § FB).",
+          "Ett avbetalningsköp innebär att han åtar sig en förbindelse, alltså precis det som 9 kap. 1 § FB hindrar. Att han skrivit under själv läker inte bristen.",
+          "Något samtycke från förmyndarna fanns inte vid avtalstillfället, och föräldrarna har efteråt uttryckligen motsatt sig köpet.",
+          "Eftersom samtycke saknades får butiken som motpart frånträda avtalet (9 kap. 6 § FB).",
+          "Blir avtalet inte gällande ska envar bära åter vad han mottagit: gitarren går tillbaka till butiken och den erlagda avbetalningen tillbaka till Jonas (9 kap. 7 § FB)."
+        ],
+        "slutsats": "Avtalet är inte bindande för Jonas. Butikens invändning att han undertecknat själv saknar betydelse, eftersom det är just förmågan att binda sig som saknas enligt 9 kap. 1 § FB. Butiken får frånträda avtalet enligt 9 kap. 6 § FB och prestationerna går åter enligt 9 kap. 7 § FB. Utgången hade kunnat bli en annan om Jonas betalat kontant med pengar han själv tjänat genom eget arbete efter fyllda 16 år, eftersom han råder över sådana medel enligt 9 kap. 3 § FB."
+      }
+    },
+    {
+      "id": "per-case-2",
+      "rubrik": "Framtidsfullmakten med ett vittne",
+      "svarighetsgrad": "medel",
+      "uppskattad_tid_min": 15,
+      "scenariotext": "Astrid är 74 år och fullt frisk. Hon vill försäkra sig om att dottern Lena ska kunna sköta hennes ekonomi om Astrid en dag inte klarar det själv. Astrid skriver därför ut ett dokument med rubriken Framtidsfullmakt, där hon utser Lena att sköta hennes ekonomiska angelägenheter. Hon undertecknar dokumentet hemma i köket medan grannen Bo tittar på och skriver under som vittne. Något ytterligare vittne finns inte på plats. Tre år senare drabbas Astrid av en demenssjukdom och kan varaktigt inte längre sköta sin ekonomi. Lena tar fram dokumentet och vill använda det mot Astrids bank.",
+      "facit": {
+        "rattsfraga": "Uppfyller Astrids dokument formkraven för en framtidsfullmakt, och vad gäller om det inte gör det?",
+        "lagrum": [
+          "1 § LFF",
+          "3 § LFF",
+          "4 § LFF",
+          "9 § LFF",
+          "11 kap. 4 § FB"
+        ],
+        "tillampningspunkter": [
+          "Innehållsmässigt är dokumentet en framtidsfullmakt: Astrid utser en fysisk person att företräda henne för det fall hon varaktigt inte längre kan ha hand om angelägenheterna (1 § LFF).",
+          "Astrid var 74 år och fullt frisk när hon upprättade dokumentet, så behörighetskravet att ha fyllt 18 år och ha förmåga att ha hand om sina angelägenheter är uppfyllt (3 § LFF).",
+          "Formkravet är däremot inte uppfyllt. Fullmakten ska vara skriftlig och undertecknas i två vittnens samtidiga närvaro (4 § LFF). Endast Bo var närvarande.",
+          "Att Astrid först tre år senare blev beslutsoförmögen saknar betydelse för formfrågan. Ikraftträdandet enligt 9 § LFF förutsätter en giltig fullmakt.",
+          "Utan giltig framtidsfullmakt får behovet i stället lösas inom ramen för god man eller förvaltare (11 kap. 4 § FB)."
+        ],
+        "slutsats": "Dokumentet är ingen giltig framtidsfullmakt, eftersom kravet i 4 § LFF på undertecknande i två vittnens samtidiga närvaro inte är uppfyllt. Lena kan därför inte grunda någon behörighet mot banken på handlingen. Vägen framåt är i stället att ansöka om god man för Astrid enligt 11 kap. 4 § FB. Att formfelet var oavsiktligt och att Astrids vilja är känd förändrar inte bedömningen, eftersom formkravet är just avsett att säkra bevisning om viljan."
+      }
+    }
+  ],
+  "flervalsfragor": [
+    {
+      "id": "per-mc-1",
+      "fraga": "Vid vilken ålder upphör omyndigheten enligt föräldrabalken?",
+      "alternativ": [
+        {
+          "text": "Vid 18 års ålder",
+          "korrekt": true,
+          "forklaring": "Den som är under arton år är underårig och omyndig.",
+          "lagrum": "9 kap. 1 § FB"
+        },
+        {
+          "text": "Vid 16 års ålder",
+          "korrekt": false,
+          "forklaring": "Vid 16 år inträder en begränsad rådighet över egna arbetsinkomster, men omyndigheten består.",
+          "lagrum": "9 kap. 3 § FB"
+        },
+        {
+          "text": "Vid 15 års ålder",
+          "korrekt": false,
+          "forklaring": "15 år är straffmyndighetsåldern, inte gränsen för omyndighet.",
+          "lagrum": "9 kap. 1 § FB"
+        },
+        {
+          "text": "Vid 21 års ålder",
+          "korrekt": false,
+          "forklaring": "Myndighetsåldern är 18 år, inte 21.",
+          "lagrum": "9 kap. 1 § FB"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-2",
+      "fraga": "Vera är 16 år och har tjänat 20 000 kr på ett sommarjobb. Får hon själv bestämma över pengarna?",
+      "alternativ": [
+        {
+          "text": "Ja, hon råder själv över vad hon förvärvat genom eget arbete efter fyllda 16 år",
+          "korrekt": true,
+          "forklaring": "Detta är det praktiskt viktigaste undantaget från omyndighetens verkningar.",
+          "lagrum": "9 kap. 3 § FB"
+        },
+        {
+          "text": "Nej, förmyndarna råder över all hennes egendom fram till 18 år",
+          "korrekt": false,
+          "forklaring": "Huvudregeln gäller inte egendom som den underårige tjänat genom eget arbete efter 16 år.",
+          "lagrum": "9 kap. 3 § FB"
+        },
+        {
+          "text": "Ja, men bara upp till ett halvt prisbasbelopp",
+          "korrekt": false,
+          "forklaring": "Någon sådan beloppsgräns uppställs inte för egna arbetsinkomster.",
+          "lagrum": "9 kap. 3 § FB"
+        },
+        {
+          "text": "Nej, inte utan överförmyndarens tillstånd",
+          "korrekt": false,
+          "forklaring": "Överförmyndarens medverkan krävs för vissa förmyndarförvaltningsåtgärder, inte för den underåriges egen arbetsinkomst.",
+          "lagrum": "9 kap. 3 § FB"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-3",
+      "fraga": "En underårig har ingått ett avtal utan erforderligt samtycke. Vad gäller för motparten?",
+      "alternativ": [
+        {
+          "text": "Motparten får frånträda avtalet",
+          "korrekt": true,
+          "forklaring": "Motparten är inte bunden av ett avtal som den underårige saknade förmåga att ingå.",
+          "lagrum": "9 kap. 6 § FB"
+        },
+        {
+          "text": "Motparten är bunden men den underårige är fri",
+          "korrekt": false,
+          "forklaring": "Bundenheten är inte ensidig på det sättet, motparten får frånträda.",
+          "lagrum": "9 kap. 6 § FB"
+        },
+        {
+          "text": "Avtalet är bindande för båda om motparten var i god tro",
+          "korrekt": false,
+          "forklaring": "God tro hos motparten läker inte den underåriges bristande rättshandlingsförmåga.",
+          "lagrum": "9 kap. 1 § FB"
+        },
+        {
+          "text": "Avtalet blir bindande om det inte klandras inom 30 dagar",
+          "korrekt": false,
+          "forklaring": "Någon sådan klanderfrist gäller inte här.",
+          "lagrum": "9 kap. 6 § FB"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-4",
+      "fraga": "Ett avtal som en underårig ingått utan samtycke blir inte gällande. Vad händer med det som redan presterats?",
+      "alternativ": [
+        {
+          "text": "Envar bär åter vad han mottagit",
+          "korrekt": true,
+          "forklaring": "Prestationerna går åter på ömse sidor.",
+          "lagrum": "9 kap. 7 § FB"
+        },
+        {
+          "text": "Den underårige får behålla det han mottagit",
+          "korrekt": false,
+          "forklaring": "Återgången är ömsesidig, den underårige behåller inte prestationen.",
+          "lagrum": "9 kap. 7 § FB"
+        },
+        {
+          "text": "Motparten får behålla betalningen som skadestånd",
+          "korrekt": false,
+          "forklaring": "Regeln handlar om återgång, inte om skadestånd till motparten.",
+          "lagrum": "9 kap. 7 § FB"
+        },
+        {
+          "text": "Prestationerna behålls och avtalet jämkas i stället",
+          "korrekt": false,
+          "forklaring": "Jämkning enligt 36 § AvtL förutsätter ett giltigt avtal.",
+          "lagrum": "36 § AvtL"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-5",
+      "fraga": "Vem får upprätta en framtidsfullmakt?",
+      "alternativ": [
+        {
+          "text": "Den som fyllt 18 år och har förmåga att ha hand om sina angelägenheter",
+          "korrekt": true,
+          "forklaring": "Båda kraven måste vara uppfyllda vid upprättandet.",
+          "lagrum": "3 § LFF"
+        },
+        {
+          "text": "Endast den som redan fått en demensdiagnos",
+          "korrekt": false,
+          "forklaring": "Tvärtom: fullmakten måste upprättas medan förmågan finns kvar.",
+          "lagrum": "3 § LFF"
+        },
+        {
+          "text": "Vem som helst som fyllt 15 år",
+          "korrekt": false,
+          "forklaring": "Åldersgränsen är 18 år.",
+          "lagrum": "3 § LFF"
+        },
+        {
+          "text": "Endast den som saknar nära anhöriga",
+          "korrekt": false,
+          "forklaring": "Något sådant villkor uppställs inte.",
+          "lagrum": "3 § LFF"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-6",
+      "fraga": "Vilka formkrav gäller för en framtidsfullmakt?",
+      "alternativ": [
+        {
+          "text": "Skriftlig handling som undertecknas i två vittnens samtidiga närvaro",
+          "korrekt": true,
+          "forklaring": "Vittnena ska vara närvarande samtidigt, och fullmaktshavaren får inte vara vittne.",
+          "lagrum": "4 § LFF"
+        },
+        {
+          "text": "Muntlig fullmakt räcker om två personer kan intyga innehållet",
+          "korrekt": false,
+          "forklaring": "Skriftlighet är ett uttryckligt krav.",
+          "lagrum": "4 § LFF"
+        },
+        {
+          "text": "Skriftlig handling som registreras hos överförmyndaren",
+          "korrekt": false,
+          "forklaring": "Någon registreringsskyldighet för giltighet finns inte.",
+          "lagrum": "4 § LFF"
+        },
+        {
+          "text": "Skriftlig handling bevittnad av en läkare",
+          "korrekt": false,
+          "forklaring": "Läkarintyg krävs inte för formens giltighet.",
+          "lagrum": "4 § LFF"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-7",
+      "fraga": "När träder en framtidsfullmakt i kraft?",
+      "alternativ": [
+        {
+          "text": "När fullmaktsgivaren varaktigt och i huvudsak inte längre kan ha hand om de angelägenheter fullmakten avser",
+          "korrekt": true,
+          "forklaring": "Ikraftträdandet knyts till den situation som beskrivs i 1 § LFF.",
+          "lagrum": "9 § LFF"
+        },
+        {
+          "text": "Omedelbart när den undertecknas",
+          "korrekt": false,
+          "forklaring": "Det skiljer framtidsfullmakten från en vanlig fullmakt.",
+          "lagrum": "1 § LFF"
+        },
+        {
+          "text": "När fullmaktsgivaren fyllt 65 år",
+          "korrekt": false,
+          "forklaring": "Ikraftträdandet är kopplat till beslutsoförmåga, inte till ålder.",
+          "lagrum": "9 § LFF"
+        },
+        {
+          "text": "När tingsrätten meddelat beslut om det",
+          "korrekt": false,
+          "forklaring": "Domstolsprövning är möjlig men inte en generell förutsättning för ikraftträdande.",
+          "lagrum": "9 § LFF"
+        }
+      ]
+    },
+    {
+      "id": "per-mc-8",
+      "fraga": "En person kan inte längre bevaka sin rätt och har ingen framtidsfullmakt. Vilken ordning ligger närmast till hands?",
+      "alternativ": [
+        {
+          "text": "God man eller förvaltare förordnas",
+          "korrekt": true,
+          "forklaring": "Föräldrabalkens regler om god man och förvaltare är det generella skyddsnätet.",
+          "lagrum": "11 kap. 4 § FB"
+        },
+        {
+          "text": "Närmaste anhörig blir automatiskt förmyndare",
+          "korrekt": false,
+          "forklaring": "Något automatiskt förmyndarskap för vuxna finns inte.",
+          "lagrum": "11 kap. 4 § FB"
+        },
+        {
+          "text": "En framtidsfullmakt kan upprättas i efterhand av anhöriga",
+          "korrekt": false,
+          "forklaring": "Fullmakten måste upprättas medan fullmaktsgivaren har förmåga kvar.",
+          "lagrum": "3 § LFF"
+        },
+        {
+          "text": "Kommunen övertar förvaltningen",
+          "korrekt": false,
+          "forklaring": "Förvaltningen sköts av en förordnad god man eller förvaltare, inte av kommunen som sådan.",
+          "lagrum": "11 kap. 4 § FB"
+        }
+      ]
+    }
+  ],
+  "lagrumsjakt": [
+    {
+      "id": "per-lj-1",
+      "situation": "En 17-åring vill på egen hand teckna ett mobilabonnemang med 24 månaders bindningstid.",
+      "facit_lagrum": [
+        "9 kap. 1 § FB"
+      ],
+      "ledtrad": "Frågan gäller själva förmågan att åta sig en förbindelse."
+    },
+    {
+      "id": "per-lj-2",
+      "situation": "En butik har sålt en dyr cykel till en 15-åring utan föräldrarnas samtycke och vill nu komma ur avtalet.",
+      "facit_lagrum": [
+        "9 kap. 6 § FB"
+      ],
+      "ledtrad": "Vilken rätt har motparten när samtycke saknades?"
+    },
+    {
+      "id": "per-lj-3",
+      "situation": "En 82-åring vill i förväg bestämma vem som ska sköta hennes ekonomi om hon i framtiden blir för sjuk för att göra det själv.",
+      "facit_lagrum": [
+        "1 § LFF"
+      ],
+      "ledtrad": "Institutet infördes 2017 och regleras i en egen lag."
+    },
+    {
+      "id": "per-lj-4",
+      "situation": "En 19-åring med en omfattande funktionsnedsättning kan inte bevaka sin rätt och har ingen fullmakt upprättad.",
+      "facit_lagrum": [
+        "11 kap. 4 § FB"
+      ],
+      "ledtrad": "Det generella skyddsnätet för vuxna finns i föräldrabalken."
+    }
+  ]
+}

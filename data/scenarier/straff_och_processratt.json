@@ -18,11 +18,11 @@
         "tillampningspunkter": [
           "Stöld förutsätter olovligt tagande av annans sak med tillägnelseuppsåt och att tagandet innebär skada (8 kap. 1 § BrB).",
           "Objektivt har Viktor olovligen tagit Saras cykel; den subjektiva sidan kräver uppsåt som täcker gärningsmomenten (1 kap. 2 § BrB).",
-          "Påståendet om tillfälligt lån ifrågasätter tillägnelseuppsåtet; utan tillägnelseuppsåt kan det i stället röra sig om egenmäktigt förfarande – bedöm bevisningen om hans avsikt.",
+          "Påståendet om tillfälligt lån ifrågasätter tillägnelseuppsåtet; utan tillägnelseuppsåt kan det i stället röra sig om egenmäktigt förfarande. Bedöm bevisningen om hans avsikt.",
           "Saras våldsanvändning skedde för att avvärja ett pågående angrepp på hennes egendom; nödvärnsrätt föreligger mot den som olovligen rubbar annans besittning på bar gärning (24 kap. 1 § BrB).",
           "Nödvärnsvåldet får inte vara uppenbart oförsvarligt; att rycka tillbaka cykeln med lindriga skrapsår som följd ligger klart inom det försvarliga."
         ],
-        "slutsats": "Om tillägnelseuppsåt kan styrkas har Viktor begått stöld; annars ligger egenmäktigt förfarande närmast till hands. Sara handlade i nödvärn och hennes våld var inte uppenbart oförsvarligt – hon går fri från ansvar. Alternativt: hade Sara fortsatt bruka våld efter att angreppet upphört hade nödvärnsrätten inte längre gällt."
+        "slutsats": "Om tillägnelseuppsåt kan styrkas har Viktor begått stöld; annars ligger egenmäktigt förfarande närmast till hands. Sara handlade i nödvärn och hennes våld var inte uppenbart oförsvarligt, så hon går fri från ansvar. Alternativt: hade Sara fortsatt bruka våld efter att angreppet upphört hade nödvärnsrätten inte längre gällt."
       }
     }
   ],
@@ -120,7 +120,7 @@
         {
           "text": "Olovligt tagande av annans sak med uppsåt att tillägna sig den, när tagandet innebär skada.",
           "korrekt": true,
-          "forklaring": "Samtliga rekvisit – olovligt tagande, tillägnelseuppsåt och skada – måste vara uppfyllda.",
+          "forklaring": "Samtliga rekvisit, alltså olovligt tagande, tillägnelseuppsåt och skada, måste vara uppfyllda.",
           "lagrum": "8 kap. 1 § BrB"
         },
         {
@@ -148,7 +148,7 @@
         {
           "text": "Att genom vilseledande förmå någon till en handling eller underlåtenhet som innebär vinning för gärningsmannen och skada för den vilseledde.",
           "korrekt": true,
-          "forklaring": "Vilseledande, disposition, förmögenhetsöverföring – bedrägeriets klassiska rekvisitkedja.",
+          "forklaring": "Vilseledande, disposition, förmögenhetsöverföring: bedrägeriets klassiska rekvisitkedja.",
           "lagrum": "9 kap. 1 § BrB"
         },
         {

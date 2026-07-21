@@ -3,8 +3,9 @@
 Ansvarar för allt visuellt som delas mellan sidorna:
 - inject_css: appens gemensamma stilar (palett ur design_system.md,
   varningsbadge för overifierade lagrum, lagrumschips)
-- render_sidebar / render_statuspanel: navigering, modellväljare och
-  räknare för återstående LLM-anrop (session + dagsbudget)
+- render_sidebar / render_sidopanel / render_statuspanel: navigeringsträdet
+  ur utils.navigation, modellväljare och räknare för återstående LLM-anrop
+  (session + dagsbudget)
 - hero, section_heading, summary_box, module_map, pipeline_steps,
   footer_note: HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
@@ -21,6 +22,8 @@ import html
 import re
 
 import streamlit as st
+
+from utils.navigation import NAV_TRAD, Modul, Nod
 
 APP_VERSION = "0.1.0"
 APP_UPDATED = "2026-07-08"
@@ -171,6 +174,93 @@ def inject_css() -> None:
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
+
+        /* Navigeringshierarki i sidopanelen (design_system.md 4.1).
+           Nivåerna skiljs åt med indrag, storlek och färgstyrka, inte med
+           ikoner: huvudkategori (versaler, blå) > underkategori (bläck)
+           > undergren (grå) > modul (st.page_link). */
+        .jok-nav-kategori {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--bla); font-weight: 700;
+            margin: 1.1rem 0 .2rem 0;
+        }}
+        .jok-nav-under {{
+            font-size: 13px; font-weight: 600; color: var(--bl);
+            margin: .5rem 0 .15rem 0;
+        }}
+        .jok-nav-gren {{
+            font-size: 12px; font-weight: 600; color: #6B6459;
+            letter-spacing: .02em; margin: .4rem 0 .15rem .6rem;
+        }}
+        .jok-nav-kommer {{
+            font-size: 13px; color: #9A9384; margin: .1rem 0 .1rem .6rem;
+        }}
+        /* Färglegend för taxonomigrafen: riktiga färgrutor, inte prosa. */
+        .jok-legend {{
+            display: flex; flex-wrap: wrap; gap: .5rem 1.1rem;
+            margin: .6rem 0 1rem 0; font-size: 14px; color: var(--bl);
+        }}
+        .jok-legend-post {{ display: inline-flex; align-items: center; gap: .4rem; }}
+        .jok-swatch {{
+            display: inline-block; width: .85rem; height: .85rem;
+            border-radius: 3px; border: 1px solid rgba(26,35,50,.25);
+            flex: 0 0 auto;
+        }}
+
+        /* Lagkort i områdesträdet (flik Systemet). */
+        .jok-lagkort {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-left: 3px solid var(--guld); border-radius: 10px;
+            padding: .8rem 1rem; margin: .5rem 0; max-width: 46rem;
+        }}
+        .jok-lagkort h4 {{
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+            font-size: 16px; color: var(--bl); margin: 0 0 .1rem 0;
+        }}
+        .jok-lagkort .sfs {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; color: #6B6459;
+        }}
+        .jok-lagkort p {{ font-size: 15px; line-height: 1.55; margin: .45rem 0 0 0; }}
+        .jok-lagkort .nar {{ font-size: 14px; color: #4A453D; margin-top: .4rem; }}
+        .jok-lagkort .nar strong {{ color: var(--bla); }}
+
+        /* Begreppskort (flik Nyckelbegrepp). */
+        .jok-begrepp {{
+            background: var(--panel); border: 1px solid var(--ram);
+            border-radius: 12px; padding: 1rem 1.2rem; margin: .5rem 0 .2rem 0;
+            max-width: 46rem; box-shadow: 0 1px 3px rgba(26,35,50,.06);
+        }}
+        .jok-begrepp h3 {{
+            font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
+            font-size: 19px; color: var(--bl); margin: 0 0 .1rem 0;
+        }}
+        .jok-begrepp .kapitel {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+            color: var(--bla);
+        }}
+        .jok-begrepp .falt {{ margin: .7rem 0 0 0; }}
+        .jok-begrepp .falt .etikett {{
+            font-variant: small-caps; letter-spacing: .05em; font-weight: 700;
+            color: var(--bla); font-size: 14px; display: block;
+            margin-bottom: .15rem;
+        }}
+        .jok-begrepp .falt p {{
+            font-size: 16px; line-height: 1.6; color: var(--bl); margin: 0;
+        }}
+        /* Skillnadsraden för kontrastpar: en enda framhävd rad. */
+        .jok-begrepp .skillnad {{
+            background: #F5F1EA; border-left: 3px solid var(--bla);
+            border-radius: 0 6px 6px 0; padding: .5rem .8rem; margin: .7rem 0 0 0;
+            font-size: 15px; line-height: 1.5;
+        }}
+        .jok-begrepp .igenkanning {{
+            background: #FFFDF7; border: 1px dashed var(--guld);
+            border-radius: 8px; padding: .6rem .8rem; margin-top: .7rem;
+        }}
+
         .jok-footer {{
             margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ram);
             font-size: 13px; color: #6B6459; max-width: 46rem;
@@ -362,15 +452,43 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
     return f'<div class="jok-tutortext"><p>{kropp}</p></div>', tuple(ovarifierade)
 
 
+# Vad ett grönt chip betyder, och inte betyder. Verifieringen slår upp
+# paragrafen i kursens lagrumslista: den intygar att lagrummet FINNS, aldrig
+# att det är det tillämpliga för studentens fall. Tutorn har observerats
+# hänvisa till existerande men irrelevanta paragrafer med självsäker och
+# felaktig beskrivning, och de renderas då som vanliga guldchips.
+VERIFIERINGSNOT = (
+    "Guldmarkerade lagrum finns i kursens lagrumslista och går att öppna på "
+    "lagen.nu. Det betyder inte att lagrummet är rätt för just ditt fall: läs "
+    "paragrafen och bedöm själv om den är tillämplig."
+)
+
+
+def _har_verifierade_lagrum(kropp_html: str) -> bool:
+    """Sant om tutorsvaret innehåller minst ett verifierat lagrumschip.
+
+    Läser den renderade HTML:en i stället för att köra verify_lagrum en gång
+    till: chipsen sätts bara in för träffar med status VERIFIERAD och egen URL.
+    """
+    return 'class="jok-chip"' in kropp_html
+
+
 def render_tutortext(text: str) -> None:
     """Rendera ett tutorsvar med verifierade lagrumschips och varningsruta.
 
     Verifierade lagrum blir klickbara lagen.nu-chips. Overifierade lagrum och
     rättsfall (t.ex. påhittade paragrafer eller NJA-referenser) samlas i en gul
     varningsruta så att studenten uppmanas kontrollera dem mot lagen.nu.
+
+    Finns det verifierade lagrum följer dessutom en kort not om vad
+    verifieringen faktiskt intygar. Overifierade lagrum får ingen not: de har
+    redan sin egen, starkare varningsruta.
     """
     kropp_html, ovarifierade = _tutortext_html(text)
     st.html(kropp_html)
+
+    if _har_verifierade_lagrum(kropp_html):
+        st.caption(VERIFIERINGSNOT)
 
     if ovarifierade:
         poster = "".join(
@@ -390,6 +508,90 @@ def render_tutortext(text: str) -> None:
 def render_info(text: str) -> None:
     """Blått informationskort (t.ex. disclaimer)."""
     st.html(f'<div class="jok-info">{html.escape(text)}</div>')
+
+
+def render_sidhjalp(punkter: tuple[str, ...], rubrik: str = "Så använder du den här sidan") -> None:
+    """Kollapsad hjälpruta överst på en sida.
+
+    Samma mönster på alla sidor: en hopfälld expander med 3-5 korta,
+    handlingsorienterade punkter. Stängd som standard så att den inte
+    konkurrerar med sidans innehåll för den som redan vet.
+    """
+    with st.expander(rubrik, expanded=False):
+        for punkt in punkter:
+            st.markdown(f"- {punkt}")
+
+
+def render_lagkort(
+    forkortning: str,
+    namn: str,
+    sfs: str,
+    beskrivning: str,
+    nar: str,
+    url: str,
+    relaterade: tuple[str, ...] = (),
+) -> str:
+    """Kort för en lag i områdesträdet: vad den täcker och när den övervägs."""
+    rel = ""
+    if relaterade:
+        rel = (
+            '<div class="nar"><strong>Relaterade lagar:</strong> '
+            f"{html.escape(', '.join(relaterade))}</div>"
+        )
+    return (
+        '<div class="jok-lagkort">'
+        f"<h4>{html.escape(forkortning)}: {html.escape(namn)}</h4>"
+        f'<div class="sfs">SFS {html.escape(sfs)}</div>'
+        f"<p>{html.escape(beskrivning)}</p>"
+        f'<div class="nar"><strong>När övervägs den?</strong> {html.escape(nar)}</div>'
+        f"{rel}"
+        f'<div class="nar"><a href="{html.escape(url)}" target="_blank">'
+        f"Öppna {html.escape(forkortning)} på lagen.nu</a></div>"
+        "</div>"
+    )
+
+
+def render_begreppskort(
+    term: str,
+    kapitel: str,
+    definition: str,
+    forklaring: str,
+    exempel: str,
+    igenkanning: str,
+    skillnaden: str = "",
+    lagrum_chips: str = "",
+) -> str:
+    """Begreppskort med de fyra fasta fälten.
+
+    Igenkänningsfältet får guldstreckad ram eftersom det är den del som
+    kopplar begreppet till RNTS-steget Rättsfrågan: det är signalorden i
+    scenariot som ska få studenten att tänka på begreppet.
+    """
+    kap = f'<div class="kapitel">{html.escape(kapitel)}</div>' if kapitel else ""
+    skillnad = (
+        f'<div class="skillnad">{html.escape(skillnaden)}</div>' if skillnaden else ""
+    )
+    chips = (
+        f'<div class="falt"><span class="etikett">Lagrum</span>{lagrum_chips}</div>'
+        if lagrum_chips
+        else ""
+    )
+    return (
+        '<div class="jok-begrepp">'
+        f"{kap}<h3>{html.escape(term)}</h3>"
+        f'<div class="falt"><span class="etikett">Definition</span>'
+        f"<p>{html.escape(definition)}</p></div>"
+        f"{skillnad}"
+        f'<div class="falt"><span class="etikett">Varför det spelar roll</span>'
+        f"<p>{html.escape(forklaring)}</p></div>"
+        f'<div class="falt"><span class="etikett">Exempel</span>'
+        f"<p>{html.escape(exempel)}</p></div>"
+        f'<div class="falt igenkanning"><span class="etikett">'
+        f"Så känner du igen det i ett scenario</span>"
+        f"<p>{html.escape(igenkanning)}</p></div>"
+        f"{chips}"
+        "</div>"
+    )
 
 
 def footer_note(version: str = APP_VERSION, updated: str = APP_UPDATED) -> str:
@@ -441,8 +643,8 @@ def render_statuspanel() -> None:
         '<div class="jok-status">'
         f'<div class="rad"><span>LLM-tutor</span><span class="prick">{prick}</span></div>'
         f'<div class="rad"><span>Modell</span><span>{html.escape(modell)}</span></div>'
-        f'<div class="rad"><span>Anrop kvar (session)</span><span>{sess}/{SESSION_CALL_CAP}</span></div>'
-        f'<div class="rad"><span>Dagsbudget kvar</span><span>{dag}/{get_daily_cap()}</span></div>'
+        f'<div class="rad"><span>Anrop kvar i sessionen</span><span>{sess}/{SESSION_CALL_CAP}</span></div>'
+        f'<div class="rad"><span>Anrop kvar i dag</span><span>{dag}/{get_daily_cap()}</span></div>'
         "</div>"
     )
 
@@ -456,7 +658,7 @@ def _render_model_selector() -> None:
         get_active_model,
     )
 
-    with st.expander("Modell", expanded=False):
+    with st.expander("Byt modell", expanded=False):
         val = st.radio(
             "Välj modell",
             options=(DEFAULT_MODEL, ALTERNATIVE_MODEL),
@@ -468,11 +670,57 @@ def _render_model_selector() -> None:
         st.session_state[MODEL_SESSION_KEY] = val
 
 
-def render_sidebar(active_page: str = "hem") -> None:
-    """Sidopanel: navigering överst, statuspanel och modellväljare nederst."""
+def _render_nod(nod: "Nod", niva: int) -> None:
+    """Rita en nod i navigeringsträdet rekursivt.
+
+    ``niva`` är djupet under huvudkategorin: 1 = underkategori, 2 och nedåt
+    = undergren. Moduler ritas som länkar, planerade moduler som gråtonad
+    text med "(kommer)".
+    """
+    if isinstance(nod, Modul):
+        if nod.sida is None:
+            st.html(
+                f'<div class="jok-nav-kommer">{html.escape(nod.namn)} (kommer)</div>'
+            )
+        else:
+            st.page_link(nod.sida, label=nod.namn)
+        return
+
+    klass = "jok-nav-under" if niva <= 1 else "jok-nav-gren"
+    st.html(f'<div class="{klass}">{html.escape(nod.namn)}</div>')
+    for barn in nod.barn:
+        _render_nod(barn, niva + 1)
+
+
+def render_sidopanel() -> None:
+    """Rita hela navigeringsträdet som en sammanhållen lista.
+
+    Speglar svensk rätts systematik enligt utils.navigation.NAV_TRAD i
+    stället för en platt sidlista. Allt visas samtidigt: inga hopfällbara
+    sektioner per huvudkategori, eftersom en panel som måste öppnas döljer
+    kursens struktur i stället för att visa den. Nivåerna skiljs åt med
+    indrag och färgstyrka enligt design_system.md 4.1.
+    """
+    for kategori in NAV_TRAD:
+        st.html(
+            f'<div class="jok-nav-kategori">{html.escape(kategori.namn)}</div>'
+        )
+        for barn in kategori.barn:
+            _render_nod(barn, niva=1)
+
+
+def render_sidebar() -> None:
+    """Sidopanelens innehåll: navigeringsträd, LLM-status och modellväljare.
+
+    Anropas en gång per körning från streamlit_app.py, som registrerar
+    samma sidor i st.navigation med position="hidden" så att Streamlits
+    egen platta sidlista inte ritas parallellt med trädet.
+    """
     with st.sidebar:
         st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')
         st.caption("Fallbaserad träning med RNTS-metoden.")
+        st.divider()
+        render_sidopanel()
         st.divider()
         render_statuspanel()
         _render_model_selector()

@@ -72,3 +72,121 @@ def test_render_tom_text():
     html_ut, ovarifierade = _tutortext_html("")
     assert ovarifierade == ()
     assert "jok-tutortext" in html_ut
+
+
+# --- Vad "verifierad" faktiskt betyder --------------------------------------
+
+
+def test_verifieringsnot_visas_nar_svaret_har_verifierade_lagrum():
+    """Ett grönt chip betyder att lagrummet finns, inte att det är rätt.
+
+    Verifieringen slår upp paragrafen i kursens lagrumslista. Den säger
+    ingenting om huruvida paragrafen är den tillämpliga för studentens fall.
+    Observerat i skarpt läge: tutorn hänvisade en korrekt löst uppgift vidare
+    till 36 § AvtL med påståendet att den "reglerar avtalens bildande", vilket
+    är fel. Chipet var ändå grönt och klickbart. Noten sätter den gränsen i
+    ord för studenten.
+    """
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, _ = _tutortext_html("Rätt norm är 36 § AvtL i det här fallet.")
+    assert _har_verifierade_lagrum(html_ut) is True
+
+
+def test_verifieringsnot_uteblir_utan_lagrum():
+    """Ingen not när svaret inte hänvisar till något lagrum alls."""
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, _ = _tutortext_html("Din struktur är tydlig, men utveckla slutsatsen.")
+    assert _har_verifierade_lagrum(html_ut) is False
+
+
+def test_verifieringsnot_uteblir_nar_alla_lagrum_ar_ovarifierade():
+    """Overifierade lagrum har redan sin egen, starkare varningsruta."""
+    from utils.ui import _har_verifierade_lagrum, _tutortext_html
+
+    html_ut, ovarifierade = _tutortext_html("Se 87 § AvtL om acceptfrist.")
+    assert ovarifierade, "87 § AvtL ska vara overifierad"
+    assert _har_verifierade_lagrum(html_ut) is False
+
+
+def test_verifieringsnoten_lovar_inte_att_lagrummet_ar_ratt():
+    """Noten måste säga att den bara intygar existens, inte relevans."""
+    from utils.ui import VERIFIERINGSNOT
+
+    assert "finns" in VERIFIERINGSNOT.lower()
+    assert "inte" in VERIFIERINGSNOT.lower()
+    # Får aldrig formuleras som ett kvalitetsintyg.
+    for forbjudet in ("korrekt lagrum", "rätt lagrum", "garanterar"):
+        assert forbjudet not in VERIFIERINGSNOT.lower()
+
+
+# --- Granskningen i genereringsflödet (fas 3) -------------------------------
+
+
+def _fejkklient(svar_i_tur):
+    """Bygg en cached_chat-ersättare som returnerar givna svar i tur och ordning."""
+    tur = list(svar_i_tur)
+    anrop = []
+
+    def _chat(system_prompt, user_prompt, *a, **k):
+        anrop.append(user_prompt)
+        return tur.pop(0) if tur else tur_sista
+
+    tur_sista = svar_i_tur[-1] if svar_i_tur else ""
+    return _chat, anrop
+
+
+def test_godkant_svar_slipper_omforsok(monkeypatch):
+    """Ett rent svar ska kosta exakt ett LLM-anrop."""
+    import utils.llm
+    from utils.tutor import generera_tutorsvar
+
+    chat, anrop = _fejkklient(["Studenten nämner korrekt 4 § AvtL."])
+    monkeypatch.setattr(utils.llm, "cached_chat", chat)
+
+    svar = generera_tutorsvar("t1", "sys", "user", ("4 § AvtL",))
+    assert svar.godkand
+    assert len(anrop) == 1, "godkänt svar ska inte generera om"
+
+
+def test_underkant_svar_ger_ett_omforsok_med_skarpning(monkeypatch):
+    """Första svaret framhåller ett påhitt, det andra är rent."""
+    import utils.llm
+    from utils.tutor import SKARPNING, generera_tutorsvar
+
+    chat, anrop = _fejkklient(
+        ["Rätt norm är 87 § AvtL.", "Studenten nämner korrekt 4 § AvtL."]
+    )
+    monkeypatch.setattr(utils.llm, "cached_chat", chat)
+
+    svar = generera_tutorsvar("t2", "sys", "user", ("4 § AvtL",))
+    assert svar.godkand
+    assert svar.text
+    assert len(anrop) == 2
+    assert SKARPNING in anrop[1], "omförsöket ska skärpa instruktionen"
+
+
+def test_tva_underkanda_svar_ger_inget_svar_alls(monkeypatch):
+    """Hellre inget svar än felaktig juridik: studenten kan inte skilja dem åt."""
+    import utils.llm
+    from utils.tutor import generera_tutorsvar
+
+    chat, anrop = _fejkklient(["Rätt norm är 87 § AvtL.", "Rätt norm är 87 § AvtL."])
+    monkeypatch.setattr(utils.llm, "cached_chat", chat)
+
+    svar = generera_tutorsvar("t3", "sys", "user", ("4 § AvtL",))
+    assert not svar.godkand
+    assert svar.text == "", "underkänd text får inte sparas"
+    assert svar.skal, "skälet ska gå att logga"
+    assert len(anrop) == 2, "högst ett omförsök"
+
+
+def test_utan_underlag_stoppas_bara_pahitt(monkeypatch):
+    """Saknas facit finns inget att jämföra mot, men påhitt stoppas ändå."""
+    import utils.llm
+    from utils.tutor import generera_tutorsvar
+
+    chat, _ = _fejkklient(["Se 36 § AvtL om jämkning."])
+    monkeypatch.setattr(utils.llm, "cached_chat", chat)
+    assert generera_tutorsvar("t4", "sys", "user", ()).godkand

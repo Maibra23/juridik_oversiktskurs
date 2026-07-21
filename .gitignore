@@ -4,3 +4,10 @@ data/.llm_daily_usage.json
 __pycache__/
 *.pyc
 .env
+
+# macOS skräpfiler.
+.DS_Store
+
+# Lokala Claude Code-inställningar (maskinspecifika sökvägar och
+# permission-listor). Delas inte: .claude/settings.json är den gemensamma.
+.claude/settings.local.json

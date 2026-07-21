@@ -4,7 +4,7 @@ Studenten kan be om ett färskt, fiktivt rättsfall att testa sin förmåga på.
 Fallet genereras av LLM men grundas deterministiskt: varje lagrum i facit
 måste verifieras mot lagrumsregistret innan scenariot visas. Klarar inte
 modellen det (påhitt, trasig JSON eller otillgänglig LLM) faller vi tillbaka
-på ett kuraterat statiskt case ur modulen – appen är alltid användbar.
+på ett kuraterat statiskt case ur modulen, så appen är alltid användbar.
 
 LLM-klienten injiceras (Protocol ChatKlient) så att logiken kan enhetstestas
 helt utan nätverk.
@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from typing import Protocol
 
 from utils.lagrum import STATUS_VERIFIERAD, validera_lagrum
-from utils.llm import LLMUnavailableError
+from utils.llm import LLMDailyCapError, LLMSessionCapError, LLMUnavailableError
 from utils.prompts import build_generate_prompt
 from utils.scenarier import (
     Case,
@@ -32,10 +32,10 @@ from utils.scenarier import (
 MAX_FORSOK = 2
 
 LLM_EJ_TILLGANGLIG_NOTIS = (
-    "LLM är inte tillgänglig just nu – här är ett kuraterat rättsfall i stället."
+    "LLM är inte tillgänglig just nu. Här är ett kuraterat rättsfall i stället."
 )
 GRUNDNING_MISSLYCKADES_NOTIS = (
-    "Kunde inte generera ett grundat fall den här gången – här är ett kuraterat "
+    "Kunde inte generera ett grundat fall den här gången. Här är ett kuraterat "
     "rättsfall i stället."
 )
 
@@ -83,7 +83,7 @@ def _extrahera_json(svar: str) -> str:
 
 
 def _case_ar_grundat(case: Case) -> bool:
-    """Alla lagrum i facit måste verifieras – och minst ett måste finnas."""
+    """Alla lagrum i facit måste verifieras, och minst ett måste finnas."""
     if not case.facit.lagrum:
         return False
     return all(validera_lagrum(ref) == STATUS_VERIFIERAD for ref in case.facit.lagrum)
@@ -109,14 +109,28 @@ def _fallback_case(modul: Modulscenarier, rng: random.Random) -> Case:
     return rng.choice(modul.case)
 
 
-def _standardklient() -> ChatKlient | None:
-    """Skapa en riktig LLM-klient, eller None om ingen token finns."""
-    try:
-        from utils.llm import LLMClient
+class _BudgeteradKlient:
+    """Adapter som skickar generatorns anrop genom utils.llm.cached_chat.
 
-        return LLMClient()
-    except LLMUnavailableError:
+    Generatorn får INTE tala med LLMClient direkt. cached_chat äger cachen,
+    sessionsräknaren och den gemensamma dagsbudgeten (PRD 5.5); ett anrop
+    förbi den skulle förbruka HF-token utan att debiteras och utan att
+    stoppas när taken är slut.
+    """
+
+    def chat(self, system_prompt: str, user_prompt: str) -> str:
+        from utils.llm import cached_chat
+
+        return cached_chat(system_prompt, user_prompt)
+
+
+def _standardklient() -> ChatKlient | None:
+    """Budgeterad LLM-klient, eller None om ingen token är konfigurerad."""
+    from utils.llm import is_llm_available
+
+    if not is_llm_available():
         return None
+    return _BudgeteradKlient()
 
 
 # --- Publikt API ------------------------------------------------------------
@@ -149,12 +163,20 @@ def generera_case(
             _fallback_case(modul, rng), "fallback", LLM_EJ_TILLGANGLIG_NOTIS
         )
 
+    # Nytt frö per anrop: annars är prompten identisk för en given modul och
+    # cachen i utils.llm.cached_chat returnerar samma rättsfall varje gång.
+    variation = rng.randrange(1_000_000)
+
     for forsok in range(MAX_FORSOK):
         system_prompt, user_prompt = build_generate_prompt(
-            modul_namn, forkortningar, striktare=forsok > 0
+            modul_namn, forkortningar, striktare=forsok > 0, variation=variation + forsok
         )
         try:
             svar = klient.chat(system_prompt, user_prompt)
+        except (LLMSessionCapError, LLMDailyCapError) as exc:
+            # Budgettaken är inte samma sak som att LLM:en saknas. Visa det
+            # riktiga budgetbeskedet i stället för "inte tillgänglig".
+            return GenereratResultat(_fallback_case(modul, rng), "fallback", str(exc))
         except LLMUnavailableError:
             return GenereratResultat(
                 _fallback_case(modul, rng), "fallback", LLM_EJ_TILLGANGLIG_NOTIS

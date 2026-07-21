@@ -1,9 +1,12 @@
 """Delad modulsidevy: Rättsfall, Quiz och Lagrumsjakt.
 
-Varje modulsida i pages/ är ett tunt skal som sätter st.set_page_config och
-anropar rendera_modulsida(...). Själva innehållet – tre flikar med RNTS-
-formulär, deterministiskt rättad quiz och lagrumsjakt – bor här så att alla
-åtta moduler delar exakt samma flöde.
+Varje modulsida i pages/ är ett tunt skal som bara anropar
+rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
+formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
+moduler delar exakt samma flöde.
+
+Rättsfallsfliken kan visa antingen kursens kuraterade fall eller ett
+nygenererat fall från utils.generator, på studentens knapptryck.
 
 Verifieringsprincip: Normfältet och lagrumsjakten rättas deterministiskt med
 utils.lagrum INNAN någon LLM alls anropas. Tutorn (utils.tutor) körs endast
@@ -11,6 +14,8 @@ på uttryckligt knapptryck och dess svar renderas med verifierade lagrumschips.
 """
 
 from __future__ import annotations
+
+import dataclasses
 
 import streamlit as st
 
@@ -22,6 +27,7 @@ from utils.lagrum import (
     validera_lagrum,
 )
 from utils.export import registrera_case_genomford
+from utils.generator import generera_case
 from utils.obsidian import registrera_case_analys
 from utils.prompts import build_case_prompt, build_quiz_prompt
 from utils.quiz import (
@@ -39,11 +45,9 @@ from utils.ui import (
     RNTS_STATUS_PAGAR,
     footer_note,
     hero,
-    inject_css,
     render_case,
     render_lagrum_chip,
     render_rnts_steg,
-    render_sidebar,
     render_varning,
 )
 
@@ -62,16 +66,14 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
     """Rendera en komplett modulsida från en scenariofil.
 
     ``filnamn`` är scenariofilens namn utan suffix, t.ex. "avtalsratt".
-    ``titel``/``undertitel`` visas i sidhuvudet.
+    ``titel``/``undertitel`` visas i sidhuvudet. CSS och sidopanel injiceras
+    centralt av streamlit_app.py och upprepas inte här.
     """
-    inject_css()
-    render_sidebar(filnamn)
-
     st.html(hero(eyebrow=undertitel or "MODUL", title=titel, lead=_ingress(filnamn)))
 
     try:
         modul = ladda_modul(filnamn)
-    except Exception as exc:  # noqa: BLE001 – vi vill visa ett vänligt fel i UI:t
+    except Exception as exc:  # noqa: BLE001 (vi vill visa ett vänligt fel i UI:t)
         render_varning(
             f"Kunde inte läsa övningsinnehållet för modulen ({exc}). "
             "Kontrollera scenariofilen."
@@ -88,7 +90,7 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
 
     flik_case, flik_quiz, flik_jakt = st.tabs(["Rättsfall", "Quiz", "Lagrumsjakt"])
     with flik_case:
-        _rendera_rattsfall(modul)
+        _rendera_rattsfall(filnamn, modul)
     with flik_quiz:
         _rendera_quiz(modul)
     with flik_jakt:
@@ -107,9 +109,71 @@ def _ingress(filnamn: str) -> str:
 # --- Flik 1: Rättsfall (RNTS-formulär) --------------------------------------
 
 
-def _rendera_rattsfall(modul: Modulscenarier) -> None:
+def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
+    """Rättsfallsfliken: ett nygenererat fall, eller kursens kuraterade.
+
+    Studenten kan begära ett helt nytt, fiktivt rättsfall inom modulens
+    rättsområde. Varje lagrum i facit verifieras mot lagrumsregistret innan
+    fallet visas; misslyckas det faller vi tillbaka på ett kuraterat fall
+    (utils.generator). Generering sker endast på knapptryck, aldrig
+    automatiskt vid rerun (PRD 5.3): Streamlit kör om skriptet vid varje
+    tangenttryck i RNTS-fälten, och ett fall som bytts ut mitt i skrivandet
+    vore obrukbart.
+    """
     if not modul.case:
         st.info("Inga rättsfall i den här modulen ännu.")
+        return
+
+    n_case = f"gen_case_{filnamn}"
+    n_notis = f"gen_notis_{filnamn}"
+    n_kalla = f"gen_kalla_{filnamn}"
+    n_raknare = f"gen_raknare_{filnamn}"
+
+    kol_ny, kol_kuraterat = st.columns(2)
+    with kol_ny:
+        generera = st.button(
+            "Generera nytt rättsfall",
+            key=f"gen_knapp_{filnamn}",
+            type="primary",
+            use_container_width=True,
+            help="Skapar ett nytt, fiktivt fall inom modulens rättsområde. "
+            "Varje lagrum i facit kontrolleras mot kursens lagrumslista.",
+        )
+    with kol_kuraterat:
+        tillbaka = st.button(
+            "Visa kursens rättsfall",
+            key=f"kur_knapp_{filnamn}",
+            use_container_width=True,
+            disabled=n_case not in st.session_state,
+        )
+
+    if tillbaka:
+        for nyckel in (n_case, n_notis, n_kalla):
+            st.session_state.pop(nyckel, None)
+
+    if generera:
+        with st.spinner("Genererar ett nytt rättsfall och kontrollerar lagrummen …"):
+            resultat = generera_case(filnamn)
+        # Unikt id per generering så att RNTS-formuläret börjar tomt.
+        raknare = st.session_state.get(n_raknare, 0) + 1
+        st.session_state[n_raknare] = raknare
+        st.session_state[n_case] = dataclasses.replace(
+            resultat.case, id=f"{filnamn}-gen-{raknare}"
+        )
+        st.session_state[n_kalla] = resultat.kalla
+        st.session_state[n_notis] = resultat.notis
+
+    genererat = st.session_state.get(n_case)
+    if genererat is not None:
+        notis = st.session_state.get(n_notis)
+        if notis:
+            render_varning(notis)
+        elif st.session_state.get(n_kalla) == "genererad":
+            st.success(
+                "Nytt rättsfall genererat och grundat mot kursens lagrum. "
+                "Skriv din RNTS-analys och be tutorn granska den."
+            )
+        rendera_case_ovning(modul.modul, genererat)
         return
 
     rubriker = [c.rubrik for c in modul.case]
@@ -152,7 +216,7 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         registrera_case_analys(modul, case, svar)
 
     st.caption(
-        "Tutorn granskar din analys steg för steg – den skriver inte lösningen åt dig."
+        "Tutorn granskar din analys steg för steg. Den skriver inte lösningen åt dig."
     )
     system_prompt, user_prompt = build_case_prompt(case, svar)
     tutorknapp(
@@ -160,6 +224,8 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         system_prompt=system_prompt,
         user_prompt=user_prompt,
         etikett="Be tutorn granska min analys",
+        underlag=tuple(case.facit.lagrum),
+        reservhanvisning="Öppna **Visa facit (utan tutor)** nedan så länge.",
     )
 
     with st.expander("Visa facit (utan tutor)"):
@@ -315,12 +381,19 @@ def _rendera_quizfraga(modul: str, nr: int, fraga: Flervalsfraga) -> None:
             _lagrum_chip_rad(alt.lagrum)
 
         system_prompt, user_prompt = build_quiz_prompt(fraga, alt)
+        # Underlaget är alternativens egna lagrum: de är kursens facit för
+        # frågan och det enda tutorn ska röra sig inom.
+        underlag = tuple(
+            str(a.lagrum) for a in fraga.alternativ if getattr(a, "lagrum", None)
+        )
         tutorknapp(
             nyckel=f"quiz_{modul}_{fraga.id}",
             system_prompt=system_prompt,
             user_prompt=user_prompt,
             etikett="Förklara med tutorn",
             knappnyckel=f"quiz_forklara_{modul}_{fraga.id}",
+            underlag=underlag,
+            reservhanvisning="Förklaringen till rätt svar står ovan.",
         )
 
 

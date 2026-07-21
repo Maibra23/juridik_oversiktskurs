@@ -6,7 +6,7 @@ ihop alla rättsfall där lagrummet tillämpats, och en repetitionssektion i
 formatet ``fråga :: svar`` matar pluginen Spaced Repetition.
 
 Modulen är ren (inget Streamlit-beroende i rapportbyggarna) och återanvänder
-utils.lagrum för all kanonisering, verifiering och lagen.nu-länkning — ingen
+utils.lagrum för all kanonisering, verifiering och lagen.nu-länkning. Ingen
 regex eller URL-logik återuppfinns här. Endast session-state-hjälparna längst
 ned kräver en Streamlit-kontext.
 """
@@ -36,7 +36,7 @@ DISCLAIMER = (
 )
 
 # Obsidian förbjuder dessa tecken i notnamn. Paragraftecknet § och å/ä/ö är
-# tillåtna och måste behållas — de är länknyckeln.
+# tillåtna och måste behållas eftersom de är länknyckeln.
 _FORBJUDNA_TECKEN = '*"\\/<>:|?#^[]'
 
 
@@ -223,13 +223,13 @@ def _startnot(moduler: tuple[str, ...]) -> str:
     rader = [
         frontmatter,
         "",
-        "# Juridik – mitt kunskapsvalv",
+        "# Juridik: mitt kunskapsvalv",
         "",
         f"Exporterat {date.today().isoformat()} från Juridisk översiktskurs.",
         "",
         "## Rättskartan",
         "",
-        "Börja i [[Rättskartan]] – en klickbar, hopfällbar karta över det "
+        "Börja i [[Rättskartan]]. Den är en klickbar, hopfällbar karta över det "
         "svenska rättssystemet som visar vilka lagar som hör till vilket "
         "område och när de ska övervägas.",
         "",

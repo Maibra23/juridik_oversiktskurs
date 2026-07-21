@@ -1,13 +1,65 @@
 {
   "_beskrivning": "Rättskartan: hierarkisk karta över det svenska rättssystemet för Obsidianexporten. Varje lag anges med förkortning ur data/lagrum.json (grundningsprincipen: inga lagar utanför registret). Namn och SFS-nummer hämtas ur registret och dupliceras inte här. 'farg' är en Obsidian-callouttyp som färgkodar området i kartvyn.",
+  "_beskrivning_avdelningar": "Bokens fyra avdelningar, i dispositionens ordning. Varje område pekar på en av dem via nyckeln 'avdelning'. Detta är kursdata och ligger därför här, inte i en modul: både appens graf och Obsidian-exporten läser samma lista. 'sida' anges för avdelningar utan egna rättsområden (AVD I) och pekar på modulsidan i appen.",
+  "avdelningar": [
+    {
+      "id": "avd1_introduktion",
+      "label": "AVD I · Introduktion",
+      "beskrivning": "Rättskällelära, lagtolkning och juridisk metod. Verktygen du använder i alla övriga avdelningar.",
+      "sida": "pages/1_Juridisk_metod.py"
+    },
+    {
+      "id": "avd2_offentlig_ratt",
+      "label": "AVD II · Offentlig rätt",
+      "beskrivning": "Förhållandet mellan enskilda och det allmänna: grundlagarna och myndigheternas verksamhet."
+    },
+    {
+      "id": "avd3_civilratt",
+      "label": "AVD III · Civilrätt",
+      "beskrivning": "Rättsförhållanden mellan enskilda: person, förmögenhet, avtal, ersättning, näring, kredit och familj."
+    },
+    {
+      "id": "avd4_straff_process",
+      "label": "AVD IV · Straff- och processrätt",
+      "beskrivning": "Vilka gärningar som är brott, och hur anspråk och ansvar prövas och tvingas igenom."
+    }
+  ],
   "omraden": [
     {
       "id": "civilratt",
       "namn": "Civilrätt",
+      "avdelning": "avd3_civilratt",
       "farg": "info",
-      "beskrivning": "Rättsförhållanden mellan enskilda – personer och företag: avtal, köp, skadestånd, egendom, bolag och arbete.",
-      "nar": "Tvisten står mellan enskilda parter och gäller pengar, avtal eller egendom – inte straff eller myndighetsutövning.",
+      "beskrivning": "Rättsförhållanden mellan enskilda, alltså personer och företag: avtal, köp, skadestånd, egendom, bolag och arbete.",
+      "nar": "Tvisten står mellan enskilda parter och gäller pengar, avtal eller egendom, inte straff eller myndighetsutövning.",
       "underomraden": [
+        {
+          "id": "personratt",
+          "namn": "Personrätt och allmän förmögenhetsrätt",
+          "beskrivning": "Grundbegreppen: vem som kan handla rättsligt bindande och hur äganderätt till lös egendom övergår.",
+          "nar": "Frågan gäller partens förmåga att binda sig, eller om en förvärvare fick äganderätt trots att säljaren inte ägde saken.",
+          "lagar": [
+            {
+              "forkortning": "LFF",
+              "beskrivning": "Framtidsfullmakt: hur någon i förväg utser den som ska sköta ens angelägenheter vid framtida beslutsoförmåga, med krav på skriftlighet och två vittnen.",
+              "nar": "En person vill i förväg bestämma vem som ska företräda hen, eller en upprättad framtidsfullmakt ska prövas mot formkraven.",
+              "relaterade": [
+                "FB",
+                "AvtL"
+              ]
+            },
+            {
+              "forkortning": "GFL",
+              "beskrivning": "Godtrosförvärv av lösöre: när en godtroende köpare som fått saken i sin besittning blir ägare, och undantaget för olovligen tagen egendom.",
+              "nar": "Säljaren visar sig inte ha varit ägare. Skilj anförtrodd egendom från stöldgods.",
+              "relaterade": [
+                "KöpL",
+                "JB",
+                "BrB"
+              ]
+            }
+          ]
+        },
         {
           "id": "avtalsratt",
           "namn": "Avtalsrätt",
@@ -18,7 +70,12 @@
               "forkortning": "AvtL",
               "beskrivning": "Hur avtal ingås genom anbud och accept, fullmakt (behörighet och befogenhet) samt när avtal kan ogiltigförklaras eller jämkas, t.ex. enligt 36 §.",
               "nar": "Frågan gäller om ett bindande avtal finns, vem som kunde binda någon annan eller om ett avtal kan angripas som ogiltigt eller oskäligt.",
-              "relaterade": ["KöpL", "KKöpL", "SkbrL", "HBL"]
+              "relaterade": [
+                "KöpL",
+                "KKöpL",
+                "SkbrL",
+                "HBL"
+              ]
             }
           ]
         },
@@ -26,25 +83,34 @@
           "id": "kop_och_konsumentratt",
           "namn": "Köp- och konsumenträtt",
           "beskrivning": "Reglerna när varor byter ägare: dröjsmål, fel, påföljder, reklamation och marknadsföring.",
-          "nar": "Ett köp har gått snett. Avgör först om köparen är konsument – det styr vilken lag som gäller.",
+          "nar": "Ett köp har gått snett. Avgör först om köparen är konsument, för det styr vilken lag som gäller.",
           "lagar": [
             {
               "forkortning": "KöpL",
-              "beskrivning": "Köp av lös egendom mellan näringsidkare eller mellan privatpersoner: dröjsmål, fel i varan och påföljder. Dispositiv – parternas avtal går före lagen.",
+              "beskrivning": "Köp av lös egendom mellan näringsidkare eller mellan privatpersoner: dröjsmål, fel i varan och påföljder. Dispositiv, så parternas avtal går före lagen.",
               "nar": "Köparen är inte konsument. Är köparen konsument gäller i stället konsumentköplagen.",
-              "relaterade": ["KKöpL", "AvtL"]
+              "relaterade": [
+                "KKöpL",
+                "AvtL"
+              ]
             },
             {
               "forkortning": "KKöpL",
               "beskrivning": "Konsumentskydd när en privatperson köper varor av ett företag: fel, reklamation och påföljder. Tvingande till konsumentens förmån.",
-              "nar": "En privatperson har köpt en vara av en näringsidkare – avtalsvillkor som är sämre för konsumenten än lagen gäller inte.",
-              "relaterade": ["KöpL", "MFL", "AvtL"]
+              "nar": "En privatperson har köpt en vara av en näringsidkare. Avtalsvillkor som är sämre för konsumenten än lagen gäller inte.",
+              "relaterade": [
+                "KöpL",
+                "MFL",
+                "AvtL"
+              ]
             },
             {
               "forkortning": "MFL",
               "beskrivning": "Regler mot vilseledande och aggressiv marknadsföring, riktade mot företags säljmetoder.",
               "nar": "Frågan gäller reklamen eller säljmetoden i sig, inte det enskilda köpeavtalet.",
-              "relaterade": ["KKöpL"]
+              "relaterade": [
+                "KKöpL"
+              ]
             }
           ]
         },
@@ -56,9 +122,23 @@
           "lagar": [
             {
               "forkortning": "SkbrL",
-              "beskrivning": "Skuldebrev – löpande och enkla: vad som händer när de överlåts och vilka invändningar gäldenären får behålla mot en ny borgenär.",
-              "nar": "En dokumenterad penningfordran har bytt ägare eller ska drivas in – skilj löpande från enkla skuldebrev.",
-              "relaterade": ["AvtL", "UB", "KonkL"]
+              "beskrivning": "Skuldebrev, löpande och enkla: vad som händer när de överlåts och vilka invändningar gäldenären får behålla mot en ny borgenär.",
+              "nar": "En dokumenterad penningfordran har bytt ägare eller ska drivas in. Skilj löpande från enkla skuldebrev.",
+              "relaterade": [
+                "AvtL",
+                "UB",
+                "KonkL"
+              ]
+            },
+            {
+              "forkortning": "PreskL",
+              "beskrivning": "Preskription av fordringar: tio år som huvudregel men tre år mot konsument, och vad som avbryter preskriptionen.",
+              "nar": "Fordran är gammal och gäldenären invänder att den inte längre kan göras gällande. Avgör först om gäldenären är konsument.",
+              "relaterade": [
+                "SkbrL",
+                "KonkL",
+                "UB"
+              ]
             }
           ]
         },
@@ -71,8 +151,12 @@
             {
               "forkortning": "SkL",
               "beskrivning": "Utomobligatoriskt skadestånd: culparegeln, person- och sakskada, ren förmögenhetsskada och arbetsgivares principalansvar.",
-              "nar": "Någon har vållat en skada utan avtalsband – pröva culpa, adekvat kausalitet och vilken skadetyp det gäller.",
-              "relaterade": ["BrB", "KöpL", "LAS"]
+              "nar": "Någon har vållat en skada utan avtalsband. Pröva culpa, adekvat kausalitet och vilken skadetyp det gäller.",
+              "relaterade": [
+                "BrB",
+                "KöpL",
+                "LAS"
+              ]
             }
           ]
         },
@@ -80,13 +164,16 @@
           "id": "fastighetsratt",
           "namn": "Fastighetsrätt",
           "beskrivning": "Fast egendom: köp av fastighet, fel, nyttjanderätter och panträtt.",
-          "nar": "Tvisten gäller mark eller byggnad – formkraven och gränsen mot lös egendom avgör ofta utgången.",
+          "nar": "Tvisten gäller mark eller byggnad. Formkraven och gränsen mot lös egendom avgör ofta utgången.",
           "lagar": [
             {
               "forkortning": "JB",
               "beskrivning": "Jordabalken reglerar fast egendom: formkrav vid fastighetsköp, fel i fastighet, hyra, servitut och panträtt.",
               "nar": "Frågan rör köp av fastighet (formkraven i 4 kap.), fel i fastighet eller rättigheter som belastar fastigheten.",
-              "relaterade": ["AvtL", "ÄktB"]
+              "relaterade": [
+                "AvtL",
+                "ÄktB"
+              ]
             }
           ]
         },
@@ -94,19 +181,25 @@
           "id": "associationsratt",
           "namn": "Associationsrätt",
           "beskrivning": "Bolagsformerna och deras viktigaste skillnad: vem svarar för bolagets skulder?",
-          "nar": "Verksamhet drivs i bolag – frågor om personligt ansvar, företrädarskap och bolagets organisation.",
+          "nar": "Verksamhet drivs i bolag. Frågor om personligt ansvar, företrädarskap och bolagets organisation.",
           "lagar": [
             {
               "forkortning": "ABL",
               "beskrivning": "Aktiebolag: bildande, aktiekapital, bolagets organ (stämma, styrelse, VD) och huvudregeln att aktieägare inte svarar personligen för bolagets skulder.",
               "nar": "Frågan rör ett aktiebolags organisation, vem som får företräda bolaget eller aktieägarnas ansvarsfrihet.",
-              "relaterade": ["HBL", "KonkL"]
+              "relaterade": [
+                "HBL",
+                "KonkL"
+              ]
             },
             {
               "forkortning": "HBL",
               "beskrivning": "Handelsbolag, kommanditbolag och enkla bolag: bolagsmännens inbördes förhållanden och deras personliga, solidariska ansvar för bolagets skulder.",
-              "nar": "Flera driver verksamhet tillsammans utan aktiebolag – då svarar bolagsmännen personligen och solidariskt.",
-              "relaterade": ["ABL", "AvtL"]
+              "nar": "Flera driver verksamhet tillsammans utan aktiebolag. Då svarar bolagsmännen personligen och solidariskt.",
+              "relaterade": [
+                "ABL",
+                "AvtL"
+              ]
             }
           ]
         },
@@ -119,8 +212,11 @@
             {
               "forkortning": "LAS",
               "beskrivning": "Anställningsskydd: anställningsformer, krav på sakliga skäl för uppsägning, avsked vid grovt åsidosättande samt turordningsregler.",
-              "nar": "Någon sägs upp, avskedas eller visstidsanställs – skilj alltid uppsägning från avsked.",
-              "relaterade": ["SkL", "AvtL"]
+              "nar": "Någon sägs upp, avskedas eller visstidsanställs. Skilj alltid uppsägning från avsked.",
+              "relaterade": [
+                "SkL",
+                "AvtL"
+              ]
             }
           ]
         }
@@ -129,6 +225,7 @@
     {
       "id": "familje_och_successionsratt",
       "namn": "Familje- och successionsrätt",
+      "avdelning": "avd3_civilratt",
       "farg": "tip",
       "beskrivning": "Familjens ekonomiska rätt: äktenskap, samboende, barn och arv. Formellt en del av civilrätten men med egna balkar och egen systematik.",
       "nar": "Frågan rör makars eller sambors egendom, barn, eller vad som händer med egendomen när någon dör.",
@@ -137,19 +234,26 @@
           "id": "makar_och_sambor",
           "namn": "Makar och sambor",
           "beskrivning": "Ekonomiska förhållanden under och efter äktenskap eller samboförhållande.",
-          "nar": "Ett par separerar eller den ena parten dör – vad ska delas och vad hålls utanför?",
+          "nar": "Ett par separerar eller den ena parten dör. Vad ska delas och vad hålls utanför?",
           "lagar": [
             {
               "forkortning": "ÄktB",
               "beskrivning": "Äktenskapsbalken: giftorättsgods och enskild egendom, bodelning vid skilsmässa och dödsfall samt makars underhåll.",
-              "nar": "Makars egendom ska delas eller skyddas – skilj giftorättsgods från enskild egendom.",
-              "relaterade": ["SamboL", "ÄB", "JB"]
+              "nar": "Makars egendom ska delas eller skyddas. Skilj giftorättsgods från enskild egendom.",
+              "relaterade": [
+                "SamboL",
+                "ÄB",
+                "JB"
+              ]
             },
             {
               "forkortning": "SamboL",
               "beskrivning": "Sambolagen: bodelning av gemensam bostad och gemensamt bohag när ett samboförhållande upphör.",
-              "nar": "Ogifta partner separerar – bara samboegendom (gemensam bostad och bohag skaffat för gemensamt bruk) ingår.",
-              "relaterade": ["ÄktB", "ÄB"]
+              "nar": "Ogifta partner separerar. Bara samboegendom (gemensam bostad och bohag skaffat för gemensamt bruk) ingår.",
+              "relaterade": [
+                "ÄktB",
+                "ÄB"
+              ]
             }
           ]
         },
@@ -163,7 +267,11 @@
               "forkortning": "FB",
               "beskrivning": "Föräldrabalken: faderskap och föräldraskap, vårdnad och umgänge, förmynderskap samt underårigas begränsade rättshandlingsförmåga.",
               "nar": "En omyndig har ingått avtal, eller frågan gäller vårdnad och vem som företräder barnet.",
-              "relaterade": ["ÄB", "ÄktB", "AvtL"]
+              "relaterade": [
+                "ÄB",
+                "ÄktB",
+                "AvtL"
+              ]
             }
           ]
         },
@@ -176,8 +284,12 @@
             {
               "forkortning": "ÄB",
               "beskrivning": "Ärvdabalken: arvsordningen (arvsklasserna), efterlevande makes rätt, särkullbarn, laglott och formkraven för testamente.",
-              "nar": "Någon har avlidit – vem ärver enligt lag, vad kan testamenteras bort och vad skyddar laglotten?",
-              "relaterade": ["ÄktB", "FB", "SamboL"]
+              "nar": "Någon har avlidit. Vem ärver enligt lag, vad kan testamenteras bort och vad skyddar laglotten?",
+              "relaterade": [
+                "ÄktB",
+                "FB",
+                "SamboL"
+              ]
             }
           ]
         }
@@ -186,21 +298,25 @@
     {
       "id": "straffratt",
       "namn": "Straffrätt",
+      "avdelning": "avd4_straff_process",
       "farg": "warning",
-      "beskrivning": "Vilka gärningar som är brott och vilka påföljder de kan leda till. Staten – inte den skadelidande – är motpart.",
+      "beskrivning": "Vilka gärningar som är brott och vilka påföljder de kan leda till. Staten, inte den skadelidande, är motpart.",
       "nar": "Frågan är om någon kan straffas. Pröva gärningens objektiva sida, den subjektiva sidan (uppsåt eller oaktsamhet) och ansvarsfrihetsgrunderna.",
       "underomraden": [
         {
           "id": "brott_och_ansvar",
           "namn": "Brott och ansvar",
           "beskrivning": "Brottskatalogen och förutsättningarna för straffansvar.",
-          "nar": "Ett handlande ska bedömas straffrättsligt – täcker uppsåtet gärningen, och finns någon ansvarsfrihetsgrund?",
+          "nar": "Ett handlande ska bedömas straffrättsligt. Täcker uppsåtet gärningen, och finns någon ansvarsfrihetsgrund?",
           "lagar": [
             {
               "forkortning": "BrB",
               "beskrivning": "Brottsbalken: de centrala brotten (stöld, misshandel, bedrägeri m.fl.), kravet på uppsåt eller oaktsamhet samt ansvarsfrihetsgrunder som nödvärn.",
-              "nar": "Frågan gäller om ett brott har begåtts – börja i den objektiva sidan och pröva sedan den subjektiva.",
-              "relaterade": ["SkL", "RB"]
+              "nar": "Frågan gäller om ett brott har begåtts. Börja i den objektiva sidan och pröva sedan den subjektiva.",
+              "relaterade": [
+                "SkL",
+                "RB"
+              ]
             }
           ]
         }
@@ -209,21 +325,25 @@
     {
       "id": "process_och_exekutionsratt",
       "namn": "Process- och exekutionsrätt",
+      "avdelning": "avd4_straff_process",
       "farg": "example",
       "beskrivning": "Hur tvister prövas i domstol och hur domar tvingas igenom: rättegång, verkställighet och konkurs.",
-      "nar": "Den materiella frågan är bedömd eller löper parallellt – nu gäller förfarandet: stämma, bevisa, verkställa eller hantera obestånd.",
+      "nar": "Den materiella frågan är bedömd eller löper parallellt. Nu gäller förfarandet: stämma, bevisa, verkställa eller hantera obestånd.",
       "underomraden": [
         {
           "id": "rattegangen",
           "namn": "Rättegången",
           "beskrivning": "Domstolsprocessen i tvistemål och brottmål.",
-          "nar": "Frågan gäller hur och var en tvist eller ett åtal prövas – inte vem som har materiellt rätt.",
+          "nar": "Frågan gäller hur och var en tvist eller ett åtal prövas, inte vem som har materiellt rätt.",
           "lagar": [
             {
               "forkortning": "RB",
               "beskrivning": "Rättegångsbalken: domstolarna, rättegången i tvistemål och brottmål, bevisning och rättegångskostnader.",
               "nar": "Processuella frågor: behörig domstol, bevisbörda, hur ett mål drivs.",
-              "relaterade": ["BrB", "UB"]
+              "relaterade": [
+                "BrB",
+                "UB"
+              ]
             }
           ]
         },
@@ -231,19 +351,28 @@
           "id": "verkstallighet_och_obestand",
           "namn": "Verkställighet och obestånd",
           "beskrivning": "Att driva in fordringar med tvång och hantera gäldenärer som inte kan betala.",
-          "nar": "En dom eller annan exekutionstitel finns men betalning uteblir – eller gäldenären är på obestånd.",
+          "nar": "En dom eller annan exekutionstitel finns men betalning uteblir, eller gäldenären är på obestånd.",
           "lagar": [
             {
               "forkortning": "UB",
               "beskrivning": "Utsökningsbalken: verkställighet av domar och andra exekutionstitlar genom Kronofogden, framför allt utmätning.",
               "nar": "Borgenären har redan en exekutionstitel och vill få betalt ur gäldenärens egendom.",
-              "relaterade": ["KonkL", "SkbrL", "RB"]
+              "relaterade": [
+                "KonkL",
+                "SkbrL",
+                "RB"
+              ]
             },
             {
               "forkortning": "KonkL",
               "beskrivning": "Konkurslagen: obeståndsbegreppet, konkursförfarandet, förvaltarens roll och återvinning av vissa transaktioner.",
               "nar": "Gäldenären kan inte betala sina skulder i takt med att de förfaller och oförmågan är inte tillfällig.",
-              "relaterade": ["UB", "ABL", "HBL", "SkbrL"]
+              "relaterade": [
+                "UB",
+                "ABL",
+                "HBL",
+                "SkbrL"
+              ]
             }
           ]
         }
@@ -252,22 +381,23 @@
     {
       "id": "offentlig_ratt",
       "namn": "Offentlig rätt i övrigt",
+      "avdelning": "avd2_offentlig_ratt",
       "farg": "quote",
       "beskrivning": "Statsrätt och förvaltningsrätt: grundlagarna, myndigheternas verksamhet och förhållandet mellan stat och enskild. Områdets lagar ligger utanför kursens lagrumslista.",
-      "nar": "Motparten är en myndighet eller frågan rör grundläggande fri- och rättigheter – läs vidare i grundlagarna och förvaltningslagen utanför kursen.",
+      "nar": "Motparten är en myndighet eller frågan rör grundläggande fri- och rättigheter. Läs vidare i grundlagarna och förvaltningslagen utanför kursen.",
       "underomraden": [
         {
           "id": "statsratt",
           "namn": "Statsrätt",
           "beskrivning": "Statsskickets grunder: grundlagarna, normhierarkin och fri- och rättigheterna.",
-          "nar": "Frågan rör lagars giltighet, normhierarkin eller grundläggande rättigheter. Inga lagrum ur kursens register – kartan pekar bara ut området.",
+          "nar": "Frågan rör lagars giltighet, normhierarkin eller grundläggande rättigheter. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
           "lagar": []
         },
         {
           "id": "forvaltningsratt",
           "namn": "Förvaltningsrätt",
           "beskrivning": "Myndigheternas ärendehandläggning och den enskildes möjligheter att överklaga beslut.",
-          "nar": "En myndighet har fattat ett beslut som berör en enskild. Inga lagrum ur kursens register – kartan pekar bara ut området.",
+          "nar": "En myndighet har fattat ett beslut som berör en enskild. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
           "lagar": []
         }
       ]

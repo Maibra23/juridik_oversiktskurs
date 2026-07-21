@@ -90,6 +90,27 @@ Prompt:
 ### 3.2 (INN) Resterande fem P0 moduler
 Prompt (en per modul, samma schema): Juridisk metod (kap 1), Köprätt (kap 8), Arbetsrätt (kap 11), Associationsrätt (kap 12), Straffrätt (kap 22). Minst 1 case, 6 MC, 3 lagrumsjakt per modul.
 
+### 3.3 (INN) Förkunskapsmodulerna Personrätt och Allmän förmögenhetsrätt
+
+Tillkom efter helhetsgranskningen: Paretourvalet startade på Avtalsrätt (kap 7) och hoppade därmed över de begrepp som avtals- och köprätten vilar på. Åtgärdat med två moduler enligt samma schema (minst 1 case, 6 MC, 3 lagrumsjakt):
+
+* **Personrätt** (kap 5): underårigs omyndighet och avtalsbundenhet (9 kap. FB), framtidsfullmakt (LFF), god man och förvaltare (11 kap. FB).
+* **Allmän förmögenhetsrätt** (kap 6): godtrosförvärv av lösöre (GFL), undantaget för olovligen tagen egendom, lösningsrätt och hävd.
+
+Lagrumsregistret utökades samtidigt med 9 kap. FB, lagen (1986:796) om godtrosförvärv av lösöre och lagen (2017:310) om framtidsfullmakter. Paragrafintervallen är kontrollerade mot rkrattsbaser.gov.se respektive lagen.nu. Rättskartan fick ett nytt underområde så att varje registrerad lag har en plats i kartan.
+
+### 3.4 (INN) Civilrättens sista luckor: Fastighetsrätt och Fordringsrätt
+
+Sidopanelen visade kap 9 och kap 15 till 17 som planerade. Båda är nu byggda enligt samma schema, så att civilrätten inte har några tomma sidor kvar. Lagrumsregistret utökades med 2 kap. JB (tillbehör) och preskriptionslagen (1981:130), kontrollerade mot lagen.nu. Kvar som planerade är endast konstitutionell rätt och förvaltningsrätt, alltså den offentliga rätten.
+
+### 3.5 (LLM) Genererade rättsfall i varje modul
+
+Rättsfallsfliken i varje modul kan nu generera ett nytt, fiktivt fall inom modulens rättsområde via utils.generator, med samma verifiering och fallback som Kunskapsutmaningen. Syftet är att studenten inte ska kunna memorera de kuraterade fallen. Generering sker endast på knapptryck enligt PRD 5.3: Streamlit kör om skriptet vid varje tangenttryck i RNTS-fälten, så automatisk generering vid rerun skulle byta ut fallet mitt i skrivandet. Knappen "Visa kursens rättsfall" tar tillbaka de kuraterade fallen.
+
+### 3.6 (UI) Hierarkisk sidopanel
+
+Sidopanelen ritas av utils.ui.render_sidopanel ur trädet i utils/navigation.py och följer bokens avdelningar i stället för en platt sidlista. Streamlits egen sidlista är avstängd med st.navigation(..., position="hidden"). Hela trädet visas samtidigt utan hopfällbara sektioner. Planerade men ej byggda moduler visas gråtonade med "(kommer)". tests/test_navigation.py vaktar att varje modul pekar på en befintlig fil eller är märkt som planerad, och att ingen sida i pages/ hamnar utanför trädet.
+
 ### 3.3 (PE) Promptjustering mot verklig modell
 Prompt:
 > "Här är fem verkliga tutorsvar från Qwen (klistras in). Identifiera avvikelser från RNTS strukturen, engelska ord, ej verifierbara lagrum och överlånga svar. Föreslå konkreta ändringar i systemprompten och regenerera prompts.py."

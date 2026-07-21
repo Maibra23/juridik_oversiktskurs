@@ -2,7 +2,7 @@
 
 Studenten testar sin förmåga på ett färskt, fiktivt rättsfall som genereras av
 LLM vid knapptryck. Fallet grundas mot kursens lagrumsregister innan det visas
-(utils.generator) — påhittade paragrafer släpps aldrig igenom, och vid problem
+(utils.generator). Påhittade paragrafer släpps aldrig igenom, och vid problem
 faller vi tillbaka på ett kuraterat fall. Själva övningen (RNTS-formulär, tutor
 och facit) återanvänder exakt samma flöde som modulsidorna.
 """
@@ -13,28 +13,16 @@ import dataclasses
 
 import streamlit as st
 
-st.set_page_config(
-    page_title="Kunskapsutmaning · Juridisk översiktskurs",
-    page_icon="⚖️",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-from utils.generator import generera_case, valj_slumpmodul  # noqa: E402
-from utils.modulvy import rendera_case_ovning  # noqa: E402
-from utils.scenarier import ladda_modul, lista_moduler  # noqa: E402
-from utils.ui import (  # noqa: E402
+from utils.generator import generera_case, valj_slumpmodul
+from utils.modulvy import rendera_case_ovning
+from utils.scenarier import ladda_modul, lista_moduler
+from utils.ui import (
     footer_note,
     hero,
-    inject_css,
     render_info,
     render_varning,
-    render_sidebar,
     section_heading,
 )
-
-inject_css()
-render_sidebar("kunskapsutmaning")
 
 st.html(
     hero(
@@ -43,11 +31,10 @@ st.html(
         lead=(
             "Generera ett helt nytt, fiktivt rättsfall och pröva din juridiska "
             "metod. Varje lagrum i facit kontrolleras mot kursens lagrumslista "
-            "innan fallet visas – du testas aldrig på en påhittad paragraf."
+            "innan fallet visas. Du testas aldrig på en påhittad paragraf."
         ),
     )
 )
-
 
 @st.cache_data(show_spinner=False)
 def _visningsnamn() -> dict[str, str]:
@@ -56,10 +43,9 @@ def _visningsnamn() -> dict[str, str]:
     for stem in lista_moduler():
         try:
             namn[stem] = ladda_modul(stem).modul
-        except Exception:  # noqa: BLE001 – hoppa över trasig fil, visa stem
+        except Exception:  # noqa: BLE001 (hoppa över trasig fil, visa stem)
             namn[stem] = stem
     return namn
-
 
 visningsnamn = _visningsnamn()
 moduler = list(visningsnamn)
@@ -96,8 +82,8 @@ if generera or overraska:
 case = st.session_state.get("utmaning_case")
 if case is None:
     render_info(
-        "Välj ett rättsområde och tryck på **Generera nytt rättsfall** – eller låt "
-        "slumpen välja med **Överraska mig** – för att börja."
+        "Välj ett rättsområde och tryck på **Generera nytt rättsfall**. Du kan "
+        "också låta slumpen välja med **Överraska mig**."
     )
 else:
     notis = st.session_state.get("utmaning_notis")

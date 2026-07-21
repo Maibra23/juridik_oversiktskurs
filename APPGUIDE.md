@@ -1,0 +1,436 @@
+# APPGUIDE.md: vad varje sida gör, hur den fungerar och var den brister
+
+Det här dokumentet beskriver den **byggda** appen, sida för sida. `PRD.md`
+beskriver avsikten, `design_system.md` utseendet och `methodology.md`
+pedagogiken. Ingen av dem berättar vad som faktiskt händer när du klickar.
+
+Allt som påstås här är kontrollerat mot koden eller mätt i skarp körning mot
+`Qwen/Qwen3-8B`. Där en siffra anges är den uppmätt, inte uppskattad.
+
+Senast verifierad: 2026-07-21, mot 540 gröna tester. (Dokumentet du läser
+räknas in i den siffran: `tests/test_sprak.py` kontrollerar teckenkodning och
+frånvaro av kyrilliska tecken i varje markdownfil i roten, så den här filen
+lade till två tester.)
+
+---
+
+## 1. Snabbstart
+
+```bash
+cd /Users/Brook/Downloads/juridik_oversiktskurs
+streamlit run streamlit_app.py
+```
+
+Appen öppnas på `http://localhost:8501`. Avsluta med `Ctrl+C`.
+
+**Token är valfri.** Utan `HF_TOKEN` i `.streamlit/secrets.toml` fungerar allt
+utom tutorn och rättsfallsgenereringen: samtliga scenarier, quiz,
+lagrumsjakter, facit, kartor och exporter är deterministiska. Tutorknapparna
+visar då ett vänligt felkort i stället för att krascha.
+
+Detta är en medveten designlinje och den bär hela appen: **LLM är ett tillägg,
+aldrig en förutsättning.**
+
+---
+
+## 2. Arkitektur i korthet
+
+`streamlit_app.py` registrerar 17 sidor via `st.navigation`. Sidopanelens
+hierarki byggs separat i `utils/navigation.py`, som också känner till
+planerade men obyggda moduler (Konstitutionell rätt, Förvaltningsrätt).
+
+Elva av de sjutton sidorna är skal på 15–22 rader som bara anropar
+`rendera_modulsida(...)`. Motorn ligger i `utils/modulvy.py`.
+
+| Sida | Motor | Datakälla |
+|---|---|---|
+| `0_Hem` | egen | `session_state` + `utils/export`, `utils/obsidian` |
+| 11 modulsidor | `utils/modulvy.py` | `data/scenarier/*.json` |
+| `9_Kunskapstest` | egen | `utils/quiz` (`session_state`) |
+| `10_Kunskapskarta` | `utils/graf`, `utils/graf_ui` | `session_state` |
+| `11_Kunskapsutmaning` | `utils/generator` + `modulvy.rendera_case_ovning` | LLM + `data/scenarier` |
+| `16_Rattskartan` | `utils/rattssystem_graf`, `utils/taxonomi_ui` | `data/rattssystem.json`, `data/nyckelbegrepp.json` |
+
+**Innehållsvolym:** 12 scenariofiler, 19 rättsfall, 86 quizfrågor,
+43 lagrumsjakter, 52 nyckelbegrepp, 21 lagar i registret.
+
+---
+
+## 3. Modulsidorna (11 av 17)
+
+Alla elva ser likadana ut och beter sig likadant. Bara innehållet skiljer.
+
+| Sida | Modul | Rättsfall | Quiz | Lagrumsjakt |
+|---|---|---|---|---|
+| `1_Juridisk_metod` | Kap. 1 · Juridisk metod | 1 | 6 | 3 |
+| `12_Personratt` | Kap. 5 · Personrätt | 2 | 8 | 4 |
+| `13_Allman_formogenhetsratt` | Kap. 6 · Allmän förmögenhetsrätt | 2 | 8 | 4 |
+| `2_Avtalsratt` | Kap. 7 · Avtalsrätt | 2 | 8 | 4 |
+| `3_Kop_och_konsumentratt` | Kap. 8 · Köprätt | 1 | 6 | 3 |
+| `14_Fastighetsratt` | Kap. 9 · Fastighetsrätt | 2 | 8 | 4 |
+| `4_Skadestandsratt` | Kap. 10 · Skadeståndsrätt | 2 | 8 | 4 |
+| `5_Arbetsratt` | Kap. 11 · Arbetsrätt | 1 | 6 | 3 |
+| `6_Associationsratt` | Kap. 12 · Associationsrätt | 1 | 6 | 3 |
+| `15_Fordringsratt` | Kap. 15–17 · Fordringsrätt | 2 | 8 | 4 |
+| `7_Familje_och_arvsratt` | Kap. 18–21 · Familj och arv | 2 | 8 | 4 |
+| `8_Straff_och_processratt` | Kap. 22 · Straffrätt | 1 | 6 | 3 |
+
+### Vad du ser
+
+Sidhuvud, sedan tre flikar: **Rättsfall**, **Quiz**, **Lagrumsjakt**.
+
+### Flik 1 — Rättsfall, steg för steg
+
+1. **Två knappar överst.** "Generera nytt rättsfall" (LLM) och "Visa kursens
+   rättsfall". Den senare är utgråad tills du genererat något.
+2. **Välj rättsfall** i en rullista, om modulen har flera.
+3. **Scenariokortet** visar rubrik, svårighetsgrad och uppskattad tid.
+4. **RNTS-formuläret**, fyra textfält: Rättsfrågan, Norm, Tillämpning,
+   Slutsats. Till vänster en stepper som visar status per steg.
+5. **Normfältet rättas medan du skriver.** Skriver du `4 § AvtL` dyker ett
+   guldchip upp direkt, klickbart till lagen.nu. Skriver du något ogiltigt får
+   du en gul varning. Detta sker helt utan LLM (`modulvy._norm_feedback`).
+6. **Steppern** markerar Norm som godkänd först när *alla* lagrum i fältet
+   verifierats. Övriga steg räknas som påbörjade så snart de har text.
+7. **"Be tutorn granska min analys"** — enda stället där LLM anropas i fliken.
+8. **"Visa facit (utan tutor)"** i en expander: rättsfråga, lagrum som chips,
+   tillämpningspunkter och slutsats. Helt deterministiskt.
+
+**Viktigt:** ett rättsfall räknas som genomfört när alla fyra fälten har
+innehåll — **utan att tutorn behöver ha körts**. Det är den händelsen som
+matar Kunskapskartan, framstegsvyn och Obsidianexporten.
+
+### Flik 2 — Quiz
+
+Flervalsfrågor. Du väljer alternativ, trycker **Svara**, och rättas
+**deterministiskt** mot data. Rätt svar ger grönt med förklaring, fel svar
+ger rött plus vilket alternativ som var rätt. Har alternativet ett lagrum
+visas det som chip. Därefter kan du valfritt be tutorn förklara.
+
+Resultatet registreras per modul och syns på Hem och Kunskapstest.
+
+### Flik 3 — Lagrumsjakt
+
+En situation beskrivs i text, du skriver vilket lagrum den handlar om. Rättas
+deterministiskt av `utils/quiz.ratta_lagrumsjakt`. Skriver du en lag som inte
+finns i registret får du veta det uttryckligen. Ledtråd och facit finns.
+
+**Ingen LLM alls i den här fliken.**
+
+### Under huven
+
+`modulvy.rendera_case_ovning` delas med Kunskapsutmaningen, så kuraterade och
+genererade fall får identiskt flöde och identisk verifiering.
+
+Generering sker **endast på knapptryck**, aldrig vid rerun. Skälet står i
+koden: Streamlit kör om skriptet vid varje tangenttryck, och ett fall som byts
+ut mitt i skrivandet vore obrukbart. Misslyckas grundningen mot
+lagrumsregistret faller appen tillbaka på ett kuraterat fall och säger till.
+
+### Styrkor
+
+- Tre olika övningsformer mot samma stoff: analys, igenkänning, uppslagning.
+- Två av tre flikar kräver ingen LLM alls.
+- Normfältets omedelbara återkoppling lär ut citeringsformatet innan tutorn
+  ens är inblandad.
+- Ett fall räknas som genomfört utan LLM, så framsteg fungerar utan token.
+
+### Begränsningar
+
+- **Innehållet är tunt i vissa moduler.** Fem moduler har bara ett rättsfall.
+  Har du gjort det finns inget mer kuraterat att öva på i den modulen.
+- Rullistan för rättsfall visas även när modulen bara har ett.
+- Tutorns kvalitet varierar — se avsnitt 8.
+
+---
+
+## 4. `0_Hem` — landningssidan
+
+### Vad du ser
+
+Sidhuvud, en disclaimer om att appen inte är juridisk rådgivning, en karta
+över modulerna, riktiga navigeringslänkar under kartan (modulkorten är
+avsiktligt inte klickbara), arbetsgången i fyra steg, och sist **Framsteg**.
+
+### Framstegssektionen
+
+- Progressbar per modul med quizresultat.
+- Lista över genomförda rättsfall per modul.
+- **Tre nedladdningar:** studierapport i Markdown, studierapport i Excel, och
+  ett Obsidianvalv som zip.
+
+Obsidianvalvet är värt att ladda ner **även med noll genomförda fall**, för
+Rättskartan följer alltid med: 28 filer, cirka 47 kB.
+
+### Begränsningar
+
+- Rubriken säger "Tolv moduler" men sidan renderar **13 modulkort**.
+- Framstegen försvinner vid omladdning av webbläsaren (avsnitt 7).
+
+---
+
+## 5. `9_Kunskapstest` — resultatöversikt
+
+### Vad du ser
+
+Dina quizresultat per modul, och under det en lista över vilka moduler som har
+quizfrågor och hur många.
+
+### Begränsningar
+
+Detta är **inte ett test**. Sidan ställer inga frågor — den summerar bara vad
+du redan svarat i modulerna. Sidhuvudet ("Dina resultat per modul") är ärligt,
+men namnet *Kunskapstest* leder fel, och modulens docstring beskriver ett
+blandat slumptest över alla moduler som aldrig byggdes.
+
+Sidan använder dessutom råa `st.info`, mot designsystemet.
+
+---
+
+## 6. `10_Kunskapskarta` — din egen graf
+
+### Vad du ser
+
+Tomt läge tills du genomfört minst ett rättsfall, med en förklaring av hur du
+fyller den. Därefter en interaktiv graf: **guld = lagrum, blå = rättsfall,
+mörkblå = modul.**
+
+Poängen är att lagrum som återkommer i flera fall blir **gemensamma noder**,
+så du ser hur samma paragraf tillämpas i olika situationer.
+
+### Under huven
+
+Data hämtas ur `session_state` via `obsidian.hamta_case_analyser`. Byggs
+deterministiskt av `utils/graf.bygg_graf`. Ingen LLM.
+
+### Begränsningar
+
+Kartan är helt beroende av `session_state`. **En omladdning tömmer den.** Det
+är den sida där persistensproblemet gör mest skada, eftersom värdet växer med
+tiden och därför är som störst precis när det riskerar att förloras.
+
+---
+
+## 7. `11_Kunskapsutmaning` — genererat rättsfall
+
+### Steg för steg
+
+1. Välj rättsområde i rullistan, eller tryck **🎲 Överraska mig**.
+2. Tryck **Generera nytt rättsfall**.
+3. Appen anropar LLM, **verifierar varje lagrum i facit mot registret**, och
+   visar fallet först därefter.
+4. Därefter exakt samma RNTS-flöde som modulsidorna.
+
+### Under huven
+
+`utils/generator.generera_case` följer mönstret constrain–validate–fallback.
+Går grundningen inte igenom returneras ett kuraterat fall med källa
+`"fallback"` och en notis som förklarar varför. Du testas alltså **aldrig på
+en påhittad paragraf** — men du kan få ett kuraterat fall när du bad om ett
+nytt.
+
+### Begränsningar
+
+- Kräver token. Utan den blir det alltid fallback.
+- Ett genererat fall har inget riktigt facit i kursens mening — det är
+  modellens egen lösning, grundad i registret men inte kvalitetsgranskad av
+  en människa. Det gör tutorgranskningen svagare här än på modulsidorna
+  (avsnitt 8).
+
+---
+
+## 8. `16_Rattskartan` — kursens orienteringssida
+
+Till skillnad från Kunskapskartan är den här **full på dag noll**. Den kräver
+varken LLM, token eller genomförda övningar.
+
+### Flik 1 — Systemet
+
+Hela taxonomin över svensk rätt som interaktiv graf: rot → avdelning →
+rättsområde → delområde → lag. 47 noder, 46 kanter, ett strikt träd.
+
+**Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
+Strukturnoder saknar länk och är avsiktligt inerta. Under grafen ligger
+områdesträdet som hopfällbara expandrar med ett kort per lag.
+
+Går grafbiblioteket inte att ladda (kräver internet) visas ett meddelande om
+det, och områdesträdet fungerar ändå.
+
+### Flik 2 — Falltypsguide
+
+Sökbar tabell: "vilken lag gäller för mitt fall?". Sökningen träffar på dolda
+sökord, så *uppsagd* hittar LAS-raden utan att sökorden syns i tabellen.
+
+### Flik 3 — Nyckelbegrepp
+
+52 begrepp med fyra fasta fält: definition, förklaring, exempel och hur
+begreppet känns igen i ett scenario. Sökbart och filtrerbart per rättsområde.
+Varje begrepp har en valfri LLM-fördjupning bakom **"Förklara djupare"**, med
+två lägen: längre förklaring eller ett övningsscenario att lösa.
+
+**Samtliga 84 lagrumsreferenser i begreppsbanken är verifierade** mot
+registret vid inläsning. Filen vägrar laddas om en referens inte går att
+verifiera.
+
+### Begränsningar
+
+- Alla 52 begreppskort byggs vid varje rerun, även i hopfällda expandrar. Det
+  ger 107 widgets på sidan och gör den till den tyngsta i appen.
+- Begreppsfördjupningen har **inget sanningsunderlag** — se nedan.
+
+---
+
+## 9. Tvärgående system
+
+### Lagrumsgarden — vad den faktiskt intygar
+
+`utils/lagrum.validera_lagrum` svarar på frågan **"finns paragrafen i kursens
+register?"**. Den svarar *inte* på "är det rätt paragraf för frågan?".
+
+Det betyder att ett guldchip garanterar existens, inte relevans. Sedan
+2026-07-21 visar tutorsvar med verifierade lagrum därför en not som säger
+just det.
+
+Verifieringen skärptes samma dag: tidigare godkändes `99 kap. 1 § AvtL`
+eftersom kapitelledet ignorerades för lagar utan kapitelindelning. Ett
+påhittat kapitel gick alltså rakt igenom garden.
+
+### Tutorn
+
+- Modell: `Qwen/Qwen3-8B`
+- Sessionstak: **40 anrop** (`llm.SESSION_CALL_CAP`)
+- Dagstak: **300 anrop** (`llm_budget.DEFAULT_DAILY_CALL_CAP`)
+- Svarslängd: 400 ord för fallgranskning, 250 för begrepp
+- Latens uppmätt: **3,7–10,0 sekunder**
+- Cache på promptinnehåll, så identiska frågor kostar inget nytt anrop
+
+Alla svar går genom `verify_lagrum`. Overifierade hänvisningar samlas i en gul
+varningsruta i stället för att renderas som fakta.
+
+### Persistens — den viktigaste begränsningen
+
+**Allt studentframsteg lever i `session_state`.** Quizresultat, genomförda
+rättsfall, RNTS-analyser, kunskapsgrafen och tutorsvaren finns bara i
+webbläsarsessionen. En omladdning, en timeout eller en stängd flik tömmer
+allt.
+
+Det finns ingen disklagring för framsteg. Enda sättet att rädda arbete är att
+ladda ner en rapport eller Obsidianvalvet **innan** sessionen tar slut, och
+inget i gränssnittet uppmanar till det.
+
+### Export
+
+| Format | Innehåll |
+|---|---|
+| Markdown | Quizresultat och genomförda fall per modul |
+| Excel | Samma, som kalkylark |
+| Obsidian (zip) | 28 filer: Rättskartan, modulnoter, lagrumsnoter, en not per genomförd RNTS-analys |
+
+---
+
+## 10. Mätresultat, 2026-07-21
+
+Fyra fall (tre avtalsrätt, ett skadeståndsrätt), skarpa anrop mot Qwen3-8B.
+
+### Rendering
+
+17 av 17 sidor renderade utan fel med tom `session_state` och utan token, och
+utan att röra LLM:en.
+
+### Fallgranskningen, före och efter facitinjektion
+
+| | Före | Efter |
+|---|---|---|
+| Facits lagrum träffade | **2/9** | **9/9** |
+| Hänvisningar utanför facit | **8** | **0** |
+| Påhittad paragraf intygad som rätt | **1** | **0** |
+| Felaktigt svar kallat korrekt | **1** | **0** |
+
+Före ändringen fick ett studentsvar som citerade det påhittade `87 § AvtL`
+svaret *"Rätt norm är 87 § AvtL"* och *"Slutsatsen är korrekt"* — trots att
+slutsatsen var fel. Efter ändringen avvisas båda påhitten uttryckligen och
+rätt lagrum pekas ut.
+
+I ett annat fall pekade tutorn en **korrekt löst** uppgift vidare till
+`36 § AvtL` med påståendet att paragrafen reglerar avtals ingående. 36 § är
+generalklausulen om jämkning. Både den och den korrekta hänvisningen
+verifierades som gröna chips.
+
+Orsaken var att `build_case_prompt` bara injicerade facits *rättsfråga*.
+Lagrum, tillämpningspunkter och slutsats hölls tillbaka, så modellen fick
+härleda svensk rätt ur sina egna vikter. Hela facit injiceras nu.
+
+### Begreppsfördjupningen
+
+Sex körningar: **0 overifierade lagrum**, 0 engelska ord. Men modellen
+producerade påhittad svensk terminologi — *"proxim meningskausalitet"*,
+*"negligens"*, *"nättillverkad"*, *"försämringsföljd"* — som varken är
+engelska ord eller riktiga juridiska termer, och därför passerade den gamla
+språkregeln. Efter skärpningen: **0 kvar**.
+
+Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
+
+---
+
+## 11. Styrkor och svagheter
+
+### Styrkor
+
+1. **Appen fungerar utan LLM.** Det är ovanligt och det är rätt.
+2. **Grundningsprincipen hålls genomgående.** Lagnamn, SFS och URL:er hämtas
+   ur registret, aldrig konstruerade. Data vägrar laddas hellre än att visa
+   ogrundade lagrum.
+3. **Rättningen är deterministisk där den kan vara det** — quiz, lagrumsjakt,
+   normfält, facit.
+4. **En källa per sak.** Rättskartan i appen och i Obsidianvalvet bygger på
+   samma data sedan 2026-07-21.
+5. **540 tester**, ruff och mypy rena.
+
+### Svagheter
+
+1. **Persistensen.** Allt framsteg försvinner vid omladdning. Störst problem
+   i appen.
+2. **Begreppsfördjupningen saknar sanningsunderlag.** Fallgranskningen fick
+   facit; begreppen har inget motsvarande, så det är nu den svagaste
+   LLM-ytan.
+3. **Tunt innehåll i fem moduler** — ett rättsfall vardera.
+4. **Kunskapstest är ingen test**, bara en resultatvy.
+5. **`use_container_width` är deprecerad** i 5 anrop i 3 filer; borttagningen
+   passerade 2025-12-31.
+6. **Råa `st.success/info/warning`** i fyra filer, mot designsystemet.
+7. **"Tolv moduler" men 13 kort** på Hem.
+8. **Rättskartan bygger 52 begreppskort vid varje rerun**, även hopfällda.
+
+---
+
+## 12. Optimeringsmöjligheter, prioriterade
+
+| # | Åtgärd | Insats | Löser |
+|---|---|---|---|
+| 1 | **Framsteg till disk** (JSON per student-id, eller `st.cache_resource`) | 1–2 d | Svaghet 1 — den enda som gör att en students arbete går förlorat |
+| 2 | **Uppmana till export innan sessionen dör** | 2 h | Dämpar 1 tills 1 är byggt |
+| 3 | **Sanningsunderlag för begrepp** — utöka `nyckelbegrepp.json` med gränsfall och kontrastpar som facit | 1 d | Svaghet 2, samma grepp som gav 2/9 → 9/9 |
+| 4 | **Fler rättsfall i tunna moduler** | löpande | Svaghet 3 |
+| 5 | **Bygg det blandade slumptestet** som docstringen redan lovar | 1 d | Svaghet 4 |
+| 6 | **Städa `use_container_width` och råa statuskomponenter** | 2 h | Svagheterna 5, 6 |
+| 7 | **Rätta "Tolv moduler" till 13**, eller räkna listan i koden | 5 min | Svaghet 7 |
+| 8 | **Lat rendering av begreppskort** — bygg bara utfällt område | 3 h | Svaghet 8 |
+| 9 | **Injicera lagtext** för vitlistade paragrafer | dagar | Tar bort beroendet av modellens minne av vad en paragraf säger |
+| 10 | **Större modell för tutorn** | konfig + kostnad | Sänker felfrekvensen, men gör 3 och 9 först — de är billigare |
+
+Ordningen är avsiktlig: 1 och 2 skyddar studentens arbete, 3 höjer den
+svagaste LLM-ytan med ett grepp som redan är mätt och bevisat, och 10 kommer
+sist eftersom de billigare åtgärderna bör prövas innan pengar läggs på
+modellstorlek.
+
+---
+
+## 13. Vad dokumentet inte täcker
+
+- **Tutorns pedagogiska kvalitet** utöver lagrumsträffarna. Att tutorn citerar
+  rätt paragraf betyder inte att förklaringen är pedagogiskt god.
+- **Prestanda under last.** Allt är mätt med en användare lokalt.
+- **Tillgänglighet.** Kontrastkraven i `design_system.md` är angivna men inte
+  verifierade med verktyg.
+- **Grafens läsbarhet vid växande data.** Kunskapskartan är bara sedd med få
+  noder.

@@ -15,7 +15,6 @@ import pytest
 
 from utils.lagrum import lagrum_register
 from utils.rattssystem_graf import (
-    AVDELNINGAR,
     GRUPP_AVDELNING,
     GRUPP_LAG,
     GRUPP_OMRADE,
@@ -39,7 +38,11 @@ def test_alla_fyra_avdelningar_finns_som_noder(graf):
     """Bokens fyra avdelningar ska alla vara egna noder, även tomma AVD I."""
     avdelningsnoder = [n for n in graf["noder"] if n["grupp"] == GRUPP_AVDELNING]
     assert len(avdelningsnoder) == 4
-    assert {n["label"] for n in avdelningsnoder} == {a.label for a in AVDELNINGAR}
+    from utils.rattskarta import ladda_avdelningar
+
+    assert {n["label"] for n in avdelningsnoder} == {
+        a.label for a in ladda_avdelningar()
+    }
 
 
 def test_avd1_tas_med_trots_att_den_saknar_rattsomraden():
@@ -118,7 +121,7 @@ def test_endast_lagnoder_ar_klickbara(graf):
 
 
 def test_alla_registrets_lagar_finns_i_grafen(graf):
-    lagnoder = {n["label"] for n in graf["noder"] if n["grupp"] == GRUPP_LAG}
+    lagnoder = {n["forkortning"] for n in graf["noder"] if n["grupp"] == GRUPP_LAG}
     assert lagnoder == set(lagrum_register())
 
 
@@ -126,8 +129,38 @@ def test_grafen_och_rattskartan_tacker_samma_lagar(graf):
     """App och Obsidianvalv får aldrig glida isär om vilka lagar som ingår."""
     from utils.rattskarta import _lagindex
 
-    lagnoder = {n["label"] for n in graf["noder"] if n["grupp"] == GRUPP_LAG}
+    lagnoder = {n["forkortning"] for n in graf["noder"] if n["grupp"] == GRUPP_LAG}
     assert lagnoder == set(_lagindex())
+
+
+def test_lagnoder_bar_sin_forkortning_som_eget_falt(graf):
+    """Förkortningen läses ur ett fält, aldrig ur nod-id:t eller etiketten.
+
+    Id:t är skopat efter förälder (se testet nedan) och går därför inte att
+    tolka som en förkortning.
+    """
+    for nod in graf["noder"]:
+        if nod["grupp"] == GRUPP_LAG:
+            assert nod["forkortning"]
+            assert nod["label"] == nod["forkortning"]
+
+
+def test_samma_lag_i_tva_delomraden_ger_tva_distinkta_noder():
+    """En lag kan höra till flera delområden utan att grafen kraschar.
+
+    lag_id() skopades tidigare bara på förkortningen. En lag som lades under
+    två delområden gav då två noder med samma id, vilket får vis.DataSet att
+    kasta i webbläsaren och bryter trädinvarianten. Noden ska i stället
+    dupliceras per förälder: att AvtL bär både avtalsrätt och allmän
+    förmögenhetsrätt är sant och ska synas på båda ställena.
+    """
+    from utils.rattssystem_graf import lag_id
+
+    a = lag_id("avtalsratt", "AvtL")
+    b = lag_id("allman_formogenhetsratt", "AvtL")
+    assert a != b, "lagnod-id måste vara skopat efter delområde"
+    assert "AvtL" in a and "AvtL" in b
+    assert "avtalsratt" in a and "allman_formogenhetsratt" in b
 
 
 # --- Taxonomiträdet ---------------------------------------------------------
@@ -152,21 +185,44 @@ def test_taxonomin_hamtar_lagnamn_ur_registret():
         assert lag.sfs == register[lag.forkortning].sfs
 
 
-def test_okand_avdelning_ger_tydligt_fel(monkeypatch, tmp_path):
-    """Fail fast: ett område med okänd avdelning får inte tappas tyst."""
+@pytest.mark.parametrize(
+    ("trasig_nyckel", "vantat_fel"),
+    [
+        ("okand", "okänd avdelning"),
+        ("saknas", "saknar nyckeln 'avdelning'"),
+    ],
+)
+def test_omrade_utan_giltig_avdelning_ger_tydligt_fel(
+    monkeypatch, tmp_path, trasig_nyckel, vantat_fel
+):
+    """Fail fast: ett område utanför dispositionen får inte tappas tyst.
+
+    Valideringen bor numera i utils.rattskarta.ladda_rattssystem, som är den
+    enda som läser datat. Cacherna måste tömmas både före och efter, annars
+    läcker den trasiga kartan in i efterföljande tester.
+    """
     import json
 
-    import utils.rattssystem_graf as modul
-    from utils.rattskarta import DATA_PATH
+    from utils.rattskarta import DATA_PATH, ladda_avdelningar, ladda_rattssystem
 
     rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
-    rad["omraden"][0]["avdelning"] = "avd_finns_inte"
+    if trasig_nyckel == "okand":
+        rad["omraden"][0]["avdelning"] = "avd_finns_inte"
+    else:
+        del rad["omraden"][0]["avdelning"]
+
     trasig = tmp_path / "rattssystem.json"
     trasig.write_text(json.dumps(rad, ensure_ascii=False), encoding="utf-8")
 
     monkeypatch.setattr("utils.rattskarta.DATA_PATH", trasig)
-    with pytest.raises(ValueError, match="okänd avdelning"):
-        modul._ravdelningar()
+    ladda_rattssystem.cache_clear()
+    ladda_avdelningar.cache_clear()
+    try:
+        with pytest.raises(ValueError, match=vantat_fel):
+            ladda_rattssystem()
+    finally:
+        ladda_rattssystem.cache_clear()
+        ladda_avdelningar.cache_clear()
 
 
 # --- Falltypsguidens sökbarhet ----------------------------------------------

@@ -1,5 +1,29 @@
 {
   "_beskrivning": "Rättskartan: hierarkisk karta över det svenska rättssystemet för Obsidianexporten. Varje lag anges med förkortning ur data/lagrum.json (grundningsprincipen: inga lagar utanför registret). Namn och SFS-nummer hämtas ur registret och dupliceras inte här. 'farg' är en Obsidian-callouttyp som färgkodar området i kartvyn.",
+  "_beskrivning_avdelningar": "Bokens fyra avdelningar, i dispositionens ordning. Varje område pekar på en av dem via nyckeln 'avdelning'. Detta är kursdata och ligger därför här, inte i en modul: både appens graf och Obsidian-exporten läser samma lista. 'sida' anges för avdelningar utan egna rättsområden (AVD I) och pekar på modulsidan i appen.",
+  "avdelningar": [
+    {
+      "id": "avd1_introduktion",
+      "label": "AVD I · Introduktion",
+      "beskrivning": "Rättskällelära, lagtolkning och juridisk metod. Verktygen du använder i alla övriga avdelningar.",
+      "sida": "pages/1_Juridisk_metod.py"
+    },
+    {
+      "id": "avd2_offentlig_ratt",
+      "label": "AVD II · Offentlig rätt",
+      "beskrivning": "Förhållandet mellan enskilda och det allmänna: grundlagarna och myndigheternas verksamhet."
+    },
+    {
+      "id": "avd3_civilratt",
+      "label": "AVD III · Civilrätt",
+      "beskrivning": "Rättsförhållanden mellan enskilda: person, förmögenhet, avtal, ersättning, näring, kredit och familj."
+    },
+    {
+      "id": "avd4_straff_process",
+      "label": "AVD IV · Straff- och processrätt",
+      "beskrivning": "Vilka gärningar som är brott, och hur anspråk och ansvar prövas och tvingas igenom."
+    }
+  ],
   "omraden": [
     {
       "id": "civilratt",

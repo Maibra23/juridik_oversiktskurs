@@ -23,8 +23,8 @@ from __future__ import annotations
 import html
 import json
 
+from utils.rattskarta import ladda_avdelningar
 from utils.rattssystem_graf import (
-    AVDELNINGAR,
     GRUPP_AVDELNING,
     GRUPP_LAG,
     GRUPP_OMRADE,
@@ -172,7 +172,7 @@ def farglegend_html() -> str:
         (_ROTFARG["bg"], "Svensk rätt (rot)"),
     ]
     poster += [
-        (AVDELNINGSFARGER[a.id]["bg"], a.label) for a in AVDELNINGAR
+        (AVDELNINGSFARGER[a.id]["bg"], a.label) for a in ladda_avdelningar()
     ]
     poster.append((_LAGFARG["bg"], "Lag (klicka för lagen.nu)"))
 

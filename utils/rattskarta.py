@@ -64,10 +64,28 @@ class Omrade:
 
     id: str
     namn: str
+    avdelning: str
     farg: str
     beskrivning: str
     nar: str
     underomraden: tuple[Underomrade, ...]
+
+
+@dataclass(frozen=True)
+class Avdelning:
+    """En avdelning i bokens disposition (AVD I-IV).
+
+    Avdelningarna är kursdata och läses ur data/rattssystem.json. Både appens
+    taxonomigraf (utils.rattssystem_graf) och Obsidian-exportens rättskarta
+    bygger på den här listan, så att de två vyerna inte kan visa olika
+    dispositioner.
+    """
+
+    id: str
+    label: str
+    beskrivning: str
+    # Modulsida att länka till för avdelningar utan egna rättsområden (AVD I).
+    sida: str | None = None
 
 
 # --- Inläsning med grundningsvalidering ----------------------------------------
@@ -94,11 +112,46 @@ def _bygg_lagpost(rad: dict) -> LagPost:
 
 
 @lru_cache(maxsize=1)
+def ladda_avdelningar() -> tuple[Avdelning, ...]:
+    """Läs och cachea bokens avdelningar, i dispositionens ordning.
+
+    Enda källan för AVD I-IV. Fail fast om listan saknas: utan avdelningar
+    kan varken grafen eller exporten gruppera kartan.
+    """
+    if not DATA_PATH.exists():
+        raise FileNotFoundError(f"Hittar inte rättssystemdatat: {DATA_PATH}")
+    rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+
+    avdelningar = tuple(
+        Avdelning(
+            id=str(a["id"]),
+            label=str(a["label"]),
+            beskrivning=str(a["beskrivning"]),
+            sida=str(a["sida"]) if a.get("sida") else None,
+        )
+        for a in rad.get("avdelningar", ())
+    )
+    if not avdelningar:
+        raise ValueError(
+            "data/rattssystem.json saknar nyckeln 'avdelningar'. Kartan måste "
+            "kunna grupperas efter bokens disposition."
+        )
+
+    ider = [a.id for a in avdelningar]
+    dubbletter = {i for i in ider if ider.count(i) > 1}
+    if dubbletter:
+        raise ValueError(f"Dubblerade avdelnings-id: {sorted(dubbletter)}")
+    return avdelningar
+
+
+@lru_cache(maxsize=1)
 def ladda_rattssystem() -> tuple[Omrade, ...]:
     """Läs, validera och cachea rättssystemkartan. Fail fast vid fel data."""
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Hittar inte rättssystemdatat: {DATA_PATH}")
     rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
+
+    giltiga_avdelningar = {a.id for a in ladda_avdelningar()}
 
     omraden = []
     for o in rad.get("omraden", ()):
@@ -108,10 +161,24 @@ def ladda_rattssystem() -> tuple[Omrade, ...]:
                 f"Området {o['namn']!r} har okänd callout-färg {farg!r}. "
                 f"Tillåtna: {sorted(_TILLATNA_FARGER)}"
             )
+        # Fail fast: kartan får aldrig tappa en gren tyst genom att ett
+        # område hamnar utanför dispositionen.
+        if "avdelning" not in o:
+            raise ValueError(
+                f"Området {o['id']!r} saknar nyckeln 'avdelning'. Varje område "
+                f"måste höra till en avdelning: {sorted(giltiga_avdelningar)}."
+            )
+        avdelning = str(o["avdelning"])
+        if avdelning not in giltiga_avdelningar:
+            raise ValueError(
+                f"Området {o['id']!r} pekar på okänd avdelning {avdelning!r}. "
+                f"Tillåtna: {sorted(giltiga_avdelningar)}."
+            )
         omraden.append(
             Omrade(
                 id=str(o["id"]),
                 namn=str(o["namn"]),
+                avdelning=avdelning,
                 farg=farg,
                 beskrivning=str(o["beskrivning"]),
                 nar=str(o["nar"]),
@@ -396,10 +463,36 @@ def rattskarta_not() -> str:
         "",
         "## Kartan",
         "",
+        "Kartan följer kursbokens disposition. Avdelningarna nedan är samma "
+        "fyra som appens rättskarta visar.",
+        "",
     ]
+
+    # Avdelningarna är rubriker (H3), inte ytterligare en callout-nivå:
+    # _tradgren lägger redan två nivåer, och en tredje ger "> > >" som
+    # Obsidian renderar illa. Rubriken ger nivån gratis och lämnar
+    # callout-trädet oförändrat.
+    omraden_per_avdelning: dict[str, list[Omrade]] = {}
     for omrade in ladda_rattssystem():
-        rader += _tradgren(omrade)
-        rader.append("")
+        omraden_per_avdelning.setdefault(omrade.avdelning, []).append(omrade)
+
+    for avdelning in ladda_avdelningar():
+        rader += [f"### {avdelning.label}", "", avdelning.beskrivning, ""]
+
+        omraden = omraden_per_avdelning.get(avdelning.id, [])
+        if not omraden:
+            # AVD I är metodavdelningen och har inga egna rättsområden.
+            rader += [
+                "*Den här avdelningen har inga egna rättsområden i kartan. "
+                "Den behandlas som juridisk metod och rättskällelära, och "
+                "genomsyrar alla övriga avdelningar.*",
+                "",
+            ]
+            continue
+
+        for omrade in omraden:
+            rader += _tradgren(omrade)
+            rader.append("")
 
     rader += [
         "## Vilken lag gäller för mitt fall?",

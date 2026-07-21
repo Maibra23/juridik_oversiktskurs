@@ -12,12 +12,13 @@ Två publika ingångar:
   i exakt samma envelope som utils.graf, så att utils.graf_ui:s
   vis-network-mönster kan återanvändas rakt av.
 
-Avdelningsnivån finns inte i rättsområdesdatat utan läggs på via nyckeln
-``avdelning`` per område i data/rattssystem.json. Kartan över avdelningar
-(AVDELNINGAR nedan) följer bokens disposition: AVD I Introduktion,
-AVD II Offentlig rätt, AVD III Civilrätt, AVD IV Straff- och processrätt.
-AVD I har inga rättsområden i datat och representeras av en enda nod som
-pekar på modulen Juridisk metod.
+Avdelningsnivån (AVD I Introduktion, AVD II Offentlig rätt, AVD III Civilrätt,
+AVD IV Straff- och processrätt) ägs av utils.rattskarta och läses ur
+data/rattssystem.json, där varje område pekar på sin avdelning via nyckeln
+``avdelning``. Modulen deklarerar alltså inte avdelningarna själv: samma lista
+driver Obsidian-exportens rättskarta, och en hårdkodad kopia här skulle låta de
+två vyerna glida isär. AVD I har inga rättsområden i datat och representeras av
+en enda nod som pekar på modulen Juridisk metod.
 
 Grundningsprincipen från utils.rattskarta gäller även här: lagnoder hämtar
 namn, SFS och lagen.nu-URL ur lagrumsregistret och konstruerar dem aldrig
@@ -30,7 +31,7 @@ from dataclasses import dataclass
 from typing import Iterator, TypedDict
 
 from utils.lagrum import lagrum_register
-from utils.rattskarta import ladda_rattssystem
+from utils.rattskarta import ladda_avdelningar, ladda_rattssystem
 
 # --- Nodgrupper (styr form och storlek i renderingen) -----------------------
 
@@ -44,56 +45,10 @@ ROT_ID = "rot"
 ROT_LABEL = "Svensk rätt"
 
 
-@dataclass(frozen=True)
-class Avdelning:
-    """En avdelning i bokens disposition (AVD I-IV)."""
-
-    id: str
-    label: str
-    beskrivning: str
-    # Modulsida att länka till för avdelningar utan egna rättsområden (AVD I).
-    sida: str | None = None
-
-
-# Bokens fyra avdelningar, i dispositionens ordning. ``id`` matchar nyckeln
-# ``avdelning`` per område i data/rattssystem.json.
-AVDELNINGAR: tuple[Avdelning, ...] = (
-    Avdelning(
-        id="avd1_introduktion",
-        label="AVD I · Introduktion",
-        beskrivning=(
-            "Rättskällelära, lagtolkning och juridisk metod. Verktygen du "
-            "använder i alla övriga avdelningar."
-        ),
-        sida="pages/1_Juridisk_metod.py",
-    ),
-    Avdelning(
-        id="avd2_offentlig_ratt",
-        label="AVD II · Offentlig rätt",
-        beskrivning=(
-            "Förhållandet mellan enskilda och det allmänna: grundlagarna och "
-            "myndigheternas verksamhet."
-        ),
-    ),
-    Avdelning(
-        id="avd3_civilratt",
-        label="AVD III · Civilrätt",
-        beskrivning=(
-            "Rättsförhållanden mellan enskilda: person, förmögenhet, avtal, "
-            "ersättning, näring, kredit och familj."
-        ),
-    ),
-    Avdelning(
-        id="avd4_straff_process",
-        label="AVD IV · Straff- och processrätt",
-        beskrivning=(
-            "Vilka gärningar som är brott, och hur anspråk och ansvar prövas "
-            "och tvingas igenom."
-        ),
-    ),
-)
-
-_AVDELNING_INDEX: dict[str, Avdelning] = {a.id: a for a in AVDELNINGAR}
+# Bokens avdelningar ägs av utils.rattskarta och läses ur data/rattssystem.json.
+# Modulen håller medvetet ingen egen kopia, inte ens en modulkonstant: en
+# konstant hade bundits vid import och blivit inaktuell om datat läses om.
+# Anropa ladda_avdelningar() på användningsstället i stället.
 
 
 # --- Trädet (delad källa för graf och framtida markdownbyggare) -------------
@@ -139,37 +94,6 @@ class TaxAvdelning:
     omraden: tuple[TaxOmrade, ...]
 
 
-def _ravdelningar() -> dict[str, str]:
-    """Karta område-id -> avdelnings-id, läst direkt ur JSON.
-
-    utils.rattskarta.Omrade plockar bara upp de fält den själv behöver, så
-    nyckeln ``avdelning`` läses här. Fail fast om ett område saknar avdelning
-    eller pekar på en okänd sådan: kartan får aldrig tappa en gren tyst.
-    """
-    import json
-
-    from utils.rattskarta import DATA_PATH
-
-    rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
-    karta: dict[str, str] = {}
-    for o in rad.get("omraden", ()):
-        oid = str(o["id"])
-        if "avdelning" not in o:
-            raise ValueError(
-                f"Rättsområdet {oid!r} saknar nyckeln 'avdelning' i "
-                "data/rattssystem.json. Varje område måste höra till en av "
-                f"bokens avdelningar: {sorted(_AVDELNING_INDEX)}."
-            )
-        avd = str(o["avdelning"])
-        if avd not in _AVDELNING_INDEX:
-            raise ValueError(
-                f"Rättsområdet {oid!r} pekar på okänd avdelning {avd!r}. "
-                f"Tillåtna: {sorted(_AVDELNING_INDEX)}."
-            )
-        karta[oid] = avd
-    return karta
-
-
 def taxonomi() -> tuple[TaxAvdelning, ...]:
     """Bygg hela taxonomin som ett ordnat, immutabelt träd.
 
@@ -178,9 +102,8 @@ def taxonomi() -> tuple[TaxAvdelning, ...]:
     helhet. Lagarnas namn, SFS och lagen.nu-URL hämtas ur lagrumsregistret.
     """
     register = lagrum_register()
-    avd_karta = _ravdelningar()
-
-    per_avdelning: dict[str, list[TaxOmrade]] = {a.id: [] for a in AVDELNINGAR}
+    avdelningar = ladda_avdelningar()
+    per_avdelning: dict[str, list[TaxOmrade]] = {a.id: [] for a in avdelningar}
 
     for omrade in ladda_rattssystem():
         underomraden = tuple(
@@ -203,7 +126,7 @@ def taxonomi() -> tuple[TaxAvdelning, ...]:
             )
             for under in omrade.underomraden
         )
-        per_avdelning[avd_karta[omrade.id]].append(
+        per_avdelning[omrade.avdelning].append(
             TaxOmrade(
                 id=omrade.id,
                 namn=omrade.namn,
@@ -222,7 +145,7 @@ def taxonomi() -> tuple[TaxAvdelning, ...]:
             sida=a.sida,
             omraden=tuple(per_avdelning[a.id]),
         )
-        for a in AVDELNINGAR
+        for a in avdelningar
     )
 
 
@@ -245,6 +168,9 @@ class TaxNod(TypedDict, total=False):
     avdelning: str
     titel: str
     url: str
+    # Endast lagnoder. Id:t är skopat efter delområde och går inte att tolka
+    # som en förkortning, så konsumenter läser den här i stället.
+    forkortning: str
 
 
 class TaxKant(TypedDict):
@@ -269,8 +195,19 @@ def underomrade_id(uid: str) -> str:
     return f"under::{uid}"
 
 
-def lag_id(forkortning: str) -> str:
-    return f"lag::{forkortning}"
+def lag_id(under_id: str, forkortning: str) -> str:
+    """Nod-id för en lag, skopat efter sitt delområde.
+
+    Skopningen är nödvändig eftersom en lag kan höra till flera delområden:
+    AvtL bär både avtalsrätten och den allmänna förmögenhetsrätten. Utan
+    förälder i id:t skulle två sådana placeringar ge två noder med samma id,
+    vilket får vis.DataSet att kasta och bryter trädinvarianten. Lagen får i
+    stället en nod per placering, vilket också är sanningen kartan ska visa.
+
+    Förkortningen läses därför aldrig ur id:t. Lagnoder bär den i fältet
+    ``forkortning``.
+    """
+    return f"lag::{under_id}::{forkortning}"
 
 
 def bygg_taxonomigraf() -> Taxonomigraf:
@@ -336,11 +273,12 @@ def bygg_taxonomigraf() -> Taxonomigraf:
                 kanter.append({"fran": oid, "till": uid})
 
                 for lag in under.lagar:
-                    lid = lag_id(lag.forkortning)
+                    lid = lag_id(under.id, lag.forkortning)
                     noder.append(
                         {
                             "id": lid,
                             "label": lag.forkortning,
+                            "forkortning": lag.forkortning,
                             "grupp": GRUPP_LAG,
                             "niva": 4,
                             "avdelning": avdelning.id,

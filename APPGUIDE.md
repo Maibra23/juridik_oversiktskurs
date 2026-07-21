@@ -7,7 +7,7 @@ pedagogiken. Ingen av dem berättar vad som faktiskt händer när du klickar.
 Allt som påstås här är kontrollerat mot koden eller mätt i skarp körning mot
 `Qwen/Qwen3-8B`. Där en siffra anges är den uppmätt, inte uppskattad.
 
-Senast verifierad: 2026-07-21, mot 628 gröna tester. (Dokumentet du läser
+Senast verifierad: 2026-07-21, mot 626 gröna tester. (Dokumentet du läser
 räknas in i den siffran: `tests/test_sprak.py` kontrollerar teckenkodning och
 frånvaro av kyrilliska tecken i varje markdownfil i roten, så den här filen
 lade till två tester.)
@@ -415,6 +415,32 @@ Det andra fallet är samma felmönster som `36 § AvtL`-incidenten ovan, och
 det är nu fångat i produktion och inte bara i test. Ett godkänt svar kostar
 fortfarande exakt ett anrop; omförsöket betalas bara när det behövs.
 
+### Qwen3-8B mot Qwen3-14B
+
+Tre rundor à 15 körningar per modell: fem moduler (avtal, skadestånd, arbete,
+fastighet, fordring) × tre studentprofiler (helt korrekt svar, svar som
+citerar påhittade `87 § X`, vagt svar utan lagrum).
+
+| | direkt | omförsök | stoppad | median | max |
+|---|---|---|---|---|---|
+| Qwen3-8B | 43 | 2 | **0** | 6,2 s | 17,4 s |
+| Qwen3-14B | 39 | 5 | **1** | 7,6 s | 15,7 s |
+
+**Den större modellen bär inte sin kostnad.** Den är omkring en sekund
+långsammare per svar, behövde fler omförsök, och stod för det enda svar som
+underkändes två gånger och därför inte kunde visas alls.
+
+Felen är inte jämnt spridda utan samlade i en profil: när studenten citerar
+en påhittad paragraf upprepar 14B den oftare som gällande rätt i stället för
+att avvisa den. I runda 2 gällde det fyra av fem sådana fall. Mekanismen är
+alltså identifierbar och inte bara brus, även om 45 körningar per modell är
+ett litet underlag.
+
+Slutsatsen är att 8B förblir standard. Ordningen i avsnitt 12 håller: de
+billiga greppen — facit, lagtext, granskning — gav mätbara lyft, medan
+modellstorlek inte gjorde det. 14B är kvar som valbart alternativ i
+sidopanelen.
+
 ### Begreppsfördjupningen
 
 Sex körningar: **0 overifierade lagrum**, 0 engelska ord. Men modellen
@@ -442,7 +468,7 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 5. **Tre lager mellan modellen och studenten:** ordagrann lagtext i prompten,
    facit som sanningsunderlag, och en granskning som hellre visar inget än
    fel juridik.
-6. **628 tester**, ruff och mypy rena.
+6. **626 tester**, ruff och mypy rena.
 
 ### Svagheter
 
@@ -474,12 +500,15 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 | 7 | **Rätta "Tolv moduler" till 13**, eller räkna listan i koden | 5 min | Svaghet 7 |
 | 8 | **Lat rendering av begreppskort** — bygg bara utfällt område | 3 h | Svaghet 8 |
 | 9 | **Logga granskningens utfall** så andelen stoppade svar går att mäta över tid | 3 h | Gör LLM-kvaliteten mätbar i stället för anekdotisk |
-| 10 | **Större modell för tutorn** | konfig + kostnad | Sänker felfrekvensen, men gör 3 först — den är billigare |
+| ~~10~~ | ~~**Större modell för tutorn**~~ | — | **Prövad och avfärdad.** Qwen3-14B var långsammare och behövde fler omförsök än 8B, se avsnitt 10 |
 
-Ordningen är avsiktlig: 1 och 2 skyddar studentens arbete, 3 höjer den
-svagaste LLM-ytan med ett grepp som redan är mätt och bevisat, och 10 kommer
-sist eftersom de billigare åtgärderna bör prövas innan pengar läggs på
-modellstorlek.
+Ordningen är avsiktlig: 1 och 2 skyddar studentens arbete, och 3 höjer den
+svagaste LLM-ytan med ett grepp som redan är mätt och bevisat.
+
+Att punkt 10 föll bort är i sig ett resultat. Antagandet att en större modell
+sänker felfrekvensen höll inte vid mätning — de billiga greppen som ger
+modellen bättre *underlag* har gett varje lyft hittills, medan mer parametrar
+inte gav något.
 
 **Genomfört 2026-07-21:** lagtextinjektion (tidigare punkt 9) och
 granskningen av tutorsvar. Båda är beskrivna i avsnitt 9 och mätta i

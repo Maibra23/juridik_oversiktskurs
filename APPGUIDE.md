@@ -33,7 +33,90 @@ aldrig en förutsättning.**
 
 ---
 
-## 2. Arkitektur i korthet
+## 2. Din första session — vad du möter, i tur och ordning
+
+Det här avsnittet beskriver upplevelsen. Avsnitt 4–9 beskriver sidorna var
+för sig; det här beskriver hur de hänger ihop när någon faktiskt använder
+appen.
+
+### Sidopanelen ligger fast
+
+Till vänster står hela kursen som ett träd, byggt av `utils/navigation.py`,
+grupperat i fem block: **START OCH METOD**, **OFFENTLIG RÄTT**,
+**CIVILRÄTT**, **STRAFF- OCH PROCESSRÄTT** och **TRÄNING**.
+
+Trädet speglar rättssystemets systematik, inte filordningen: Avtalsrätt
+ligger under Civilrätt → Förmögenhetsrätt → Kontraktsrätt. Att navigera i
+appen är därför i sig en repetition av hur svensk rätt är indelad.
+
+Två poster — Konstitutionell rätt och Förvaltningsrätt — visas som
+**planerade men obyggda**. De är medvetet kvar: kartan ska visa hela
+rättssystemet, även de delar kursen inte täcker.
+
+Längst ned i panelen ligger en statuspanel med modellväljare (Qwen3-8B eller
+14B) och kvarvarande LLM-anrop för sessionen.
+
+### 1. Hem — orientering och framsteg
+
+Du landar på `0_Hem`. Överst en disclaimer om att appen inte är juridisk
+rådgivning. Sedan ett rutnät av modulkort, arbetsgången som en vågrät
+stegindikator, och längst ned **Framsteg** — tomt vid första besöket.
+
+Modulkorten är avsiktligt **inte** klickbara; de riktiga länkarna ligger
+under kartan. Skälet är att korten är en översiktsbild, inte en meny.
+
+### 2. Rättskartan — dit man bör gå härnäst
+
+`16_Rattskartan` är den enda sidan som är **full på dag noll**. Den kräver
+varken token, LLM eller genomförda övningar, och svarar på frågan "var i
+rättssystemet befinner jag mig?".
+
+Här kan du klicka dig runt i hela taxonomin, slå upp "vilken lag gäller för
+mitt fall?" och läsa 52 nyckelbegrepp.
+
+### 3. En modulsida — själva arbetet
+
+Säg `2_Avtalsratt`. Tre flikar: **Rättsfall**, **Quiz**, **Lagrumsjakt**.
+
+I fliken Rättsfall läser du ett scenario och fyller i fyra textfält enligt
+RNTS (se ordlistan, avsnitt 13). Medan du skriver i **Norm**-fältet rättas
+det direkt: skriver du `4 § AvtL` dyker ett guldchip upp, klickbart till
+lagen.nu. Skriver du något ogiltigt får du en gul varning. Ingen LLM är
+inblandad — det är ren mönstermatchning mot lagrumsregistret.
+
+Till vänster visar en stegindikator status per RNTS-steg: tom cirkel, blå
+"pågår", gul "behöver mer" eller grön bock.
+
+Först när du skrivit klart trycker du **"Be tutorn granska min analys"**.
+Ordningen är pedagogiskt avsiktlig: du ska ha formulerat ett eget svar innan
+du ser någon annans.
+
+### 4. Vad som räknas som framsteg
+
+Ett rättsfall räknas som genomfört när **alla fyra fälten har innehåll** —
+utan att tutorn behöver ha körts. Det är den händelsen som matar
+Kunskapskartan, framstegsvyn på Hem och Obsidianexporten.
+
+Det betyder att hela framstegssystemet fungerar **utan token**.
+
+### 5. Kunskapskartan växer fram
+
+Efter några genomförda fall är `10_Kunskapskarta` inte längre tom. Lagrum som
+återkommer i flera fall blir gemensamma noder, så du ser hur samma paragraf
+tillämpas i olika situationer.
+
+### 6. Innan du stänger fliken
+
+**Ladda ner något.** Allt framsteg lever i webbläsarsessionen och försvinner
+vid omladdning (avsnitt 11). Hem erbjuder tre nedladdningar: studierapport i
+Markdown, samma som Excel, och ett Obsidianvalv som zip.
+
+Detta är appens allvarligaste svaghet, och inget i gränssnittet påminner dig
+om det.
+
+---
+
+## 3. Arkitektur i korthet
 
 `streamlit_app.py` registrerar 17 sidor via `st.navigation`. Sidopanelens
 hierarki byggs separat i `utils/navigation.py`, som också känner till
@@ -56,7 +139,7 @@ Elva av de sjutton sidorna är skal på 15–22 rader som bara anropar
 
 ---
 
-## 3. Modulsidorna (11 av 17)
+## 4. Modulsidorna (11 av 17)
 
 Alla elva ser likadana ut och beter sig likadant. Bara innehållet skiljer.
 
@@ -140,11 +223,11 @@ lagrumsregistret faller appen tillbaka på ett kuraterat fall och säger till.
 - **Innehållet är tunt i vissa moduler.** Fem moduler har bara ett rättsfall.
   Har du gjort det finns inget mer kuraterat att öva på i den modulen.
 - Rullistan för rättsfall visas även när modulen bara har ett.
-- Tutorns kvalitet varierar — se avsnitt 8.
+- Tutorns kvalitet varierar — se avsnitt 11.
 
 ---
 
-## 4. `0_Hem` — landningssidan
+## 5. `0_Hem` — landningssidan
 
 ### Vad du ser
 
@@ -165,11 +248,11 @@ Rättskartan följer alltid med: 28 filer, cirka 47 kB.
 ### Begränsningar
 
 - Rubriken säger "Tolv moduler" men sidan renderar **13 modulkort**.
-- Framstegen försvinner vid omladdning av webbläsaren (avsnitt 7).
+- Framstegen försvinner vid omladdning av webbläsaren (avsnitt 11).
 
 ---
 
-## 5. `9_Kunskapstest` — resultatöversikt
+## 6. `9_Kunskapstest` — resultatöversikt
 
 ### Vad du ser
 
@@ -187,7 +270,7 @@ Sidan använder dessutom råa `st.info`, mot designsystemet.
 
 ---
 
-## 6. `10_Kunskapskarta` — din egen graf
+## 7. `10_Kunskapskarta` — din egen graf
 
 ### Vad du ser
 
@@ -211,7 +294,7 @@ tiden och därför är som störst precis när det riskerar att förloras.
 
 ---
 
-## 7. `11_Kunskapsutmaning` — genererat rättsfall
+## 8. `11_Kunskapsutmaning` — genererat rättsfall
 
 ### Steg för steg
 
@@ -235,11 +318,11 @@ nytt.
 - Ett genererat fall har inget riktigt facit i kursens mening — det är
   modellens egen lösning, grundad i registret men inte kvalitetsgranskad av
   en människa. Det gör tutorgranskningen svagare här än på modulsidorna
-  (avsnitt 8).
+  (avsnitt 11).
 
 ---
 
-## 8. `16_Rattskartan` — kursens orienteringssida
+## 9. `16_Rattskartan` — kursens orienteringssida
 
 Till skillnad från Kunskapskartan är den här **full på dag noll**. Den kräver
 varken LLM, token eller genomförda övningar.
@@ -283,7 +366,71 @@ verifiera.
 
 ---
 
-## 9. Tvärgående system
+## 10. Visualiseringar — vad som ritas, och varför
+
+Ja, appen är visuell, men sparsamt och med avsikt. Det finns **inga diagram
+över studieresultat** — inga stapeldiagram, inga cirkeldiagram, ingen
+statistik över tid. Det är ett medvetet val: metodiken är formativ, inte
+summativ (`methodology.md` avsnitt 1). Studenten ska se *vad hen kan*, inte
+en poäng att jaga.
+
+De visualiseringar som finns är av två slag: **grafer** som visar struktur,
+och **statusindikatorer** som visar var du är.
+
+### Interaktiva grafer (vis-network)
+
+Två av dem, båda renderade i en sandlådad iframe med `vis-network` från CDN.
+De kräver internet; utan uppkoppling visas ett meddelande och sidans övriga
+innehåll fungerar ändå.
+
+| Graf | Sida | Innehåll | Interaktion |
+|---|---|---|---|
+| **Rättssystemets taxonomi** | `16_Rattskartan` | 47 noder, 46 kanter, strikt träd: rot → avdelning → rättsområde → delområde → lag | Zooma, dra, klicka. **Guldfärgade lagnoder öppnar lagen.nu i ny flik.** Strukturnoder är avsiktligt inerta |
+| **Din kunskapskarta** | `10_Kunskapskarta` | Dina genomförda fall och deras lagrum | Zooma, dra. Lagrum som återkommer i flera fall blir gemensamma noder |
+
+Nodstorleken i taxonomigrafen följer djupet (26 px i roten ned till 13 px för
+lagnoder), så trädets nivåer går att läsa av utan att följa kanterna.
+
+### Färgspråket bär betydelse
+
+Färgerna är inte dekoration. De är samma i båda graferna, i chipsen och i
+korten, och de betyder alltid samma sak:
+
+| Färg | Hex | Betyder |
+|---|---|---|
+| **Paragrafguld** | `#B8860B` | **Alltid och enbart lagrum.** Ser du guld är det en paragraf |
+| Myndighetsblå | `#2C5F8A` | Rättsfall, och appens primära accent |
+| Bläck | `#1A2332` | Modul- och strukturnoder, brödtext |
+| Grön | `#2E7D4F` | Godkänt |
+| Gul | `#C9971C` | Varning, "behöver mer" |
+| Röd | `#B3402A` | Fel |
+
+Att guld är reserverat för lagrum är den bärande regeln: den lär studenten
+känna igen en paragrafhänvisning på formen innan hen kan läsa den.
+
+### Statusindikatorer och kort
+
+- **RNTS-steppern** — fyra steg bredvid formuläret, var och en i ett av fyra
+  lägen: tom cirkel (ej påbörjad), blå (pågår), gul (behöver mer), grön bock
+  (godkänd). Norm blir grön först när *alla* lagrum i fältet verifierats.
+- **Lagrumschips** — guldkantade piller. Verifierade chips länkar till
+  lagen.nu; overifierade får varningsstil och prefixet "Ej verifierad:".
+- **Progressbar per modul** på Hem, med quizresultat.
+- **Modulrutnät** på Hem — kort i två kolumner, en på mobil.
+- **Stegindikator** för arbetsgången, vågrät.
+- **Begreppskort och lagkort** på Rättskartan.
+
+### Vad som inte finns
+
+- Ingen graf över resultat, poäng eller utveckling över tid.
+- Ingen jämförelse mot andra studenter.
+- Ingen tidslinje.
+- Kunskapskartan är bara sedd med få noder — läsbarheten vid växande data är
+  oprövad (avsnitt 16).
+
+---
+
+## 11. Tvärgående system
 
 ### Lagrumsgarden — vad den faktiskt intygar
 
@@ -370,7 +517,7 @@ inget i gränssnittet uppmanar till det.
 
 ---
 
-## 10. Mätresultat, 2026-07-21
+## 12. Mätresultat, 2026-07-21
 
 Fyra fall (tre avtalsrätt, ett skadeståndsrätt), skarpa anrop mot Qwen3-8B.
 
@@ -436,7 +583,7 @@ att avvisa den. I runda 2 gällde det fyra av fem sådana fall. Mekanismen är
 alltså identifierbar och inte bara brus, även om 45 körningar per modell är
 ett litet underlag.
 
-Slutsatsen är att 8B förblir standard. Ordningen i avsnitt 12 håller: de
+Slutsatsen är att 8B förblir standard. Ordningen i avsnitt 15 håller: de
 billiga greppen — facit, lagtext, granskning — gav mätbara lyft, medan
 modellstorlek inte gjorde det. 14B är kvar som valbart alternativ i
 sidopanelen.
@@ -453,7 +600,89 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 
 ---
 
-## 11. Styrkor och svagheter
+## 13. Ordlista — termer i appen och i koden
+
+Appen blandar tre ordförråd: juridikens, pedagogikens och kodens. Den som
+läser koden möter svenska variabelnamn för juridiska begrepp, och den som
+använder appen möter facktermer utan förklaring. Här är båda.
+
+### Juridiska termer studenten möter
+
+**Lagrum** — en precis hänvisning till en bestämmelse, t.ex. `4 § AvtL`
+(paragraf 4 i avtalslagen) eller `2 kap. 1 § SkL` (kapitel 2, paragraf 1 i
+skadeståndslagen). Appen skriver alltid paragrafen först och förkortningen
+sist. Den *läser* även omvänd ordning (`AvtL 4 §`), eftersom studenter
+skriver så, men lär ut den kanoniska formen.
+
+**SFS** — Svensk författningssamling, lagens officiella nummer, t.ex.
+`1915:218` för avtalslagen. Används som filnamn i lagtextkorpusen.
+
+**Rekvisit** — de villkor som måste vara uppfyllda för att en regel ska bli
+tillämplig. Att pröva dem ett i taget mot fakta är *subsumtion*.
+
+**Subsumtion** — att föra in de faktiska omständigheterna under regelns
+rekvisit. Det är detta som sker i RNTS-steget Tillämpning, och enligt
+`methodology.md` det steg studenter oftast hastar förbi — därför har det ett
+eget fält och egen bedömning.
+
+**Dispositiv rätt** — regler parterna kan avtala bort (stora delar av
+köprätten). **Tvingande rätt** — regler som gäller oavsett avtal (stora delar
+av arbetsrätten och konsumenträtten). Skillnaden är central i flera moduler.
+
+**Rättskällelära** — hierarkin mellan lag, förarbeten, prejudikat och
+doktrin. Modul 1 lär ut den; övriga moduler tillämpar den underförstått.
+
+**Anbud och accept** — erbjudande och svar, de två viljeförklaringar som
+bildar ett avtal. En *sen accept* gäller enligt 4 § AvtL som ett nytt anbud —
+det återkommande skolexemplet i den här appen.
+
+### Pedagogiska begrepp
+
+**RNTS** — appens bärande analysmodell, den juridiska metodens fyra steg:
+
+| Steg | Frågan du besvarar |
+|---|---|
+| **R** — Rättsfrågan | Vad är den juridiskt relevanta frågan? Inte "vem har rätt?" utan t.ex. "har bindande avtal uppkommit trots den sena accepten?" |
+| **N** — Norm | Vilken rättsregel styr frågan? Kräver precist lagrum. **Detta steg validerar appen maskinellt.** |
+| **T** — Tillämpning | Subsumtion: regelns rekvisit prövas ett i taget mot fakta |
+| **S** — Slutsats | Svaret på rättsfrågan, med reservation för alternativa utfall |
+
+**Facit** — kursens kontrollerade lösning på ett rättsfall: rättsfråga,
+lagrum, tillämpningspunkter och slutsats. Deterministisk, skriven av
+människa, och sedan 2026-07-21 tutorns sanningsunderlag. Studenten når den
+via "Visa facit (utan tutor)".
+
+**Generationseffekten** — att själv formulera ett svar ger mätbart bättre
+retention än att läsa ett färdigt. Det är skälet till att tutorn aldrig körs
+automatiskt utan bara på knapptryck, efter ett eget försök.
+
+**Formativ bedömning** — återkoppling som stöder lärande, till skillnad från
+*summativ* bedömning som sätter betyg. Appen är genomgående formativ, vilket
+är skälet till att det inte finns några resultatdiagram (avsnitt 10).
+
+**Lagrumsjakt** — övningsformen där en situation beskrivs i text och
+studenten ska ange vilket lagrum den handlar om. Uppslagning snarare än
+analys. Rättas deterministiskt, ingen LLM.
+
+### Termer i koden
+
+Koden är skriven på svenska. Dessa dyker upp oftast:
+
+| Term | Betyder |
+|---|---|
+| `underlag` | Uppgiftens kända korrekta lagrum, det tutorn ska hålla sig inom |
+| `granskning` | Kontrollen av ett tutorsvar *innan* studenten ser det (avsnitt 11) |
+| `verifierad` | Lagrummet finns i kursens register — **inte** att det är rätt för frågan |
+| `vitlista` | De lagar tutorn får hänvisa till i en given uppgift |
+| `grundning` | Att binda modellens svar till kontrollerad data i stället för dess minne |
+| `fallback` | Kuraterat innehåll som visas när genereringen inte kan verifieras |
+| `case` / `rättsfall` | Ett övningsscenario med facit |
+| `modulvy` | Motorn som renderar alla elva modulsidor |
+| `skarpning` | Den skärpta instruktionen vid tutorns omförsök |
+
+---
+
+## 14. Styrkor och svagheter
 
 ### Styrkor
 
@@ -487,7 +716,7 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 
 ---
 
-## 12. Optimeringsmöjligheter, prioriterade
+## 15. Optimeringsmöjligheter, prioriterade
 
 | # | Åtgärd | Insats | Löser |
 |---|---|---|---|
@@ -500,7 +729,7 @@ Ett studentsvar skrivet helt på engelska besvaras helt på svenska.
 | 7 | **Rätta "Tolv moduler" till 13**, eller räkna listan i koden | 5 min | Svaghet 7 |
 | 8 | **Lat rendering av begreppskort** — bygg bara utfällt område | 3 h | Svaghet 8 |
 | 9 | **Logga granskningens utfall** så andelen stoppade svar går att mäta över tid | 3 h | Gör LLM-kvaliteten mätbar i stället för anekdotisk |
-| ~~10~~ | ~~**Större modell för tutorn**~~ | — | **Prövad och avfärdad.** Qwen3-14B var långsammare och behövde fler omförsök än 8B, se avsnitt 10 |
+| ~~10~~ | ~~**Större modell för tutorn**~~ | — | **Prövad och avfärdad.** Qwen3-14B var långsammare och behövde fler omförsök än 8B, se avsnitt 12 |
 
 Ordningen är avsiktlig: 1 och 2 skyddar studentens arbete, och 3 höjer den
 svagaste LLM-ytan med ett grepp som redan är mätt och bevisat.
@@ -511,12 +740,12 @@ modellen bättre *underlag* har gett varje lyft hittills, medan mer parametrar
 inte gav något.
 
 **Genomfört 2026-07-21:** lagtextinjektion (tidigare punkt 9) och
-granskningen av tutorsvar. Båda är beskrivna i avsnitt 9 och mätta i
-avsnitt 10.
+granskningen av tutorsvar. Båda är beskrivna i avsnitt 11 och mätta i
+avsnitt 12.
 
 ---
 
-## 13. Vad dokumentet inte täcker
+## 16. Vad dokumentet inte täcker
 
 - **Tutorns pedagogiska kvalitet** utöver lagrumsträffarna. Att tutorn citerar
   rätt paragraf betyder inte att förklaringen är pedagogiskt god.

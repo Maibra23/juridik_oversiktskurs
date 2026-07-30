@@ -108,13 +108,9 @@ def test_lagrumsformat_har_paragrafnumret_forst(begrepp):
 
 
 def test_varje_begrepp_hor_till_ett_verkligt_delomrade(begrepp):
-    from utils.rattskarta import ladda_rattssystem
+    from utils.rattskarta import delomraden
 
-    giltiga = {
-        under.id
-        for omrade in ladda_rattssystem()
-        for under in omrade.underomraden
-    }
+    giltiga = {lov.id for lov in delomraden()}
     for b in begrepp:
         assert b.omrade_id in giltiga, f"{b.id}: okänt delområde {b.omrade_id}"
 
@@ -147,17 +143,16 @@ def test_alla_byggda_rattsomraden_har_begrepp():
     Undantag: delområden helt utan lagar i kursens register (statsrätt och
     förvaltningsrätt) kan inte bära lagrumsgrundade begrepp.
     """
-    from utils.rattskarta import ladda_rattssystem
+    from utils.rattskarta import delomraden
 
     per_omrade = begrepp_per_omrade()
-    for omrade in ladda_rattssystem():
-        for under in omrade.underomraden:
-            if not under.lagar:
-                continue
-            traffar = per_omrade.get(under.id, ())
-            assert len(traffar) >= 3, (
-                f"{under.id} har bara {len(traffar)} begrepp"
-            )
+    for lov in delomraden():
+        if not lov.lagar:
+            continue
+        traffar = per_omrade.get(lov.id, ())
+        assert len(traffar) >= 3, (
+            f"{lov.id} har bara {len(traffar)} begrepp"
+        )
 
 
 def test_hamta_och_sok(begrepp):

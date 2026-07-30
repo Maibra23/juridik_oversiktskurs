@@ -9,10 +9,10 @@ Två skillnader mot den personliga kunskapsgrafen:
 - **Klickbara lagnoder.** Noder med ``url`` (endast lagnoder, se
   utils.rattssystem_graf) öppnar lagen.nu i en ny flik vid klick.
   Strukturnoder saknar url och är därmed inerta.
-- **Färg per avdelning.** Strukturnoderna färgas efter bokens avdelning,
-  medan lagnoder alltid är paragrafguld. Guld betyder alltid lagrum eller
-  lag i appen (design_system.md avsnitt 1), och den kopplingen får inte
-  brytas här.
+- **Färg per huvudgren.** Strukturnoderna färgas efter sin toppgren
+  (offentlig rätt / civilrätt), medan lagnoder alltid är paragrafguld. Guld
+  betyder alltid lagrum eller lag i appen (design_system.md avsnitt 1), och
+  den kopplingen får inte brytas här.
 
 ``render_farglegend`` ritar legenden som riktiga färgrutor i HTML, inte som
 prosa i en caption.
@@ -23,13 +23,11 @@ from __future__ import annotations
 import html
 import json
 
-from utils.rattskarta import ladda_avdelningar
+from utils.rattskarta import ladda_rattssystem
 from utils.rattssystem_graf import (
-    GRUPP_AVDELNING,
+    GRUPP_GREN,
     GRUPP_LAG,
-    GRUPP_OMRADE,
     GRUPP_ROT,
-    GRUPP_UNDEROMRADE,
     TaxNod,
     Taxonomigraf,
 )
@@ -39,22 +37,27 @@ _VIS_NETWORK_CDN = (
     "https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"
 )
 
-# Bläck och myndighetsblå ur paletten, plus två dämpade systerkulörer för
-# straff/process och offentlig rätt. Ingen av dem är guld: guld är reserverat
-# för lagar och lagrum (design_system.md avsnitt 1). Alla fyra klarar
-# kontrastkravet mot vit text.
-AVDELNINGSFARGER: dict[str, dict[str, str]] = {
-    "avd1_introduktion": {"bg": "#4A5568", "kant": "#2D3748", "text": "#FFFFFF"},
-    "avd2_offentlig_ratt": {"bg": "#6B6459", "kant": "#4A453D", "text": "#FFFFFF"},
-    "avd3_civilratt": {"bg": "#2C5F8A", "kant": "#1F4460", "text": "#FFFFFF"},
-    "avd4_straff_process": {"bg": "#8A4A3C", "kant": "#5E3228", "text": "#FFFFFF"},
+# Myndighetsblå ur paletten för civilrätten och en dämpad grå systerkulör för
+# offentlig rätt. Ingen av dem är guld: guld är reserverat för lagar och lagrum
+# (design_system.md avsnitt 1). Båda klarar kontrastkravet mot vit text.
+GRENFARGER: dict[str, dict[str, str]] = {
+    "offentlig_ratt": {"bg": "#6B6459", "kant": "#4A453D", "text": "#FFFFFF"},
+    "civilratt": {"bg": "#2C5F8A", "kant": "#1F4460", "text": "#FFFFFF"},
+}
+
+# Etiketter för legenden. Läses inte ur datat för att hålla legenden ren även
+# om en toppgren saknar noder.
+_GRENETIKETT: dict[str, str] = {
+    "offentlig_ratt": "Offentlig rätt",
+    "civilratt": "Civilrätt",
 }
 
 _ROTFARG = {"bg": "#1A2332", "kant": "#0D131D", "text": "#FAF7F2"}
 _LAGFARG = {"bg": "#B8860B", "kant": "#8A6608", "text": "#FFFFFF"}
 
-# Nodstorlek per nivå: roten störst, lagarna minst.
-_STORLEK = {0: 26, 1: 22, 2: 18, 3: 15, 4: 13}
+# Nodstorlek per djup: roten störst, lagarna minst. Djupare nivåer klampas
+# till minsta storleken.
+_STORLEK = {0: 26, 1: 22, 2: 18, 3: 16, 4: 14, 5: 13, 6: 12}
 
 
 def _json_for_html(data: object) -> str:
@@ -63,12 +66,12 @@ def _json_for_html(data: object) -> str:
 
 
 def _nodfarg(nod: TaxNod) -> dict[str, str]:
-    """Färgen för en nod: lag = guld, rot = bläck, annars per avdelning."""
+    """Färgen för en nod: lag = guld, rot = bläck, annars per toppgren."""
     if nod["grupp"] == GRUPP_LAG:
         return _LAGFARG
     if nod["grupp"] == GRUPP_ROT:
         return _ROTFARG
-    return AVDELNINGSFARGER.get(nod.get("avdelning", ""), _ROTFARG)
+    return GRENFARGER.get(nod.get("toppgren", ""), _ROTFARG)
 
 
 def _vis_noder(graf: Taxonomigraf) -> list[dict]:
@@ -171,8 +174,11 @@ def farglegend_html() -> str:
     poster = [
         (_ROTFARG["bg"], "Svensk rätt (rot)"),
     ]
+    # Toppgrenarna i datats ordning, så legenden matchar kartan.
     poster += [
-        (AVDELNINGSFARGER[a.id]["bg"], a.label) for a in ladda_avdelningar()
+        (GRENFARGER[g.id]["bg"], _GRENETIKETT.get(g.id, g.namn))
+        for g in ladda_rattssystem()
+        if g.id in GRENFARGER
     ]
     poster.append((_LAGFARG["bg"], "Lag (klicka för lagen.nu)"))
 
@@ -194,12 +200,10 @@ def render_farglegend() -> None:
 
 # Exporteras för sidan: gruppkonstanterna används vid filtrering av noder.
 __all__ = [
-    "AVDELNINGSFARGER",
-    "GRUPP_AVDELNING",
+    "GRENFARGER",
+    "GRUPP_GREN",
     "GRUPP_LAG",
-    "GRUPP_OMRADE",
     "GRUPP_ROT",
-    "GRUPP_UNDEROMRADE",
     "bygg_html",
     "farglegend_html",
     "render_farglegend",

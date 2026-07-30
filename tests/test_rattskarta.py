@@ -1,9 +1,9 @@
 """Tester för utils/rattskarta.py: Obsidiankarta över det svenska rättssystemet.
 
-Kartan är en hierarkisk, hopfällbar och klickbar trädvy (Obsidian-callouts med
-wikilänkar) som visar hur rättsområdena hänger ihop och när varje lag ska
-övervägas. Grundningsprincipen gäller även här: varje lag i kartan måste
-finnas i kursens lagrumsregister — kartan får aldrig nämna påhittade lagar.
+Kartan är ett rekursivt träd av grenar (Obsidian-callouts med wikilänkar) som
+visar hur rättsområdena hänger ihop och när varje lag ska övervägas.
+Grundningsprincipen gäller: varje lag i kartan måste finnas i kursens
+lagrumsregister — kartan får aldrig nämna påhittade lagar.
 """
 
 from __future__ import annotations
@@ -11,42 +11,43 @@ from __future__ import annotations
 import io
 import zipfile
 
+import pytest
+
 from utils.lagrum import lagrum_register
 from utils.rattskarta import (
+    delomraden,
     ladda_rattssystem,
     lagnot,
     omradesnot,
     rattskarta_filer,
     rattskarta_not,
+    toppgrenar,
 )
 
 
-# --- Datamodell och grundning -------------------------------------------------
+# --- Datamodell och grundning ------------------------------------------------
 
-def test_rattssystemet_laddar_med_omraden():
-    omraden = ladda_rattssystem()
-    assert len(omraden) >= 3
-    namn = [o.namn for o in omraden]
+def test_rattssystemet_laddar_med_toppgrenar():
+    grenar = ladda_rattssystem()
+    assert len(grenar) == 2
+    namn = [g.namn for g in grenar]
     assert "Civilrätt" in namn
+    assert "Offentlig rätt" in namn
 
 
 def test_alla_lagar_i_kartan_finns_i_registret():
     register = lagrum_register()
-    for omrade in ladda_rattssystem():
-        for under in omrade.underomraden:
-            for lag in under.lagar:
-                assert lag.forkortning in register, (
-                    f"{lag.forkortning} i kartan saknas i lagrumsregistret"
-                )
+    for lov in delomraden():
+        for lag in lov.lagar:
+            assert lag.forkortning in register, (
+                f"{lag.forkortning} i kartan saknas i lagrumsregistret"
+            )
 
 
 def test_kartan_tacker_hela_lagrumsregistret():
     """Varje lag i kursens register ska ha en plats i kartan."""
     i_kartan = {
-        lag.forkortning
-        for omrade in ladda_rattssystem()
-        for under in omrade.underomraden
-        for lag in under.lagar
+        lag.forkortning for lov in delomraden() for lag in lov.lagar
     }
     saknas = set(lagrum_register()) - i_kartan
     assert not saknas, f"Lagar utan plats i rättskartan: {sorted(saknas)}"
@@ -54,23 +55,26 @@ def test_kartan_tacker_hela_lagrumsregistret():
 
 def test_relaterade_lagar_pekar_pa_kanda_forkortningar():
     kanda = set(lagrum_register())
-    for omrade in ladda_rattssystem():
-        for under in omrade.underomraden:
-            for lag in under.lagar:
-                for rel in lag.relaterade:
-                    assert rel in kanda, f"{lag.forkortning} relaterar till okänd {rel}"
+    for lov in delomraden():
+        for lag in lov.lagar:
+            for rel in lag.relaterade:
+                assert rel in kanda, f"{lag.forkortning} relaterar till okänd {rel}"
 
 
-def test_alla_noder_har_beskrivning_och_nar():
-    for omrade in ladda_rattssystem():
-        assert omrade.beskrivning and omrade.nar
-        for under in omrade.underomraden:
-            assert under.beskrivning and under.nar, under.namn
-            for lag in under.lagar:
-                assert lag.beskrivning and lag.nar, lag.forkortning
+def test_alla_grenar_har_beskrivning():
+    for topp in toppgrenar():
+        _kontrollera_beskrivning(topp)
 
 
-# --- Kartnoten (dashboard) ------------------------------------------------------
+def _kontrollera_beskrivning(gren):
+    assert gren.beskrivning, f"{gren.id} saknar beskrivning"
+    for lag in gren.lagar:
+        assert lag.beskrivning and lag.nar, lag.forkortning
+    for barn in gren.grenar:
+        _kontrollera_beskrivning(barn)
+
+
+# --- Kartnoten (dashboard) ---------------------------------------------------
 
 def test_rattskarta_not_har_hopfallbara_callouts():
     not_md = rattskarta_not()
@@ -78,7 +82,7 @@ def test_rattskarta_not_har_hopfallbara_callouts():
     assert "]- " in not_md           # "-" = hopfällbar
 
 
-def test_rattskarta_not_lankar_omraden_och_lagar():
+def test_rattskarta_not_lankar_grenar_och_lagar():
     not_md = rattskarta_not()
     assert "[[Civilrätt" in not_md
     assert "[[AvtL" in not_md
@@ -91,14 +95,19 @@ def test_rattskarta_not_har_falltypsguide():
     assert "Vilken lag gäller" in not_md
 
 
-def test_rattskarta_not_anvander_olika_callouttyper():
-    """Olika toppområden ska få olika färger (olika callouttyper)."""
+def test_rattskarta_not_fargkodar_per_toppgren():
+    """De två toppgrenarna ska få var sin callouttyp (färg)."""
     not_md = rattskarta_not()
-    typer = {rad.split("[!")[1].split("]")[0] for rad in not_md.splitlines() if "[!" in rad}
-    assert len(typer) >= 3, f"För få callouttyper för färgkodning: {typer}"
+    typer = {
+        rad.split("[!")[1].split("]")[0]
+        for rad in not_md.splitlines()
+        if "[!" in rad and "]- " in rad
+    }
+    # quote (offentlig rätt) och info (civilrätt).
+    assert {"quote", "info"} <= typer
 
 
-# --- Lag- och områdesnoter ------------------------------------------------------
+# --- Lag- och områdesnoter ---------------------------------------------------
 
 def test_lagnot_innehaller_beskrivning_nar_och_lagen_nu():
     md = lagnot("AvtL")
@@ -112,21 +121,27 @@ def test_lagnot_lankar_relaterade_lagar():
     assert "[[KKöpL]]" in md or "[[KKöpL|" in md
 
 
-def test_lagnot_okand_forkortning_ger_fel():
-    import pytest
+def test_lagnot_deep_lankar_till_toppgrenens_note():
+    """Lagnoten pekar tillbaka in i toppgrenens note via en rubrik."""
+    md = lagnot("AvtL")
+    assert "[[Civilrätt#" in md
 
+
+def test_lagnot_okand_forkortning_ger_fel():
     with pytest.raises(KeyError):
         lagnot("PåhittL")
 
 
-def test_omradesnot_lankar_sina_lagar():
-    omrade = next(o for o in ladda_rattssystem() if o.namn == "Civilrätt")
-    md = omradesnot(omrade)
+def test_omradesnot_renderar_subtrad_med_rubriker():
+    civilratt = next(g for g in ladda_rattssystem() if g.namn == "Civilrätt")
+    md = omradesnot(civilratt)
     assert "[[AvtL" in md
-    assert "## " in md  # underområden som rubriker (nås via [[Civilrätt#...]])
+    assert "## " in md  # grenar som rubriker (nås via [[Civilrätt#...]])
+    # Doktrinen ska synas i rubrikerna.
+    assert "Obligationsrätt" in md and "Sakrätt" in md
 
 
-# --- Valvintegration -------------------------------------------------------------
+# --- Valvintegration ---------------------------------------------------------
 
 def test_rattskarta_filer_har_dashboard_och_lagnoter():
     filer = rattskarta_filer()

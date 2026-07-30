@@ -48,14 +48,10 @@ class Begrepp:
 
 
 def _giltiga_omraden() -> set[str]:
-    """Alla delområdes-id:n ur rättssystemkartan."""
-    from utils.rattskarta import ladda_rattssystem
+    """Alla delområdes-id:n (löv-grenar) ur rättssystemkartan."""
+    from utils.rattskarta import delomraden
 
-    return {
-        under.id
-        for omrade in ladda_rattssystem()
-        for under in omrade.underomraden
-    }
+    return {lov.id for lov in delomraden()}
 
 
 def _bygg_begrepp(rad: dict, giltiga_omraden: set[str]) -> Begrepp:
@@ -131,15 +127,14 @@ def ladda_begrepp() -> tuple[Begrepp, ...]:
 
 def begrepp_per_omrade() -> dict[str, tuple[Begrepp, ...]]:
     """Gruppera begreppen per delområde, i rättssystemkartans ordning."""
-    from utils.rattskarta import ladda_rattssystem
+    from utils.rattskarta import delomraden
 
     alla = ladda_begrepp()
     ut: dict[str, tuple[Begrepp, ...]] = {}
-    for omrade in ladda_rattssystem():
-        for under in omrade.underomraden:
-            traffar = tuple(b for b in alla if b.omrade_id == under.id)
-            if traffar:
-                ut[under.id] = traffar
+    for lov in delomraden():
+        traffar = tuple(b for b in alla if b.omrade_id == lov.id)
+        if traffar:
+            ut[lov.id] = traffar
     return ut
 
 

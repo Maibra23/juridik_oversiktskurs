@@ -16,7 +16,7 @@ import pytest
 from utils.lagrum import lagrum_register
 from utils.rattssystem_graf import GRUPP_LAG, bygg_taxonomigraf
 from utils.taxonomi_ui import (
-    AVDELNINGSFARGER,
+    GRENFARGER,
     _LAGFARG,
     _vis_noder,
     bygg_html,
@@ -85,10 +85,23 @@ def test_strukturnoder_anvander_aldrig_guld(graf):
             assert vis_nod["color"]["border"] not in guld
 
 
-def test_varje_avdelning_har_egen_farg():
-    farger = [f["bg"] for f in AVDELNINGSFARGER.values()]
-    assert len(farger) == 4
-    assert len(set(farger)) == 4, "Avdelningarna måste gå att skilja åt"
+def test_varje_toppgren_har_egen_farg():
+    farger = [f["bg"] for f in GRENFARGER.values()]
+    assert len(farger) == 2
+    assert len(set(farger)) == 2, "Toppgrenarna måste gå att skilja åt"
+
+
+def test_offentlig_och_civil_far_olika_farg(graf):
+    """Strukturnoder ska färgas efter sin toppgren, inte efter djup."""
+    from utils.rattssystem_graf import GRUPP_GREN
+
+    farg_for = {}
+    for vis_nod, kall_nod in zip(_vis_noder(graf), graf["noder"]):
+        tg = kall_nod.get("toppgren")
+        if kall_nod["grupp"] == GRUPP_GREN and tg in GRENFARGER:
+            farg_for[tg] = vis_nod["color"]["background"]
+    assert farg_for["offentlig_ratt"] != farg_for["civilratt"]
+    assert "#B8860B" not in farg_for.values()  # aldrig lagrumsguld
 
 
 def test_noderna_ar_giltig_json(graf, html):
@@ -104,8 +117,8 @@ def test_noderna_ar_giltig_json(graf, html):
 
 def test_legenden_ritar_fargrutor_inte_prosa():
     legend = farglegend_html()
-    assert legend.count("jok-swatch") == 6  # rot + fyra avdelningar + lag
-    for farg in AVDELNINGSFARGER.values():
+    assert legend.count("jok-swatch") == 4  # rot + två toppgrenar + lag
+    for farg in GRENFARGER.values():
         assert farg["bg"] in legend
     assert _LAGFARG["bg"] in legend
 

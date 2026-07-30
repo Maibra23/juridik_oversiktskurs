@@ -22,11 +22,16 @@ from __future__ import annotations
 
 import streamlit as st
 
-from utils.lagrum import STATUS_VERIFIERAD, lagen_nu_url, validera_lagrum
+from utils.lagrum import (
+    STATUS_VERIFIERAD,
+    lagen_nu_url,
+    lagrum_register,
+    validera_lagrum,
+)
 from utils.nyckelbegrepp import begrepp_per_omrade, ladda_begrepp, sok_begrepp
 from utils.prompts import LAS_FORDJUPNING, LAS_OVNING, build_begrepp_prompt
-from utils.rattskarta import falltypsguide, ladda_rattssystem
-from utils.rattssystem_graf import bygg_taxonomigraf, taxonomi
+from utils.rattskarta import delomraden, delomraden_med_vag, falltypsguide
+from utils.rattssystem_graf import bygg_taxonomigraf
 from utils.taxonomi_ui import render_farglegend, render_taxonomigraf
 from utils.tutor import tutorknapp
 from utils.ui import (
@@ -68,6 +73,18 @@ render_sidhjalp(
     )
 )
 
+# Återställ hela sidan till utgångsläget: tömmer sökrutor och områdesfilter.
+# Expandrarna fälls ihop automatiskt, eftersom deras öppna läge styrs av om
+# ett filter är aktivt (se Nyckelbegrepp nedan).
+_RESET_NYCKLAR = ("falltyp_sok", "begrepp_sok", "begrepp_omrade")
+_, kol_reset = st.columns([5, 1])
+with kol_reset:
+    if st.button("↺ Återställ", use_container_width=True,
+                 help="Töm sökrutor och områdesfilter och fäll ihop allt."):
+        for _nyckel in _RESET_NYCKLAR:
+            st.session_state.pop(_nyckel, None)
+        st.rerun()
+
 flik_system, flik_falltyp, flik_begrepp = st.tabs(
     ["Systemet", "Falltypsguide", "Nyckelbegrepp"]
 )
@@ -78,10 +95,11 @@ flik_system, flik_falltyp, flik_begrepp = st.tabs(
 with flik_system:
     st.html(section_heading("ÖVERSIKT", "Rättssystemets indelning"))
     st.markdown(
-        "Svensk rätt delas i **civilrätt** (mellan enskilda) och **offentlig "
-        "rätt** (mellan enskild och det allmänna, däribland straffrätten). "
-        "Process- och exekutionsrätten styr hur anspråk prövas och drivs "
-        "igenom. Grafen följer kursbokens fyra avdelningar."
+        "Svensk rätt delas i **offentlig rätt** (mellan enskild och det "
+        "allmänna, däribland straffrätten och processrätten) och **civilrätt** "
+        "(mellan enskilda). Civilrätten delas i sin tur i förmögenhetsrätt "
+        "(obligationsrätt och sakrätt), familjerätt, associationsrätt och "
+        "fastighetsrätt. Grafen följer den doktrinära systematiken."
     )
 
     render_taxonomigraf(bygg_taxonomigraf())
@@ -89,48 +107,34 @@ with flik_system:
 
     st.html(section_heading("OMRÅDEN", "Rättsområden och deras lagar"))
     st.caption(
-        "Fäll ut ett område för att se vilka lagar som hör dit, vad de täcker "
-        "och när de ska övervägas."
+        "Fäll ut ett delområde för att se var i systematiken det hör hemma, "
+        "vilka lagar som bär det och när de ska övervägas."
     )
 
-    for avdelning in taxonomi():
-        if not avdelning.omraden:
-            # AVD I har inga rättsområden utan är metodavdelningen.
-            with st.expander(avdelning.label, expanded=False):
-                st.markdown(avdelning.beskrivning)
-                if avdelning.sida:
-                    st.page_link(avdelning.sida, label="Öppna Juridisk metod →")
-            continue
+    register = lagrum_register()
+    for vag, lov in delomraden_med_vag():
+        etikett = " · ".join((*vag, lov.namn))
+        with st.expander(etikett, expanded=False):
+            st.markdown(lov.beskrivning)
+            if lov.nar:
+                st.markdown(f"**När hamnar ett fall här?** {lov.nar}")
 
-        for omrade in avdelning.omraden:
-            etikett = f"{avdelning.label} · {omrade.namn}"
-            with st.expander(etikett, expanded=False):
-                st.markdown(f"{omrade.beskrivning}")
-                st.markdown(f"**När hamnar ett fall här?** {omrade.nar}")
-
-                for under in omrade.underomraden:
-                    st.markdown(f"##### {under.namn}")
-                    st.markdown(under.beskrivning)
-                    st.caption(f"När: {under.nar}")
-
-                    if not under.lagar:
-                        st.caption(
-                            "Inga lagar ur kursens lagrumslista i detta "
-                            "delområde."
-                        )
-                        continue
-
-                    for lag in under.lagar:
-                        st.html(
-                            render_lagkort(
-                                forkortning=lag.forkortning,
-                                namn=lag.namn,
-                                sfs=lag.sfs,
-                                beskrivning=lag.beskrivning,
-                                nar=lag.nar,
-                                url=lag.url,
-                            )
-                        )
+            if not lov.lagar:
+                st.caption(
+                    "Inga lagar ur kursens lagrumslista i detta delområde."
+                )
+            for lag in lov.lagar:
+                info = register[lag.forkortning]
+                st.html(
+                    render_lagkort(
+                        forkortning=lag.forkortning,
+                        namn=info.namn,
+                        sfs=info.sfs,
+                        beskrivning=lag.beskrivning,
+                        nar=lag.nar,
+                        url=info.lagen_nu_bas_url,
+                    )
+                )
 
 
 # --- Flik 2: Falltypsguide --------------------------------------------------
@@ -274,11 +278,7 @@ with flik_begrepp:
     per_omrade = begrepp_per_omrade()
 
     # Namnkarta delområdes-id -> visningsnamn för rubrikerna.
-    omradesnamn = {
-        under.id: under.namn
-        for omrade in ladda_rattssystem()
-        for under in omrade.underomraden
-    }
+    omradesnamn = {lov.id: lov.namn for lov in delomraden()}
 
     kol_sok, kol_omrade = st.columns([2, 2])
     with kol_sok:

@@ -1,23 +1,27 @@
-"""Rättskartan: Obsidiankarta över det svenska rättssystemet.
+"""Rättskartan: doktrinär, rekursiv karta över det svenska rättssystemet.
 
-Bygger en hierarkisk, hopfällbar och klickbar trädvy av rättssystemet som
-huvudsida i det exporterade Obsidianvalvet, plus en not per rättsområde och
-en not per lag. Trädet renderas med Obsidians callouts (färgkodade per
-område, hopfällbara med "-") och wikilänkar (klickbara, med förhandsvisning
-vid hovring via kärnpluginen Page preview).
+Läser data/rattssystem.json som ett rekursivt träd av *grenar*. Trädet följer
+rättens systematik: offentlig rätt och civilrätt, där civilrätten delas i
+förmögenhetsrätt (obligationsrätt/sakrätt), familjerätt, associationsrätt och
+fastighetsrätt. Varje gren har antingen undergrenar eller lagar (löv).
 
-Grundningsprincipen gäller även här: varje lag i data/rattssystem.json måste
-finnas i lagrumsregistret (data/lagrum.json), annars vägrar inläsningen.
-Namn och SFS-nummer hämtas alltid ur registret och dupliceras aldrig i
-kartdatat. Ren modul utan Streamlit-beroende.
+Modulen driver både appens taxonomigraf/rättskartesida (utils.rattssystem_graf,
+utils.taxonomi_ui) och Obsidian-exportens rättskarta, så att de två vyerna aldrig
+kan glida isär.
+
+Grundningsprincipen gäller: varje lag i data/rattssystem.json måste finnas i
+lagrumsregistret (data/lagrum.json), annars vägrar inläsningen. Namn och SFS
+hämtas alltid ur registret och dupliceras aldrig i kartdatat. Ren modul utan
+Streamlit-beroende.
 """
 
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import lru_cache
 from pathlib import Path
+from typing import Iterator
 
 from utils.lagrum import lagrum_register
 
@@ -35,7 +39,7 @@ _DISCLAIMER = (
 )
 
 
-# --- Datamodell (immutabel) ---------------------------------------------------
+# --- Datamodell (immutabel, rekursiv) ----------------------------------------
 
 @dataclass(frozen=True)
 class LagPost:
@@ -48,47 +52,31 @@ class LagPost:
 
 
 @dataclass(frozen=True)
-class Underomrade:
-    """Ett underområde (t.ex. Avtalsrätt) med sina lagar."""
+class Gren:
+    """En nod i rättssystemsträdet.
 
-    id: str
-    namn: str
-    beskrivning: str
-    nar: str
-    lagar: tuple[LagPost, ...]
-
-
-@dataclass(frozen=True)
-class Omrade:
-    """Ett toppområde (t.ex. Civilrätt) med callout-färg och underområden."""
-
-    id: str
-    namn: str
-    avdelning: str
-    farg: str
-    beskrivning: str
-    nar: str
-    underomraden: tuple[Underomrade, ...]
-
-
-@dataclass(frozen=True)
-class Avdelning:
-    """En avdelning i bokens disposition (AVD I-IV).
-
-    Avdelningarna är kursdata och läses ur data/rattssystem.json. Både appens
-    taxonomigraf (utils.rattssystem_graf) och Obsidian-exportens rättskarta
-    bygger på den här listan, så att de två vyerna inte kan visa olika
-    dispositioner.
+    En gren har ANTINGEN undergrenar (``grenar``) ELLER lagar (``lagar``, ett
+    löv). ``farg`` ärvs från toppgrenen och färgkodar hela grenen. ``toppgren``
+    är id:t på den toppgren (offentlig_ratt/civilratt) noden hör till, vilket
+    driver appens färgläggning.
     """
 
     id: str
-    label: str
+    namn: str
     beskrivning: str
-    # Modulsida att länka till för avdelningar utan egna rättsområden (AVD I).
-    sida: str | None = None
+    nar: str
+    farg: str
+    toppgren: str
+    grenar: tuple["Gren", ...] = ()
+    lagar: tuple[LagPost, ...] = field(default_factory=tuple)
+
+    @property
+    def ar_lov(self) -> bool:
+        """True om grenen bär lagar i stället för undergrenar."""
+        return not self.grenar
 
 
-# --- Inläsning med grundningsvalidering ----------------------------------------
+# --- Inläsning med grundningsvalidering ---------------------------------------
 
 def _bygg_lagpost(rad: dict) -> LagPost:
     lag = LagPost(
@@ -111,105 +99,127 @@ def _bygg_lagpost(rad: dict) -> LagPost:
     return lag
 
 
-@lru_cache(maxsize=1)
-def ladda_avdelningar() -> tuple[Avdelning, ...]:
-    """Läs och cachea bokens avdelningar, i dispositionens ordning.
+def _bygg_gren(rad: dict, farg: str, toppgren: str) -> Gren:
+    """Bygg en gren rekursivt och ärv färg och toppgren nedåt."""
+    har_grenar = "grenar" in rad
+    har_lagar = "lagar" in rad
+    if har_grenar == har_lagar:
+        raise ValueError(
+            f"Grenen {rad.get('id')!r} måste ha antingen 'grenar' eller 'lagar', "
+            "inte båda och inte ingetdera."
+        )
+    grenar = tuple(
+        _bygg_gren(barn, farg, toppgren) for barn in rad.get("grenar", ())
+    )
+    lagar = tuple(_bygg_lagpost(lag) for lag in rad.get("lagar", ()))
+    return Gren(
+        id=str(rad["id"]),
+        namn=str(rad["namn"]),
+        beskrivning=str(rad["beskrivning"]),
+        nar=str(rad.get("nar", "")),
+        farg=farg,
+        toppgren=toppgren,
+        grenar=grenar,
+        lagar=lagar,
+    )
 
-    Enda källan för AVD I-IV. Fail fast om listan saknas: utan avdelningar
-    kan varken grafen eller exporten gruppera kartan.
+
+@lru_cache(maxsize=1)
+def ladda_rattssystem() -> tuple[Gren, ...]:
+    """Läs, validera och cachea rättssystemsträdet. Fail fast vid fel data.
+
+    Returnerar toppgrenarna (offentlig rätt, civilrätt) i dispositionsordning.
     """
     if not DATA_PATH.exists():
         raise FileNotFoundError(f"Hittar inte rättssystemdatat: {DATA_PATH}")
     rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
 
-    avdelningar = tuple(
-        Avdelning(
-            id=str(a["id"]),
-            label=str(a["label"]),
-            beskrivning=str(a["beskrivning"]),
-            sida=str(a["sida"]) if a.get("sida") else None,
-        )
-        for a in rad.get("avdelningar", ())
-    )
-    if not avdelningar:
-        raise ValueError(
-            "data/rattssystem.json saknar nyckeln 'avdelningar'. Kartan måste "
-            "kunna grupperas efter bokens disposition."
-        )
+    toppgrenar = rad.get("grenar")
+    if not toppgrenar:
+        raise ValueError("data/rattssystem.json saknar nyckeln 'grenar'.")
 
-    ider = [a.id for a in avdelningar]
-    dubbletter = {i for i in ider if ider.count(i) > 1}
-    if dubbletter:
-        raise ValueError(f"Dubblerade avdelnings-id: {sorted(dubbletter)}")
-    return avdelningar
-
-
-@lru_cache(maxsize=1)
-def ladda_rattssystem() -> tuple[Omrade, ...]:
-    """Läs, validera och cachea rättssystemkartan. Fail fast vid fel data."""
-    if not DATA_PATH.exists():
-        raise FileNotFoundError(f"Hittar inte rättssystemdatat: {DATA_PATH}")
-    rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
-
-    giltiga_avdelningar = {a.id for a in ladda_avdelningar()}
-
-    omraden = []
-    for o in rad.get("omraden", ()):
-        farg = str(o["farg"])
+    grenar: list[Gren] = []
+    for topp in toppgrenar:
+        farg = str(topp["farg"])
         if farg not in _TILLATNA_FARGER:
             raise ValueError(
-                f"Området {o['namn']!r} har okänd callout-färg {farg!r}. "
+                f"Toppgrenen {topp['namn']!r} har okänd callout-färg {farg!r}. "
                 f"Tillåtna: {sorted(_TILLATNA_FARGER)}"
             )
-        # Fail fast: kartan får aldrig tappa en gren tyst genom att ett
-        # område hamnar utanför dispositionen.
-        if "avdelning" not in o:
-            raise ValueError(
-                f"Området {o['id']!r} saknar nyckeln 'avdelning'. Varje område "
-                f"måste höra till en avdelning: {sorted(giltiga_avdelningar)}."
-            )
-        avdelning = str(o["avdelning"])
-        if avdelning not in giltiga_avdelningar:
-            raise ValueError(
-                f"Området {o['id']!r} pekar på okänd avdelning {avdelning!r}. "
-                f"Tillåtna: {sorted(giltiga_avdelningar)}."
-            )
-        omraden.append(
-            Omrade(
-                id=str(o["id"]),
-                namn=str(o["namn"]),
-                avdelning=avdelning,
-                farg=farg,
-                beskrivning=str(o["beskrivning"]),
-                nar=str(o["nar"]),
-                underomraden=tuple(
-                    Underomrade(
-                        id=str(u["id"]),
-                        namn=str(u["namn"]),
-                        beskrivning=str(u["beskrivning"]),
-                        nar=str(u["nar"]),
-                        lagar=tuple(_bygg_lagpost(lag) for lag in u.get("lagar", ())),
-                    )
-                    for u in o.get("underomraden", ())
-                ),
-            )
-        )
-    if not omraden:
-        raise ValueError("Rättssystemdatat innehåller inga områden.")
-    return tuple(omraden)
+        grenar.append(_bygg_gren(topp, farg, str(topp["id"])))
+
+    _validera_unika_id(grenar)
+    return tuple(grenar)
 
 
-def _lagindex() -> dict[str, tuple[LagPost, Omrade, Underomrade]]:
-    """Index förkortning -> (lagpost, område, underområde) för notbyggarna."""
-    index: dict[str, tuple[LagPost, Omrade, Underomrade]] = {}
-    for omrade in ladda_rattssystem():
-        for under in omrade.underomraden:
-            for lag in under.lagar:
-                index.setdefault(lag.forkortning, (lag, omrade, under))
+def _validera_unika_id(grenar: tuple[Gren, ...] | list[Gren]) -> None:
+    """Fail fast om samma gren-id förekommer flera gånger i trädet."""
+    sedda: set[str] = set()
+    for gren in _alla_grenar(grenar):
+        if gren.id in sedda:
+            raise ValueError(f"Dubblerat gren-id i rättssystemet: {gren.id!r}")
+        sedda.add(gren.id)
+
+
+def _alla_grenar(grenar: tuple[Gren, ...] | list[Gren]) -> Iterator[Gren]:
+    """Gå igenom trädet i förhandsordning och ge varje gren."""
+    for gren in grenar:
+        yield gren
+        yield from _alla_grenar(gren.grenar)
+
+
+def toppgrenar() -> tuple[Gren, ...]:
+    """Rättssystemets toppgrenar (offentlig rätt, civilrätt)."""
+    return ladda_rattssystem()
+
+
+def delomraden() -> tuple[Gren, ...]:
+    """Alla löv-grenar (de som bär lagar), i trädets ordning.
+
+    Det här är nivån som data/nyckelbegrepp.json knyter begrepp till, så id:na
+    är stabila delar av kontraktet mot begreppsdatat.
+    """
+    return tuple(gren for gren in _alla_grenar(ladda_rattssystem()) if gren.ar_lov)
+
+
+def delomraden_med_vag() -> tuple[tuple[tuple[str, ...], Gren], ...]:
+    """Alla löv-grenar med sin brödsmula (namnen på grenarna ovanför).
+
+    Ger t.ex. (("Civilrätt", "Förmögenhetsrätt", "Obligationsrätt"), <köp-lövet>)
+    så att sidan kan visa var i doktrinen ett delområde hör hemma.
+    """
+    ut: list[tuple[tuple[str, ...], Gren]] = []
+
+    def _walk(gren: Gren, vag: tuple[str, ...]) -> None:
+        if gren.ar_lov:
+            ut.append((vag, gren))
+        else:
+            for barn in gren.grenar:
+                _walk(barn, vag + (gren.namn,))
+
+    for topp in ladda_rattssystem():
+        _walk(topp, ())
+    return tuple(ut)
+
+
+def hitta_gren(gren_id: str) -> Gren | None:
+    """Slå upp en gren på id, eller None om den saknas."""
+    for gren in _alla_grenar(ladda_rattssystem()):
+        if gren.id == gren_id:
+            return gren
+    return None
+
+
+def _lagindex() -> dict[str, tuple[LagPost, Gren]]:
+    """Index förkortning -> (lagpost, löv-gren) för notbyggarna."""
+    index: dict[str, tuple[LagPost, Gren]] = {}
+    for lov in delomraden():
+        for lag in lov.lagar:
+            index.setdefault(lag.forkortning, (lag, lov))
     return index
 
 
-# --- Notbyggare -----------------------------------------------------------------
+# --- Notbyggare (Obsidian-export) --------------------------------------------
 
 def _frontmatter(rader: dict[str, str], taggar: tuple[str, ...]) -> str:
     ut = ["---"]
@@ -225,7 +235,7 @@ def lagnot(forkortning: str) -> str:
 
     KeyError om lagen inte finns i kartan (och därmed i registret).
     """
-    lag, omrade, under = _lagindex()[forkortning]
+    lag, lov = _lagindex()[forkortning]
     register = lagrum_register()
     info = register[forkortning]
 
@@ -233,10 +243,10 @@ def lagnot(forkortning: str) -> str:
         {
             "lag": info.namn,
             "sfs": info.sfs,
-            "område": f"{omrade.namn} · {under.namn}",
+            "område": lov.namn,
             "beskrivning": lag.beskrivning,
         },
-        taggar=("juridik/lag", f"juridik/omrade/{omrade.id}"),
+        taggar=("juridik/lag", f"juridik/omrade/{lov.id}"),
     )
 
     rader = [
@@ -244,7 +254,7 @@ def lagnot(forkortning: str) -> str:
         "",
         f"# {forkortning}: {info.namn}",
         "",
-        f"> [!{omrade.farg}] I korthet",
+        f"> [!{lov.farg}] I korthet",
         f"> {lag.beskrivning}",
         "",
         "## När ska lagen övervägas?",
@@ -258,13 +268,14 @@ def lagnot(forkortning: str) -> str:
             rel_info = register[rel]
             rader.append(f"- [[{rel}]]: {rel_info.namn}")
         rader.append("")
+    toppnamn = _toppnamn(lov.toppgren)
     rader += [
         "## Läs lagen",
         "",
         f"[Öppna {forkortning} på lagen.nu](https://lagen.nu/{info.sfs})",
         "",
-        f"Del av [[{omrade.namn}#{under.namn}|{under.namn}]] "
-        f"i [[{omrade.namn}]] · tillbaka till [[Rättskartan]].",
+        f"Del av [[{toppnamn}#{lov.namn}|{lov.namn}]] · tillbaka till "
+        "[[Rättskartan]].",
         "",
         "---",
         "",
@@ -274,40 +285,50 @@ def lagnot(forkortning: str) -> str:
     return "\n".join(rader)
 
 
-def omradesnot(omrade: Omrade) -> str:
-    """Bygg noten för ett rättsområde med underområdena som rubriker.
+def _toppnamn(toppgren_id: str) -> str:
+    """Namnet på en toppgren, för deep-länkar in i dess note."""
+    for topp in ladda_rattssystem():
+        if topp.id == toppgren_id:
+            return topp.namn
+    return toppgren_id
 
-    Rubrikerna gör att kartan kan djuplänka med [[Område#Underområde]].
-    """
+
+def _gren_rubriker(gren: Gren, niva: int, rader: list[str]) -> None:
+    """Rendera en gren och dess undergrenar som rubriker i en områdesnot."""
+    prefix = "#" * min(niva, 6)
+    rader += [f"{prefix} {gren.namn}", "", gren.beskrivning, ""]
+    if gren.nar:
+        rader += [f"**När:** {gren.nar}", ""]
+    if gren.ar_lov:
+        if gren.lagar:
+            for lag in gren.lagar:
+                rader.append(f"- [[{lag.forkortning}]]: {lag.beskrivning}")
+        else:
+            rader.append("*Inga lagar ur kursens lagrumslista i denna gren.*")
+        rader.append("")
+    else:
+        for barn in gren.grenar:
+            _gren_rubriker(barn, niva + 1, rader)
+
+
+def omradesnot(gren: Gren) -> str:
+    """Bygg noten för en toppgren med hela dess subträd som rubriker."""
     frontmatter = _frontmatter(
-        {"område": omrade.namn, "beskrivning": omrade.beskrivning},
-        taggar=("juridik/omrade", f"juridik/omrade/{omrade.id}"),
+        {"område": gren.namn, "beskrivning": gren.beskrivning},
+        taggar=("juridik/omrade", f"juridik/omrade/{gren.id}"),
     )
     rader = [
         frontmatter,
         "",
-        f"# {omrade.namn}",
+        f"# {gren.namn}",
         "",
-        omrade.beskrivning,
-        "",
-        f"**När hamnar ett fall här?** {omrade.nar}",
+        gren.beskrivning,
         "",
     ]
-    for under in omrade.underomraden:
-        rader += [
-            f"## {under.namn}",
-            "",
-            under.beskrivning,
-            "",
-            f"**När:** {under.nar}",
-            "",
-        ]
-        if under.lagar:
-            for lag in under.lagar:
-                rader.append(f"- [[{lag.forkortning}]]: {lag.beskrivning}")
-        else:
-            rader.append("*Inga lagar ur kursens lagrumslista i detta underområde.*")
-        rader.append("")
+    if gren.nar:
+        rader += [f"**När hamnar ett fall här?** {gren.nar}", ""]
+    for barn in gren.grenar:
+        _gren_rubriker(barn, 2, rader)
     rader += ["---", "", "Tillbaka till [[Rättskartan]].", "", _DISCLAIMER, ""]
     return "\n".join(rader)
 
@@ -392,10 +413,6 @@ def falltypsguide() -> tuple[tuple[str, str, str], ...]:
     Publik ingång för appens Rättskarta-sida, så att den slipper importera
     den privata konstanten. Markdownbyggarna använder _FALLTYPSGUIDE direkt
     eftersom de vill ha wikilänkarna kvar.
-
-    Sökorden visas aldrig i UI:t utan används bara för filtrering, så att
-    en sökning på "uppsagd" hittar raden "Någon har sagts upp eller
-    avskedats".
     """
     return tuple(
         (
@@ -407,25 +424,36 @@ def falltypsguide() -> tuple[tuple[str, str, str], ...]:
     )
 
 
-def _tradgren(omrade: Omrade) -> list[str]:
-    """Rendera ett toppområde som hopfällbar, färgkodad callout-gren."""
+def _tradgren(gren: Gren, toppnamn: str | None = None, niva: int = 0) -> list[str]:
+    """Rendera en gren rekursivt som hopfällbar, färgkodad callout.
+
+    Callout-nivån (antal '>') följer djupet i trädet. Löv listar sina lagar.
+    Toppgrenen länkar till sin egen note; undergrenar deep-länkar in i
+    toppgrenens note via en rubrik (den enda note som faktiskt genereras).
+    """
+    if toppnamn is None:
+        toppnamn = gren.namn
+        lank = f"[[{gren.namn}]]"
+    else:
+        lank = f"[[{toppnamn}#{gren.namn}|{gren.namn}]]"
+
+    inryck = "> " * (niva + 1)
     rader = [
-        f"> [!{omrade.farg}]- **[[{omrade.namn}]]**: {omrade.beskrivning}",
-        f"> *När:* {omrade.nar}",
-        ">",
+        f"{inryck}[!{gren.farg}]- **{lank}**: {gren.beskrivning}",
     ]
-    for under in omrade.underomraden:
-        lank = f"[[{omrade.namn}#{under.namn}|{under.namn}]]"
-        rader.append(f"> > [!{omrade.farg}]- **{lank}**: {under.beskrivning}")
-        rader.append(f"> > *När:* {under.nar}")
-        if under.lagar:
-            rader.append("> >")
-            for lag in under.lagar:
+    if gren.nar:
+        rader.append(f"{inryck}*När:* {gren.nar}")
+    if gren.ar_lov:
+        if gren.lagar:
+            rader.append(inryck.rstrip())
+            for lag in gren.lagar:
                 rader.append(
-                    f"> > - [[{lag.forkortning}]]: {lag.beskrivning} "
+                    f"{inryck}- [[{lag.forkortning}]]: {lag.beskrivning} "
                     f"*När:* {lag.nar}"
                 )
-        rader.append(">")
+    else:
+        for barn in gren.grenar:
+            rader.extend(_tradgren(barn, toppnamn, niva + 1))
     return rader
 
 
@@ -443,56 +471,30 @@ def rattskarta_not() -> str:
         "",
         "# Rättskartan: det svenska rättssystemet",
         "",
-        "Svensk rätt delas traditionellt i **civilrätt** (förhållanden mellan "
-        "enskilda) och **offentlig rätt** (förhållandet mellan enskilda och det "
-        "allmänna, däribland straffrätten). Process- och exekutionsrätten styr "
-        "hur anspråken prövas och tvingas igenom. Kartan nedan visar hur "
-        "områdena hänger ihop, vilka lagar som bär varje område och när de ska "
-        "övervägas i ett fall.",
+        "Svensk rätt delas i **offentlig rätt** (förhållandet mellan enskilda och "
+        "det allmänna, däribland straffrätten och processrätten) och **civilrätt** "
+        "(förhållanden mellan enskilda). Civilrätten delas i sin tur i "
+        "förmögenhetsrätt (obligationsrätt och sakrätt), familjerätt, "
+        "associationsrätt och fastighetsrätt. Kartan nedan visar hur grenarna "
+        "hänger ihop, vilka lagar som bär varje gren och när de ska övervägas.",
         "",
         "> [!question]- Så använder du kartan",
         "> - **Fäll ut** en gren genom att klicka på pilen i rutans vänsterkant.",
         "> - **Klicka** på en länk för att öppna områdes- eller lagnoten.",
         "> - **Hovra** över en länk för en förhandsvisning. Aktivera "
         "kärnpluginen *Sidförhandsvisning* (Page preview) i Obsidian.",
-        "> - **Färgerna** skiljer områdena åt: blå = civilrätt, turkos = familj "
-        "och arv, orange = straffrätt, lila = process och exekution, grå = "
-        "offentlig rätt i övrigt.",
+        "> - **Färgerna** skiljer huvudgrenarna åt: blå = civilrätt, grå = "
+        "offentlig rätt.",
         "> - Grafvyn (Ctrl/Cmd + G) visar samma karta som nätverk, tillsammans "
         "med dina egna rättsfallsnoter.",
         "",
         "## Kartan",
         "",
-        "Kartan följer kursbokens disposition. Avdelningarna nedan är samma "
-        "fyra som appens rättskarta visar.",
-        "",
     ]
 
-    # Avdelningarna är rubriker (H3), inte ytterligare en callout-nivå:
-    # _tradgren lägger redan två nivåer, och en tredje ger "> > >" som
-    # Obsidian renderar illa. Rubriken ger nivån gratis och lämnar
-    # callout-trädet oförändrat.
-    omraden_per_avdelning: dict[str, list[Omrade]] = {}
-    for omrade in ladda_rattssystem():
-        omraden_per_avdelning.setdefault(omrade.avdelning, []).append(omrade)
-
-    for avdelning in ladda_avdelningar():
-        rader += [f"### {avdelning.label}", "", avdelning.beskrivning, ""]
-
-        omraden = omraden_per_avdelning.get(avdelning.id, [])
-        if not omraden:
-            # AVD I är metodavdelningen och har inga egna rättsområden.
-            rader += [
-                "*Den här avdelningen har inga egna rättsområden i kartan. "
-                "Den behandlas som juridisk metod och rättskällelära, och "
-                "genomsyrar alla övriga avdelningar.*",
-                "",
-            ]
-            continue
-
-        for omrade in omraden:
-            rader += _tradgren(omrade)
-            rader.append("")
+    for gren in ladda_rattssystem():
+        rader.extend(_tradgren(gren))
+        rader.append("")
 
     rader += [
         "## Vilken lag gäller för mitt fall?",
@@ -515,13 +517,13 @@ def rattskarta_not() -> str:
     return "\n".join(rader)
 
 
-# --- Filpaket för valvbyggaren ---------------------------------------------------
+# --- Filpaket för valvbyggaren -----------------------------------------------
 
 def rattskarta_filer() -> dict[str, str]:
     """Alla kartfiler som {sökväg i valvet: markdown}."""
     filer: dict[str, str] = {"Juridik/Rättskartan.md": rattskarta_not()}
-    for omrade in ladda_rattssystem():
-        filer[f"Juridik/Rättssystemet/{omrade.namn}.md"] = omradesnot(omrade)
+    for gren in ladda_rattssystem():
+        filer[f"Juridik/Rättssystemet/{gren.namn}.md"] = omradesnot(gren)
     for forkortning in _lagindex():
         filer[f"Juridik/Lagar/{forkortning}.md"] = lagnot(forkortning)
     return filer

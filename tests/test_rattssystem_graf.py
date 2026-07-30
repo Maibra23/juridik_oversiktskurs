@@ -1,12 +1,8 @@
 """Tester för taxonomigrafen över svensk rätt (utils.rattssystem_graf).
 
-Vaktar tre saker:
-- att alla fyra avdelningar ur bokens disposition finns med,
-- att grafen är ett strikt träd utan dubblett-id:n,
-- att varje lagnod har en giltig lagen.nu-URL ur registret,
-
-samt att grafen och Obsidianexportens rättskarta aldrig glider isär: båda
-ska täcka exakt samma lagar.
+Vaktar att grafen är ett strikt träd utan dubblett-id:n, att varje lagnod har
+en giltig lagen.nu-URL ur registret, att toppgrenen ärvs nedåt och styr färgen,
+och att grafen och Obsidianexportens rättskarta aldrig glider isär (samma lagar).
 """
 
 from __future__ import annotations
@@ -15,11 +11,9 @@ import pytest
 
 from utils.lagrum import lagrum_register
 from utils.rattssystem_graf import (
-    GRUPP_AVDELNING,
+    GRUPP_GREN,
     GRUPP_LAG,
-    GRUPP_OMRADE,
     GRUPP_ROT,
-    GRUPP_UNDEROMRADE,
     ROT_ID,
     bygg_taxonomigraf,
     taxonomi,
@@ -34,22 +28,18 @@ def graf():
 # --- Struktur ---------------------------------------------------------------
 
 
-def test_alla_fyra_avdelningar_finns_som_noder(graf):
-    """Bokens fyra avdelningar ska alla vara egna noder, även tomma AVD I."""
-    avdelningsnoder = [n for n in graf["noder"] if n["grupp"] == GRUPP_AVDELNING]
-    assert len(avdelningsnoder) == 4
-    from utils.rattskarta import ladda_avdelningar
-
-    assert {n["label"] for n in avdelningsnoder} == {
-        a.label for a in ladda_avdelningar()
-    }
+def test_tva_toppgrenar_finns_som_noder(graf):
+    """Offentlig rätt och civilrätt ska vara de två grennoderna på nivå 1."""
+    toppnoder = [
+        n for n in graf["noder"] if n["grupp"] == GRUPP_GREN and n["niva"] == 1
+    ]
+    assert {n["label"] for n in toppnoder} == {"Offentlig rätt", "Civilrätt"}
 
 
-def test_avd1_tas_med_trots_att_den_saknar_rattsomraden():
-    """AVD I har inga områden i datat men ska ändå synas, med en modullänk."""
-    avd1 = next(a for a in taxonomi() if a.id == "avd1_introduktion")
-    assert avd1.omraden == ()
-    assert avd1.sida == "sidor/1_Juridisk_metod.py"
+def test_juridisk_metod_finns_inte_i_grafen(graf):
+    labels = {n["label"] for n in graf["noder"]}
+    assert "Juridisk metod" not in labels
+    assert not any("AVD" in lbl for lbl in labels)
 
 
 def test_exakt_en_rot(graf):
@@ -88,19 +78,28 @@ def test_nivaer_okar_nedat(graf):
         assert niva[kant["till"]] == niva[kant["fran"]] + 1
 
 
-def test_avdelning_arvs_nedat(graf):
-    """Alla noder utom roten bär ett avdelnings-id som styr färgen."""
+def test_toppgren_arvs_nedat(graf):
+    """Alla noder utom roten bär en toppgren (offentlig/civil) som styr färg."""
     for nod in graf["noder"]:
         if nod["id"] == ROT_ID:
             continue
-        assert nod["avdelning"], f"{nod['id']} saknar avdelning"
+        assert nod["toppgren"] in {"offentlig_ratt", "civilratt"}, (
+            f"{nod['id']} har oväntad toppgren {nod['toppgren']!r}"
+        )
+
+
+def test_djupt_trad_civilratten_ar_djupare_an_offentliga(graf):
+    """Doktrinen är ojämnt djup: köprätten ligger flera nivåer ner."""
+    niva_for_label = {n["label"]: n["niva"] for n in graf["noder"]}
+    # Civilrätt(1) -> Förmögenhetsrätt(2) -> Obligationsrätt(3)
+    # -> Speciell avtalsrätt(4) -> Köp- och konsumenträtt(5)
+    assert niva_for_label["Köp- och konsumenträtt"] >= 5
 
 
 # --- Lagnoder ---------------------------------------------------------------
 
 
 def test_varje_lagnod_har_giltig_lagen_nu_url(graf):
-    """Lagnoder ska ha en URL ur registret, aldrig en konstruerad."""
     register = lagrum_register()
     lagnoder = [n for n in graf["noder"] if n["grupp"] == GRUPP_LAG]
     assert lagnoder
@@ -114,7 +113,6 @@ def test_varje_lagnod_har_giltig_lagen_nu_url(graf):
 
 
 def test_endast_lagnoder_ar_klickbara(graf):
-    """Strukturnoder får aldrig url: de ska vara inerta vid klick."""
     for nod in graf["noder"]:
         if nod["grupp"] != GRUPP_LAG:
             assert "url" not in nod, f"{nod['id']} borde inte vara klickbar"
@@ -126,7 +124,6 @@ def test_alla_registrets_lagar_finns_i_grafen(graf):
 
 
 def test_grafen_och_rattskartan_tacker_samma_lagar(graf):
-    """App och Obsidianvalv får aldrig glida isär om vilka lagar som ingår."""
     from utils.rattskarta import _lagindex
 
     lagnoder = {n["forkortning"] for n in graf["noder"] if n["grupp"] == GRUPP_LAG}
@@ -134,102 +131,77 @@ def test_grafen_och_rattskartan_tacker_samma_lagar(graf):
 
 
 def test_lagnoder_bar_sin_forkortning_som_eget_falt(graf):
-    """Förkortningen läses ur ett fält, aldrig ur nod-id:t eller etiketten.
-
-    Id:t är skopat efter förälder (se testet nedan) och går därför inte att
-    tolka som en förkortning.
-    """
     for nod in graf["noder"]:
         if nod["grupp"] == GRUPP_LAG:
             assert nod["forkortning"]
             assert nod["label"] == nod["forkortning"]
 
 
-def test_samma_lag_i_tva_delomraden_ger_tva_distinkta_noder():
-    """En lag kan höra till flera delområden utan att grafen kraschar.
-
-    lag_id() skopades tidigare bara på förkortningen. En lag som lades under
-    två delområden gav då två noder med samma id, vilket får vis.DataSet att
-    kasta i webbläsaren och bryter trädinvarianten. Noden ska i stället
-    dupliceras per förälder: att AvtL bär både avtalsrätt och allmän
-    förmögenhetsrätt är sant och ska synas på båda ställena.
-    """
+def test_samma_lag_i_tva_grenar_ger_tva_distinkta_noder():
+    """lag_id skopas efter gren så samma lag kan förekomma flera gånger."""
     from utils.rattssystem_graf import lag_id
 
     a = lag_id("avtalsratt", "AvtL")
-    b = lag_id("allman_formogenhetsratt", "AvtL")
-    assert a != b, "lagnod-id måste vara skopat efter delområde"
+    b = lag_id("kop_och_konsumentratt", "AvtL")
+    assert a != b, "lagnod-id måste vara skopat efter gren"
     assert "AvtL" in a and "AvtL" in b
-    assert "avtalsratt" in a and "allman_formogenhetsratt" in b
+    assert "avtalsratt" in a and "kop_och_konsumentratt" in b
 
 
 # --- Taxonomiträdet ---------------------------------------------------------
 
 
-def test_taxonomin_har_alla_omraden_och_underomraden(graf):
-    omraden = [n for n in graf["noder"] if n["grupp"] == GRUPP_OMRADE]
-    underomraden = [n for n in graf["noder"] if n["grupp"] == GRUPP_UNDEROMRADE]
-    assert len(omraden) == 5
-    assert len(underomraden) == 16
+def test_taxonomin_ger_toppgrenarna():
+    grenar = taxonomi()
+    assert [g.id for g in grenar] == ["offentlig_ratt", "civilratt"]
 
 
-def test_taxonomin_hamtar_lagnamn_ur_registret():
-    """Namn och SFS dupliceras aldrig i kartdatat utan kommer ur registret."""
-    from utils.rattssystem_graf import alla_lagar
+def test_nyckelgrenar_finns_som_noder(graf):
+    labels = {n["label"] for n in graf["noder"]}
+    for vantad in (
+        "Förmögenhetsrätt", "Obligationsrätt", "Speciell avtalsrätt", "Sakrätt",
+    ):
+        assert vantad in labels, f"{vantad} saknas i grafen"
 
-    register = lagrum_register()
-    lagar = list(alla_lagar())
-    assert lagar
-    for lag in lagar:
-        assert lag.namn == register[lag.forkortning].namn
-        assert lag.sfs == register[lag.forkortning].sfs
+
+# --- Fail fast i inläsningen ------------------------------------------------
 
 
 @pytest.mark.parametrize(
-    ("trasig_nyckel", "vantat_fel"),
+    ("mutation", "vantat_fel"),
     [
-        ("okand", "okänd avdelning"),
-        ("saknas", "saknar nyckeln 'avdelning'"),
+        ("bade_grenar_och_lagar", "antingen 'grenar' eller 'lagar'"),
+        ("okand_farg", "okänd callout-färg"),
     ],
 )
-def test_omrade_utan_giltig_avdelning_ger_tydligt_fel(
-    monkeypatch, tmp_path, trasig_nyckel, vantat_fel
-):
-    """Fail fast: ett område utanför dispositionen får inte tappas tyst.
-
-    Valideringen bor numera i utils.rattskarta.ladda_rattssystem, som är den
-    enda som läser datat. Cacherna måste tömmas både före och efter, annars
-    läcker den trasiga kartan in i efterföljande tester.
-    """
+def test_trasig_data_ger_tydligt_fel(monkeypatch, tmp_path, mutation, vantat_fel):
+    """Fail fast: en tvetydig gren eller okänd färg får inte laddas tyst."""
     import json
 
-    from utils.rattskarta import DATA_PATH, ladda_avdelningar, ladda_rattssystem
+    from utils.rattskarta import DATA_PATH, ladda_rattssystem
 
     rad = json.loads(DATA_PATH.read_text(encoding="utf-8"))
-    if trasig_nyckel == "okand":
-        rad["omraden"][0]["avdelning"] = "avd_finns_inte"
+    if mutation == "bade_grenar_och_lagar":
+        rad["grenar"][0]["lagar"] = []  # har redan 'grenar'
     else:
-        del rad["omraden"][0]["avdelning"]
+        rad["grenar"][0]["farg"] = "finns_inte"
 
     trasig = tmp_path / "rattssystem.json"
     trasig.write_text(json.dumps(rad, ensure_ascii=False), encoding="utf-8")
 
     monkeypatch.setattr("utils.rattskarta.DATA_PATH", trasig)
     ladda_rattssystem.cache_clear()
-    ladda_avdelningar.cache_clear()
     try:
         with pytest.raises(ValueError, match=vantat_fel):
             ladda_rattssystem()
     finally:
         ladda_rattssystem.cache_clear()
-        ladda_avdelningar.cache_clear()
 
 
 # --- Falltypsguidens sökbarhet ----------------------------------------------
 
 
 def test_falltypsguiden_har_sokord_for_varje_rad():
-    """Varje falltyp ska bära sökord, annars blir tabellen osökbar."""
     from utils.rattskarta import falltypsguide
 
     guide = falltypsguide()
@@ -248,11 +220,6 @@ def test_falltypsguiden_har_sokord_for_varje_rad():
     ],
 )
 def test_naturliga_sokningar_ger_traff(fras):
-    """De ord en student faktiskt söker på måste hitta rätt rad.
-
-    Situationstexterna är böjda meningar ("sagts upp"), så ren
-    delsträngsmatchning räcker inte.
-    """
     from utils.rattskarta import falltypsguide
 
     traffar = [
@@ -264,7 +231,6 @@ def test_naturliga_sokningar_ger_traff(fras):
 
 
 def test_falltypsguiden_paverkar_inte_vaultens_markdown():
-    """Sökorden är ett apptillägg och får aldrig läcka in i valvet."""
     from utils.rattskarta import rattskarta_not
 
     not_md = rattskarta_not()

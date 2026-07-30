@@ -82,8 +82,9 @@ def test_varje_begrepp_far_sin_egen_tutorknapp(sida):
 
     nycklar = [k.key for k in sida.button if k.key]
     assert len(nycklar) == len(set(nycklar)), "dubblerade knappnycklar"
-    # En knapp per begrepp (radion väljer läge, knappen är en per begrepp).
-    assert len(sida.button) == len(ladda_begrepp())
+    # En nycklad tutorknapp per begrepp. Återställningsknappen överst saknar
+    # nyckel och räknas därför inte in här.
+    assert len(nycklar) == len(ladda_begrepp())
 
 
 def test_sidan_anvander_inga_raa_statuskomponenter(sida):

@@ -262,3 +262,17 @@ def test_generate_prompt_ogiltig_niva_normaliseras_till_grund():
     _, user = build_generate_prompt("avtalsratt", svarighetsgrad="nonsens")
     assert instruktion_for("grund") in user
     assert '"svarighetsgrad": "grund"' in user
+
+
+def test_generate_prompt_kraver_korrekt_svensk_sprakkvalitet():
+    """Genereringen ska uttryckligen be om korrekt, idiomatisk svenska.
+
+    Scenariotexten grundas inte deterministiskt (bara lagrummen verifieras),
+    så språkkvaliteten vilar helt på prompten. Regression: 8B-modellen skrev
+    'Ongiltig', 'anlade ett avtal' och 'Penaltiklause'.
+    """
+    _, user = build_generate_prompt("avtalsratt")
+    lag = user.lower()
+    assert "språk" in lag
+    assert "korrekt" in lag and "svenska" in lag
+    assert "korrekturläs" in lag or "stavning" in lag

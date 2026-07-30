@@ -420,7 +420,13 @@ def build_generate_prompt(
         f"Fältet svarighetsgrad MÅSTE vara exakt \"{niva}\". "
         "Alla lagrum i facit.lagrum MÅSTE finnas i vitlistan och skrivas som "
         "\"N § FÖRK\" eller \"N kap. M § FÖRK\" (paragrafnummer först). Använd "
-        "aldrig påhittade paragrafer." + variationsrad + skarpning
+        "aldrig påhittade paragrafer.\n\n"
+        "SPRÅKKVALITET (viktigt): rubrik och scenariotext ska vara på korrekt, "
+        "idiomatisk svenska med rätt stavning och grammatik. Korrekturläs texten "
+        "innan du svarar. Skriv t.ex. \"ogiltig\" (inte \"ongiltig\"), \"ingick "
+        "ett avtal\" (inte \"anlade ett avtal\") och \"vitesklausul\" (inte "
+        "\"penaltiklausul\"). Använd inga engelska eller hemmagjorda ord."
+        + variationsrad + skarpning
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 

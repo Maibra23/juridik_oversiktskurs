@@ -28,6 +28,8 @@ from utils.scenarier import (
     ladda_modul,
     lista_moduler,
 )
+from utils.svarighetsgrad import STANDARDNIVA
+from utils.svarighetsgrad import normalisera as normalisera_svarighet
 
 MAX_FORSOK = 2
 
@@ -145,15 +147,21 @@ def generera_case(
     modul_namn: str,
     klient: ChatKlient | None = None,
     rng: random.Random | None = None,
+    svarighetsgrad: str = STANDARDNIVA,
 ) -> GenereratResultat:
     """Generera ett grundat rättsfall för modulen, med fallback vid problem.
 
     Försöker upp till ``MAX_FORSOK`` gånger. Ett scenario returneras endast om
     varje lagrum i facit verifieras mot registret; annars faller vi tillbaka på
     ett kuraterat case ur modulen.
+
+    ``svarighetsgrad`` styr hur svårt det genererade fallet blir och skickas
+    vidare till prompten. Nivån normaliseras defensivt (okänt värde blir grund).
+    Ett kuraterat fallback-case behåller sin egen svårighetsgrad.
     """
     modul = ladda_modul(modul_namn)
     rng = rng or random.Random()
+    niva = normalisera_svarighet(svarighetsgrad)
     forkortningar = _forkortningar_for_modul(modul)
 
     if klient is None:
@@ -169,7 +177,11 @@ def generera_case(
 
     for forsok in range(MAX_FORSOK):
         system_prompt, user_prompt = build_generate_prompt(
-            modul_namn, forkortningar, striktare=forsok > 0, variation=variation + forsok
+            modul_namn,
+            forkortningar,
+            striktare=forsok > 0,
+            variation=variation + forsok,
+            svarighetsgrad=niva,
         )
         try:
             svar = klient.chat(system_prompt, user_prompt)

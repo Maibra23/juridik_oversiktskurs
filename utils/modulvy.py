@@ -37,6 +37,7 @@ from utils.quiz import (
     registrera_mc_svar,
 )
 from utils.scenarier import Case, Flervalsfraga, Lagrumsjakt, Modulscenarier, ladda_modul
+from utils.svarighetsgrad import SVARIGHETSNIVAER, STANDARDNIVA, etikett_for
 from utils.tutor import tutorknapp
 from utils.ui import (
     RNTS_STATUS_BEHOVER_MER,
@@ -57,6 +58,28 @@ RNTS_FALT = (
     ("tillampning", "Tillämpning", "Hur tillämpas normen på omständigheterna?"),
     ("slutsats", "Slutsats", "Vad blir svaret på rättsfrågan?"),
 )
+
+# Etikett -> nyckel för svårighetsväljaren. Nycklarna ägs av utils.svarighetsgrad.
+_SVARIGHET_NYCKEL_FOR = {etikett: nyckel for nyckel, etikett in SVARIGHETSNIVAER}
+
+
+def svarighetsvaljare(key: str) -> str:
+    """Rendera svårighetsväljaren och returnera vald nivås nyckel.
+
+    Delas av modulsidorna och Kunskapsutmaningen så att väljaren ser likadan ut
+    överallt och alltid ger en kanonisk nyckel (grund/medel/avancerad). Sätts
+    före genereringsknappen: nivån ska vara vald innan fallet skapas.
+    """
+    val = st.segmented_control(
+        "Svårighetsgrad",
+        options=[etikett for _, etikett in SVARIGHETSNIVAER],
+        default=etikett_for(STANDARDNIVA),
+        key=key,
+        help="Styr hur svårt det genererade fallet blir. Väljs innan du "
+        "genererar.",
+    )
+    # segmented_control returnerar None om studenten avmarkerar valet.
+    return _SVARIGHET_NYCKEL_FOR.get(val, STANDARDNIVA)
 
 
 # --- Publik ingång ----------------------------------------------------------
@@ -129,6 +152,8 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
     n_kalla = f"gen_kalla_{filnamn}"
     n_raknare = f"gen_raknare_{filnamn}"
 
+    niva = svarighetsvaljare(f"gen_niva_{filnamn}")
+
     kol_ny, kol_kuraterat = st.columns(2)
     with kol_ny:
         generera = st.button(
@@ -153,7 +178,7 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
 
     if generera:
         with st.spinner("Genererar ett nytt rättsfall och kontrollerar lagrummen …"):
-            resultat = generera_case(filnamn)
+            resultat = generera_case(filnamn, svarighetsgrad=niva)
         # Unikt id per generering så att RNTS-formuläret börjar tomt.
         raknare = st.session_state.get(n_raknare, 0) + 1
         st.session_state[n_raknare] = raknare

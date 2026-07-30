@@ -26,6 +26,9 @@ from collections.abc import Iterable
 from typing import cast
 
 from utils.lagrum import Lag, lagrum_register
+from utils.svarighetsgrad import STANDARDNIVA
+from utils.svarighetsgrad import instruktion_for as svarighetsinstruktion_for
+from utils.svarighetsgrad import normalisera as normalisera_svarighet
 
 # Maxlängd på tutorsvar. Injiceras i systemprompten och används av
 # nedströms tester som en mjuk gräns.
@@ -353,6 +356,7 @@ def build_generate_prompt(
     forkortningar: Iterable[str] | None = None,
     striktare: bool = False,
     variation: int | None = None,
+    svarighetsgrad: str = STANDARDNIVA,
 ) -> tuple[str, str]:
     """Bygg (system, user) för att generera ett nytt fiktivt rättsfall.
 
@@ -365,7 +369,14 @@ def build_generate_prompt(
     ny cachenyckel i utils.llm.cached_chat. Utan fröet returnerar cachen samma
     rättsfall vid varje knapptryck, eftersom prompten annars är identisk för
     en given modul.
+
+    ``svarighetsgrad`` styr hur svårt fallet blir. Nivån normaliseras (okänt
+    värde blir grund), ett instruktionsblock injiceras och JSON-schemats
+    svarighetsgrad-fält pinnas till den valda nivån så att det studenten bad om
+    är det som registreras.
     """
+    niva = normalisera_svarighet(svarighetsgrad)
+    svarighetsinstruktion = "\n\n" + svarighetsinstruktion_for(niva)
     vitlista = vitlista_block(forkortningar)
 
     variationsrad = ""
@@ -385,16 +396,18 @@ def build_generate_prompt(
         )
 
     user_prompt = (
-        f"{vitlista}\n\n"
+        f"{vitlista}"
+        f"{svarighetsinstruktion}\n\n"
         f"Skapa ETT nytt, fiktivt och realistiskt rättsfall för modulen "
         f"\"{modul_namn}\" på JÖK-nivå. Fallet ska gå att lösa med juridisk metod "
-        "och de lagrum som finns i vitlistan ovan.\n\n"
+        "och de lagrum som finns i vitlistan ovan. Kalibrera fallet efter "
+        "svårighetsgraden ovan.\n\n"
         "Svara med ENBART giltig JSON (ingen kod-markdown, ingen text runt om) "
         "enligt exakt detta schema:\n"
         "{\n"
         '  "id": "gen-<kort-slug>",\n'
         '  "rubrik": "<kort fallrubrik>",\n'
-        '  "svarighetsgrad": "grund" | "medel" | "avancerad",\n'
+        f'  "svarighetsgrad": "{niva}",\n'
         '  "uppskattad_tid_min": <heltal>,\n'
         '  "scenariotext": "<fiktiva omständigheter, 4-8 meningar>",\n'
         '  "facit": {\n'
@@ -404,6 +417,7 @@ def build_generate_prompt(
         '    "slutsats": "<motiverad slutsats>"\n'
         "  }\n"
         "}\n\n"
+        f"Fältet svarighetsgrad MÅSTE vara exakt \"{niva}\". "
         "Alla lagrum i facit.lagrum MÅSTE finnas i vitlistan och skrivas som "
         "\"N § FÖRK\" eller \"N kap. M § FÖRK\" (paragrafnummer först). Använd "
         "aldrig påhittade paragrafer." + variationsrad + skarpning

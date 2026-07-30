@@ -210,3 +210,43 @@ def test_dagsbudget_ger_budgetbesked():
 
     resultat = generera_case("avtalsratt", klient=DagenSlut())
     assert resultat.notis == DAILY_CAP_MESSAGE
+
+
+# --- Svårighetsgrad ---------------------------------------------------------
+
+class FangaPromptKlient:
+    """Fångar den user-prompt generatorn skickar, returnerar ett giltigt case."""
+
+    def __init__(self, svar: str = GILTIGT) -> None:
+        self.user_prompts: list[str] = []
+        self._svar = svar
+
+    def chat(self, system_prompt: str, user_prompt: str, **kwargs: object) -> str:
+        self.user_prompts.append(user_prompt)
+        return self._svar
+
+
+def test_generera_case_vidarebefordrar_svarighetsgrad_till_prompten():
+    from utils.svarighetsgrad import instruktion_for
+
+    klient = FangaPromptKlient()
+    generera_case(MODUL, klient=klient, svarighetsgrad="medel")
+    assert klient.user_prompts, "ingen prompt fångades"
+    assert instruktion_for("medel") in klient.user_prompts[0]
+    assert '"svarighetsgrad": "medel"' in klient.user_prompts[0]
+
+
+def test_generera_case_default_ar_grund():
+    from utils.svarighetsgrad import instruktion_for
+
+    klient = FangaPromptKlient()
+    generera_case(MODUL, klient=klient)
+    assert instruktion_for("grund") in klient.user_prompts[0]
+
+
+def test_generera_case_ogiltig_svarighetsgrad_normaliseras():
+    from utils.svarighetsgrad import instruktion_for
+
+    klient = FangaPromptKlient()
+    generera_case(MODUL, klient=klient, svarighetsgrad="nonsens")
+    assert instruktion_for("grund") in klient.user_prompts[0]

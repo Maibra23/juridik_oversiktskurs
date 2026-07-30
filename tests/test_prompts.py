@@ -14,10 +14,12 @@ from utils.prompts import (
     SYSTEM_PROMPT_BASE,
     build_begrepp_prompt,
     build_case_prompt,
+    build_generate_prompt,
     build_quiz_prompt,
     vitlista_block,
 )
 from utils.scenarier import ladda_modul
+from utils.svarighetsgrad import instruktion_for
 
 
 def test_systemprompt_kraver_rnts_rubriker():
@@ -224,3 +226,39 @@ def test_lagtexten_markeras_som_ordagrann():
     _, user = build_case_prompt(modul.case[0], {"norm": "4 § AvtL"})
     assert "ordagrann" in user.lower()
     assert "som inte står i texten" in user
+
+
+# --- build_generate_prompt: svårighetsgrad ---------------------------------
+
+def test_generate_prompt_injicerar_vald_svarighetsinstruktion():
+    """Prompten ska innehålla exakt det block som hör till vald nivå."""
+    _, user = build_generate_prompt("avtalsratt", svarighetsgrad="avancerad")
+    assert instruktion_for("avancerad") in user
+
+
+def test_generate_prompt_pinnar_schemafaltet_till_vald_niva():
+    """JSON-schemat ska tvinga svarighetsgrad till den valda nivån."""
+    _, user = build_generate_prompt("avtalsratt", svarighetsgrad="medel")
+    assert '"svarighetsgrad": "medel"' in user
+    # Det gamla fria alternativuttrycket ska inte längre ligga kvar.
+    assert '"grund" | "medel" | "avancerad"' not in user
+
+
+def test_generate_prompt_olika_nivaer_ger_olika_instruktion():
+    _, grund = build_generate_prompt("avtalsratt", svarighetsgrad="grund")
+    _, avancerad = build_generate_prompt("avtalsratt", svarighetsgrad="avancerad")
+    assert grund != avancerad
+    assert instruktion_for("grund") in grund
+    assert instruktion_for("avancerad") in avancerad
+
+
+def test_generate_prompt_default_ar_grund():
+    _, user = build_generate_prompt("avtalsratt")
+    assert instruktion_for("grund") in user
+    assert '"svarighetsgrad": "grund"' in user
+
+
+def test_generate_prompt_ogiltig_niva_normaliseras_till_grund():
+    _, user = build_generate_prompt("avtalsratt", svarighetsgrad="nonsens")
+    assert instruktion_for("grund") in user
+    assert '"svarighetsgrad": "grund"' in user

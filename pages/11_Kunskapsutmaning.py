@@ -14,7 +14,7 @@ import dataclasses
 import streamlit as st
 
 from utils.generator import generera_case, valj_slumpmodul
-from utils.modulvy import rendera_case_ovning
+from utils.modulvy import rendera_case_ovning, svarighetsvaljare
 from utils.scenarier import ladda_modul, lista_moduler
 from utils.ui import (
     footer_note,
@@ -64,12 +64,16 @@ with kol_slump:
     st.caption("&nbsp;", unsafe_allow_html=True)
     overraska = st.button("🎲 Överraska mig", use_container_width=True)
 
+# Svårigheten väljs alltid av studenten. Överraska mig slumpar bara modulen,
+# inte nivån: studenten behåller kontrollen över hur svårt fallet blir.
+niva = svarighetsvaljare("utmaning_niva")
+
 generera = st.button("Generera nytt rättsfall", type="primary")
 
 if generera or overraska:
     stem = valj_slumpmodul() if overraska else vald_stem
     with st.spinner("Genererar ett nytt rättsfall och kontrollerar lagrummen …"):
-        resultat = generera_case(stem)
+        resultat = generera_case(stem, svarighetsgrad=niva)
     # Unik id per generering så RNTS-formuläret alltid börjar tomt.
     raknare = st.session_state.get("utmaning_raknare", 0) + 1
     st.session_state["utmaning_raknare"] = raknare

@@ -1,4 +1,4 @@
-"""Renderingstester för sidan Rättskartan (pages/16_Rattskartan.py).
+"""Renderingstester för sidan Rättskartan (sidor/16_Rattskartan.py).
 
 Sidans hela löfte är att den är *deterministisk*: alla tre flikarna ska vara
 fulla på dag noll, utan LLM, utan token och utan genomförda rättsfall. Övriga
@@ -11,7 +11,7 @@ Två saker stubbas, och bara två:
 - ``st.page_link`` kastar ``KeyError: 'url_pathname'`` under AppTest, som
   saknar den sidkontext ett multipage-appbygge ger. Det är en begränsning i
   testverktyget, inte ett fel i sidan: samma anrop fungerar i appen och
-  används redan i pages/0_Hem.py och utils/ui.py.
+  används redan i sidor/0_Hem.py och utils/ui.py.
 - ``utils.llm.cached_chat`` ersätts med en spion som failar testet om den
   anropas. Sidan får rendera 52 tutorknappar, men inte röra modellen förrän
   någon faktiskt trycker på en.
@@ -24,7 +24,7 @@ from pathlib import Path
 import pytest
 from streamlit.testing.v1 import AppTest
 
-SIDA = str(Path(__file__).resolve().parent.parent / "pages" / "16_Rattskartan.py")
+SIDA = str(Path(__file__).resolve().parent.parent / "sidor" / "16_Rattskartan.py")
 
 
 @pytest.fixture

@@ -6,7 +6,7 @@
       "id": "avd1_introduktion",
       "label": "AVD I · Introduktion",
       "beskrivning": "Rättskällelära, lagtolkning och juridisk metod. Verktygen du använder i alla övriga avdelningar.",
-      "sida": "pages/1_Juridisk_metod.py"
+      "sida": "sidor/1_Juridisk_metod.py"
     },
     {
       "id": "avd2_offentlig_ratt",

@@ -1,6 +1,6 @@
 """Delad modulsidevy: Rättsfall, Quiz och Lagrumsjakt.
 
-Varje modulsida i pages/ är ett tunt skal som bara anropar
+Varje modulsida i sidor/ är ett tunt skal som bara anropar
 rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
 formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
 moduler delar exakt samma flöde.

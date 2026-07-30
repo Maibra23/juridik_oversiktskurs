@@ -1,7 +1,7 @@
 """Tester för navigeringsträdet i sidopanelen.
 
 Vaktar den enda invariant som gör trädet trovärdigt: varje modul i trädet
-pekar antingen på en sida som faktiskt finns i pages/, eller saknar sida
+pekar antingen på en sida som faktiskt finns i sidor/, eller saknar sida
 och visas som "(kommer)". Ett stavfel i en sökväg ska fångas här och inte
 som en trasig länk i UI:t.
 
@@ -77,13 +77,13 @@ def test_alla_grupper_har_barn():
 
 
 def test_alla_modulsidor_finns_med_i_tradet():
-    """Ingen sida i pages/ får sakna plats i navigeringen.
+    """Ingen sida i sidor/ får sakna plats i navigeringen.
 
     Utan den här kontrollen kan en ny modulsida bli oåtkomlig, eftersom
     Streamlits egen sidlista är avstängd (position="hidden").
     """
     pa_disk = {
-        f"pages/{p.name}" for p in (ROT / "pages").glob("*.py") if p.name != "__init__.py"
+        f"sidor/{p.name}" for p in (ROT / "sidor").glob("*.py") if p.name != "__init__.py"
     }
     i_tradet = set(byggda_sidor())
     assert pa_disk == i_tradet, (

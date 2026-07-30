@@ -1,7 +1,7 @@
 """Röktester för hela flödet.
 
 Verifierar att:
-- alla sidor i pages/ kan importeras (körs i Streamlits bare mode utan token),
+- alla sidor i sidor/ kan importeras (körs i Streamlits bare mode utan token),
 - alla scenariofiler i data/scenarier laddas och strukturvalideras,
 - varje lagrum i case-facit, quizalternativ och lagrumsjakt verifieras mot
   lagrum.json,
@@ -29,7 +29,7 @@ from utils.scenarier import (
     ogiltiga_lagrum,
 )
 
-PAGES_DIR = Path(__file__).resolve().parent.parent / "pages"
+PAGES_DIR = Path(__file__).resolve().parent.parent / "sidor"
 
 SCENARIOFILER = sorted(SCENARIER_DIR.glob("*.json"))
 SIDFILER = sorted(PAGES_DIR.glob("*.py"))
@@ -37,7 +37,7 @@ SIDFILER = sorted(PAGES_DIR.glob("*.py"))
 
 @pytest.mark.parametrize("sidfil", SIDFILER, ids=lambda p: p.name)
 def test_alla_sidor_kan_importeras(sidfil: Path):
-    """Varje sida i pages/ ska kunna köras utan att krascha (bare mode)."""
+    """Varje sida i sidor/ ska kunna köras utan att krascha (bare mode)."""
     spec = importlib.util.spec_from_file_location(f"page_{sidfil.stem}", sidfil)
     assert spec and spec.loader
     mod = importlib.util.module_from_spec(spec)

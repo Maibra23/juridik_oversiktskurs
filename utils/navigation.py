@@ -10,7 +10,7 @@ sidor i st.navigation.
 
 En ``Modul`` utan ``sida`` är planerad men inte byggd. Den visas gråtonad
 med texten "(kommer)" och är aldrig en klickbar länk. tests/test_navigation.py
-kontrollerar att varje modul antingen pekar på en befintlig fil i pages/
+kontrollerar att varje modul antingen pekar på en befintlig fil i sidor/
 eller saknar sida.
 """
 
@@ -27,7 +27,7 @@ ROT = Path(__file__).resolve().parent.parent
 class Modul:
     """Ett löv i trädet: en modulsida, byggd eller planerad.
 
-    ``sida`` är sökvägen relativt projektroten, t.ex. "pages/2_Avtalsratt.py".
+    ``sida`` är sökvägen relativt projektroten, t.ex. "sidor/2_Avtalsratt.py".
     None betyder att modulen är planerad men ännu inte byggd.
     """
 
@@ -57,9 +57,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
     Grupp(
         "START OCH METOD",
         (
-            Modul("Hem", "pages/0_Hem.py"),
-            Modul("Juridisk metod", "pages/1_Juridisk_metod.py"),  # kap 1
-            Modul("Rättskartan", "pages/16_Rattskartan.py"),
+            Modul("Hem", "sidor/0_Hem.py"),
+            Modul("Juridisk metod", "sidor/1_Juridisk_metod.py"),  # kap 1
+            Modul("Rättskartan", "sidor/16_Rattskartan.py"),
         ),
     ),
     Grupp(
@@ -74,25 +74,25 @@ NAV_TRAD: tuple[Grupp, ...] = (
         (
             Grupp(
                 "Personrätt",
-                (Modul("Personrätt", "pages/12_Personratt.py"),),  # kap 5
+                (Modul("Personrätt", "sidor/12_Personratt.py"),),  # kap 5
             ),
             Grupp(
                 "Förmögenhetsrätt",
                 (
                     Modul(
                         "Allmän förmögenhetsrätt",
-                        "pages/13_Allman_formogenhetsratt.py",
+                        "sidor/13_Allman_formogenhetsratt.py",
                     ),  # kap 6
                     Grupp(
                         "Kontraktsrätt",
                         (
-                            Modul("Avtalsrätt", "pages/2_Avtalsratt.py"),  # kap 7
+                            Modul("Avtalsrätt", "sidor/2_Avtalsratt.py"),  # kap 7
                             Modul(
                                 "Köp- och konsumenträtt",
-                                "pages/3_Kop_och_konsumentratt.py",
+                                "sidor/3_Kop_och_konsumentratt.py",
                             ),  # kap 8
                             Modul(
-                                "Fastighetsrätt", "pages/14_Fastighetsratt.py"
+                                "Fastighetsrätt", "sidor/14_Fastighetsratt.py"
                             ),  # kap 9
                         ),
                     ),
@@ -100,16 +100,16 @@ NAV_TRAD: tuple[Grupp, ...] = (
                         "Ersättningsrätt",
                         (
                             Modul(
-                                "Skadeståndsrätt", "pages/4_Skadestandsratt.py"
+                                "Skadeståndsrätt", "sidor/4_Skadestandsratt.py"
                             ),  # kap 10
                         ),
                     ),
                     Grupp(
                         "Näringsrätt",
                         (
-                            Modul("Arbetsrätt", "pages/5_Arbetsratt.py"),  # kap 11
+                            Modul("Arbetsrätt", "sidor/5_Arbetsratt.py"),  # kap 11
                             Modul(
-                                "Associationsrätt", "pages/6_Associationsratt.py"
+                                "Associationsrätt", "sidor/6_Associationsratt.py"
                             ),  # kap 12
                         ),
                     ),
@@ -117,7 +117,7 @@ NAV_TRAD: tuple[Grupp, ...] = (
                         "Kredit- och obeståndsrätt",
                         (
                             Modul(
-                                "Fordringsrätt", "pages/15_Fordringsratt.py"
+                                "Fordringsrätt", "sidor/15_Fordringsratt.py"
                             ),
                         ),  # kap 15-17
                     ),
@@ -128,7 +128,7 @@ NAV_TRAD: tuple[Grupp, ...] = (
                 (
                     Modul(
                         "Familje- och successionsrätt",
-                        "pages/7_Familje_och_arvsratt.py",
+                        "sidor/7_Familje_och_arvsratt.py",
                     ),  # kap 18-21
                 ),
             ),
@@ -138,16 +138,16 @@ NAV_TRAD: tuple[Grupp, ...] = (
         "STRAFF- OCH PROCESSRÄTT",
         (
             Modul(
-                "Straff- och processrätt", "pages/8_Straff_och_processratt.py"
+                "Straff- och processrätt", "sidor/8_Straff_och_processratt.py"
             ),  # kap 22
         ),
     ),
     Grupp(
         "TRÄNING",
         (
-            Modul("Kunskapstest", "pages/9_Kunskapstest.py"),
-            Modul("Kunskapskarta", "pages/10_Kunskapskarta.py"),
-            Modul("Kunskapsutmaning", "pages/11_Kunskapsutmaning.py"),
+            Modul("Kunskapstest", "sidor/9_Kunskapstest.py"),
+            Modul("Kunskapskarta", "sidor/10_Kunskapskarta.py"),
+            Modul("Kunskapsutmaning", "sidor/11_Kunskapsutmaning.py"),
         ),
     ),
 )

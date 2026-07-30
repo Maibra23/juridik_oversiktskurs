@@ -49,7 +49,7 @@ def test_avd1_tas_med_trots_att_den_saknar_rattsomraden():
     """AVD I har inga områden i datat men ska ändå synas, med en modullänk."""
     avd1 = next(a for a in taxonomi() if a.id == "avd1_introduktion")
     assert avd1.omraden == ()
-    assert avd1.sida == "pages/1_Juridisk_metod.py"
+    assert avd1.sida == "sidor/1_Juridisk_metod.py"
 
 
 def test_exakt_en_rot(graf):

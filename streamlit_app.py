@@ -5,13 +5,16 @@ Ansvarar för:
 - sidregistret nedan, som ger sidorna deras namn i sidopanelen
 - gemensam CSS och sidopanel för samtliga sidor via utils.ui
 
-Varför ett explicit sidregister: filnamnen i pages/ är ASCII och saknar
-å, ä och ö. Streamlits automatiska sidnavigering härleder etiketterna ur
-filnamnen och visade därför "Avtalsratt", "Kop och konsumentratt" och
-"streamlit app" i sidopanelen. st.navigation låter oss sätta korrekt
-svenska titlar oberoende av filnamnen.
+Varför sidorna ligger i sidor/ och INTE i pages/: en mapp som heter exakt
+pages/ aktiverar Streamlits äldre automatiska sidnavigering. Den härleder
+etiketter ur ASCII-filnamnen ("Avtalsratt", "Kop och konsumentratt") och
+listar även ingångsskriptet som "streamlit app". Ännu värre serveras varje
+pages/-fil på sin egen URL och renderas då fristående, utan att den här
+routern (och därmed CSS:en och den svenska sidopanelen) körs. Genom att
+lägga sidorna i sidor/ finns ingen automatisk navigering: alla vägar går
+genom detta skript, och st.navigation ger korrekta svenska titlar.
 
-Ingen affärslogik här: sidinnehållet ligger i pages/ och all LLM-,
+Ingen affärslogik här: sidinnehållet ligger i sidor/ och all LLM-,
 lagrums- och scenariologik i utils/.
 """
 
@@ -30,26 +33,26 @@ st.set_page_config(
 from utils.ui import inject_css, render_sidebar  # noqa: E402
 
 # Titeln är etiketten i webbläsarfliken. Sökvägen måste matcha filnamnet i
-# pages/ exakt. Ordningen här saknar betydelse för sidopanelen: den ritas av
+# sidor/ exakt. Ordningen här saknar betydelse för sidopanelen: den ritas av
 # utils.ui.render_sidopanel ur navigeringsträdet i utils.navigation.
 SIDOR = [
-    st.Page("pages/0_Hem.py", title="Hem", default=True),
-    st.Page("pages/1_Juridisk_metod.py", title="Juridisk metod"),
-    st.Page("pages/16_Rattskartan.py", title="Rättskartan"),
-    st.Page("pages/12_Personratt.py", title="Personrätt"),
-    st.Page("pages/13_Allman_formogenhetsratt.py", title="Allmän förmögenhetsrätt"),
-    st.Page("pages/2_Avtalsratt.py", title="Avtalsrätt"),
-    st.Page("pages/3_Kop_och_konsumentratt.py", title="Köp- och konsumenträtt"),
-    st.Page("pages/4_Skadestandsratt.py", title="Skadeståndsrätt"),
-    st.Page("pages/5_Arbetsratt.py", title="Arbetsrätt"),
-    st.Page("pages/6_Associationsratt.py", title="Associationsrätt"),
-    st.Page("pages/7_Familje_och_arvsratt.py", title="Familje- och successionsrätt"),
-    st.Page("pages/8_Straff_och_processratt.py", title="Straff- och processrätt"),
-    st.Page("pages/14_Fastighetsratt.py", title="Fastighetsrätt"),
-    st.Page("pages/15_Fordringsratt.py", title="Fordringsrätt"),
-    st.Page("pages/9_Kunskapstest.py", title="Kunskapstest"),
-    st.Page("pages/10_Kunskapskarta.py", title="Kunskapskarta"),
-    st.Page("pages/11_Kunskapsutmaning.py", title="Kunskapsutmaning"),
+    st.Page("sidor/0_Hem.py", title="Hem", default=True),
+    st.Page("sidor/1_Juridisk_metod.py", title="Juridisk metod"),
+    st.Page("sidor/16_Rattskartan.py", title="Rättskartan"),
+    st.Page("sidor/12_Personratt.py", title="Personrätt"),
+    st.Page("sidor/13_Allman_formogenhetsratt.py", title="Allmän förmögenhetsrätt"),
+    st.Page("sidor/2_Avtalsratt.py", title="Avtalsrätt"),
+    st.Page("sidor/3_Kop_och_konsumentratt.py", title="Köp- och konsumenträtt"),
+    st.Page("sidor/4_Skadestandsratt.py", title="Skadeståndsrätt"),
+    st.Page("sidor/5_Arbetsratt.py", title="Arbetsrätt"),
+    st.Page("sidor/6_Associationsratt.py", title="Associationsrätt"),
+    st.Page("sidor/7_Familje_och_arvsratt.py", title="Familje- och successionsrätt"),
+    st.Page("sidor/8_Straff_och_processratt.py", title="Straff- och processrätt"),
+    st.Page("sidor/14_Fastighetsratt.py", title="Fastighetsrätt"),
+    st.Page("sidor/15_Fordringsratt.py", title="Fordringsrätt"),
+    st.Page("sidor/9_Kunskapstest.py", title="Kunskapstest"),
+    st.Page("sidor/10_Kunskapskarta.py", title="Kunskapskarta"),
+    st.Page("sidor/11_Kunskapsutmaning.py", title="Kunskapsutmaning"),
 ]
 
 inject_css()

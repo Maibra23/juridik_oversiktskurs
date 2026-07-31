@@ -65,7 +65,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
     Grupp(
         "OFFENTLIG RÄTT",
         (
-            Modul("Konstitutionell rätt"),  # kap 2-3, ej byggd
+            # Heter Statsrätt även i Rättskartan (data/rattssystem.json).
+            # Samma rättsområde får inte bära två namn på samma skärm.
+            Modul("Statsrätt"),  # kap 2-3, ej byggd
             Modul("Förvaltningsrätt"),  # kap 4, ej byggd
         ),
     ),

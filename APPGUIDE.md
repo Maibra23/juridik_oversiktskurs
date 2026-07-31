@@ -49,7 +49,7 @@ Trädet speglar rättssystemets systematik, inte filordningen: Avtalsrätt
 ligger under Civilrätt → Förmögenhetsrätt → Kontraktsrätt. Att navigera i
 appen är därför i sig en repetition av hur svensk rätt är indelad.
 
-Två poster — Konstitutionell rätt och Förvaltningsrätt — visas som
+Två poster — Statsrätt och Förvaltningsrätt — visas som
 **planerade men obyggda**. De är medvetet kvar: kartan ska visa hela
 rättssystemet, även de delar kursen inte täcker.
 
@@ -120,7 +120,7 @@ om det.
 
 `streamlit_app.py` registrerar 17 sidor via `st.navigation`. Sidopanelens
 hierarki byggs separat i `utils/navigation.py`, som också känner till
-planerade men obyggda moduler (Konstitutionell rätt, Förvaltningsrätt).
+planerade men obyggda moduler (Statsrätt, Förvaltningsrätt).
 
 Elva av de sjutton sidorna är skal på 15–22 rader som bara anropar
 `rendera_modulsida(...)`. Motorn ligger i `utils/modulvy.py`.

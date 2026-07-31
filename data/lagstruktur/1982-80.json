@@ -1,0 +1,152 @@
+{
+ "forkortning": "LAS",
+ "namn": "Lag om anställningsskydd",
+ "sfs": "1982:80",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1982-80.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": null,
+   "paragrafer": [
+    "1",
+    "2",
+    "3"
+   ]
+  },
+  {
+   "rubrik": "Anställningsavtalet",
+   "kapitel": null,
+   "paragrafer": [
+    "4",
+    "5",
+    "6"
+   ]
+  },
+  {
+   "rubrik": "Uppsägning från arbetsgivarens sida",
+   "kapitel": null,
+   "paragrafer": [
+    "7",
+    "8",
+    "9",
+    "10"
+   ]
+  },
+  {
+   "rubrik": "Uppsägningstid",
+   "kapitel": null,
+   "paragrafer": [
+    "11"
+   ]
+  },
+  {
+   "rubrik": "Lön och andra förmåner under uppsägningstiden",
+   "kapitel": null,
+   "paragrafer": [
+    "12",
+    "13",
+    "14"
+   ]
+  },
+  {
+   "rubrik": "Besked om att tidsbegränsad anställning inte kommer att fortsätta",
+   "kapitel": null,
+   "paragrafer": [
+    "15",
+    "16",
+    "17"
+   ]
+  },
+  {
+   "rubrik": "Avskedande",
+   "kapitel": null,
+   "paragrafer": [
+    "18",
+    "19",
+    "20"
+   ]
+  },
+  {
+   "rubrik": "Lön och andra förmåner under permittering",
+   "kapitel": null,
+   "paragrafer": [
+    "21"
+   ]
+  },
+  {
+   "rubrik": "Turordning vid uppsägning",
+   "kapitel": null,
+   "paragrafer": [
+    "22",
+    "23",
+    "24"
+   ]
+  },
+  {
+   "rubrik": "Företrädesrätt till återanställning m.m.",
+   "kapitel": null,
+   "paragrafer": [
+    "25",
+    "26",
+    "27"
+   ]
+  },
+  {
+   "rubrik": "Förhandlingar m.m.",
+   "kapitel": null,
+   "paragrafer": [
+    "28",
+    "29",
+    "30",
+    "31",
+    "32"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser för arbetstagare som har fyllt 69 år",
+   "kapitel": null,
+   "paragrafer": [
+    "33"
+   ]
+  },
+  {
+   "rubrik": "Tvister om giltigheten av uppsägningar eller avskedanden m.m.",
+   "kapitel": null,
+   "paragrafer": [
+    "34",
+    "35",
+    "36",
+    "37"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "38",
+    "39"
+   ]
+  },
+  {
+   "rubrik": "Preskription",
+   "kapitel": null,
+   "paragrafer": [
+    "40",
+    "41",
+    "42"
+   ]
+  },
+  {
+   "rubrik": "Rättegången",
+   "kapitel": null,
+   "paragrafer": [
+    "43"
+   ]
+  }
+ ]
+}

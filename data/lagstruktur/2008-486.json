@@ -1,0 +1,349 @@
+{
+ "forkortning": "MFL",
+ "namn": "Marknadsföringslag",
+ "sfs": "2008:486",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-2008-486.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Inledande bestämmelse",
+   "kapitel": null,
+   "paragrafer": [
+    "1"
+   ]
+  },
+  {
+   "rubrik": "Lagens tillämpningsområde",
+   "kapitel": null,
+   "paragrafer": [
+    "2"
+   ]
+  },
+  {
+   "rubrik": "Definitioner",
+   "kapitel": null,
+   "paragrafer": [
+    "3"
+   ]
+  },
+  {
+   "rubrik": "Direktivbilagan",
+   "kapitel": null,
+   "paragrafer": [
+    "4"
+   ]
+  },
+  {
+   "rubrik": "God marknadsföringssed",
+   "kapitel": null,
+   "paragrafer": [
+    "5",
+    "6"
+   ]
+  },
+  {
+   "rubrik": "Aggressiv marknadsföring",
+   "kapitel": null,
+   "paragrafer": [
+    "7"
+   ]
+  },
+  {
+   "rubrik": "Vilseledande marknadsföring",
+   "kapitel": null,
+   "paragrafer": [
+    "8"
+   ]
+  },
+  {
+   "rubrik": "Reklamidentifiering",
+   "kapitel": null,
+   "paragrafer": [
+    "9"
+   ]
+  },
+  {
+   "rubrik": "Förbud mot vilseledande marknadsföring",
+   "kapitel": null,
+   "paragrafer": [
+    "10"
+   ]
+  },
+  {
+   "rubrik": "Begränsningar i kommunikationsmediet m.m.",
+   "kapitel": null,
+   "paragrafer": [
+    "11"
+   ]
+  },
+  {
+   "rubrik": "Köperbjudanden",
+   "kapitel": null,
+   "paragrafer": [
+    "12"
+   ]
+  },
+  {
+   "rubrik": "Vilseledande förpackningsstorlekar",
+   "kapitel": null,
+   "paragrafer": [
+    "13"
+   ]
+  },
+  {
+   "rubrik": "Vilseledande efterbildningar",
+   "kapitel": null,
+   "paragrafer": [
+    "14"
+   ]
+  },
+  {
+   "rubrik": "Konkursutförsäljningar",
+   "kapitel": null,
+   "paragrafer": [
+    "15"
+   ]
+  },
+  {
+   "rubrik": "Utförsäljningar",
+   "kapitel": null,
+   "paragrafer": [
+    "16"
+   ]
+  },
+  {
+   "rubrik": "Realisationer",
+   "kapitel": null,
+   "paragrafer": [
+    "17"
+   ]
+  },
+  {
+   "rubrik": "Jämförande reklam",
+   "kapitel": null,
+   "paragrafer": [
+    "18"
+   ]
+  },
+  {
+   "rubrik": "Obeställd reklam",
+   "kapitel": null,
+   "paragrafer": [
+    "19",
+    "20",
+    "21"
+   ]
+  },
+  {
+   "rubrik": "Information om garantier",
+   "kapitel": null,
+   "paragrafer": [
+    "22"
+   ]
+  },
+  {
+   "rubrik": "Förbud mot viss marknadsföring",
+   "kapitel": null,
+   "paragrafer": [
+    "23"
+   ]
+  },
+  {
+   "rubrik": "Åläggande att lämna information",
+   "kapitel": null,
+   "paragrafer": [
+    "24"
+   ]
+  },
+  {
+   "rubrik": "Åläggande att tillhandahålla tekniska hjälpmedel",
+   "kapitel": null,
+   "paragrafer": [
+    "25"
+   ]
+  },
+  {
+   "rubrik": "Vite",
+   "kapitel": null,
+   "paragrafer": [
+    "26"
+   ]
+  },
+  {
+   "rubrik": "Interimistiska beslut",
+   "kapitel": null,
+   "paragrafer": [
+    "27"
+   ]
+  },
+  {
+   "rubrik": "Förelägganden",
+   "kapitel": null,
+   "paragrafer": [
+    "28"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för avgift",
+   "kapitel": null,
+   "paragrafer": [
+    "29",
+    "30"
+   ]
+  },
+  {
+   "rubrik": "Avgiftens storlek",
+   "kapitel": null,
+   "paragrafer": [
+    "31",
+    "32"
+   ]
+  },
+  {
+   "rubrik": "Betalning av avgiften",
+   "kapitel": null,
+   "paragrafer": [
+    "33"
+   ]
+  },
+  {
+   "rubrik": "Preskription",
+   "kapitel": null,
+   "paragrafer": [
+    "34",
+    "35"
+   ]
+  },
+  {
+   "rubrik": "Kvarstad",
+   "kapitel": null,
+   "paragrafer": [
+    "36"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "37",
+    "38"
+   ]
+  },
+  {
+   "rubrik": "Utplånande",
+   "kapitel": null,
+   "paragrafer": [
+    "39"
+   ]
+  },
+  {
+   "rubrik": "Säkerhetsåtgärder",
+   "kapitel": null,
+   "paragrafer": [
+    "40",
+    "41"
+   ]
+  },
+  {
+   "rubrik": "Tillsynsbefogenheter",
+   "kapitel": null,
+   "paragrafer": [
+    "42",
+    "43",
+    "44",
+    "45",
+    "46"
+   ]
+  },
+  {
+   "rubrik": "Förbud och ålägganden",
+   "kapitel": null,
+   "paragrafer": [
+    "47"
+   ]
+  },
+  {
+   "rubrik": "Marknadsstörningsavgift",
+   "kapitel": null,
+   "paragrafer": [
+    "48"
+   ]
+  },
+  {
+   "rubrik": "Utdömande av vite",
+   "kapitel": null,
+   "paragrafer": [
+    "49"
+   ]
+  },
+  {
+   "rubrik": "Kvarstad vid utdömande av vite",
+   "kapitel": null,
+   "paragrafer": [
+    "50"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av vissa beslut",
+   "kapitel": null,
+   "paragrafer": [
+    "51",
+    "52"
+   ]
+  },
+  {
+   "rubrik": "Rättskraft",
+   "kapitel": null,
+   "paragrafer": [
+    "53",
+    "54",
+    "55",
+    "56",
+    "57",
+    "58"
+   ]
+  },
+  {
+   "rubrik": "Handläggningen i domstolen",
+   "kapitel": null,
+   "paragrafer": [
+    "59",
+    "60",
+    "61",
+    "62"
+   ]
+  },
+  {
+   "rubrik": "Intervention",
+   "kapitel": null,
+   "paragrafer": [
+    "63"
+   ]
+  },
+  {
+   "rubrik": "Rättegångskostnader",
+   "kapitel": null,
+   "paragrafer": [
+    "64"
+   ]
+  },
+  {
+   "rubrik": "Utevaro",
+   "kapitel": null,
+   "paragrafer": [
+    "65"
+   ]
+  },
+  {
+   "rubrik": "Övriga bestämmelser",
+   "kapitel": null,
+   "paragrafer": [
+    "66"
+   ]
+  }
+ ]
+}

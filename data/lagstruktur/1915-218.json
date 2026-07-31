@@ -1,0 +1,78 @@
+{
+ "forkortning": "AvtL",
+ "namn": "Lag om avtal och andra rättshandlingar på förmögenhetsrättens område",
+ "sfs": "1915:218",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1915-218.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Om slutande av avtal",
+   "paragrafer": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Om fullmakt",
+   "paragrafer": [
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21",
+    "22",
+    "23",
+    "24",
+    "25",
+    "26",
+    "27"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Om rättshandlingars ogiltighet",
+   "paragrafer": [
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37",
+    "38"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Allmänna bestämmelser",
+   "paragrafer": [
+    "39",
+    "40",
+    "41"
+   ]
+  }
+ ],
+ "moment": []
+}

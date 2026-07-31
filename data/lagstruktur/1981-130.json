@@ -1,0 +1,62 @@
+{
+ "forkortning": "PreskL",
+ "namn": "Preskriptionslag",
+ "sfs": "1981:130",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1981-130.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Inledande bestämmelse",
+   "kapitel": null,
+   "paragrafer": [
+    "1"
+   ]
+  },
+  {
+   "rubrik": "Preskriptionstid",
+   "kapitel": null,
+   "paragrafer": [
+    "2",
+    "3",
+    "4"
+   ]
+  },
+  {
+   "rubrik": "Preskriptionsavbrott",
+   "kapitel": null,
+   "paragrafer": [
+    "5"
+   ]
+  },
+  {
+   "rubrik": "Verkan av preskriptionsavbrott",
+   "kapitel": null,
+   "paragrafer": [
+    "6",
+    "7"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av preskription",
+   "kapitel": null,
+   "paragrafer": [
+    "8",
+    "9",
+    "10",
+    "11"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser",
+   "kapitel": null,
+   "paragrafer": [
+    "12",
+    "13"
+   ]
+  }
+ ]
+}

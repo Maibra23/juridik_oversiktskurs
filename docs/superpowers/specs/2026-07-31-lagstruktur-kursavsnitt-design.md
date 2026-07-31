@@ -57,22 +57,20 @@ lagens faktiska struktur först, så att inget overifierat påstående når stud
 
 ## Källans tre former
 
-Sju lagar hämtades och inspekterades under designarbetet. De gav tre former:
+Samtliga 21 lagar är hämtade och uppmätta (Task 2). De fördelar sig på tre former:
 
-| Form | Uppmätt | `<h3>` | `<h4>` |
+| Form | Lagar | `<h3>` | `<h4>` |
 |---|---|---|---|
-| Kapitel **och** moment | KKöpL (56 h4), BrB (39), UB (108) | `3 kap. Näringsidkarens dröjsmål` | `Påföljder vid dröjsmål` |
-| Bara kapitel | AvtL (0 h4) | `2 kap. Om fullmakt` | saknas |
-| Bara moment | KöpL (69), LAS (19), PreskL (6) | saknas | `Påföljder vid säljarens dröjsmål` |
+| Kapitel **och** moment | BrB, JB, HBL, UB, KonkL, ÄktB, FB, RB, ABL, KKöpL | `3 kap. Näringsidkarens dröjsmål` | `Påföljder vid dröjsmål` |
+| Bara kapitel | AvtL, SkbrL, ÄB, SkL | `2 kap. Om fullmakt` | saknas |
+| Bara moment | LAS, KöpL, SamboL, MFL, GFL, LFF, PreskL | saknas | `Påföljder vid säljarens dröjsmål` |
 
-De återstående 14 lagarna är **inte** inspekterade var för sig. Registret säger att
-elva av dem är kapitelindelade (RB, ABL, ÄktB, JB, SkL, HBL, KonkL, FB, ÄB) och att
-resten (MFL, SkbrL, SamboL, GFL, LFF) är det inte, men om en enskild lag bär
-momentrubriker eller inte är ett empiriskt faktum som avgörs först vid hämtningen.
+Tre lagar föll inte ut som designarbetets gissning: **SkL och ÄB saknar
+momentrubriker** (de klassificerades som "kapitel och moment"), och **SkbrL har
+kapitelrubriker** trots att den klassificerades som kapitellös.
 
-Hämtaren ska därför inte förutsätta någon form per lag: den läser vilka rubriknivåer
-som finns och skriver de listor som faktiskt fylls. Fas 1 rapporterar utfallet per lag,
-så klassificeringen ovan blir bekräftad eller korrigerad av data i stället för antagen.
+Hämtaren förutsätter därför ingen form per lag: den läser vilka rubriknivåer som
+finns och skriver de listor som faktiskt fylls. Ingen lag saknade båda nivåerna.
 
 `<h3>` innehåller även brus (`Innehåll:`, `Övergångsbestämmelser`) som filtreras på
 mönstret `^\d+ kap\.`.
@@ -82,6 +80,9 @@ vilket registret redan noterar (`kapitelindelad: false` med förklarande `not`-f
 Dess `kapitel[].nummer` blir alltså `"2"` medan `kapitel[].paragrafer` är platta
 nycklar (`"10"`, `"11"`, …), inte `"2:10"`. Paragrafnyckelns form styrs av lagens
 numrering, aldrig av om en kapitelrubrik råkar finnas.
+
+**SkbrL är samma fall** och upptäcktes i Task 2: fyra kapitelrubriker
+(`Om löpande skuldebrev` osv.) med löpande numrering 1–38 tvärs igenom dem.
 
 Uppmätt vid implementationen av Task 1, och tvärtemot vad den här specen först
 antog: **källan märker AvtL:s paragrafer `K2P10`**, med kapitelprefix, trots att

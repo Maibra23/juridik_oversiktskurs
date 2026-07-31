@@ -1,0 +1,197 @@
+{
+ "forkortning": "HBL",
+ "namn": "Lag om handelsbolag och enkla bolag",
+ "sfs": "1980:1102",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1980-1102.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Inledande bestämmelser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Handelsbolag",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16",
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23",
+    "2:24",
+    "2:25",
+    "2:26",
+    "2:27",
+    "2:28",
+    "2:29",
+    "2:30",
+    "2:31",
+    "2:32",
+    "2:33",
+    "2:34",
+    "2:35",
+    "2:36",
+    "2:37",
+    "2:38",
+    "2:39",
+    "2:40",
+    "2:41",
+    "2:42",
+    "2:43",
+    "2:44",
+    "2:45"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Kommanditbolag",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Enkla bolag",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Bolagsmännens inbördes rättigheter och skyldigheter",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16"
+   ]
+  },
+  {
+   "rubrik": "Bolagets och bolagsmännens förhållande till tredje man",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23"
+   ]
+  },
+  {
+   "rubrik": "Bolagets likvidation och upplösning",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:24",
+    "2:25",
+    "2:26",
+    "2:27",
+    "2:28",
+    "2:29",
+    "2:30",
+    "2:31",
+    "2:32",
+    "2:33",
+    "2:34",
+    "2:35",
+    "2:36",
+    "2:37",
+    "2:38",
+    "2:39",
+    "2:40",
+    "2:41",
+    "2:42",
+    "2:43",
+    "2:44",
+    "2:45"
+   ]
+  },
+  {
+   "rubrik": "Bolagsmännens inbördes rättigheter och skyldigheter",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4"
+   ]
+  },
+  {
+   "rubrik": "Bolagsmännens förhållande till tredje man",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:5",
+    "4:6"
+   ]
+  },
+  {
+   "rubrik": "Bolagets likvidation och upplösning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:7",
+    "4:8",
+    "4:9"
+   ]
+  }
+ ]
+}

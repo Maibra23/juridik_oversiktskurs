@@ -1,0 +1,5783 @@
+{
+ "forkortning": "ABL",
+ "namn": "Aktiebolagslag",
+ "sfs": "2005:551",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-2005-551.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Inledande bestämmelser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8",
+    "1:9",
+    "1:10",
+    "1:11",
+    "1:12",
+    "1:13",
+    "1:14"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Bildande av aktiebolag",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16",
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23",
+    "2:24",
+    "2:25",
+    "2:26",
+    "2:27",
+    "2:28",
+    "2:29",
+    "2:30",
+    "2:31"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Bolagsordning",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Aktierna",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23",
+    "4:24",
+    "4:25",
+    "4:26",
+    "4:27",
+    "4:28",
+    "4:29",
+    "4:30",
+    "4:31",
+    "4:32",
+    "4:33",
+    "4:34",
+    "4:35",
+    "4:36",
+    "4:37",
+    "4:38",
+    "4:39",
+    "4:40",
+    "4:41",
+    "4:42",
+    "4:43",
+    "4:44",
+    "4:45",
+    "4:46",
+    "4:47",
+    "4:48",
+    "4:49",
+    "4:50"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Aktiebok",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11",
+    "5:12",
+    "5:13",
+    "5:14",
+    "5:15",
+    "5:16",
+    "5:17",
+    "5:18",
+    "5:19"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Aktiebrev",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Bolagsstämma",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21",
+    "7:22",
+    "7:23",
+    "7:24",
+    "7:25",
+    "7:26",
+    "7:27",
+    "7:28",
+    "7:29",
+    "7:30",
+    "7:31",
+    "7:32",
+    "7:33",
+    "7:34",
+    "7:35",
+    "7:36",
+    "7:37",
+    "7:38",
+    "7:39",
+    "7:40",
+    "7:41",
+    "7:42",
+    "7:43",
+    "7:44",
+    "7:45",
+    "7:46",
+    "7:47",
+    "7:48",
+    "7:49",
+    "7:50",
+    "7:51",
+    "7:52",
+    "7:53",
+    "7:54",
+    "7:55",
+    "7:56",
+    "7:57",
+    "7:58",
+    "7:59",
+    "7:60",
+    "7:61",
+    "7:62",
+    "7:63",
+    "7:64",
+    "7:65",
+    "7:66",
+    "7:67",
+    "7:68",
+    "7:69",
+    "7:70",
+    "7:71"
+   ]
+  },
+  {
+   "nummer": "8",
+   "rubrik": "Bolagets ledning",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14",
+    "8:15",
+    "8:16",
+    "8:17",
+    "8:18",
+    "8:19",
+    "8:20",
+    "8:21",
+    "8:22",
+    "8:23",
+    "8:24",
+    "8:25",
+    "8:26",
+    "8:27",
+    "8:28",
+    "8:29",
+    "8:30",
+    "8:31",
+    "8:32",
+    "8:33",
+    "8:34",
+    "8:35",
+    "8:36",
+    "8:37",
+    "8:38",
+    "8:39",
+    "8:40",
+    "8:41",
+    "8:42",
+    "8:43",
+    "8:44",
+    "8:45",
+    "8:46",
+    "8:47",
+    "8:48",
+    "8:49",
+    "8:50",
+    "8:51",
+    "8:52",
+    "8:53",
+    "8:54"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Revision",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19",
+    "9:20",
+    "9:21",
+    "9:22",
+    "9:23",
+    "9:24",
+    "9:25",
+    "9:26",
+    "9:27",
+    "9:28",
+    "9:29",
+    "9:30",
+    "9:31",
+    "9:32",
+    "9:33",
+    "9:34",
+    "9:35",
+    "9:36",
+    "9:37",
+    "9:38",
+    "9:39",
+    "9:40",
+    "9:41",
+    "9:42",
+    "9:43",
+    "9:44",
+    "9:45",
+    "9:46",
+    "9:47",
+    "9:48"
+   ]
+  },
+  {
+   "nummer": "10",
+   "rubrik": "Allmän och särskild granskning",
+   "paragrafer": [
+    "10:1",
+    "10:2",
+    "10:3",
+    "10:4",
+    "10:5",
+    "10:6",
+    "10:7",
+    "10:8",
+    "10:9",
+    "10:10",
+    "10:11",
+    "10:12",
+    "10:13",
+    "10:14",
+    "10:15",
+    "10:16",
+    "10:17",
+    "10:18",
+    "10:19",
+    "10:20",
+    "10:21",
+    "10:22",
+    "10:23",
+    "10:24",
+    "10:25",
+    "10:26",
+    "10:27",
+    "10:28"
+   ]
+  },
+  {
+   "nummer": "11",
+   "rubrik": "Ökning av aktiekapitalet, utgivande av nya aktier, upptagande av vissa penninglån, m.m.",
+   "paragrafer": [
+    "11:1",
+    "11:2",
+    "11:3",
+    "11:4",
+    "11:5",
+    "11:6",
+    "11:7",
+    "11:8",
+    "11:9",
+    "11:10",
+    "11:11",
+    "11:12",
+    "11:13",
+    "11:14",
+    "11:15",
+    "11:16",
+    "11:17",
+    "11:18",
+    "11:19",
+    "11:20"
+   ]
+  },
+  {
+   "nummer": "12",
+   "rubrik": "Fondemission",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14"
+   ]
+  },
+  {
+   "nummer": "13",
+   "rubrik": "Nyemission av aktier",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9",
+    "13:10",
+    "13:11",
+    "13:12",
+    "13:13",
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17",
+    "13:18",
+    "13:19",
+    "13:20",
+    "13:21",
+    "13:22",
+    "13:23",
+    "13:24",
+    "13:25",
+    "13:26",
+    "13:27",
+    "13:28",
+    "13:29",
+    "13:30",
+    "13:31",
+    "13:32",
+    "13:33",
+    "13:34",
+    "13:35",
+    "13:36",
+    "13:37",
+    "13:38",
+    "13:39",
+    "13:40",
+    "13:41",
+    "13:42"
+   ]
+  },
+  {
+   "nummer": "14",
+   "rubrik": "Emission av teckningsoptioner med åtföljande teckning av nya aktier",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10",
+    "14:11",
+    "14:12",
+    "14:13",
+    "14:14",
+    "14:15",
+    "14:16",
+    "14:17",
+    "14:18",
+    "14:19",
+    "14:20",
+    "14:21",
+    "14:22",
+    "14:23",
+    "14:24",
+    "14:25",
+    "14:26",
+    "14:27",
+    "14:28",
+    "14:29",
+    "14:30",
+    "14:31",
+    "14:32",
+    "14:33",
+    "14:34",
+    "14:35",
+    "14:36",
+    "14:37",
+    "14:38",
+    "14:39",
+    "14:40",
+    "14:41",
+    "14:42",
+    "14:43",
+    "14:44",
+    "14:45",
+    "14:46",
+    "14:47",
+    "14:48",
+    "14:49"
+   ]
+  },
+  {
+   "nummer": "15",
+   "rubrik": "Emission av konvertibler med åtföljande konvertering till nya aktier",
+   "paragrafer": [
+    "15:1",
+    "15:2",
+    "15:3",
+    "15:4",
+    "15:5",
+    "15:6",
+    "15:7",
+    "15:8",
+    "15:9",
+    "15:10",
+    "15:11",
+    "15:12",
+    "15:13",
+    "15:14",
+    "15:15",
+    "15:16",
+    "15:17",
+    "15:18",
+    "15:19",
+    "15:20",
+    "15:21",
+    "15:22",
+    "15:23",
+    "15:24",
+    "15:25",
+    "15:26",
+    "15:27",
+    "15:28",
+    "15:29",
+    "15:31",
+    "15:32",
+    "15:33",
+    "15:34",
+    "15:35",
+    "15:36",
+    "15:37",
+    "15:38",
+    "15:39",
+    "15:40",
+    "15:42",
+    "15:43",
+    "15:44"
+   ]
+  },
+  {
+   "nummer": "16",
+   "rubrik": "Vissa riktade emissioner m.m.",
+   "paragrafer": [
+    "16:1",
+    "16:2",
+    "16:3",
+    "16:4",
+    "16:5",
+    "16:6",
+    "16:7",
+    "16:8",
+    "16:9",
+    "16:10"
+   ]
+  },
+  {
+   "nummer": "17",
+   "rubrik": "Värdeöverföringar från bolaget",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5",
+    "17:6",
+    "17:7"
+   ]
+  },
+  {
+   "nummer": "18",
+   "rubrik": "Vinstutdelning",
+   "paragrafer": [
+    "18:1",
+    "18:2",
+    "18:3",
+    "18:4",
+    "18:5",
+    "18:6",
+    "18:7",
+    "18:8",
+    "18:9",
+    "18:10",
+    "18:11",
+    "18:12",
+    "18:13",
+    "18:14"
+   ]
+  },
+  {
+   "nummer": "19",
+   "rubrik": "Förvärv av egna aktier m.m.",
+   "paragrafer": [
+    "19:1",
+    "19:2",
+    "19:3",
+    "19:4",
+    "19:5",
+    "19:6",
+    "19:7",
+    "19:8",
+    "19:9",
+    "19:10",
+    "19:11",
+    "19:12",
+    "19:13",
+    "19:14",
+    "19:15",
+    "19:16",
+    "19:17",
+    "19:18",
+    "19:19",
+    "19:20",
+    "19:21",
+    "19:22",
+    "19:23",
+    "19:24",
+    "19:25",
+    "19:26",
+    "19:27",
+    "19:28",
+    "19:29",
+    "19:30",
+    "19:31",
+    "19:32",
+    "19:33",
+    "19:34",
+    "19:35",
+    "19:36",
+    "19:37"
+   ]
+  },
+  {
+   "nummer": "20",
+   "rubrik": "Minskning av aktiekapitalet, den bundna överkursfonden och reservfonden",
+   "paragrafer": [
+    "20:1",
+    "20:2",
+    "20:3",
+    "20:4",
+    "20:5",
+    "20:6",
+    "20:7",
+    "20:8",
+    "20:9",
+    "20:10",
+    "20:11",
+    "20:12",
+    "20:13",
+    "20:14",
+    "20:15",
+    "20:16",
+    "20:17",
+    "20:18",
+    "20:19",
+    "20:20",
+    "20:21",
+    "20:22",
+    "20:23",
+    "20:24",
+    "20:25",
+    "20:26",
+    "20:27",
+    "20:28",
+    "20:29",
+    "20:30",
+    "20:31",
+    "20:32",
+    "20:33",
+    "20:34",
+    "20:35",
+    "20:36",
+    "20:37"
+   ]
+  },
+  {
+   "nummer": "21",
+   "rubrik": "Lån från bolaget till aktieägare m.fl.",
+   "paragrafer": [
+    "21:1",
+    "21:2",
+    "21:3",
+    "21:4",
+    "21:5",
+    "21:6",
+    "21:7",
+    "21:8",
+    "21:9",
+    "21:10",
+    "21:11",
+    "21:12"
+   ]
+  },
+  {
+   "nummer": "22",
+   "rubrik": "Inlösen av minoritetsaktier",
+   "paragrafer": [
+    "22:1",
+    "22:2",
+    "22:3",
+    "22:4",
+    "22:5",
+    "22:6",
+    "22:7",
+    "22:8",
+    "22:9",
+    "22:10",
+    "22:11",
+    "22:12",
+    "22:13",
+    "22:14",
+    "22:15",
+    "22:16",
+    "22:17",
+    "22:18",
+    "22:19",
+    "22:20",
+    "22:21",
+    "22:22",
+    "22:23",
+    "22:24",
+    "22:25",
+    "22:26",
+    "22:27",
+    "22:28"
+   ]
+  },
+  {
+   "nummer": "23",
+   "rubrik": "Fusion",
+   "paragrafer": [
+    "23:1",
+    "23:2",
+    "23:3",
+    "23:4",
+    "23:5",
+    "23:6",
+    "23:7",
+    "23:8",
+    "23:9",
+    "23:10",
+    "23:11",
+    "23:12",
+    "23:13",
+    "23:14",
+    "23:15",
+    "23:16",
+    "23:17",
+    "23:18",
+    "23:19",
+    "23:20",
+    "23:21",
+    "23:22",
+    "23:23",
+    "23:24",
+    "23:25",
+    "23:26",
+    "23:27",
+    "23:28",
+    "23:29",
+    "23:30",
+    "23:31",
+    "23:32",
+    "23:33",
+    "23:34",
+    "23:35",
+    "23:36",
+    "23:37",
+    "23:38",
+    "23:39",
+    "23:40",
+    "23:41",
+    "23:42",
+    "23:43",
+    "23:44",
+    "23:45",
+    "23:46",
+    "23:47",
+    "23:48",
+    "23:49",
+    "23:50",
+    "23:51",
+    "23:52",
+    "23:53",
+    "23:54",
+    "23:55",
+    "23:56",
+    "23:57"
+   ]
+  },
+  {
+   "nummer": "24",
+   "rubrik": "Delning",
+   "paragrafer": [
+    "24:1",
+    "24:2",
+    "24:3",
+    "24:4",
+    "24:5",
+    "24:6",
+    "24:7",
+    "24:8",
+    "24:9",
+    "24:10",
+    "24:11",
+    "24:12",
+    "24:13",
+    "24:14",
+    "24:15",
+    "24:16",
+    "24:17",
+    "24:18",
+    "24:19",
+    "24:20",
+    "24:21",
+    "24:22",
+    "24:23",
+    "24:24",
+    "24:25",
+    "24:26",
+    "24:27",
+    "24:28",
+    "24:29",
+    "24:30",
+    "24:31",
+    "24:32",
+    "24:33",
+    "24:34",
+    "24:35",
+    "24:36",
+    "24:37",
+    "24:38",
+    "24:39",
+    "24:40",
+    "24:41",
+    "24:42",
+    "24:43",
+    "24:44",
+    "24:45",
+    "24:46",
+    "24:47",
+    "24:48",
+    "24:49",
+    "24:50",
+    "24:51",
+    "24:52",
+    "24:53",
+    "24:54",
+    "24:55",
+    "24:56",
+    "24:57",
+    "24:58",
+    "24:59",
+    "24:60",
+    "24:61",
+    "24:62"
+   ]
+  },
+  {
+   "nummer": "25",
+   "rubrik": "Likvidation och konkurs",
+   "paragrafer": [
+    "25:1",
+    "25:2",
+    "25:3",
+    "25:4",
+    "25:5",
+    "25:6",
+    "25:7",
+    "25:8",
+    "25:9",
+    "25:10",
+    "25:11",
+    "25:12",
+    "25:13",
+    "25:14",
+    "25:15",
+    "25:16",
+    "25:17",
+    "25:18",
+    "25:19",
+    "25:20",
+    "25:21",
+    "25:22",
+    "25:23",
+    "25:24",
+    "25:25",
+    "25:26",
+    "25:27",
+    "25:28",
+    "25:29",
+    "25:30",
+    "25:31",
+    "25:32",
+    "25:33",
+    "25:34",
+    "25:35",
+    "25:36",
+    "25:37",
+    "25:38",
+    "25:39",
+    "25:40",
+    "25:41",
+    "25:42",
+    "25:43",
+    "25:44",
+    "25:45",
+    "25:46",
+    "25:47",
+    "25:48",
+    "25:49",
+    "25:50",
+    "25:51",
+    "25:52"
+   ]
+  },
+  {
+   "nummer": "26",
+   "rubrik": "Byte av bolagskategori",
+   "paragrafer": [
+    "26:1",
+    "26:2",
+    "26:3",
+    "26:4",
+    "26:5",
+    "26:6",
+    "26:7",
+    "26:8"
+   ]
+  },
+  {
+   "nummer": "27",
+   "rubrik": "Registrering",
+   "paragrafer": [
+    "27:1",
+    "27:2",
+    "27:3",
+    "27:4",
+    "27:5",
+    "27:6",
+    "27:7",
+    "27:8",
+    "27:9"
+   ]
+  },
+  {
+   "nummer": "28",
+   "rubrik": "Aktiebolagets företagsnamn",
+   "paragrafer": [
+    "28:1",
+    "28:2",
+    "28:3",
+    "28:4",
+    "28:5",
+    "28:6",
+    "28:7"
+   ]
+  },
+  {
+   "nummer": "29",
+   "rubrik": "Skadestånd",
+   "paragrafer": [
+    "29:1",
+    "29:2",
+    "29:3",
+    "29:4",
+    "29:5",
+    "29:6",
+    "29:7",
+    "29:8",
+    "29:9",
+    "29:10",
+    "29:11",
+    "29:12",
+    "29:13",
+    "29:14"
+   ]
+  },
+  {
+   "nummer": "30",
+   "rubrik": "Straff och vite",
+   "paragrafer": [
+    "30:1",
+    "30:2",
+    "30:3"
+   ]
+  },
+  {
+   "nummer": "31",
+   "rubrik": "Överklagande",
+   "paragrafer": [
+    "31:1",
+    "31:2",
+    "31:3",
+    "31:4",
+    "31:5",
+    "31:6",
+    "31:7",
+    "31:8"
+   ]
+  },
+  {
+   "nummer": "32",
+   "rubrik": "Aktiebolag med särskild vinstutdelningsbegränsning",
+   "paragrafer": [
+    "32:1",
+    "32:2",
+    "32:3",
+    "32:4",
+    "32:5",
+    "32:6",
+    "32:7",
+    "32:8",
+    "32:9",
+    "32:10",
+    "32:11",
+    "32:12",
+    "32:13",
+    "32:14",
+    "32:15",
+    "32:16",
+    "32:17",
+    "32:18"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Lagens innehåll",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:1"
+   ]
+  },
+  {
+   "rubrik": "Privata och publika aktiebolag",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:2"
+   ]
+  },
+  {
+   "rubrik": "Aktieägarnas betalningsansvar",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:3"
+   ]
+  },
+  {
+   "rubrik": "Aktiekapital",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8"
+   ]
+  },
+  {
+   "rubrik": "Var det finns definitioner och förklaringar",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:9"
+   ]
+  },
+  {
+   "rubrik": "Avstämningsbolag",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:10"
+   ]
+  },
+  {
+   "rubrik": "Begreppen moderbolag, dotterföretag och koncern",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:11",
+    "1:12"
+   ]
+  },
+  {
+   "rubrik": "Undertecknande med elektronisk underskrift",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:13"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser för publika aktiebolag",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:14"
+   ]
+  },
+  {
+   "rubrik": "Stiftare",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:1",
+    "2:2"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder som skall vidtas vid bolagsbildningen",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:3"
+   ]
+  },
+  {
+   "rubrik": "När bolaget anses bildat",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:4"
+   ]
+  },
+  {
+   "rubrik": "Stiftelseurkundens innehåll",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11"
+   ]
+  },
+  {
+   "rubrik": "Hur aktier skall tecknas",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:12"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att aktier har tecknats med avvikande villkor",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:13"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att villkor för aktieteckning inte har uppfyllts",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:14"
+   ]
+  },
+  {
+   "rubrik": "Vad som lägst skall betalas för en aktie",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:15"
+   ]
+  },
+  {
+   "rubrik": "Hur aktierna skall betalas",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:16"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:17"
+   ]
+  },
+  {
+   "rubrik": "Betalning med apportegendom",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:18",
+    "2:19"
+   ]
+  },
+  {
+   "rubrik": "Betalningens verkan mot aktietecknarens borgenärer",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:20"
+   ]
+  },
+  {
+   "rubrik": "Kvittning m.m.",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:21"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:22"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:23"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att registrering inte sker",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:24"
+   ]
+  },
+  {
+   "rubrik": "Rättshandlingar som har företagits före bolagets registrering",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:25",
+    "2:26",
+    "2:27"
+   ]
+  },
+  {
+   "rubrik": "Uppgift i stiftelseurkunden om kostnader för bolagets bildande",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:28"
+   ]
+  },
+  {
+   "rubrik": "Uppskjuten apport",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:29",
+    "2:30",
+    "2:31"
+   ]
+  },
+  {
+   "rubrik": "Obligatoriska uppgifter",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:1"
+   ]
+  },
+  {
+   "rubrik": "Uppgift om redovisningsvaluta",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:2"
+   ]
+  },
+  {
+   "rubrik": "Uppgift om verksamhetens syfte",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:3"
+   ]
+  },
+  {
+   "rubrik": "Vem som kan besluta om ändring av bolagsordningen",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:4"
+   ]
+  },
+  {
+   "rubrik": "Anmälan och verkställighet av beslut om ändring av bolagsordningen",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:5"
+   ]
+  },
+  {
+   "rubrik": "Regeringens tillstånd till ändringar av bolagsordningen",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:6"
+   ]
+  },
+  {
+   "rubrik": "Panthavares samtycke till att avstämningsförbehåll tas bort ur bolagsordningen",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:7"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser vid byte av redovisningsvaluta",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:8",
+    "3:9",
+    "3:10"
+   ]
+  },
+  {
+   "rubrik": "Uppgift om bolagskategori",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:11"
+   ]
+  },
+  {
+   "rubrik": "Likhetsprincipen",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1"
+   ]
+  },
+  {
+   "rubrik": "Föreskrifter om olika aktieslag",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:2"
+   ]
+  },
+  {
+   "rubrik": "Föreskrifter om företrädesrätt vid nyemission av aktier eller emission av teckningsoptioner eller konvertibler",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:3"
+   ]
+  },
+  {
+   "rubrik": "Föreskrifter om rätt till fondaktie",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:4"
+   ]
+  },
+  {
+   "rubrik": "Röstvärdesskillnader",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:5"
+   ]
+  },
+  {
+   "rubrik": "Omvandlingsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:6"
+   ]
+  },
+  {
+   "rubrik": "Aktiers överlåtbarhet",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:7"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av ett samtyckesförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:8"
+   ]
+  },
+  {
+   "rubrik": "Innehållet i ett samtyckesförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:9"
+   ]
+  },
+  {
+   "rubrik": "Samtyckesförbehålls tillämplighet på utmätta aktier",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:10"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om samtycke",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:11"
+   ]
+  },
+  {
+   "rubrik": "Bolagets beslut i en fråga om samtycke",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:12",
+    "4:13"
+   ]
+  },
+  {
+   "rubrik": "Talan angående samtycke",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:14"
+   ]
+  },
+  {
+   "rubrik": "Jämkning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:15"
+   ]
+  },
+  {
+   "rubrik": "Verkan av ett beslut om samtycke",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:16"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse i strid med ett samtyckesförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:17"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av ett förköpsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:18"
+   ]
+  },
+  {
+   "rubrik": "Innehållet i ett förköpsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:19"
+   ]
+  },
+  {
+   "rubrik": "Anmälan om överlåtelse av aktier som omfattas av förköpsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:20"
+   ]
+  },
+  {
+   "rubrik": "Utövande av förköpsrätt m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:21"
+   ]
+  },
+  {
+   "rubrik": "Talan angående förköp",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:22"
+   ]
+  },
+  {
+   "rubrik": "Intyg om anteckningar i aktieboken",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:23"
+   ]
+  },
+  {
+   "rubrik": "Jämkning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:24"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att förköp inte har kommit till stånd",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:25"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse i strid med ett förköpsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:26"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av ett hembudsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:27"
+   ]
+  },
+  {
+   "rubrik": "Innehållet i ett hembudsförbehåll",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:28"
+   ]
+  },
+  {
+   "rubrik": "Tillämplighet av hembudsförbehåll vid dödsfall",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:29"
+   ]
+  },
+  {
+   "rubrik": "Anmälan om förvärv av hembudspliktiga aktier",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:30",
+    "4:31"
+   ]
+  },
+  {
+   "rubrik": "Utövande av lösningsrätt m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:32"
+   ]
+  },
+  {
+   "rubrik": "Talan i en fråga om hembud",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:33"
+   ]
+  },
+  {
+   "rubrik": "Jämkning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:34"
+   ]
+  },
+  {
+   "rubrik": "Utövande av rättigheter under hembudstiden m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:35",
+    "4:36"
+   ]
+  },
+  {
+   "rubrik": "Aktierättigheternas anknytning till aktieboken m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:37"
+   ]
+  },
+  {
+   "rubrik": "Utövande av vissa ekonomiska rättigheter i bolag som inte är avstämningsbolag",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:38"
+   ]
+  },
+  {
+   "rubrik": "Utövande av vissa ekonomiska rättigheter i avstämningsbolag",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:39",
+    "4:40",
+    "4:41"
+   ]
+  },
+  {
+   "rubrik": "Om en aktie har flera ägare",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:42"
+   ]
+  },
+  {
+   "rubrik": "Testamentarisk nyttjanderätt m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:43",
+    "4:44",
+    "4:45"
+   ]
+  },
+  {
+   "rubrik": "Uppdelning och sammanläggning av aktier",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:46",
+    "4:47",
+    "4:48",
+    "4:49",
+    "4:50"
+   ]
+  },
+  {
+   "rubrik": "Skyldighet att föra aktiebok",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:1"
+   ]
+  },
+  {
+   "rubrik": "Aktiebokens form",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:2"
+   ]
+  },
+  {
+   "rubrik": "Arkivering",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:3",
+    "5:4"
+   ]
+  },
+  {
+   "rubrik": "Aktiebokens innehåll",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:5",
+    "5:6"
+   ]
+  },
+  {
+   "rubrik": "Ansvaret för aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:7"
+   ]
+  },
+  {
+   "rubrik": "Upprättandet av aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:8"
+   ]
+  },
+  {
+   "rubrik": "Ändringar i aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:9"
+   ]
+  },
+  {
+   "rubrik": "Aktiebokens offentlighet",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:10"
+   ]
+  },
+  {
+   "rubrik": "Innehållet i aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:11"
+   ]
+  },
+  {
+   "rubrik": "Ansvaret för aktieboken m.m.",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:12"
+   ]
+  },
+  {
+   "rubrik": "Införing av aktieägare i aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:13"
+   ]
+  },
+  {
+   "rubrik": "Införing av förvaltare i aktieboken",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:14"
+   ]
+  },
+  {
+   "rubrik": "Rösträttsregistrering",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:15"
+   ]
+  },
+  {
+   "rubrik": "Överföring av uppgifter från äldre aktiebok",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:16",
+    "5:17",
+    "5:18"
+   ]
+  },
+  {
+   "rubrik": "Aktiebokens offentlighet",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:19"
+   ]
+  },
+  {
+   "rubrik": "Bolagets skyldighet att utfärda aktiebrev",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter i aktiebrev",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:2"
+   ]
+  },
+  {
+   "rubrik": "Undertecknande av aktiebrev",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:3"
+   ]
+  },
+  {
+   "rubrik": "Utlämnande av aktiebrev",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:4"
+   ]
+  },
+  {
+   "rubrik": "Anteckning på aktiebrevet",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:5"
+   ]
+  },
+  {
+   "rubrik": "Utbyte av aktiebrev",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:6"
+   ]
+  },
+  {
+   "rubrik": "Innehållande av utdelning eller emissionsbevis",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:7"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse och pantsättning av aktiebrev m.m.",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:8"
+   ]
+  },
+  {
+   "rubrik": "Interimsbevis",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:9"
+   ]
+  },
+  {
+   "rubrik": "Avstämningsbolag",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:10"
+   ]
+  },
+  {
+   "rubrik": "Utövande av aktieägares beslutanderätt i bolaget",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:1"
+   ]
+  },
+  {
+   "rubrik": "Rätt att delta i bolagsstämman som aktieägare",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:2"
+   ]
+  },
+  {
+   "rubrik": "Ombud vid bolagsstämman",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:3"
+   ]
+  },
+  {
+   "rubrik": "Insamling av fullmakter",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:4"
+   ]
+  },
+  {
+   "rubrik": "Biträde vid bolagsstämman",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:5"
+   ]
+  },
+  {
+   "rubrik": "Utomståendes närvaro vid bolagsstämman",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:6"
+   ]
+  },
+  {
+   "rubrik": "Egna aktiers ställning vid bolagsstämman",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:7"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rösträtt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:8",
+    "7:9"
+   ]
+  },
+  {
+   "rubrik": "Ordinarie bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:10",
+    "7:11",
+    "7:12"
+   ]
+  },
+  {
+   "rubrik": "Extra bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:13"
+   ]
+  },
+  {
+   "rubrik": "Fortsatt bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:14"
+   ]
+  },
+  {
+   "rubrik": "Ort för bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:15"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares initiativrätt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:16"
+   ]
+  },
+  {
+   "rubrik": "Sammankallande av bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:17"
+   ]
+  },
+  {
+   "rubrik": "Ordinarie bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:18"
+   ]
+  },
+  {
+   "rubrik": "Extra bolagsstämma där ändring av bolagsordningen kommer att behandlas",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:19"
+   ]
+  },
+  {
+   "rubrik": "Annan extra bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:20"
+   ]
+  },
+  {
+   "rubrik": "Fortsatt bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:21"
+   ]
+  },
+  {
+   "rubrik": "Kallelse när beslut skall fattas vid två bolagsstämmor",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:22"
+   ]
+  },
+  {
+   "rubrik": "Kallelsesätt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:23"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:24"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av handlingar inför årsstämman",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:25"
+   ]
+  },
+  {
+   "rubrik": "Fel i kallelse m.m.",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:26"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans öppnande",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:27"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av aktiebok",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:28"
+   ]
+  },
+  {
+   "rubrik": "Röstlängd",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:29"
+   ]
+  },
+  {
+   "rubrik": "Hur bolagsstämmans ordförande utses",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:30"
+   ]
+  },
+  {
+   "rubrik": "Dagordning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:31"
+   ]
+  },
+  {
+   "rubrik": "Vilka upplysningar som skall lämnas",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:32",
+    "7:33"
+   ]
+  },
+  {
+   "rubrik": "Upplysningar som kan medföra väsentlig skada för bolaget",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:34",
+    "7:35"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rätt till insyn i aktiebolag med högst tio aktieägare",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:36"
+   ]
+  },
+  {
+   "rubrik": "Omröstning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:37",
+    "7:38",
+    "7:39"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav vid andra beslut än val",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:40"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav vid val",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:41"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav vid beslut om ändring av bolagsordningen",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:42",
+    "7:43",
+    "7:44",
+    "7:45"
+   ]
+  },
+  {
+   "rubrik": "Jäv",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:46"
+   ]
+  },
+  {
+   "rubrik": "Generell inskränkning i bolagsstämmans beslutanderätt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:47"
+   ]
+  },
+  {
+   "rubrik": "Stämmoprotokoll",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:48",
+    "7:49"
+   ]
+  },
+  {
+   "rubrik": "Talan mot bolagsstämmobeslut",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:50",
+    "7:51",
+    "7:52"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens talan mot bolaget",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:53"
+   ]
+  },
+  {
+   "rubrik": "Skiljeförfarande",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:54"
+   ]
+  },
+  {
+   "rubrik": "Utomståendes närvaro vid bolagsstämma",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:55"
+   ]
+  },
+  {
+   "rubrik": "Kallelsesätt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:56"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens och den verkställande direktörens upplysningsplikt",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:57"
+   ]
+  },
+  {
+   "rubrik": "Omröstning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:58"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:59"
+   ]
+  },
+  {
+   "rubrik": "Ansvaret för ersättningen till skiljemän",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:60"
+   ]
+  },
+  {
+   "rubrik": "Beslut vid årsstämman i vissa publika aktiebolag",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:61",
+    "7:62"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll i vissa publika aktiebolag",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:63"
+   ]
+  },
+  {
+   "rubrik": "Information till aktieägare i vissa publika aktiebolag",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:64",
+    "7:65",
+    "7:66",
+    "7:67"
+   ]
+  },
+  {
+   "rubrik": "Stämmoprotokoll i vissa publika aktiebolag",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:68"
+   ]
+  },
+  {
+   "rubrik": "Bekräftelser i vissa publika aktiebolag",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:69",
+    "7:70"
+   ]
+  },
+  {
+   "rubrik": "Ytterligare bestämmelser i kommissionens genomförandeförordning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:71"
+   ]
+  },
+  {
+   "rubrik": "Styrelsen",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:1",
+    "8:2"
+   ]
+  },
+  {
+   "rubrik": "Styrelsesuppleanter",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:3"
+   ]
+  },
+  {
+   "rubrik": "Huvuduppgifter",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:4"
+   ]
+  },
+  {
+   "rubrik": "Instruktioner om rapportering till styrelsen",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:5",
+    "8:6",
+    "8:7"
+   ]
+  },
+  {
+   "rubrik": "Hur styrelsen utses",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:8"
+   ]
+  },
+  {
+   "rubrik": "Bosättningskrav",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:9"
+   ]
+  },
+  {
+   "rubrik": "Hinder mot att vara styrelseledamot",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:10",
+    "8:11",
+    "8:12"
+   ]
+  },
+  {
+   "rubrik": "Styrelseledamots mandattid",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:13"
+   ]
+  },
+  {
+   "rubrik": "Styrelseledamots förtida avgång",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:14",
+    "8:15"
+   ]
+  },
+  {
+   "rubrik": "Bolagsverkets beslut om ersättare för en styrelseledamot",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:16"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens ordförande",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:17"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens sammanträden",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:18",
+    "8:19",
+    "8:20"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens beslutförhet",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:21"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav vid styrelsebeslut",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:22"
+   ]
+  },
+  {
+   "rubrik": "Jäv för styrelseledamot",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:23"
+   ]
+  },
+  {
+   "rubrik": "Styrelseprotokoll",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:24",
+    "8:25",
+    "8:26"
+   ]
+  },
+  {
+   "rubrik": "Verkställande direktör",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:27"
+   ]
+  },
+  {
+   "rubrik": "Vice verkställande direktör",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:28"
+   ]
+  },
+  {
+   "rubrik": "Den verkställande direktörens uppgifter",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:29"
+   ]
+  },
+  {
+   "rubrik": "Bosättningskrav för den verkställande direktören",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:30"
+   ]
+  },
+  {
+   "rubrik": "Hinder att vara verkställande direktör",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:31",
+    "8:32"
+   ]
+  },
+  {
+   "rubrik": "Verkställande direktörs mandattid",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:33"
+   ]
+  },
+  {
+   "rubrik": "Jäv för den verkställande direktören",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:34"
+   ]
+  },
+  {
+   "rubrik": "Styrelsen som bolagets ställföreträdare",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:35"
+   ]
+  },
+  {
+   "rubrik": "Den verkställande direktören som bolagets ställföreträdare",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:36"
+   ]
+  },
+  {
+   "rubrik": "Särskild firmatecknare",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:37",
+    "8:38"
+   ]
+  },
+  {
+   "rubrik": "Inskränkningar i firmateckningsrätt",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:39"
+   ]
+  },
+  {
+   "rubrik": "Särskild delgivningsmottagare",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:40"
+   ]
+  },
+  {
+   "rubrik": "Generella inskränkningar i ställföreträdares kompetens",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:41"
+   ]
+  },
+  {
+   "rubrik": "Kompetensöverskridande",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:42"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:43",
+    "8:44"
+   ]
+  },
+  {
+   "rubrik": "Anmälan av aktieinnehav",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:45"
+   ]
+  },
+  {
+   "rubrik": "Antalet styrelseledamöter",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:46"
+   ]
+  },
+  {
+   "rubrik": "Vem som utser styrelseledamöter",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:47"
+   ]
+  },
+  {
+   "rubrik": "Information inför styrelseval",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:48"
+   ]
+  },
+  {
+   "rubrik": "Särskilt om styrelseordföranden",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:49"
+   ]
+  },
+  {
+   "rubrik": "Verkställande direktör",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:50"
+   ]
+  },
+  {
+   "rubrik": "Riktlinjer för ersättning till ledande befattningshavare i vissa publika aktiebolag",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:51",
+    "8:52",
+    "8:53",
+    "8:54"
+   ]
+  },
+  {
+   "rubrik": "Skyldighet att ha revisor",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:1"
+   ]
+  },
+  {
+   "rubrik": "Revisorssuppleanter",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:2"
+   ]
+  },
+  {
+   "rubrik": "Revisorns uppgifter",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av upplysningar m.m.",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:7"
+   ]
+  },
+  {
+   "rubrik": "Hur en revisor utses",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:8"
+   ]
+  },
+  {
+   "rubrik": "Minoritetsrevisor",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:9"
+   ]
+  },
+  {
+   "rubrik": "Obehörighetsgrunder",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:10"
+   ]
+  },
+  {
+   "rubrik": "Kompetenskrav",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16"
+   ]
+  },
+  {
+   "rubrik": "Jäv",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:17",
+    "9:18"
+   ]
+  },
+  {
+   "rubrik": "Registrerat revisionsbolag",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:19"
+   ]
+  },
+  {
+   "rubrik": "Revisor i dotterföretag",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:20"
+   ]
+  },
+  {
+   "rubrik": "Revisorns mandattid",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:21"
+   ]
+  },
+  {
+   "rubrik": "Avgång och entledigande i förtid",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:22",
+    "9:23",
+    "9:24"
+   ]
+  },
+  {
+   "rubrik": "Bolagsverkets förordnande av revisor",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:25",
+    "9:26",
+    "9:27"
+   ]
+  },
+  {
+   "rubrik": "Revisionsberättelsen",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:28",
+    "9:29",
+    "9:30",
+    "9:31",
+    "9:32",
+    "9:33",
+    "9:34",
+    "9:35",
+    "9:36",
+    "9:37"
+   ]
+  },
+  {
+   "rubrik": "Koncernrevisionsberättelsen",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:38"
+   ]
+  },
+  {
+   "rubrik": "Erinringar",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:39"
+   ]
+  },
+  {
+   "rubrik": "Revisorns närvaro vid bolagsstämman",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:40"
+   ]
+  },
+  {
+   "rubrik": "Revisorns tystnadsplikt",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:41"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder vid misstanke om brott",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:42",
+    "9:43",
+    "9:44"
+   ]
+  },
+  {
+   "rubrik": "Revisorns upplysningsplikt gentemot bolagsstämman",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:45"
+   ]
+  },
+  {
+   "rubrik": "Revisorns upplysningsplikt gentemot medrevisor m.fl.",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:46"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:47",
+    "9:48"
+   ]
+  },
+  {
+   "rubrik": "När en lekmannarevisor får utses",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:1"
+   ]
+  },
+  {
+   "rubrik": "Suppleant för lekmannarevisor",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:2"
+   ]
+  },
+  {
+   "rubrik": "Lekmannarevisorns uppgifter",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:3",
+    "10:4",
+    "10:5",
+    "10:6"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av upplysningar m.m.",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:7"
+   ]
+  },
+  {
+   "rubrik": "Hur en lekmannarevisor utses",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:8"
+   ]
+  },
+  {
+   "rubrik": "Obehörighetsgrunder",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:9"
+   ]
+  },
+  {
+   "rubrik": "Jäv",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:10",
+    "10:11"
+   ]
+  },
+  {
+   "rubrik": "Avgång",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:12"
+   ]
+  },
+  {
+   "rubrik": "Granskningsrapporten",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:13",
+    "10:14"
+   ]
+  },
+  {
+   "rubrik": "Lekmannarevisorns närvaro vid bolagsstämma",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:15"
+   ]
+  },
+  {
+   "rubrik": "Lekmannarevisorns tystnadsplikt",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:16"
+   ]
+  },
+  {
+   "rubrik": "Lekmannarevisorns upplysningsplikt gentemot bolagsstämman",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:17"
+   ]
+  },
+  {
+   "rubrik": "Lekmannarevisorns upplysningsplikt gentemot revisor m.fl.",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:18"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:19",
+    "10:20"
+   ]
+  },
+  {
+   "rubrik": "Vad särskild granskning är",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:21"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om särskild granskning",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:22",
+    "10:23"
+   ]
+  },
+  {
+   "rubrik": "Den särskilda granskaren och hans eller hennes arbete",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:24"
+   ]
+  },
+  {
+   "rubrik": "Den särskilda granskarens tystnadsplikt",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:25"
+   ]
+  },
+  {
+   "rubrik": "Den särskilda granskarens yttrande",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:26"
+   ]
+  },
+  {
+   "rubrik": "Den särskilda granskarens ersättning",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:27",
+    "10:28"
+   ]
+  },
+  {
+   "rubrik": "De olika formerna för ökning av aktiekapitalet",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:1"
+   ]
+  },
+  {
+   "rubrik": "Beslutsordning",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:2",
+    "11:3"
+   ]
+  },
+  {
+   "rubrik": "Definitioner",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:4"
+   ]
+  },
+  {
+   "rubrik": "Utfärdande av emissionsbevis",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:5"
+   ]
+  },
+  {
+   "rubrik": "Undertecknande av emissionsbevis m.m.",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:6"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse och pantsättning av emissionsbevis m.m.",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:7"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fondaktierätter och teckningsrätter i avstämningsbolag",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:8"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av överskjutande fondaktierätter och teckningsrätter",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:9"
+   ]
+  },
+  {
+   "rubrik": "Rätt till utdelning på nya aktier",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:10"
+   ]
+  },
+  {
+   "rubrik": "Vissa lån",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:11",
+    "11:12",
+    "11:13",
+    "11:14",
+    "11:15",
+    "11:16",
+    "11:17",
+    "11:18",
+    "11:19",
+    "11:20"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av fondemission",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:1"
+   ]
+  },
+  {
+   "rubrik": "Rätt till fondaktier",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:2"
+   ]
+  },
+  {
+   "rubrik": "Förslaget till beslut",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:7"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:8"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:9"
+   ]
+  },
+  {
+   "rubrik": "Registrering av emissionsbeslutet",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:10"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av fondaktie",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14"
+   ]
+  },
+  {
+   "rubrik": "Företrädesrätt",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:1",
+    "13:2"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:3"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:4",
+    "13:5"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:6"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter om apportegendom och kvittning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:7"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:8"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:9"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:10"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:11"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:12"
+   ]
+  },
+  {
+   "rubrik": "Hur nya aktier ska tecknas",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:13"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att teckning inte sker på rätt sätt",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:14"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att aktier har tecknats med avvikande villkor",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:15"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att villkor för aktieteckning inte har uppfyllts",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:16"
+   ]
+  },
+  {
+   "rubrik": "Otillräcklig teckning m.m.",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:17"
+   ]
+  },
+  {
+   "rubrik": "Tilldelning av aktier",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:18"
+   ]
+  },
+  {
+   "rubrik": "Vad som lägst skall betalas för tecknade aktier",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:19"
+   ]
+  },
+  {
+   "rubrik": "Hur aktierna skall betalas",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:20"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:21"
+   ]
+  },
+  {
+   "rubrik": "Betalning med apportegendom",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:22",
+    "13:23",
+    "13:24",
+    "13:25"
+   ]
+  },
+  {
+   "rubrik": "Förverkande av rätt till aktie",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:26"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:27"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:28"
+   ]
+  },
+  {
+   "rubrik": "Verkan av registrering",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:29"
+   ]
+  },
+  {
+   "rubrik": "Verkan av utebliven registrering",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:30"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission under förutsättning av bolagsstämmans godkännande",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:31",
+    "13:32",
+    "13:33",
+    "13:34"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission enligt bolagsstämmans bemyndigande",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:35",
+    "13:36",
+    "13:37",
+    "13:38"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter om kvittning i emissionsbeslut m.m.",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:39"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:40"
+   ]
+  },
+  {
+   "rubrik": "Kvittning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:41"
+   ]
+  },
+  {
+   "rubrik": "Revisorsyttrande",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:42"
+   ]
+  },
+  {
+   "rubrik": "Företrädesrätt",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:1",
+    "14:2"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:3"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:8"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter om apportegendom och kvittning",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:9"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:10"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:11"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:12"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:13"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:14"
+   ]
+  },
+  {
+   "rubrik": "Hur teckningsoptioner ska tecknas",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:15"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att teckning inte sker på rätt sätt",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:16"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att teckningsoptioner har tecknats med avvikande villkor",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:17"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att villkor för teckning av teckningsoptioner inte har uppfyllts",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:18"
+   ]
+  },
+  {
+   "rubrik": "Otillräcklig teckning m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:19"
+   ]
+  },
+  {
+   "rubrik": "Tilldelning av teckningsoptioner",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:20"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:21"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:22"
+   ]
+  },
+  {
+   "rubrik": "Verkan av utebliven registrering",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:23"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission under förutsättning av bolagsstämmans godkännande",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:24",
+    "14:25",
+    "14:26",
+    "14:27"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission enligt bolagsstämmans bemyndigande",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:28",
+    "14:29",
+    "14:30",
+    "14:31"
+   ]
+  },
+  {
+   "rubrik": "Hur aktier ska tecknas",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:32"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att teckning inte sker på rätt sätt",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:33"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att aktier har tecknats med avvikande villkor",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:34"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att villkor för aktieteckningen inte har uppfyllts",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:35"
+   ]
+  },
+  {
+   "rubrik": "Tilldelning av aktier",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:36"
+   ]
+  },
+  {
+   "rubrik": "Vad som lägst skall betalas för tecknade aktier",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:37"
+   ]
+  },
+  {
+   "rubrik": "Hur aktierna skall betalas",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:38",
+    "14:39"
+   ]
+  },
+  {
+   "rubrik": "Kvittning m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:40",
+    "14:41"
+   ]
+  },
+  {
+   "rubrik": "Förverkande av rätt till aktie",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:42"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:43"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:44"
+   ]
+  },
+  {
+   "rubrik": "Verkan av registrering",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:45"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter om kvittning i emissionsbeslut m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:46"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:47"
+   ]
+  },
+  {
+   "rubrik": "Kvittning",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:48"
+   ]
+  },
+  {
+   "rubrik": "Revisorsyttrande",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:49"
+   ]
+  },
+  {
+   "rubrik": "Företrädesrätt",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:1",
+    "15:2"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:3"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:4",
+    "15:5",
+    "15:6",
+    "15:7"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:8"
+   ]
+  },
+  {
+   "rubrik": "Uppgifter om apportegendom och kvittning",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:9"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:10"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:11"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:12"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:13"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:14"
+   ]
+  },
+  {
+   "rubrik": "Hur konvertibler ska tecknas",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:15"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att teckning inte sker på rätt sätt",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:16"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att konvertibler har tecknats med avvikande villkor",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:17"
+   ]
+  },
+  {
+   "rubrik": "Verkan av att villkor för teckning av konvertibler inte har uppfyllts",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:18"
+   ]
+  },
+  {
+   "rubrik": "Otillräcklig teckning m.m.",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:19"
+   ]
+  },
+  {
+   "rubrik": "Tilldelning av konvertibler",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:20"
+   ]
+  },
+  {
+   "rubrik": "Hur konvertiblerna skall betalas",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:21"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:22"
+   ]
+  },
+  {
+   "rubrik": "Betalning med apportegendom",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:23",
+    "15:24"
+   ]
+  },
+  {
+   "rubrik": "Kvittning",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:25"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:26"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:27"
+   ]
+  },
+  {
+   "rubrik": "Verkan av utebliven registrering",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:28"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission under förutsättning av bolagsstämmans godkännande",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:29",
+    "15:31",
+    "15:32"
+   ]
+  },
+  {
+   "rubrik": "Styrelsebeslut om emission enligt bolagsstämmans bemyndigande",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:33",
+    "15:34",
+    "15:35",
+    "15:36"
+   ]
+  },
+  {
+   "rubrik": "Anteckning i aktiebok m.m.",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:37"
+   ]
+  },
+  {
+   "rubrik": "Registreringsanmälan",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:38"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för registrering",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:39"
+   ]
+  },
+  {
+   "rubrik": "Verkan av registrering",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:40"
+   ]
+  },
+  {
+   "rubrik": "Betalning i pengar",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:42"
+   ]
+  },
+  {
+   "rubrik": "Kvittning",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:43"
+   ]
+  },
+  {
+   "rubrik": "Revisorsyttrande",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:44"
+   ]
+  },
+  {
+   "rubrik": "Tillämpningsområde",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:1"
+   ]
+  },
+  {
+   "rubrik": "Nyemission av aktier m.m.",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:2",
+    "16:3"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av aktier, teckningsoptioner eller konvertibler",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:4",
+    "16:5",
+    "16:6"
+   ]
+  },
+  {
+   "rubrik": "Vissa lån",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:7"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:8",
+    "16:9"
+   ]
+  },
+  {
+   "rubrik": "Information i förvaltningsberättelsen",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:10"
+   ]
+  },
+  {
+   "rubrik": "Begreppet värdeöverföring",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:1"
+   ]
+  },
+  {
+   "rubrik": "Tillåtna former för värdeöverföring",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:2"
+   ]
+  },
+  {
+   "rubrik": "Skyddet för bolagets bundna egna kapital och försiktighetsregeln",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:3"
+   ]
+  },
+  {
+   "rubrik": "Värdeöverföringar under löpande räkenskapsår",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:4"
+   ]
+  },
+  {
+   "rubrik": "Gåva till allmännyttigt ändamål",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:5"
+   ]
+  },
+  {
+   "rubrik": "Återbäringsskyldighet vid olaglig värdeöverföring",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:6"
+   ]
+  },
+  {
+   "rubrik": "Bristtäckningsansvar vid olaglig värdeöverföring",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:7"
+   ]
+  },
+  {
+   "rubrik": "Beslutsordning",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:1"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:2"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:3"
+   ]
+  },
+  {
+   "rubrik": "Yttrande från styrelsen",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:4"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:5",
+    "18:6"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:7"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:8"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:9"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:10"
+   ]
+  },
+  {
+   "rubrik": "Vinstutdelning på begäran av en aktieägarminoritet",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:11",
+    "18:12"
+   ]
+  },
+  {
+   "rubrik": "Betalningsdag för beslutad utdelning",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:13",
+    "18:14"
+   ]
+  },
+  {
+   "rubrik": "Teckning av egna aktier",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:1"
+   ]
+  },
+  {
+   "rubrik": "Dotterföretags teckning av aktier i moderbolag",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:2"
+   ]
+  },
+  {
+   "rubrik": "Egna aktier som pant",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:3"
+   ]
+  },
+  {
+   "rubrik": "I vilka fall ett aktiebolag får förvärva egna aktier",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:4",
+    "19:5"
+   ]
+  },
+  {
+   "rubrik": "Avyttringsskyldighet efter förvärv enligt 5 §",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:6"
+   ]
+  },
+  {
+   "rubrik": "Dotterföretags förvärv och innehav av aktier i moderbolag",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:7",
+    "19:8",
+    "19:9"
+   ]
+  },
+  {
+   "rubrik": "Förvärv och överlåtelse av egna teckningsoptioner och konvertibler",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:10",
+    "19:11",
+    "19:12"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser om vissa publika aktiebolags förvärv av egna aktier",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:13"
+   ]
+  },
+  {
+   "rubrik": "Tillåtna förvärvsmetoder",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:14"
+   ]
+  },
+  {
+   "rubrik": "Hur stor andel egna aktier som får förvärvas",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:15"
+   ]
+  },
+  {
+   "rubrik": "Otillåtna förvärv",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:16"
+   ]
+  },
+  {
+   "rubrik": "Beslutsordning",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:17"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:18"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag till beslut",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:19"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:20",
+    "19:21"
+   ]
+  },
+  {
+   "rubrik": "Yttrande från styrelsen",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:22"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:23",
+    "19:24"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut, m.m.",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:25"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:26"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:27"
+   ]
+  },
+  {
+   "rubrik": "Bemyndigande för styrelsen",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:28",
+    "19:29"
+   ]
+  },
+  {
+   "rubrik": "Avyttringsskyldighet efter förvärv av egna aktier enligt 5 §",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:30"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser om publika aktiebolags överlåtelse av egna aktier",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:31"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av egna aktier på en reglerad marknad eller en motsvarande marknad utanför Europeiska ekonomiska samarbetsområdet",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:32"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av egna aktier på vissa handelsplatser",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:32",
+    "19:33",
+    "19:34"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av egna aktier i andra fall",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:35",
+    "19:36",
+    "19:37"
+   ]
+  },
+  {
+   "rubrik": "Minskningsändamål",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:1"
+   ]
+  },
+  {
+   "rubrik": "Metoder för minskning av aktiekapitalet",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:2"
+   ]
+  },
+  {
+   "rubrik": "Beslutsordning",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:3",
+    "20:4"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:5"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av förslag",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:6"
+   ]
+  },
+  {
+   "rubrik": "Förslagets innehåll",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:7",
+    "20:8",
+    "20:9",
+    "20:10"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:11",
+    "20:12",
+    "20:13"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:14"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslag till beslut m.m.",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:15"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:16"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:17"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:18"
+   ]
+  },
+  {
+   "rubrik": "Registrering m.m.",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:19",
+    "20:20",
+    "20:21"
+   ]
+  },
+  {
+   "rubrik": "Minskningsbeslutet faller",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:22"
+   ]
+  },
+  {
+   "rubrik": "Tillstånd att verkställa beslut om minskning av aktiekapitalet för återbetalning till aktieägarna m.m.",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:23"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse till bolagets kända borgenärer",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:24"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om tillstånd",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:25"
+   ]
+  },
+  {
+   "rubrik": "Kallelse på bolagets borgenärer",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:26"
+   ]
+  },
+  {
+   "rubrik": "När Bolagsverket skall lämna tillstånd till minskning av aktiekapitalet",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:27"
+   ]
+  },
+  {
+   "rubrik": "När allmän domstol skall lämna tillstånd till minskning av aktiekapitalet",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:28"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:29"
+   ]
+  },
+  {
+   "rubrik": "Tillstånd till vinstutdelning efter beslut om minskning av aktiekapitalet",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:30"
+   ]
+  },
+  {
+   "rubrik": "Inlösenförbehåll",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:31"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:32"
+   ]
+  },
+  {
+   "rubrik": "Tillstånd till minskning av aktiekapitalet",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:33"
+   ]
+  },
+  {
+   "rubrik": "Registrering m.m.",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:34"
+   ]
+  },
+  {
+   "rubrik": "Minskningsändamål",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:35"
+   ]
+  },
+  {
+   "rubrik": "Beslutsordning",
+   "kapitel": "20",
+   "paragrafer": [
+    "20:36",
+    "20:37"
+   ]
+  },
+  {
+   "rubrik": "Lån till aktieägare m.fl.",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:1",
+    "21:2"
+   ]
+  },
+  {
+   "rubrik": "Ställande av säkerhet",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:3"
+   ]
+  },
+  {
+   "rubrik": "Innehav i värdepappersfond eller specialfond",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:4"
+   ]
+  },
+  {
+   "rubrik": "Lån till förvärv av aktier i bolaget eller överordnat bolag i samma koncern",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:5",
+    "21:6"
+   ]
+  },
+  {
+   "rubrik": "Innehav i värdepappersfond eller specialfond",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:7"
+   ]
+  },
+  {
+   "rubrik": "Dispens",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:8",
+    "21:9"
+   ]
+  },
+  {
+   "rubrik": "Förteckning över lån m.m.",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:10"
+   ]
+  },
+  {
+   "rubrik": "Rättsföljderna vid olagligt lämnande av lån eller ställande av säkerhet",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:11"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser om publika aktiebolag",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:12"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för inlösen",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:1"
+   ]
+  },
+  {
+   "rubrik": "Lösenbeloppets storlek",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:2"
+   ]
+  },
+  {
+   "rubrik": "Ränta på lösenbeloppet",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:3"
+   ]
+  },
+  {
+   "rubrik": "Rätten till lösenbeloppet",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:4"
+   ]
+  },
+  {
+   "rubrik": "Talan i inlösentvist",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:5"
+   ]
+  },
+  {
+   "rubrik": "Begäran om prövning av skiljemän",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:6"
+   ]
+  },
+  {
+   "rubrik": "Bolagets underrättelse till minoritetsaktieägarna",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:7"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om god man",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:8"
+   ]
+  },
+  {
+   "rubrik": "Vem som kan utses till god man",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:9"
+   ]
+  },
+  {
+   "rubrik": "Den gode mannens uppgifter",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:10",
+    "22:11"
+   ]
+  },
+  {
+   "rubrik": "Förhandstillträde",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:12",
+    "22:13",
+    "22:14"
+   ]
+  },
+  {
+   "rubrik": "Särskild dom i inlösentvist",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:15"
+   ]
+  },
+  {
+   "rubrik": "Majoritetsaktieägarens skyldighet att fullfölja talan",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:16",
+    "22:17",
+    "22:18"
+   ]
+  },
+  {
+   "rubrik": "Skyldighet för annan än majoritetsaktieägaren att fullfölja talan",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:19"
+   ]
+  },
+  {
+   "rubrik": "Verkningar av en skiljedom avseende lösenbeloppet",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:20"
+   ]
+  },
+  {
+   "rubrik": "Nedsättning av fastställt lösenbelopp",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:21"
+   ]
+  },
+  {
+   "rubrik": "Utfärdande av nytt aktiebrev",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:22"
+   ]
+  },
+  {
+   "rubrik": "Kostnaderna för skiljeförfarandet",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:23"
+   ]
+  },
+  {
+   "rubrik": "Talan mot skiljedom",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:24"
+   ]
+  },
+  {
+   "rubrik": "Rättegångskostnader i allmän domstol",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:25"
+   ]
+  },
+  {
+   "rubrik": "Inlösen av teckningsoptioner och konvertibler",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:26",
+    "22:27"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser för publika aktiebolag",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:28"
+   ]
+  },
+  {
+   "rubrik": "Vad en fusion innebär",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:1"
+   ]
+  },
+  {
+   "rubrik": "Fusionsvederlag",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:2"
+   ]
+  },
+  {
+   "rubrik": "De deltagande bolagens redovisningsvaluta",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:3"
+   ]
+  },
+  {
+   "rubrik": "Fusion när överlåtande bolag har gått i likvidation",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:4"
+   ]
+  },
+  {
+   "rubrik": "Särskilda rättighetshavares ställning",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:5"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av fusionsplan",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:6"
+   ]
+  },
+  {
+   "rubrik": "Fusionsplanens innehåll",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:7",
+    "23:8",
+    "23:9"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:10"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:11",
+    "23:12",
+    "23:13"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:14"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans prövning av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:15"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:16"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav m.m.",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:17",
+    "23:18"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse till bolagets kända borgenärer",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:19",
+    "23:20",
+    "23:21"
+   ]
+  },
+  {
+   "rubrik": "Kallelse på bolagens borgenärer",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:22"
+   ]
+  },
+  {
+   "rubrik": "När Bolagsverket skall lämna tillstånd till verkställande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:23"
+   ]
+  },
+  {
+   "rubrik": "När allmän domstol skall lämna tillstånd till verkställande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:24"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:25"
+   ]
+  },
+  {
+   "rubrik": "Fusionens rättsverkningar",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:26"
+   ]
+  },
+  {
+   "rubrik": "Frågan om fusion faller",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:27"
+   ]
+  },
+  {
+   "rubrik": "Fusionsplan",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:28"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:29"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:30"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans godkännande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:31"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse till bolagets kända borgenärer",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:32"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om tillstånd att verkställa fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:33"
+   ]
+  },
+  {
+   "rubrik": "Fusionens rättsverkningar",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:34"
+   ]
+  },
+  {
+   "rubrik": "Frågan om fusion faller",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:35"
+   ]
+  },
+  {
+   "rubrik": "Vad en gränsöverskridande fusion innebär",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:36"
+   ]
+  },
+  {
+   "rubrik": "Fusionsplan m.m.",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:37",
+    "23:38"
+   ]
+  },
+  {
+   "rubrik": "Styrelsernas redogörelser",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:39"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:40",
+    "23:41"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:42"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:43"
+   ]
+  },
+  {
+   "rubrik": "Villkorat beslut om godkännande av fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:44"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om tillstånd att verkställa fusionsplanen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:45"
+   ]
+  },
+  {
+   "rubrik": "Utfärdande av fusionsintyg",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:46"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionen när det övertagande bolaget ska ha sin hemvist i en annan stat än Sverige",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:47"
+   ]
+  },
+  {
+   "rubrik": "Registrering av fusionen när det övertagande bolaget ska ha sin hemvist i Sverige",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:48"
+   ]
+  },
+  {
+   "rubrik": "Fusionens rättsverkningar",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:49"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rätt till inlösen",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:50"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rätt till ytterligare ersättning",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:51",
+    "23:52",
+    "23:53",
+    "23:54"
+   ]
+  },
+  {
+   "rubrik": "Förenklad fusion",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:55"
+   ]
+  },
+  {
+   "rubrik": "Ogiltighet",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:56",
+    "23:57"
+   ]
+  },
+  {
+   "rubrik": "Vad en delning innebär",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:1"
+   ]
+  },
+  {
+   "rubrik": "Delningsvederlag",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:2"
+   ]
+  },
+  {
+   "rubrik": "De deltagande bolagens redovisningsvaluta",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:3"
+   ]
+  },
+  {
+   "rubrik": "Delning när det överlåtande bolaget har gått i likvidation",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:4"
+   ]
+  },
+  {
+   "rubrik": "Övertagande bolags betalningsansvar",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:5"
+   ]
+  },
+  {
+   "rubrik": "Särskilda rättighetshavares ställning",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:6"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av delningsplan",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:7"
+   ]
+  },
+  {
+   "rubrik": "Delningsplanens innehåll",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:8",
+    "24:9",
+    "24:10",
+    "24:11"
+   ]
+  },
+  {
+   "rubrik": "Kompletterande information",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:12"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:13",
+    "24:14",
+    "24:15"
+   ]
+  },
+  {
+   "rubrik": "Registrering av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:16"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans prövning av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:17"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av delningsplanen m.m.",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:18"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav m.m.",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:19",
+    "24:20"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse till bolagets kända borgenärer",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:21"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om tillstånd att verkställa delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:22",
+    "24:23"
+   ]
+  },
+  {
+   "rubrik": "Kallelse på bolagens borgenärer",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:24"
+   ]
+  },
+  {
+   "rubrik": "När Bolagsverket skall lämna tillstånd till verkställande av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:25"
+   ]
+  },
+  {
+   "rubrik": "När allmän domstol skall lämna tillstånd till verkställande av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:26"
+   ]
+  },
+  {
+   "rubrik": "Registrering av delningen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:27"
+   ]
+  },
+  {
+   "rubrik": "Delningens rättsverkningar",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:28"
+   ]
+  },
+  {
+   "rubrik": "Frågan om delning faller",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:29"
+   ]
+  },
+  {
+   "rubrik": "Vad en gränsöverskridande delning innebär",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:30"
+   ]
+  },
+  {
+   "rubrik": "Bestämmelser som ska tillämpas vid en gränsöverskridande delning",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:31"
+   ]
+  },
+  {
+   "rubrik": "Särskilda begränsningar i rätten att genomföra en gränsöverskridande delning",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:32"
+   ]
+  },
+  {
+   "rubrik": "Delningsplan",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:33",
+    "24:34"
+   ]
+  },
+  {
+   "rubrik": "Styrelsens redogörelse",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:35",
+    "24:36",
+    "24:37"
+   ]
+  },
+  {
+   "rubrik": "Revisorsgranskning",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:38"
+   ]
+  },
+  {
+   "rubrik": "Meddelande om att synpunkter får lämnas",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:39"
+   ]
+  },
+  {
+   "rubrik": "Registrering av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:40",
+    "24:41"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:42",
+    "24:43"
+   ]
+  },
+  {
+   "rubrik": "Villkorat beslut om godkännande av delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:44"
+   ]
+  },
+  {
+   "rubrik": "Ansökan om tillstånd att verkställa delningsplanen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:45",
+    "24:46",
+    "24:47",
+    "24:48",
+    "24:49"
+   ]
+  },
+  {
+   "rubrik": "Utfärdande av delningsintyg",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:50"
+   ]
+  },
+  {
+   "rubrik": "Registrering av en delning när ett övertagande bolag ska ha sin hemvist i en annan stat än Sverige",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:51"
+   ]
+  },
+  {
+   "rubrik": "Registrering av en delning när ett övertagande bolag ska ha sin hemvist i Sverige",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:52",
+    "24:53"
+   ]
+  },
+  {
+   "rubrik": "Delningens rättsverkningar",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:54"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rätt till inlösen",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:55"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares rätt till ytterligare ersättning",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:56",
+    "24:57",
+    "24:58",
+    "24:59"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser vid delning genom separation",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:60"
+   ]
+  },
+  {
+   "rubrik": "Ogiltighet",
+   "kapitel": "24",
+   "paragrafer": [
+    "24:61",
+    "24:62"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans beslut om likvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:1"
+   ]
+  },
+  {
+   "rubrik": "Majoritetskrav",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:2"
+   ]
+  },
+  {
+   "rubrik": "Förslag till beslut",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:3",
+    "25:4"
+   ]
+  },
+  {
+   "rubrik": "Kallelsens innehåll",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:5"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande av förslaget till beslut",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:6"
+   ]
+  },
+  {
+   "rubrik": "Innehållet i bolagsstämmans beslut",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:7",
+    "25:8"
+   ]
+  },
+  {
+   "rubrik": "Tidpunkt då beslutet om likvidation börjar gälla",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:9"
+   ]
+  },
+  {
+   "rubrik": "Allmänt om tvångslikvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:10"
+   ]
+  },
+  {
+   "rubrik": "Tvångslikvidation på grund av Bolagsverkets beslut",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:11"
+   ]
+  },
+  {
+   "rubrik": "Tvångslikvidation på grund av bestämmelse i bolagsordningen",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:12"
+   ]
+  },
+  {
+   "rubrik": "Skyldighet att upprätta kontrollbalansräkning",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:13"
+   ]
+  },
+  {
+   "rubrik": "Kontrollbalansräkningens innehåll",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:14"
+   ]
+  },
+  {
+   "rubrik": "Första kontrollstämman",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:15"
+   ]
+  },
+  {
+   "rubrik": "Andra kontrollstämman",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:16"
+   ]
+  },
+  {
+   "rubrik": "Beslut om tvångslikvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:17"
+   ]
+  },
+  {
+   "rubrik": "Personligt betalningsansvar för bolagets företrädare",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:18"
+   ]
+  },
+  {
+   "rubrik": "Personligt betalningsansvar för aktieägare",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:19"
+   ]
+  },
+  {
+   "rubrik": "Ansvarsperiodens slut",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:20"
+   ]
+  },
+  {
+   "rubrik": "Likvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:21"
+   ]
+  },
+  {
+   "rubrik": "Inlösen av aktier",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:22"
+   ]
+  },
+  {
+   "rubrik": "Syssloman",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:23"
+   ]
+  },
+  {
+   "rubrik": "Handläggning hos Bolagsverket",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:24"
+   ]
+  },
+  {
+   "rubrik": "Handläggning hos allmän domstol",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:25"
+   ]
+  },
+  {
+   "rubrik": "Avgift",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:26",
+    "25:27"
+   ]
+  },
+  {
+   "rubrik": "Beslut att utse en likvidator",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:28"
+   ]
+  },
+  {
+   "rubrik": "Beslut att entlediga en likvidator",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:29"
+   ]
+  },
+  {
+   "rubrik": "Likvidatorns ställning",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:30"
+   ]
+  },
+  {
+   "rubrik": "Revision och annan granskning under likvidationen",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:31"
+   ]
+  },
+  {
+   "rubrik": "Bolagsstämmans ställning under likvidationen",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:32"
+   ]
+  },
+  {
+   "rubrik": "Redovisning för tiden innan likvidator utsågs",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:33"
+   ]
+  },
+  {
+   "rubrik": "Kallelse på okända borgenärer",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:34"
+   ]
+  },
+  {
+   "rubrik": "Avvecklingen av rörelsen",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:35"
+   ]
+  },
+  {
+   "rubrik": "Obestånd",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:36"
+   ]
+  },
+  {
+   "rubrik": "Redovisning under likvidationen",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:37"
+   ]
+  },
+  {
+   "rubrik": "Skifte",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:38"
+   ]
+  },
+  {
+   "rubrik": "Talan mot skifte",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:39"
+   ]
+  },
+  {
+   "rubrik": "Slutredovisning",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:40"
+   ]
+  },
+  {
+   "rubrik": "Bolagets upplösning",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:41"
+   ]
+  },
+  {
+   "rubrik": "Preskription av rätt till andel i tillgångarna",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:42"
+   ]
+  },
+  {
+   "rubrik": "Skadeståndstalan",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:43"
+   ]
+  },
+  {
+   "rubrik": "Fortsatt likvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:44"
+   ]
+  },
+  {
+   "rubrik": "Upphörande av likvidation",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:45",
+    "25:46",
+    "25:47"
+   ]
+  },
+  {
+   "rubrik": "Registrering",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:48"
+   ]
+  },
+  {
+   "rubrik": "Företrädare för bolaget i dess egenskap av konkursgäldenär",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:49"
+   ]
+  },
+  {
+   "rubrik": "Bolagets upplösning efter konkurs",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:50"
+   ]
+  },
+  {
+   "rubrik": "Likvidation efter överskottskonkurs m.m.",
+   "kapitel": "25",
+   "paragrafer": [
+    "25:51",
+    "25:52"
+   ]
+  },
+  {
+   "rubrik": "Byte från privat till publikt aktiebolag",
+   "kapitel": "26",
+   "paragrafer": [
+    "26:1",
+    "26:2",
+    "26:3",
+    "26:4",
+    "26:5"
+   ]
+  },
+  {
+   "rubrik": "Byte från publikt till privat aktiebolag",
+   "kapitel": "26",
+   "paragrafer": [
+    "26:6",
+    "26:7",
+    "26:8"
+   ]
+  },
+  {
+   "rubrik": "Aktiebolagsregistret",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:1"
+   ]
+  },
+  {
+   "rubrik": "Handläggning av registreringsärenden",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:2"
+   ]
+  },
+  {
+   "rubrik": "Kungörande i Post- och Inrikes Tidningar",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:3"
+   ]
+  },
+  {
+   "rubrik": "Verkan av registrering och kungörande",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:4",
+    "27:5"
+   ]
+  },
+  {
+   "rubrik": "Avregistrering av en ställföreträdare eller revisor",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:6"
+   ]
+  },
+  {
+   "rubrik": "Avregistrering av ett företagsnamn",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:7"
+   ]
+  },
+  {
+   "rubrik": "Ändring av aktiekapitalet m.m.",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:8"
+   ]
+  },
+  {
+   "rubrik": "Bemyndiganden m.m.",
+   "kapitel": "27",
+   "paragrafer": [
+    "27:9"
+   ]
+  },
+  {
+   "rubrik": "Företagsnamn",
+   "kapitel": "28",
+   "paragrafer": [
+    "28:1",
+    "28:2"
+   ]
+  },
+  {
+   "rubrik": "Särskilt företagsnamn",
+   "kapitel": "28",
+   "paragrafer": [
+    "28:3"
+   ]
+  },
+  {
+   "rubrik": "Övriga bestämmelser om företagsnamn",
+   "kapitel": "28",
+   "paragrafer": [
+    "28:4",
+    "28:5"
+   ]
+  },
+  {
+   "rubrik": "Underskrifter",
+   "kapitel": "28",
+   "paragrafer": [
+    "28:6"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser för publika aktiebolag",
+   "kapitel": "28",
+   "paragrafer": [
+    "28:7"
+   ]
+  },
+  {
+   "rubrik": "Stiftares, styrelseledamots och verkställande direktörs skadeståndsansvar",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:1"
+   ]
+  },
+  {
+   "rubrik": "Revisors, lekmannarevisors och särskild granskares skadeståndsansvar",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:2"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares skadeståndsansvar",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:3"
+   ]
+  },
+  {
+   "rubrik": "Aktieägares inlösenskyldighet vid missbruk",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:4"
+   ]
+  },
+  {
+   "rubrik": "Jämkning av skadestånd",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:5"
+   ]
+  },
+  {
+   "rubrik": "Gemensamt skadeståndsansvar",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:6"
+   ]
+  },
+  {
+   "rubrik": "Talan om skadestånd till bolaget",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:7",
+    "29:8",
+    "29:9"
+   ]
+  },
+  {
+   "rubrik": "Tiden för att väcka talan",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:10",
+    "29:11",
+    "29:12",
+    "29:13"
+   ]
+  },
+  {
+   "rubrik": "Konkursbos rätt att föra talan",
+   "kapitel": "29",
+   "paragrafer": [
+    "29:14"
+   ]
+  },
+  {
+   "rubrik": "Straff",
+   "kapitel": "30",
+   "paragrafer": [
+    "30:1"
+   ]
+  },
+  {
+   "rubrik": "Vite",
+   "kapitel": "30",
+   "paragrafer": [
+    "30:2",
+    "30:3"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av Bolagsverkets beslut",
+   "kapitel": "31",
+   "paragrafer": [
+    "31:1",
+    "31:2",
+    "31:3",
+    "31:4"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av Skatteverkets beslut",
+   "kapitel": "31",
+   "paragrafer": [
+    "31:5"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av Finansinspektionens beslut",
+   "kapitel": "31",
+   "paragrafer": [
+    "31:6",
+    "31:7"
+   ]
+  },
+  {
+   "rubrik": "Prövningstillstånd",
+   "kapitel": "31",
+   "paragrafer": [
+    "31:8"
+   ]
+  },
+  {
+   "rubrik": "Tillämpningsområde",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:1"
+   ]
+  },
+  {
+   "rubrik": "Bolagsordningens innehåll",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:2"
+   ]
+  },
+  {
+   "rubrik": "Revision",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:3",
+    "32:4"
+   ]
+  },
+  {
+   "rubrik": "Värdeöverföringar från bolaget",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:5",
+    "32:6"
+   ]
+  },
+  {
+   "rubrik": "Vissa lån",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:7"
+   ]
+  },
+  {
+   "rubrik": "Koncernförhållanden",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:8",
+    "32:9",
+    "32:10"
+   ]
+  },
+  {
+   "rubrik": "Fusion",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:11"
+   ]
+  },
+  {
+   "rubrik": "Delning",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:12"
+   ]
+  },
+  {
+   "rubrik": "Likvidation",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:13",
+    "32:14"
+   ]
+  },
+  {
+   "rubrik": "Byte av bolagskategori m.m.",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:15",
+    "32:16"
+   ]
+  },
+  {
+   "rubrik": "Bolagets företagsnamn",
+   "kapitel": "32",
+   "paragrafer": [
+    "32:17",
+    "32:18"
+   ]
+  }
+ ]
+}

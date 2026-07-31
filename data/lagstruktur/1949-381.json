@@ -1,0 +1,1379 @@
+{
+ "forkortning": "FB",
+ "namn": "Föräldrabalk",
+ "sfs": "1949:381",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1949-381.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Om faderskapet och moderskapet till barn",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8",
+    "1:9",
+    "1:10",
+    "1:11",
+    "1:12",
+    "1:13",
+    "1:14",
+    "1:15"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Om socialnämnds medverkan vid fastställande av faderskap",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Vissa bestämmelser om rättegången i mål om faderskap",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11",
+    "3:12",
+    "3:13",
+    "3:14",
+    "3:15",
+    "3:16",
+    "3:17",
+    "3:18",
+    "3:19"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Om adoption",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Om barnets namn",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Om vårdnad, boende och umgänge",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11",
+    "6:12",
+    "6:13",
+    "6:14",
+    "6:15",
+    "6:16",
+    "6:17",
+    "6:18",
+    "6:19",
+    "6:20",
+    "6:21",
+    "6:22"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Om underhållsskyldighet",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Om underårigs omyndighet",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8"
+   ]
+  },
+  {
+   "nummer": "10",
+   "rubrik": "Om förmyndare",
+   "paragrafer": [
+    "10:1",
+    "10:2",
+    "10:3",
+    "10:4",
+    "10:5",
+    "10:6",
+    "10:7",
+    "10:8",
+    "10:9",
+    "10:10",
+    "10:11",
+    "10:12",
+    "10:13",
+    "10:14",
+    "10:15",
+    "10:16",
+    "10:17",
+    "10:18"
+   ]
+  },
+  {
+   "nummer": "11",
+   "rubrik": "Om god man och förvaltare",
+   "paragrafer": [
+    "11:1",
+    "11:2",
+    "11:3",
+    "11:4",
+    "11:5",
+    "11:6",
+    "11:7",
+    "11:8",
+    "11:9",
+    "11:10",
+    "11:11",
+    "11:12",
+    "11:13",
+    "11:14",
+    "11:15",
+    "11:16",
+    "11:17",
+    "11:18",
+    "11:19",
+    "11:20",
+    "11:21",
+    "11:22",
+    "11:23",
+    "11:24",
+    "11:25",
+    "11:26",
+    "11:27"
+   ]
+  },
+  {
+   "nummer": "12",
+   "rubrik": "Allmänna bestämmelser om förmyndares, gode mäns och förvaltares verksamhet",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17"
+   ]
+  },
+  {
+   "nummer": "13",
+   "rubrik": "Föräldrars förmyndarförvaltning",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9",
+    "13:10",
+    "13:11",
+    "13:12",
+    "13:13",
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17",
+    "13:18",
+    "13:19",
+    "13:20",
+    "13:21",
+    "13:22"
+   ]
+  },
+  {
+   "nummer": "14",
+   "rubrik": "Förordnade förmyndares, gode mäns och förvaltares vård av egendom",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10",
+    "14:11",
+    "14:12",
+    "14:13",
+    "14:14",
+    "14:15",
+    "14:16",
+    "14:17",
+    "14:18",
+    "14:19",
+    "14:20",
+    "14:21",
+    "14:22",
+    "14:23",
+    "14:24",
+    "14:25"
+   ]
+  },
+  {
+   "nummer": "15",
+   "rubrik": "Vård av rätt i dödsbo, m.m.",
+   "paragrafer": [
+    "15:1",
+    "15:2",
+    "15:3",
+    "15:4",
+    "15:5",
+    "15:6",
+    "15:7",
+    "15:8",
+    "15:9",
+    "15:10"
+   ]
+  },
+  {
+   "nummer": "16",
+   "rubrik": "Tillsyn över förmyndares, gode mäns och förvaltares verksamhet",
+   "paragrafer": [
+    "16:1",
+    "16:2",
+    "16:3",
+    "16:4",
+    "16:5",
+    "16:6",
+    "16:7",
+    "16:8",
+    "16:9",
+    "16:10",
+    "16:11",
+    "16:12",
+    "16:13",
+    "16:14"
+   ]
+  },
+  {
+   "nummer": "17",
+   "rubrik": "Anhörigas behörighet att rättshandla i vissa fall",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5",
+    "17:6"
+   ]
+  },
+  {
+   "nummer": "18",
+   "rubrik": "Ställföreträdarregistret",
+   "paragrafer": [
+    "18:1",
+    "18:2",
+    "18:3",
+    "18:4",
+    "18:5",
+    "18:6",
+    "18:7",
+    "18:8"
+   ]
+  },
+  {
+   "nummer": "19",
+   "rubrik": "Om överförmyndare",
+   "paragrafer": [
+    "19:1",
+    "19:2",
+    "19:3",
+    "19:4",
+    "19:5",
+    "19:6",
+    "19:7",
+    "19:8",
+    "19:9",
+    "19:10",
+    "19:11",
+    "19:12",
+    "19:13",
+    "19:14",
+    "19:15",
+    "19:16",
+    "19:17",
+    "19:18",
+    "19:19",
+    "19:20"
+   ]
+  },
+  {
+   "nummer": "20",
+   "rubrik": "Vissa gemensamma bestämmelser om rättegången",
+   "paragrafer": [
+    "20:1",
+    "20:2",
+    "20:3",
+    "20:4",
+    "20:5",
+    "20:6",
+    "20:7",
+    "20:8",
+    "20:9",
+    "20:10",
+    "20:11",
+    "20:12"
+   ]
+  },
+  {
+   "nummer": "21",
+   "rubrik": "Om verkställighet av domar, beslut eller avtal om vårdnad, boende eller umgänge m.m.",
+   "paragrafer": [
+    "21:1",
+    "21:2",
+    "21:3",
+    "21:4",
+    "21:5",
+    "21:6",
+    "21:7",
+    "21:8",
+    "21:9",
+    "21:10",
+    "21:11",
+    "21:12",
+    "21:13",
+    "21:14",
+    "21:15",
+    "21:16"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Faderskapspresumtion",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:1",
+    "1:2"
+   ]
+  },
+  {
+   "rubrik": "Fastställande av faderskap",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6"
+   ]
+  },
+  {
+   "rubrik": "Moderskap vid befruktning utanför kroppen",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:7"
+   ]
+  },
+  {
+   "rubrik": "Faderskap vid insemination eller befruktning utanför kroppen",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:8"
+   ]
+  },
+  {
+   "rubrik": "Föräldraskap vid insemination eller befruktning utanför kroppen",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:9"
+   ]
+  },
+  {
+   "rubrik": "Faderskap och moderskap vid ändrad könstillhörighet",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:10",
+    "1:11",
+    "1:12",
+    "1:13",
+    "1:14"
+   ]
+  },
+  {
+   "rubrik": "Barnets rätt till upplysning i vissa fall",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:15"
+   ]
+  },
+  {
+   "rubrik": "Mål om hävande av faderskap",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4"
+   ]
+  },
+  {
+   "rubrik": "Mål om fastställande av faderskap",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11",
+    "3:12"
+   ]
+  },
+  {
+   "rubrik": "Förening av mål vid talan om hävande av faderskap",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:13",
+    "3:14",
+    "3:15",
+    "3:16",
+    "3:17",
+    "3:18",
+    "3:19"
+   ]
+  },
+  {
+   "rubrik": "Adoption av ett barn",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3"
+   ]
+  },
+  {
+   "rubrik": "Adoption av en vuxen",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:4"
+   ]
+  },
+  {
+   "rubrik": "Vem som får adoptera",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:5",
+    "4:6"
+   ]
+  },
+  {
+   "rubrik": "Samtycke",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:7",
+    "4:8",
+    "4:9"
+   ]
+  },
+  {
+   "rubrik": "Förbud mot ersättning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:10"
+   ]
+  },
+  {
+   "rubrik": "Adoptionsärenden",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20"
+   ]
+  },
+  {
+   "rubrik": "Rättsverkningar av en adoption",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:21",
+    "4:22"
+   ]
+  },
+  {
+   "rubrik": "Barnets rätt till upplysning om adoptionen",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:23"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1",
+    "6:2"
+   ]
+  },
+  {
+   "rubrik": "Vårdnadshavare",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10"
+   ]
+  },
+  {
+   "rubrik": "Vårdnadens utövande",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:11",
+    "6:12",
+    "6:13",
+    "6:14"
+   ]
+  },
+  {
+   "rubrik": "Umgänge",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:15"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet i mål och ärenden om vårdnad m.m.",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:16",
+    "6:17",
+    "6:18",
+    "6:19",
+    "6:20",
+    "6:21",
+    "6:22"
+   ]
+  },
+  {
+   "rubrik": "God man i förmyndares ställe",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:1"
+   ]
+  },
+  {
+   "rubrik": "God man vid intressekonflikt",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:2"
+   ]
+  },
+  {
+   "rubrik": "God man för bortavarande och andra",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:3"
+   ]
+  },
+  {
+   "rubrik": "God man vid sjukdom och liknande förhållanden",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:4"
+   ]
+  },
+  {
+   "rubrik": "Den gode mannens behörighet och förhållandet till tredje man",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:5",
+    "11:6"
+   ]
+  },
+  {
+   "rubrik": "När ett förvaltarskap ska anordnas",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:7"
+   ]
+  },
+  {
+   "rubrik": "Den enskildes och förvaltarens behörighet",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:8",
+    "11:9",
+    "11:10",
+    "11:11"
+   ]
+  },
+  {
+   "rubrik": "Kompetens- och lämplighetskrav",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:12"
+   ]
+  },
+  {
+   "rubrik": "Flera gode män eller förvaltare",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:13",
+    "11:14"
+   ]
+  },
+  {
+   "rubrik": "Handläggningen",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:15",
+    "11:16",
+    "11:17"
+   ]
+  },
+  {
+   "rubrik": "Interimistiskt beslut",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:18"
+   ]
+  },
+  {
+   "rubrik": "Upphörande och entledigande",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:19",
+    "11:20",
+    "11:21",
+    "11:22"
+   ]
+  },
+  {
+   "rubrik": "Ändring av ett godmanskap eller förvaltarskap",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:23"
+   ]
+  },
+  {
+   "rubrik": "Ställföreträdarens yttrande",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:24"
+   ]
+  },
+  {
+   "rubrik": "Behörig överförmyndare och domstol",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:25",
+    "11:26"
+   ]
+  },
+  {
+   "rubrik": "Kungörelse",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:27"
+   ]
+  },
+  {
+   "rubrik": "Förmyndares skyldigheter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:1"
+   ]
+  },
+  {
+   "rubrik": "Gode mäns och förvaltares skyldigheter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:2"
+   ]
+  },
+  {
+   "rubrik": "Gemensamma bestämmelser",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8"
+   ]
+  },
+  {
+   "rubrik": "Överförmyndarens tillsyn",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:9"
+   ]
+  },
+  {
+   "rubrik": "Avtal utan överförmyndarens samtycke",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:10",
+    "12:11"
+   ]
+  },
+  {
+   "rubrik": "Flera förmyndare, gode män eller förvaltare",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:12"
+   ]
+  },
+  {
+   "rubrik": "Ställande av säkerhet",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:13"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:14",
+    "12:15"
+   ]
+  },
+  {
+   "rubrik": "Arvode och ersättning för utgifter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:16",
+    "12:17"
+   ]
+  },
+  {
+   "rubrik": "Föräldrars rådighet",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:1"
+   ]
+  },
+  {
+   "rubrik": "Kontroll av förvaltningen av viss egendom",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7"
+   ]
+  },
+  {
+   "rubrik": "Bankmedel",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:8"
+   ]
+  },
+  {
+   "rubrik": "Upphävande av eller lättnader i kontrollen",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:9"
+   ]
+  },
+  {
+   "rubrik": "Fast egendom m.m.",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:10"
+   ]
+  },
+  {
+   "rubrik": "Bortgivande av egendom",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:11"
+   ]
+  },
+  {
+   "rubrik": "Upptagande av lån m.m.",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:12"
+   ]
+  },
+  {
+   "rubrik": "Rörelse",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:13"
+   ]
+  },
+  {
+   "rubrik": "Redovisning av viss egendom",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17"
+   ]
+  },
+  {
+   "rubrik": "Särskilda beslut av överförmyndaren i vissa fall",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:18",
+    "13:19"
+   ]
+  },
+  {
+   "rubrik": "Vissa åtgärder vid förvaltningens upphörande",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:20",
+    "13:21"
+   ]
+  },
+  {
+   "rubrik": "Föräldrars död eller konkurs",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:22"
+   ]
+  },
+  {
+   "rubrik": "Förteckningar över egendom",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:1",
+    "14:2"
+   ]
+  },
+  {
+   "rubrik": "Förvaltning av egendom",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10"
+   ]
+  },
+  {
+   "rubrik": "Fast egendom m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:11"
+   ]
+  },
+  {
+   "rubrik": "Bortgivande av egendom",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:12"
+   ]
+  },
+  {
+   "rubrik": "Upptagande av lån m.m.",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:13"
+   ]
+  },
+  {
+   "rubrik": "Rörelse",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:14"
+   ]
+  },
+  {
+   "rubrik": "Redovisning av förvaltad egendom",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:15",
+    "14:16",
+    "14:17",
+    "14:18",
+    "14:19",
+    "14:20"
+   ]
+  },
+  {
+   "rubrik": "Särskilda beslut av överförmyndaren i vissa fall",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:21"
+   ]
+  },
+  {
+   "rubrik": "Vissa åtgärder vid förvaltningens upphörande",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:22",
+    "14:23"
+   ]
+  },
+  {
+   "rubrik": "Ställföreträdares död eller konkurs",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:24",
+    "14:25"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:1"
+   ]
+  },
+  {
+   "rubrik": "Tidpunkt för bodelning och skifte",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:2",
+    "15:3"
+   ]
+  },
+  {
+   "rubrik": "Ställföreträdares deltagande i förvaltningen",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:4"
+   ]
+  },
+  {
+   "rubrik": "Fördelning av egendom vid bodelning och skifte",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:5"
+   ]
+  },
+  {
+   "rubrik": "Avstående från arv eller testamente",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:6"
+   ]
+  },
+  {
+   "rubrik": "Avtal om sammanlevnad i oskiftat dödsbo",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:7",
+    "15:8"
+   ]
+  },
+  {
+   "rubrik": "Förrättande av bouppteckning i vissa fall",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:9"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av viss egendom",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:10"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:1"
+   ]
+  },
+  {
+   "rubrik": "Behörig överförmyndare",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:2"
+   ]
+  },
+  {
+   "rubrik": "Granskning av verksamheten",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:3",
+    "16:4"
+   ]
+  },
+  {
+   "rubrik": "Anmärkning mot verksamheten",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:5",
+    "16:6"
+   ]
+  },
+  {
+   "rubrik": "Rätt att ta del av handlingar",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:7"
+   ]
+  },
+  {
+   "rubrik": "Överlämnande av handlingar vid granskningens slut",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:8"
+   ]
+  },
+  {
+   "rubrik": "Inhämtande av yttrande m.m.",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:9",
+    "16:10"
+   ]
+  },
+  {
+   "rubrik": "Utbetalning till bank och underrättelse till överförmyndaren i vissa fall",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:11"
+   ]
+  },
+  {
+   "rubrik": "Överförmyndarens handläggning",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:12"
+   ]
+  },
+  {
+   "rubrik": "Vite",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:13"
+   ]
+  },
+  {
+   "rubrik": "Tillsyn och utformning av handlingar",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:14"
+   ]
+  },
+  {
+   "rubrik": "Innebörden av behörigheten",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:1"
+   ]
+  },
+  {
+   "rubrik": "Behöriga anhöriga",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:2"
+   ]
+  },
+  {
+   "rubrik": "Behörighetens omfattning i vissa fall",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:3"
+   ]
+  },
+  {
+   "rubrik": "Skyldigheter för den anhörige",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:4"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:5",
+    "17:6"
+   ]
+  },
+  {
+   "rubrik": "Ett ställföreträdarregister",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:1"
+   ]
+  },
+  {
+   "rubrik": "Förhållandet till annan reglering",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:2"
+   ]
+  },
+  {
+   "rubrik": "Personuppgiftsansvar",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:3"
+   ]
+  },
+  {
+   "rubrik": "Ändamålet med behandlingen av personuppgifter",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:4"
+   ]
+  },
+  {
+   "rubrik": "Känsliga personuppgifter",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:5"
+   ]
+  },
+  {
+   "rubrik": "Sökbegränsningar",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:6"
+   ]
+  },
+  {
+   "rubrik": "Elektroniskt utlämnande av personuppgifter",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:7"
+   ]
+  },
+  {
+   "rubrik": "Upplysning om föreskrifter",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:8"
+   ]
+  },
+  {
+   "rubrik": "Om överförmyndare och överförmyndarnämnd",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:1",
+    "19:2",
+    "19:3"
+   ]
+  },
+  {
+   "rubrik": "Överförmyndarens verksamhet",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:3",
+    "19:4"
+   ]
+  },
+  {
+   "rubrik": "Val av överförmyndare och ledamöter i överförmyndarnämnd",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:5",
+    "19:6",
+    "19:7",
+    "19:8",
+    "19:9",
+    "19:10",
+    "19:11",
+    "19:12"
+   ]
+  },
+  {
+   "rubrik": "Beslut av överförmyndaren och överförmyndarnämnden",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:13",
+    "19:14"
+   ]
+  },
+  {
+   "rubrik": "Ekonomiska förmåner",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:15"
+   ]
+  },
+  {
+   "rubrik": "Kommunallagens tillämplighet",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:16"
+   ]
+  },
+  {
+   "rubrik": "Länsstyrelsens tillsyn",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:17"
+   ]
+  },
+  {
+   "rubrik": "Överförmyndarens ansvar för utbildning och information",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:18",
+    "19:19",
+    "19:20"
+   ]
+  },
+  {
+   "rubrik": "Ansvariga länsstyrelser",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:20"
+   ]
+  },
+  {
+   "rubrik": "Verkställighet av domar, beslut eller avtal",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:1",
+    "21:2",
+    "21:3",
+    "21:4",
+    "21:5",
+    "21:6"
+   ]
+  },
+  {
+   "rubrik": "Överflyttning av barn i andra fall",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:7",
+    "21:8"
+   ]
+  },
+  {
+   "rubrik": "Gemensamma bestämmelser",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:9",
+    "21:10",
+    "21:11",
+    "21:12",
+    "21:13",
+    "21:14",
+    "21:15",
+    "21:16"
+   ]
+  }
+ ]
+}

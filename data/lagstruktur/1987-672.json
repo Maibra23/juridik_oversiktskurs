@@ -1,0 +1,1119 @@
+{
+ "forkortning": "KonkL",
+ "namn": "Konkurslag",
+ "sfs": "1987:672",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1987-672.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Inledande bestämmelser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Konkursansökan och konkursbeslut",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16",
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23",
+    "2:24",
+    "2:25",
+    "2:26"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Verkningar av konkurs",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Återvinning till konkursbo",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Fordringar i konkurs",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11",
+    "5:12",
+    "5:13",
+    "5:14",
+    "5:15",
+    "5:16",
+    "5:17",
+    "5:18"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Gäldenärens skyldigheter under boutredningen",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11",
+    "6:12",
+    "6:13",
+    "6:14"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Förvaltning och tillsyn",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21",
+    "7:22",
+    "7:23",
+    "7:24",
+    "7:25",
+    "7:26",
+    "7:27",
+    "7:28",
+    "7:29",
+    "7:30",
+    "7:31",
+    "7:32"
+   ]
+  },
+  {
+   "nummer": "8",
+   "rubrik": "Försäljning av egendom",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Bevaknings- och anmärkningsförfarandet",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19",
+    "9:20",
+    "9:21",
+    "9:22"
+   ]
+  },
+  {
+   "nummer": "10",
+   "rubrik": "Avskrivning av konkurs",
+   "paragrafer": [
+    "10:1",
+    "10:2",
+    "10:3",
+    "10:4",
+    "10:5"
+   ]
+  },
+  {
+   "nummer": "11",
+   "rubrik": "Utdelning",
+   "paragrafer": [
+    "11:1",
+    "11:2",
+    "11:3",
+    "11:4",
+    "11:5",
+    "11:6",
+    "11:7",
+    "11:8",
+    "11:9",
+    "11:10",
+    "11:11",
+    "11:12",
+    "11:13",
+    "11:14",
+    "11:15",
+    "11:16",
+    "11:17",
+    "11:18",
+    "11:19",
+    "11:20",
+    "11:21",
+    "11:22"
+   ]
+  },
+  {
+   "nummer": "12",
+   "rubrik": "Ackord i konkurs m.m.",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17",
+    "12:18",
+    "12:19",
+    "12:20",
+    "12:21",
+    "12:22",
+    "12:23",
+    "12:24",
+    "12:25",
+    "12:26",
+    "12:27",
+    "12:28"
+   ]
+  },
+  {
+   "nummer": "13",
+   "rubrik": "Förvaltarens slutredovisning",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9"
+   ]
+  },
+  {
+   "nummer": "14",
+   "rubrik": "Konkurskostnader",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10",
+    "14:11",
+    "14:12",
+    "14:13",
+    "14:14",
+    "14:15",
+    "14:17",
+    "14:18"
+   ]
+  },
+  {
+   "nummer": "15",
+   "rubrik": "Information om beslut och åtgärder under konkurs",
+   "paragrafer": [
+    "15:1",
+    "15:2",
+    "15:3",
+    "15:4",
+    "15:5",
+    "15:6",
+    "15:7",
+    "15:8"
+   ]
+  },
+  {
+   "nummer": "16",
+   "rubrik": "Handläggningen av konkursärenden",
+   "paragrafer": [
+    "16:1",
+    "16:2",
+    "16:3",
+    "16:4",
+    "16:5",
+    "16:6",
+    "16:7",
+    "16:8",
+    "16:9",
+    "16:10",
+    "16:11",
+    "16:12",
+    "16:13",
+    "16:14",
+    "16:15",
+    "16:16",
+    "16:17",
+    "16:18",
+    "16:19",
+    "16:20",
+    "16:21",
+    "16:22",
+    "16:23"
+   ]
+  },
+  {
+   "nummer": "17",
+   "rubrik": "Skadestånd och straff",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5",
+    "17:6",
+    "17:7"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Konkursansökan",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6"
+   ]
+  },
+  {
+   "rubrik": "Bevisning om obestånd",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:7",
+    "2:8",
+    "2:9"
+   ]
+  },
+  {
+   "rubrik": "Konkurshinder",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:10"
+   ]
+  },
+  {
+   "rubrik": "Säkerhetsåtgärder",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16",
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23",
+    "2:24",
+    "2:25",
+    "2:26"
+   ]
+  },
+  {
+   "rubrik": "Gäldenärens förlust av sin rådighet",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:1",
+    "3:2"
+   ]
+  },
+  {
+   "rubrik": "Egendom som ingår i ett konkursbo",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6"
+   ]
+  },
+  {
+   "rubrik": "Utmätning vid konkurs",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:7",
+    "3:8"
+   ]
+  },
+  {
+   "rubrik": "Rättegång vid konkurs m.m.",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:9",
+    "3:10"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4"
+   ]
+  },
+  {
+   "rubrik": "Förutsättningar för återvinning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13"
+   ]
+  },
+  {
+   "rubrik": "Verkan av återvinning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21"
+   ]
+  },
+  {
+   "rubrik": "Fordringar som kan göras gällande",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3"
+   ]
+  },
+  {
+   "rubrik": "Fordringar med solidariskt betalningsansvar",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9"
+   ]
+  },
+  {
+   "rubrik": "Vissa fordringar som är beroende av villkor",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:10",
+    "5:11",
+    "5:12"
+   ]
+  },
+  {
+   "rubrik": "Värdering av vissa fordringar",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:13",
+    "5:14"
+   ]
+  },
+  {
+   "rubrik": "Kvittning i konkurs",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:15",
+    "5:16",
+    "5:17"
+   ]
+  },
+  {
+   "rubrik": "Ett konkursbos ansvar för lönefordringar",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:18"
+   ]
+  },
+  {
+   "rubrik": "Förbud mot näringsverksamhet under konkurs",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1"
+   ]
+  },
+  {
+   "rubrik": "Upplysnings- och närvaroplikt under boutredningen",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:2"
+   ]
+  },
+  {
+   "rubrik": "Bekräftelse av bouppteckningen och edgång",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:3",
+    "6:4",
+    "6:5"
+   ]
+  },
+  {
+   "rubrik": "Tvångsmedel m.m.",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11",
+    "6:12",
+    "6:13"
+   ]
+  },
+  {
+   "rubrik": "Ersättning för inställelse",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:14"
+   ]
+  },
+  {
+   "rubrik": "Förvaltare",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4"
+   ]
+  },
+  {
+   "rubrik": "Entledigande av förvaltare",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17"
+   ]
+  },
+  {
+   "rubrik": "Förvaltarens medelsförvaltning m.m.",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21",
+    "7:22"
+   ]
+  },
+  {
+   "rubrik": "Redovisning av medel till tredje man",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:23",
+    "7:24"
+   ]
+  },
+  {
+   "rubrik": "Tillsynen över förvaltningen",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:25",
+    "7:26",
+    "7:27",
+    "7:28",
+    "7:29"
+   ]
+  },
+  {
+   "rubrik": "Särskild granskning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:30",
+    "7:31",
+    "7:32"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av fast egendom",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:6"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av lös egendom",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10"
+   ]
+  },
+  {
+   "rubrik": "Kungörande av auktion i vissa fall",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:11",
+    "8:12",
+    "8:13"
+   ]
+  },
+  {
+   "rubrik": "Indrivning av fordringar",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:14"
+   ]
+  },
+  {
+   "rubrik": "Bevakning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7"
+   ]
+  },
+  {
+   "rubrik": "Anmärkning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12"
+   ]
+  },
+  {
+   "rubrik": "Tvist angående en bevakad fordran",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19"
+   ]
+  },
+  {
+   "rubrik": "Efterbevakning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:20",
+    "9:21",
+    "9:22"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:1",
+    "11:2",
+    "11:3"
+   ]
+  },
+  {
+   "rubrik": "Utdelningsförfarandet",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:4",
+    "11:5",
+    "11:6",
+    "11:7",
+    "11:8"
+   ]
+  },
+  {
+   "rubrik": "Utbetalning av utdelningsmedel",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:9",
+    "11:10",
+    "11:11",
+    "11:12",
+    "11:13"
+   ]
+  },
+  {
+   "rubrik": "Förskottsbetalning",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:14",
+    "11:15",
+    "11:16",
+    "11:17",
+    "11:18"
+   ]
+  },
+  {
+   "rubrik": "Efterutdelning",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:19",
+    "11:20",
+    "11:21"
+   ]
+  },
+  {
+   "rubrik": "Viss anmälningsskyldighet m.m.",
+   "kapitel": "11",
+   "paragrafer": [
+    "11:22"
+   ]
+  },
+  {
+   "rubrik": "Frivillig uppgörelse",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7"
+   ]
+  },
+  {
+   "rubrik": "Sammanträde för prövning av ackordsförslag",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16"
+   ]
+  },
+  {
+   "rubrik": "Fastställelse av ackord",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:17",
+    "12:18",
+    "12:19",
+    "12:20"
+   ]
+  },
+  {
+   "rubrik": "Verkan av ackord",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:21",
+    "12:22",
+    "12:23",
+    "12:24",
+    "12:25"
+   ]
+  },
+  {
+   "rubrik": "Tillsyn över ackord",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:26",
+    "12:27"
+   ]
+  },
+  {
+   "rubrik": "Förverkande av ackord",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:28"
+   ]
+  },
+  {
+   "rubrik": "Avgivande av slutredovisningen",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder för granskning av slutredovisningen",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:5",
+    "13:6"
+   ]
+  },
+  {
+   "rubrik": "Klander av slutredovisningen",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:7",
+    "13:8",
+    "13:9"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3"
+   ]
+  },
+  {
+   "rubrik": "Förvaltarens arvode",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10",
+    "14:11"
+   ]
+  },
+  {
+   "rubrik": "Förskott på förvaltarens arvode",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:12"
+   ]
+  },
+  {
+   "rubrik": "Förvaltarens ersättning för kostnader",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:13",
+    "14:14"
+   ]
+  },
+  {
+   "rubrik": "Övriga konkurskostnader",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:15",
+    "14:17"
+   ]
+  },
+  {
+   "rubrik": "Fördelning av konkurskostnaderna på olika slag av egendom",
+   "kapitel": "14",
+   "paragrafer": [
+    "14:18"
+   ]
+  },
+  {
+   "rubrik": "Formen för kungörande",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:1"
+   ]
+  },
+  {
+   "rubrik": "Utbyte av kungörelse mot skriftliga underrättelser till borgenärerna",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:2"
+   ]
+  },
+  {
+   "rubrik": "Utbyte av underrättelser och kallelser till borgenärerna mot kungörelse",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:3"
+   ]
+  },
+  {
+   "rubrik": "Formen för kallelser och underrättelser m.m.",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:4"
+   ]
+  },
+  {
+   "rubrik": "Registrering av konkurser",
+   "kapitel": "15",
+   "paragrafer": [
+    "15:5",
+    "15:6",
+    "15:7",
+    "15:8"
+   ]
+  },
+  {
+   "rubrik": "Beslut av tillsynsmyndigheten",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:1",
+    "16:2"
+   ]
+  },
+  {
+   "rubrik": "Beslut av förvaltaren",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:3",
+    "16:4"
+   ]
+  },
+  {
+   "rubrik": "Allmänt om handläggningen i domstol",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:5",
+    "16:6",
+    "16:7"
+   ]
+  },
+  {
+   "rubrik": "Behörig tingsrätt",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:8",
+    "16:9"
+   ]
+  },
+  {
+   "rubrik": "När ett beslut börjar gälla",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:10"
+   ]
+  },
+  {
+   "rubrik": "Särskilda regler om överklagande av tingsrättens beslut",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:11",
+    "16:12",
+    "16:13"
+   ]
+  },
+  {
+   "rubrik": "Behörig tingsrätt",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:14"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av tillsynsmyndighetens beslut",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:15",
+    "16:16"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av förvaltarens beslut",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:17",
+    "16:18",
+    "16:19",
+    "16:20",
+    "16:21",
+    "16:22"
+   ]
+  },
+  {
+   "rubrik": "När ett beslut börjar gälla",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:23"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3"
+   ]
+  },
+  {
+   "rubrik": "Straff m.m.",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:4",
+    "17:5",
+    "17:6",
+    "17:7"
+   ]
+  }
+ ]
+}

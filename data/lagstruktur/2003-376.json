@@ -1,0 +1,87 @@
+{
+ "forkortning": "SamboL",
+ "namn": "Sambolag",
+ "sfs": "2003:376",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-2003-376.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Vad som avses med sambor",
+   "kapitel": null,
+   "paragrafer": [
+    "1"
+   ]
+  },
+  {
+   "rubrik": "När ett samboförhållande upphör",
+   "kapitel": null,
+   "paragrafer": [
+    "2"
+   ]
+  },
+  {
+   "rubrik": "Sambors egendom",
+   "kapitel": null,
+   "paragrafer": [
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+   ]
+  },
+  {
+   "rubrik": "Bodelning",
+   "kapitel": null,
+   "paragrafer": [
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20",
+    "21"
+   ]
+  },
+  {
+   "rubrik": "Övertagande av bostad i vissa fall",
+   "kapitel": null,
+   "paragrafer": [
+    "22"
+   ]
+  },
+  {
+   "rubrik": "Inskränkningar i rätten att förfoga över det gemensamma hemmet",
+   "kapitel": null,
+   "paragrafer": [
+    "23",
+    "24",
+    "25"
+   ]
+  },
+  {
+   "rubrik": "Övriga bestämmelser",
+   "kapitel": null,
+   "paragrafer": [
+    "26",
+    "27",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32"
+   ]
+  }
+ ]
+}

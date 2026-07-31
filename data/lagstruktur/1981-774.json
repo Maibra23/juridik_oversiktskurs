@@ -1,0 +1,1459 @@
+{
+ "forkortning": "UB",
+ "namn": "Utsökningsbalk",
+ "sfs": "1981:774",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1981-774.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Inledande bestämmelser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8",
+    "1:9",
+    "1:10",
+    "1:11",
+    "1:12"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Förfarandet vid Kronofogdemyndigheten",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9",
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14",
+    "2:15",
+    "2:16",
+    "2:17",
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21",
+    "2:22",
+    "2:23",
+    "2:24",
+    "2:25",
+    "2:26",
+    "2:27",
+    "2:28",
+    "2:29",
+    "2:30"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Exekutionstitlar",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11",
+    "3:12",
+    "3:13",
+    "3:14",
+    "3:15",
+    "3:16",
+    "3:17",
+    "3:18",
+    "3:19",
+    "3:20",
+    "3:21",
+    "3:22",
+    "3:23",
+    "3:24"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Utmätning",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23",
+    "4:24",
+    "4:25",
+    "4:26",
+    "4:27",
+    "4:28",
+    "4:29",
+    "4:30",
+    "4:31",
+    "4:32",
+    "4:33",
+    "4:34",
+    "4:35",
+    "4:36"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Undantag från utmätning",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11",
+    "5:12",
+    "5:13",
+    "5:14",
+    "5:15"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Säkerställande av utmätning",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11",
+    "6:12",
+    "6:13",
+    "6:14"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Utmätning av lön och andra förmåner",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21",
+    "7:22",
+    "7:23",
+    "7:24",
+    "7:25"
+   ]
+  },
+  {
+   "nummer": "8",
+   "rubrik": "Allmänna bestämmelser om exekutiv försäljning",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14",
+    "8:15",
+    "8:16",
+    "8:17",
+    "8:18",
+    "8:19"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Försäljning av lös egendom i allmänhet och indrivning av utmätt fordran",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16"
+   ]
+  },
+  {
+   "nummer": "10",
+   "rubrik": "Försäljning av registrerat skepp",
+   "paragrafer": [
+    "10:1",
+    "10:2",
+    "10:3",
+    "10:4",
+    "10:5",
+    "10:6",
+    "10:7",
+    "10:8",
+    "10:9",
+    "10:10",
+    "10:11",
+    "10:12",
+    "10:13",
+    "10:14",
+    "10:15",
+    "10:16",
+    "10:17",
+    "10:18",
+    "10:19",
+    "10:20",
+    "10:21",
+    "10:22",
+    "10:23",
+    "10:24"
+   ]
+  },
+  {
+   "nummer": "11",
+   "rubrik": "Försäljning av registrerat luftfartyg och reservdelar",
+   "paragrafer": [
+    "11:1",
+    "11:2",
+    "11:3",
+    "11:4",
+    "11:5"
+   ]
+  },
+  {
+   "nummer": "12",
+   "rubrik": "Försäljning av fast egendom",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17",
+    "12:18",
+    "12:19",
+    "12:20",
+    "12:21",
+    "12:22",
+    "12:23",
+    "12:24",
+    "12:25",
+    "12:26",
+    "12:27",
+    "12:28",
+    "12:29",
+    "12:30",
+    "12:31",
+    "12:32",
+    "12:33",
+    "12:34",
+    "12:35",
+    "12:36",
+    "12:37",
+    "12:38",
+    "12:39",
+    "12:40",
+    "12:41",
+    "12:42",
+    "12:43",
+    "12:44",
+    "12:45",
+    "12:46",
+    "12:47",
+    "12:48",
+    "12:49",
+    "12:50",
+    "12:51",
+    "12:52",
+    "12:53",
+    "12:54",
+    "12:55",
+    "12:56",
+    "12:57",
+    "12:58",
+    "12:59",
+    "12:60",
+    "12:61",
+    "12:62",
+    "12:63",
+    "12:64",
+    "12:65",
+    "12:66",
+    "12:67",
+    "12:68",
+    "12:69"
+   ]
+  },
+  {
+   "nummer": "13",
+   "rubrik": "Redovisning av inbetalda pengar",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9",
+    "13:10",
+    "13:11",
+    "13:12",
+    "13:13",
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17",
+    "13:18",
+    "13:19",
+    "13:20",
+    "13:21"
+   ]
+  },
+  {
+   "nummer": "14",
+   "rubrik": "Verkan av exekutiv försäljning",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6"
+   ]
+  },
+  {
+   "nummer": "16",
+   "rubrik": "Annan verkställighet",
+   "paragrafer": [
+    "16:1",
+    "16:2",
+    "16:3",
+    "16:4",
+    "16:5",
+    "16:6",
+    "16:7",
+    "16:8",
+    "16:9",
+    "16:10",
+    "16:11",
+    "16:12",
+    "16:13",
+    "16:14",
+    "16:15",
+    "16:16"
+   ]
+  },
+  {
+   "nummer": "17",
+   "rubrik": "Kostnader",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5",
+    "17:6",
+    "17:7",
+    "17:8",
+    "17:9",
+    "17:10",
+    "17:11",
+    "17:12",
+    "17:13"
+   ]
+  },
+  {
+   "nummer": "18",
+   "rubrik": "Överklagande",
+   "paragrafer": [
+    "18:1",
+    "18:2",
+    "18:3",
+    "18:4",
+    "18:5",
+    "18:6",
+    "18:7",
+    "18:8",
+    "18:9",
+    "18:10",
+    "18:11",
+    "18:12",
+    "18:13",
+    "18:14",
+    "18:15",
+    "18:16",
+    "18:17",
+    "18:18",
+    "18:19",
+    "18:20"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Balkens tillämpningsområde",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:1"
+   ]
+  },
+  {
+   "rubrik": "Balkens innehåll",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:2"
+   ]
+  },
+  {
+   "rubrik": "Exekutiv myndighet",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:3"
+   ]
+  },
+  {
+   "rubrik": "Jäv",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:4",
+    "1:5"
+   ]
+  },
+  {
+   "rubrik": "Vissa föreskrifter om mål och parter m.m.",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:6",
+    "1:7"
+   ]
+  },
+  {
+   "rubrik": "Tillämpning av bestämmelser som rör fartyg, luftfartyg eller fast egendom",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:8",
+    "1:9",
+    "1:10",
+    "1:11",
+    "1:12"
+   ]
+  },
+  {
+   "rubrik": "Ansökan m.m.",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7",
+    "2:8",
+    "2:9"
+   ]
+  },
+  {
+   "rubrik": "Förhör",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:10",
+    "2:11",
+    "2:12",
+    "2:13",
+    "2:14"
+   ]
+  },
+  {
+   "rubrik": "Tvångsmedel",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:15",
+    "2:16",
+    "2:17"
+   ]
+  },
+  {
+   "rubrik": "Beslut",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:18",
+    "2:19",
+    "2:20",
+    "2:21"
+   ]
+  },
+  {
+   "rubrik": "Prövning av tvist",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:22",
+    "2:23",
+    "2:24"
+   ]
+  },
+  {
+   "rubrik": "Ställande av säkerhet m.m.",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:25",
+    "2:26",
+    "2:27"
+   ]
+  },
+  {
+   "rubrik": "Fordran som ej är förfallen samt ränta",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:28",
+    "2:29"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser beträffande allmänna mål",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:30"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:1",
+    "3:2"
+   ]
+  },
+  {
+   "rubrik": "Dom",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10"
+   ]
+  },
+  {
+   "rubrik": "Utslag och beslut i mål om betalningsföreläggande och handräckning samt europeiskt betalningsföreläggande",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:11",
+    "3:12"
+   ]
+  },
+  {
+   "rubrik": "Förlikning och medlingsöverenskommelse",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:13"
+   ]
+  },
+  {
+   "rubrik": "Strafföreläggande och föreläggande av ordningsbot",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:14"
+   ]
+  },
+  {
+   "rubrik": "Skiljedom",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:15",
+    "3:16",
+    "3:17",
+    "3:18"
+   ]
+  },
+  {
+   "rubrik": "Förbindelse angående underhållsbidrag",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:19"
+   ]
+  },
+  {
+   "rubrik": "Annan exekutionstitel",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:20"
+   ]
+  },
+  {
+   "rubrik": "Invändningar mot verkställighet",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:21"
+   ]
+  },
+  {
+   "rubrik": "Upphävande av exekutionstitel",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:22"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser beträffande allmänna mål",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:23",
+    "3:24"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2"
+   ]
+  },
+  {
+   "rubrik": "Utmätningsordningen",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13"
+   ]
+  },
+  {
+   "rubrik": "Upplysningsplikt",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:14",
+    "4:15",
+    "4:16"
+   ]
+  },
+  {
+   "rubrik": "Förhållandet till tredje man vid utmätning av lös egendom",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23"
+   ]
+  },
+  {
+   "rubrik": "Förhållandet till tredje man vid utmätning av fast egendom",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:24",
+    "4:25",
+    "4:26"
+   ]
+  },
+  {
+   "rubrik": "Utmätningsverkan av domstols beslut eller av betalning till kronofogdemyndigheten, m.m.",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:27",
+    "4:28"
+   ]
+  },
+  {
+   "rubrik": "Verkan av utmätning",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:29",
+    "4:30",
+    "4:31",
+    "4:32"
+   ]
+  },
+  {
+   "rubrik": "Hävande av utmätning och annan rättelse",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:33",
+    "4:34",
+    "4:35"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser om allmänna mål",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:36"
+   ]
+  },
+  {
+   "rubrik": "Undantag med hänsyn till gäldenärens behov",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4"
+   ]
+  },
+  {
+   "rubrik": "Undantag på grund av egendomens beskaffenhet eller särskild föreskrift",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11",
+    "5:12"
+   ]
+  },
+  {
+   "rubrik": "Pantsatt egendom m.m.",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:13"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet vid prövningen",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:14",
+    "5:15"
+   ]
+  },
+  {
+   "rubrik": "Lös egendom",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11"
+   ]
+  },
+  {
+   "rubrik": "Provisorisk åtgärd",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:12"
+   ]
+  },
+  {
+   "rubrik": "Fast egendom",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:13",
+    "6:14"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:1",
+    "7:2"
+   ]
+  },
+  {
+   "rubrik": "Villkor för utmätning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12"
+   ]
+  },
+  {
+   "rubrik": "Företrädesordning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19"
+   ]
+  },
+  {
+   "rubrik": "Arbetsgivares skyldigheter",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:20",
+    "7:21",
+    "7:22"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:23",
+    "7:24"
+   ]
+  },
+  {
+   "rubrik": "Straffbestämmelse",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:25"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:1",
+    "8:2"
+   ]
+  },
+  {
+   "rubrik": "Tidsfrist för försäljning och hinder mot försäljning",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7"
+   ]
+  },
+  {
+   "rubrik": "Andel i egendom",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:8",
+    "8:9"
+   ]
+  },
+  {
+   "rubrik": "Tredje mans rätt till betalning",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14",
+    "8:15",
+    "8:16"
+   ]
+  },
+  {
+   "rubrik": "Avbrytande av verkställigheten",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:17"
+   ]
+  },
+  {
+   "rubrik": "Handräckning efter försäljning",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:18"
+   ]
+  },
+  {
+   "rubrik": "Särskild bestämmelse beträffande allmänna mål",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:19"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser om försäljning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:1"
+   ]
+  },
+  {
+   "rubrik": "Försäljning på auktion",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7"
+   ]
+  },
+  {
+   "rubrik": "Försäljning under hand",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:8",
+    "9:9"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av egendom som innehas under förbehåll om återtaganderätt",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:10"
+   ]
+  },
+  {
+   "rubrik": "Indrivning av utmätt fordran",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:11",
+    "9:12",
+    "9:13"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder efter utmätning av pantbrev m.m.",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:14",
+    "9:15",
+    "9:16"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:1",
+    "10:2"
+   ]
+  },
+  {
+   "rubrik": "Tidsfrist för försäljning",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:3"
+   ]
+  },
+  {
+   "rubrik": "Utlösnings- och anslutningsrätt",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:4",
+    "10:5"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder före auktion",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:6",
+    "10:7",
+    "10:8"
+   ]
+  },
+  {
+   "rubrik": "Förhandling och sakägarförteckning",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:9",
+    "10:10",
+    "10:11",
+    "10:12",
+    "10:13"
+   ]
+  },
+  {
+   "rubrik": "Villkor för försäljning",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:14",
+    "10:15",
+    "10:16",
+    "10:17"
+   ]
+  },
+  {
+   "rubrik": "Auktionen",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:18",
+    "10:19",
+    "10:20",
+    "10:21",
+    "10:22",
+    "10:23"
+   ]
+  },
+  {
+   "rubrik": "Särskild bestämmelse beträffande allmänna mål",
+   "kapitel": "10",
+   "paragrafer": [
+    "10:24"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:1",
+    "12:2"
+   ]
+  },
+  {
+   "rubrik": "Förberedande åtgärder",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:3",
+    "12:4",
+    "12:5"
+   ]
+  },
+  {
+   "rubrik": "Förvaltning av utmätt fastighet",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10"
+   ]
+  },
+  {
+   "rubrik": "Tidsfrist för försäljning",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:11"
+   ]
+  },
+  {
+   "rubrik": "Utlösnings- och anslutningsrätt",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:12",
+    "12:13"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av fastighetstillbehör",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17"
+   ]
+  },
+  {
+   "rubrik": "Åtgärder före försäljning på auktion",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:18",
+    "12:19",
+    "12:20",
+    "12:21",
+    "12:22"
+   ]
+  },
+  {
+   "rubrik": "Bevakningssammanträde",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:23"
+   ]
+  },
+  {
+   "rubrik": "Sakägarförteckning",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:24",
+    "12:25",
+    "12:26",
+    "12:27",
+    "12:28",
+    "12:29",
+    "12:30",
+    "12:31"
+   ]
+  },
+  {
+   "rubrik": "Villkor för försäljning på auktion",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:32",
+    "12:33",
+    "12:34",
+    "12:35",
+    "12:36",
+    "12:37"
+   ]
+  },
+  {
+   "rubrik": "Auktion",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:38",
+    "12:39",
+    "12:40",
+    "12:41",
+    "12:42",
+    "12:43",
+    "12:44"
+   ]
+  },
+  {
+   "rubrik": "Vissa rättsföljder av auktion",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:45",
+    "12:46",
+    "12:47",
+    "12:48"
+   ]
+  },
+  {
+   "rubrik": "Gemensamt intecknade fastigheter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:49",
+    "12:50",
+    "12:51",
+    "12:52",
+    "12:53",
+    "12:54",
+    "12:55"
+   ]
+  },
+  {
+   "rubrik": "Fortsatt inteckningsansvar",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:56"
+   ]
+  },
+  {
+   "rubrik": "Försäljning under hand",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:57",
+    "12:58",
+    "12:59",
+    "12:60",
+    "12:61",
+    "12:62",
+    "12:63",
+    "12:64",
+    "12:65",
+    "12:66",
+    "12:67",
+    "12:68"
+   ]
+  },
+  {
+   "rubrik": "Särskild bestämmelse beträffande allmänna mål",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:69"
+   ]
+  },
+  {
+   "rubrik": "Allmänna bestämmelser om redovisning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3"
+   ]
+  },
+  {
+   "rubrik": "Fördelning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9",
+    "13:10",
+    "13:11",
+    "13:12"
+   ]
+  },
+  {
+   "rubrik": "Avräkning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:13"
+   ]
+  },
+  {
+   "rubrik": "Utbetalning",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17",
+    "13:18",
+    "13:19",
+    "13:20"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser beträffande allmänna mål",
+   "kapitel": "13",
+   "paragrafer": [
+    "13:21"
+   ]
+  },
+  {
+   "rubrik": "Avhysning",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:1",
+    "16:2",
+    "16:3",
+    "16:4",
+    "16:5",
+    "16:6",
+    "16:7",
+    "16:8",
+    "16:9"
+   ]
+  },
+  {
+   "rubrik": "Avlägsnande",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:10"
+   ]
+  },
+  {
+   "rubrik": "Verkställighet i annat fall",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:11",
+    "16:12"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser om kvarstad",
+   "kapitel": "16",
+   "paragrafer": [
+    "16:13",
+    "16:14",
+    "16:15",
+    "16:16"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelse",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:1"
+   ]
+  },
+  {
+   "rubrik": "Sökandens ansvar för förrättningskostnader",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5"
+   ]
+  },
+  {
+   "rubrik": "Uttagande av förrättningskostnader",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:6",
+    "17:7",
+    "17:8",
+    "17:9",
+    "17:10",
+    "17:11"
+   ]
+  },
+  {
+   "rubrik": "Kostnader i tvist vid fördelning",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:12"
+   ]
+  },
+  {
+   "rubrik": "Särskild bestämmelse beträffande allmänna mål",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:13"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:1"
+   ]
+  },
+  {
+   "rubrik": "Överklagande av kronofogdemyndighetens beslut",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:2",
+    "18:3",
+    "18:4",
+    "18:5",
+    "18:6",
+    "18:7",
+    "18:8",
+    "18:9",
+    "18:10",
+    "18:11"
+   ]
+  },
+  {
+   "rubrik": "Vissa bestämmelser om förfarandet i tingsrätten",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:12",
+    "18:13",
+    "18:14",
+    "18:15",
+    "18:16",
+    "18:17",
+    "18:18",
+    "18:19"
+   ]
+  },
+  {
+   "rubrik": "Särskilda rättsmedel",
+   "kapitel": "18",
+   "paragrafer": [
+    "18:20"
+   ]
+  }
+ ]
+}

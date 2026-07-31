@@ -1,0 +1,1404 @@
+{
+ "forkortning": "JB",
+ "namn": "Jordabalk",
+ "sfs": "1970:994",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1970-994.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Fastighet och dess gränser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Tillbehör till fastighet",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6",
+    "2:7"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Rättsförhållanden mellan grannar",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6",
+    "3:7",
+    "3:8",
+    "3:9",
+    "3:10",
+    "3:11",
+    "3:12",
+    "3:13"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Köp, byte och gåva",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23",
+    "4:24",
+    "4:25",
+    "4:26",
+    "4:27",
+    "4:28",
+    "4:29",
+    "4:30",
+    "4:31"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Verkan av att fast egendom frånvinnes någon efter klander m.m.",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Panträtt",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6",
+    "6:7",
+    "6:8",
+    "6:9",
+    "6:10",
+    "6:11",
+    "6:12",
+    "6:13",
+    "6:14",
+    "6:15",
+    "6:16",
+    "6:17"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Allmänna bestämmelser om nyttjanderätt, servitut och rätt till elektrisk kraft",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8",
+    "7:9",
+    "7:10",
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21",
+    "7:22",
+    "7:23",
+    "7:24",
+    "7:25",
+    "7:26",
+    "7:27",
+    "7:28",
+    "7:29",
+    "7:30",
+    "7:31"
+   ]
+  },
+  {
+   "nummer": "8",
+   "rubrik": "Arrende i allmänhet",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14",
+    "8:15",
+    "8:16",
+    "8:17",
+    "8:18",
+    "8:19",
+    "8:20",
+    "8:21",
+    "8:22",
+    "8:23",
+    "8:24",
+    "8:25",
+    "8:26",
+    "8:27",
+    "8:28",
+    "8:29",
+    "8:30",
+    "8:31",
+    "8:32",
+    "8:33"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Jordbruksarrende",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19",
+    "9:20",
+    "9:21",
+    "9:22",
+    "9:23",
+    "9:24",
+    "9:25",
+    "9:26",
+    "9:27",
+    "9:28",
+    "9:29",
+    "9:30",
+    "9:31",
+    "9:32",
+    "9:33",
+    "9:34",
+    "9:35",
+    "9:36",
+    "9:37",
+    "9:38",
+    "9:39"
+   ]
+  },
+  {
+   "nummer": "12",
+   "rubrik": "Hyra",
+   "paragrafer": [
+    "12:1",
+    "12:2",
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8",
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17",
+    "12:18",
+    "12:19",
+    "12:20",
+    "12:21",
+    "12:22",
+    "12:23",
+    "12:24",
+    "12:25",
+    "12:26",
+    "12:27",
+    "12:28",
+    "12:29",
+    "12:30",
+    "12:31",
+    "12:32",
+    "12:33",
+    "12:34",
+    "12:35",
+    "12:36",
+    "12:37",
+    "12:38",
+    "12:39",
+    "12:40",
+    "12:41",
+    "12:42",
+    "12:43",
+    "12:44",
+    "12:45",
+    "12:46",
+    "12:47",
+    "12:48",
+    "12:49",
+    "12:50",
+    "12:51",
+    "12:52",
+    "12:53",
+    "12:54",
+    "12:55",
+    "12:56",
+    "12:57",
+    "12:58",
+    "12:59",
+    "12:60",
+    "12:61",
+    "12:62",
+    "12:63",
+    "12:64",
+    "12:65",
+    "12:66",
+    "12:67",
+    "12:68",
+    "12:69",
+    "12:70",
+    "12:71",
+    "12:72",
+    "12:73"
+   ]
+  },
+  {
+   "nummer": "13",
+   "rubrik": "Tomträtt",
+   "paragrafer": [
+    "13:1",
+    "13:2",
+    "13:3",
+    "13:4",
+    "13:5",
+    "13:6",
+    "13:7",
+    "13:8",
+    "13:9",
+    "13:10",
+    "13:11",
+    "13:12",
+    "13:13",
+    "13:14",
+    "13:15",
+    "13:16",
+    "13:17",
+    "13:18",
+    "13:19",
+    "13:20",
+    "13:21",
+    "13:22",
+    "13:23",
+    "13:24",
+    "13:25",
+    "13:26"
+   ]
+  },
+  {
+   "nummer": "14",
+   "rubrik": "Servitut",
+   "paragrafer": [
+    "14:1",
+    "14:2",
+    "14:3",
+    "14:4",
+    "14:5",
+    "14:6",
+    "14:7",
+    "14:8",
+    "14:9",
+    "14:10",
+    "14:11",
+    "14:12",
+    "14:13",
+    "14:14"
+   ]
+  },
+  {
+   "nummer": "15",
+   "rubrik": "Rätt till elektrisk kraft",
+   "paragrafer": [
+    "15:1",
+    "15:2",
+    "15:3"
+   ]
+  },
+  {
+   "nummer": "16",
+   "rubrik": "Hävd till fast egendom",
+   "paragrafer": [
+    "16:1",
+    "16:2"
+   ]
+  },
+  {
+   "nummer": "17",
+   "rubrik": "Företräde på grund av inskrivning",
+   "paragrafer": [
+    "17:1",
+    "17:2",
+    "17:3",
+    "17:4",
+    "17:5",
+    "17:6",
+    "17:7",
+    "17:8",
+    "17:9",
+    "17:10",
+    "17:11"
+   ]
+  },
+  {
+   "nummer": "18",
+   "rubrik": "Godtrosförvärv på grund av inskrivning och betydelse av inskrivning i vissa andra fall",
+   "paragrafer": [
+    "18:1",
+    "18:2",
+    "18:3",
+    "18:4",
+    "18:5",
+    "18:6",
+    "18:7",
+    "18:8",
+    "18:9",
+    "18:10"
+   ]
+  },
+  {
+   "nummer": "19",
+   "rubrik": "Handläggning av inskrivningsärenden m.m.",
+   "paragrafer": [
+    "19:1",
+    "19:2",
+    "19:3",
+    "19:4",
+    "19:5",
+    "19:6",
+    "19:7",
+    "19:8",
+    "19:9",
+    "19:10",
+    "19:11",
+    "19:12",
+    "19:13",
+    "19:14",
+    "19:15",
+    "19:16",
+    "19:17",
+    "19:18",
+    "19:19",
+    "19:20",
+    "19:21",
+    "19:22",
+    "19:23",
+    "19:24",
+    "19:25",
+    "19:26",
+    "19:27",
+    "19:28",
+    "19:29",
+    "19:30",
+    "19:31",
+    "19:32",
+    "19:33",
+    "19:34",
+    "19:35",
+    "19:36",
+    "19:37",
+    "19:38",
+    "19:39",
+    "19:40"
+   ]
+  },
+  {
+   "nummer": "20",
+   "rubrik": "Lagfart",
+   "paragrafer": [
+    "20:1",
+    "20:2",
+    "20:3",
+    "20:4",
+    "20:5",
+    "20:6",
+    "20:7",
+    "20:8",
+    "20:9",
+    "20:10",
+    "20:11",
+    "20:12",
+    "20:13",
+    "20:14"
+   ]
+  },
+  {
+   "nummer": "21",
+   "rubrik": "Inskrivning av tomträtt",
+   "paragrafer": [
+    "21:1",
+    "21:2",
+    "21:3",
+    "21:4",
+    "21:5",
+    "21:6",
+    "21:7"
+   ]
+  },
+  {
+   "nummer": "22",
+   "rubrik": "Inteckning",
+   "paragrafer": [
+    "22:1",
+    "22:2",
+    "22:3",
+    "22:4",
+    "22:5",
+    "22:6",
+    "22:7",
+    "22:8",
+    "22:9",
+    "22:10",
+    "22:11",
+    "22:12",
+    "22:13",
+    "22:14",
+    "22:15"
+   ]
+  },
+  {
+   "nummer": "23",
+   "rubrik": "Inskrivning av annan nyttjanderätt än tomträtt samt avservitut och rätt till elektrisk kraft",
+   "paragrafer": [
+    "23:1",
+    "23:2",
+    "23:3",
+    "23:4",
+    "23:5",
+    "23:6",
+    "23:7",
+    "23:8",
+    "23:9"
+   ]
+  },
+  {
+   "nummer": "24",
+   "rubrik": "Inskrivning av förklaring om tillbehör till fastighet",
+   "paragrafer": [
+    "24:1",
+    "24:2",
+    "24:3"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Köpets form",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3"
+   ]
+  },
+  {
+   "rubrik": "Villkorligt köp",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:4",
+    "4:5",
+    "4:6"
+   ]
+  },
+  {
+   "rubrik": "Köp av del av fastighet",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:7",
+    "4:8",
+    "4:9"
+   ]
+  },
+  {
+   "rubrik": "Säljarens och köparens rättigheter och förpliktelser",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23",
+    "4:24",
+    "4:25",
+    "4:26",
+    "4:27"
+   ]
+  },
+  {
+   "rubrik": "Byte",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:28"
+   ]
+  },
+  {
+   "rubrik": "Gåva",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:29",
+    "4:30",
+    "4:31"
+   ]
+  },
+  {
+   "rubrik": "Upplåtelse av panträtt",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1",
+    "6:2"
+   ]
+  },
+  {
+   "rubrik": "Panträttens innebörd",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:3",
+    "6:4",
+    "6:5",
+    "6:6"
+   ]
+  },
+  {
+   "rubrik": "Upplåtelse av panträtt i vissa fall",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:7",
+    "6:8"
+   ]
+  },
+  {
+   "rubrik": "Ägarhypotekets innebörd",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:9"
+   ]
+  },
+  {
+   "rubrik": "Gemensamt intecknade fastigheters inbördes ansvar",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:10",
+    "6:11"
+   ]
+  },
+  {
+   "rubrik": "Vissa bestämmelser om intecknings och pantbrevs giltighet",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:12",
+    "6:13",
+    "6:14",
+    "6:15",
+    "6:16",
+    "6:17"
+   ]
+  },
+  {
+   "rubrik": "Bestämmelsernas tillämpningsområde",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4"
+   ]
+  },
+  {
+   "rubrik": "Upplåtelsetiden",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:5",
+    "7:6"
+   ]
+  },
+  {
+   "rubrik": "Förlängning av tiden för upplåtelsen samt ändringar i och tillägg till upplåtelseavtalet",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:7",
+    "7:8"
+   ]
+  },
+  {
+   "rubrik": "Hinder mot andelsupplåtelse",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:9"
+   ]
+  },
+  {
+   "rubrik": "Rätt till inskrivning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:10"
+   ]
+  },
+  {
+   "rubrik": "Rättighetens ställning vid fastighetens övergång till ny ägare",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:11",
+    "7:12",
+    "7:13",
+    "7:14",
+    "7:15",
+    "7:16",
+    "7:17",
+    "7:18",
+    "7:19",
+    "7:20",
+    "7:21"
+   ]
+  },
+  {
+   "rubrik": "Rättigheters inbördes ställning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:22",
+    "7:23",
+    "7:24"
+   ]
+  },
+  {
+   "rubrik": "Rättighetens upphörande i vissa fall",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:25",
+    "7:26"
+   ]
+  },
+  {
+   "rubrik": "Verkan av ändring i fastighetsindelningen",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:27",
+    "7:28",
+    "7:29",
+    "7:30"
+   ]
+  },
+  {
+   "rubrik": "Vissa upplåtelser i andra hand",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:31"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:1",
+    "8:2"
+   ]
+  },
+  {
+   "rubrik": "Arrendeavtals ingående",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:3"
+   ]
+  },
+  {
+   "rubrik": "Arrendeavtals upphörande vid uppsägning m.m.",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7"
+   ]
+  },
+  {
+   "rubrik": "Sättet för uppsägning",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11"
+   ]
+  },
+  {
+   "rubrik": "Betalning av arrendeavgift",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:12",
+    "8:13"
+   ]
+  },
+  {
+   "rubrik": "Pant eller borgen",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:14"
+   ]
+  },
+  {
+   "rubrik": "Utmätning och konkurs",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:15",
+    "8:16",
+    "8:17",
+    "8:18"
+   ]
+  },
+  {
+   "rubrik": "Arrendatorns rätt att upplåta nyttjanderätt",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:19",
+    "8:20"
+   ]
+  },
+  {
+   "rubrik": "Bortförande av arrendatorn tillhörig egendom",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:21",
+    "8:22"
+   ]
+  },
+  {
+   "rubrik": "Arrenderättens förverkande",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:23",
+    "8:24",
+    "8:25"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:26",
+    "8:27",
+    "8:28"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet i vissa arrendetvister",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:29",
+    "8:30",
+    "8:31",
+    "8:32",
+    "8:33"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelse",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:1"
+   ]
+  },
+  {
+   "rubrik": "Arrendetid",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6"
+   ]
+  },
+  {
+   "rubrik": "Rätt till förlängning av arrendeavtalet m.m.",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14"
+   ]
+  },
+  {
+   "rubrik": "Underhåll och nybyggnad m.m.",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19",
+    "9:20",
+    "9:21",
+    "9:22"
+   ]
+  },
+  {
+   "rubrik": "Avräkning och syn",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:23",
+    "9:24",
+    "9:25",
+    "9:26",
+    "9:27",
+    "9:28"
+   ]
+  },
+  {
+   "rubrik": "Arrendeavgiften",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:29"
+   ]
+  },
+  {
+   "rubrik": "Arrendatorns konkurs",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:30"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av arrenderätten och inlösen av investering",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:31"
+   ]
+  },
+  {
+   "rubrik": "Övriga rättigheter och skyldigheter vid nyttjandet av arrendestället",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:32",
+    "9:33",
+    "9:34",
+    "9:35",
+    "9:36",
+    "9:37",
+    "9:38",
+    "9:39"
+   ]
+  },
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:1"
+   ]
+  },
+  {
+   "rubrik": "Hyresavtalet",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:2"
+   ]
+  },
+  {
+   "rubrik": "Hyrestid och uppsägning",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:3",
+    "12:4",
+    "12:5",
+    "12:6",
+    "12:7",
+    "12:8"
+   ]
+  },
+  {
+   "rubrik": "Lägenhetens skick och hinder i hyresrätten",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:9",
+    "12:10",
+    "12:11",
+    "12:12",
+    "12:13",
+    "12:14",
+    "12:15",
+    "12:16",
+    "12:17",
+    "12:18"
+   ]
+  },
+  {
+   "rubrik": "Hyran",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:19",
+    "12:20",
+    "12:21",
+    "12:22"
+   ]
+  },
+  {
+   "rubrik": "Hyresgästens användning av lägenheten",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:23",
+    "12:24",
+    "12:25",
+    "12:26",
+    "12:27"
+   ]
+  },
+  {
+   "rubrik": "Pant eller borgen",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:28"
+   ]
+  },
+  {
+   "rubrik": "Utmätning och konkurs",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:29",
+    "12:30",
+    "12:31"
+   ]
+  },
+  {
+   "rubrik": "Överlåtelse av hyresrätten",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:32",
+    "12:33",
+    "12:34",
+    "12:35",
+    "12:36",
+    "12:37",
+    "12:38"
+   ]
+  },
+  {
+   "rubrik": "Upplåtelse av lägenheten i andra hand",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:39",
+    "12:40",
+    "12:41"
+   ]
+  },
+  {
+   "rubrik": "Hyresrättens förverkande",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:42",
+    "12:43",
+    "12:44"
+   ]
+  },
+  {
+   "rubrik": "Förlängning av hyresavtal för bostadslägenheter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:45",
+    "12:46",
+    "12:47",
+    "12:48",
+    "12:49",
+    "12:50",
+    "12:51",
+    "12:52"
+   ]
+  },
+  {
+   "rubrik": "Prövning av hyran och andra hyresvillkor för bostadslägenheter",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:53",
+    "12:54",
+    "12:55"
+   ]
+  },
+  {
+   "rubrik": "Vissa bestämmelser om lokaler",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:56",
+    "12:57",
+    "12:58",
+    "12:59",
+    "12:60"
+   ]
+  },
+  {
+   "rubrik": "Särskilda bestämmelser",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:61",
+    "12:62",
+    "12:63",
+    "12:64",
+    "12:65",
+    "12:66",
+    "12:67"
+   ]
+  },
+  {
+   "rubrik": "Förfarandet i hyrestvister",
+   "kapitel": "12",
+   "paragrafer": [
+    "12:68",
+    "12:69",
+    "12:70",
+    "12:71",
+    "12:72",
+    "12:73"
+   ]
+  },
+  {
+   "rubrik": "Företräde på grund av inteckning",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:6",
+    "17:7"
+   ]
+  },
+  {
+   "rubrik": "Övriga bestämmelser",
+   "kapitel": "17",
+   "paragrafer": [
+    "17:8",
+    "17:9",
+    "17:10",
+    "17:11"
+   ]
+  },
+  {
+   "rubrik": "Inskrivning",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:1"
+   ]
+  },
+  {
+   "rubrik": "Inskrivningsärenden",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:2"
+   ]
+  },
+  {
+   "rubrik": "Handläggande myndighet",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:3"
+   ]
+  },
+  {
+   "rubrik": "Expeditionsavgifter",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:4",
+    "19:5"
+   ]
+  },
+  {
+   "rubrik": "Inskrivningsdag",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:6",
+    "19:7"
+   ]
+  },
+  {
+   "rubrik": "Ärenderegister och akter",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:8",
+    "19:9"
+   ]
+  },
+  {
+   "rubrik": "Ansökan",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:10",
+    "19:11"
+   ]
+  },
+  {
+   "rubrik": "Avvisning",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:12"
+   ]
+  },
+  {
+   "rubrik": "Uppskov",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:13",
+    "19:14",
+    "19:15"
+   ]
+  },
+  {
+   "rubrik": "Kommunicering m.m.",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:16"
+   ]
+  },
+  {
+   "rubrik": "Vilandeförklaring",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:17",
+    "19:18"
+   ]
+  },
+  {
+   "rubrik": "Meddelande av beslut",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:19"
+   ]
+  },
+  {
+   "rubrik": "Underrättelse och bevis om beslut",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:20",
+    "19:21"
+   ]
+  },
+  {
+   "rubrik": "Rättelse",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:22",
+    "19:23",
+    "19:24",
+    "19:25"
+   ]
+  },
+  {
+   "rubrik": "Övriga regler för handläggningen",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:26"
+   ]
+  },
+  {
+   "rubrik": "Bemyndiganden",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:27",
+    "19:28"
+   ]
+  },
+  {
+   "rubrik": "Anteckningsärenden",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:29",
+    "19:30",
+    "19:31"
+   ]
+  },
+  {
+   "rubrik": "Allmänt om överklagande",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:32"
+   ]
+  },
+  {
+   "rubrik": "Vissa begränsningar för när ett beslut kan överklagas",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:33"
+   ]
+  },
+  {
+   "rubrik": "Sätt och tid för överklagande",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:34"
+   ]
+  },
+  {
+   "rubrik": "Anteckning om överklagande",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:35"
+   ]
+  },
+  {
+   "rubrik": "Särskilda rättsmedel",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:36"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:37",
+    "19:38",
+    "19:39"
+   ]
+  },
+  {
+   "rubrik": "Inskrivningens inverkan på giltigheten av inskrivna förvärv",
+   "kapitel": "19",
+   "paragrafer": [
+    "19:40"
+   ]
+  },
+  {
+   "rubrik": "Inskrivning av upplåtelse m.m.",
+   "kapitel": "21",
+   "paragrafer": [
+    "21:1",
+    "21:2",
+    "21:3",
+    "21:4",
+    "21:5",
+    "21:6",
+    "21:7"
+   ]
+  },
+  {
+   "rubrik": "Inteckning i fast egendom",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:1",
+    "22:2",
+    "22:3",
+    "22:4",
+    "22:5",
+    "22:6",
+    "22:7",
+    "22:8",
+    "22:9",
+    "22:10",
+    "22:11",
+    "22:12",
+    "22:13",
+    "22:14"
+   ]
+  },
+  {
+   "rubrik": "Inteckning i tomträtt",
+   "kapitel": "22",
+   "paragrafer": [
+    "22:15"
+   ]
+  },
+  {
+   "rubrik": "Inskrivning i fast egendom",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:1",
+    "23:2",
+    "23:3",
+    "23:4",
+    "23:5",
+    "23:6",
+    "23:7"
+   ]
+  },
+  {
+   "rubrik": "Inskrivning i tomträtt",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:8"
+   ]
+  },
+  {
+   "rubrik": "Övriga bestämmelser",
+   "kapitel": "23",
+   "paragrafer": [
+    "23:9"
+   ]
+  }
+ ]
+}

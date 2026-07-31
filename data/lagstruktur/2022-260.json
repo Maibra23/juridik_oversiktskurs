@@ -1,0 +1,586 @@
+{
+ "forkortning": "KKöpL",
+ "namn": "Konsumentköplag",
+ "sfs": "2022:260",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-2022-260.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": true,
+ "kapitel": [
+  {
+   "nummer": "1",
+   "rubrik": "Grundläggande bestämmelser",
+   "paragrafer": [
+    "1:1",
+    "1:2",
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8",
+    "1:9",
+    "1:10"
+   ]
+  },
+  {
+   "nummer": "2",
+   "rubrik": "Varans avlämnande",
+   "paragrafer": [
+    "2:1",
+    "2:2",
+    "2:3",
+    "2:4",
+    "2:5",
+    "2:6"
+   ]
+  },
+  {
+   "nummer": "3",
+   "rubrik": "Näringsidkarens dröjsmål",
+   "paragrafer": [
+    "3:1",
+    "3:2",
+    "3:3",
+    "3:4",
+    "3:5",
+    "3:6"
+   ]
+  },
+  {
+   "nummer": "4",
+   "rubrik": "Fel på varan",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4",
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12",
+    "4:13",
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17",
+    "4:18",
+    "4:19",
+    "4:20",
+    "4:21",
+    "4:22",
+    "4:23"
+   ]
+  },
+  {
+   "nummer": "5",
+   "rubrik": "Påföljder vid fel på varan",
+   "paragrafer": [
+    "5:1",
+    "5:2",
+    "5:3",
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7",
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11"
+   ]
+  },
+  {
+   "nummer": "6",
+   "rubrik": "Skadestånd vid näringsidkarens avtalsbrott",
+   "paragrafer": [
+    "6:1",
+    "6:2",
+    "6:3",
+    "6:4",
+    "6:5"
+   ]
+  },
+  {
+   "nummer": "7",
+   "rubrik": "Konsumentens betalningsskyldighet och dröjsmål",
+   "paragrafer": [
+    "7:1",
+    "7:2",
+    "7:3",
+    "7:4",
+    "7:5",
+    "7:6",
+    "7:7",
+    "7:8"
+   ]
+  },
+  {
+   "nummer": "8",
+   "rubrik": "Övriga bestämmelser om köp av varor",
+   "paragrafer": [
+    "8:1",
+    "8:2",
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7"
+   ]
+  },
+  {
+   "nummer": "9",
+   "rubrik": "Avtal om tillhandahållande av digitalt innehåll och digitala tjänster",
+   "paragrafer": [
+    "9:1",
+    "9:2",
+    "9:3",
+    "9:4",
+    "9:5",
+    "9:6",
+    "9:7",
+    "9:8",
+    "9:9",
+    "9:10",
+    "9:11",
+    "9:12",
+    "9:13",
+    "9:14",
+    "9:15",
+    "9:16",
+    "9:17",
+    "9:18",
+    "9:19",
+    "9:20",
+    "9:21"
+   ]
+  }
+ ],
+ "moment": [
+  {
+   "rubrik": "Lagens innehåll",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:1"
+   ]
+  },
+  {
+   "rubrik": "Uttryck i lagen",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:2"
+   ]
+  },
+  {
+   "rubrik": "Lagens tillämpningsområde",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:3",
+    "1:4",
+    "1:5",
+    "1:6",
+    "1:7",
+    "1:8"
+   ]
+  },
+  {
+   "rubrik": "Behandling av personuppgifter",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:9"
+   ]
+  },
+  {
+   "rubrik": "Avtalsvillkor som avviker från lagen",
+   "kapitel": "1",
+   "paragrafer": [
+    "1:10"
+   ]
+  },
+  {
+   "rubrik": "Platsen för avlämnandet",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:1"
+   ]
+  },
+  {
+   "rubrik": "Tiden för avlämnandet",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:2"
+   ]
+  },
+  {
+   "rubrik": "Avlämnandet",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:3",
+    "2:4"
+   ]
+  },
+  {
+   "rubrik": "Kostnaderna för varan",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:5"
+   ]
+  },
+  {
+   "rubrik": "Risken för varan",
+   "kapitel": "2",
+   "paragrafer": [
+    "2:6"
+   ]
+  },
+  {
+   "rubrik": "Vad som avses med dröjsmål",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:1"
+   ]
+  },
+  {
+   "rubrik": "Påföljder vid dröjsmål",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:2"
+   ]
+  },
+  {
+   "rubrik": "Rätt att hålla inne betalningen",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:3"
+   ]
+  },
+  {
+   "rubrik": "Rätt att kräva att näringsidkaren fullgör köpet",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:4"
+   ]
+  },
+  {
+   "rubrik": "Rätt att häva köpet",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:5"
+   ]
+  },
+  {
+   "rubrik": "Meddelande om hävning och skadestånd",
+   "kapitel": "3",
+   "paragrafer": [
+    "3:6"
+   ]
+  },
+  {
+   "rubrik": "Krav på varan",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:1",
+    "4:2",
+    "4:3",
+    "4:4"
+   ]
+  },
+  {
+   "rubrik": "Fel på varan",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:5",
+    "4:6",
+    "4:7",
+    "4:8",
+    "4:9",
+    "4:10",
+    "4:11",
+    "4:12"
+   ]
+  },
+  {
+   "rubrik": "Köp av begagnade varor på offentlig auktion",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:13"
+   ]
+  },
+  {
+   "rubrik": "Näringsidkarens ansvar för fel",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:14",
+    "4:15",
+    "4:16",
+    "4:17"
+   ]
+  },
+  {
+   "rubrik": "Köp av levande djur",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:18",
+    "4:19",
+    "4:20"
+   ]
+  },
+  {
+   "rubrik": "Garantier",
+   "kapitel": "4",
+   "paragrafer": [
+    "4:21",
+    "4:22",
+    "4:23"
+   ]
+  },
+  {
+   "rubrik": "Påföljder",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:1"
+   ]
+  },
+  {
+   "rubrik": "Reklamation",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:2"
+   ]
+  },
+  {
+   "rubrik": "Rätt att hålla inne betalningen",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:3"
+   ]
+  },
+  {
+   "rubrik": "Rätt till avhjälpande eller omleverans",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:4",
+    "5:5",
+    "5:6",
+    "5:7"
+   ]
+  },
+  {
+   "rubrik": "Rätt till prisavdrag eller hävning",
+   "kapitel": "5",
+   "paragrafer": [
+    "5:8",
+    "5:9",
+    "5:10",
+    "5:11"
+   ]
+  },
+  {
+   "rubrik": "Rätt till skadestånd",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:1",
+    "6:2"
+   ]
+  },
+  {
+   "rubrik": "Skadeståndets omfattning",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:3"
+   ]
+  },
+  {
+   "rubrik": "Prisskillnad",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:4"
+   ]
+  },
+  {
+   "rubrik": "Jämkning",
+   "kapitel": "6",
+   "paragrafer": [
+    "6:5"
+   ]
+  },
+  {
+   "rubrik": "Priset för varan",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:1"
+   ]
+  },
+  {
+   "rubrik": "Tidpunkten för betalningen",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:2"
+   ]
+  },
+  {
+   "rubrik": "Avbeställning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:3"
+   ]
+  },
+  {
+   "rubrik": "Konsumentens dröjsmål",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:4"
+   ]
+  },
+  {
+   "rubrik": "Påföljder vid dröjsmål",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:5"
+   ]
+  },
+  {
+   "rubrik": "Rätt till hävning",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:6"
+   ]
+  },
+  {
+   "rubrik": "Rätt till skadestånd",
+   "kapitel": "7",
+   "paragrafer": [
+    "7:7",
+    "7:8"
+   ]
+  },
+  {
+   "rubrik": "Begränsning av skadan",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:1"
+   ]
+  },
+  {
+   "rubrik": "Verkningar av hävning",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:2",
+    "8:3"
+   ]
+  },
+  {
+   "rubrik": "Vissa följder av hävning och omleverans",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:4"
+   ]
+  },
+  {
+   "rubrik": "Anspråk mot näringsidkare i tidigare säljled",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:5"
+   ]
+  },
+  {
+   "rubrik": "Risken för vissa meddelanden",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:6"
+   ]
+  },
+  {
+   "rubrik": "Förhållandet till näringsidkarens borgenärer",
+   "kapitel": "8",
+   "paragrafer": [
+    "8:7"
+   ]
+  },
+  {
+   "rubrik": "Tillhandahållande",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:1"
+   ]
+  },
+  {
+   "rubrik": "Näringsidkarens dröjsmål",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:2",
+    "9:3"
+   ]
+  },
+  {
+   "rubrik": "Vilka krav som ställs och vad som utgör fel",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:4",
+    "9:5",
+    "9:6"
+   ]
+  },
+  {
+   "rubrik": "Näringsidkarens ansvar för fel",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:7",
+    "9:8",
+    "9:9"
+   ]
+  },
+  {
+   "rubrik": "Påföljder vid fel på det digitala innehållet eller den digitala tjänsten",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:10",
+    "9:11",
+    "9:12"
+   ]
+  },
+  {
+   "rubrik": "Konsumentens betalningsskyldighet och dröjsmål",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:13",
+    "9:14"
+   ]
+  },
+  {
+   "rubrik": "Verkningar av hävning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:15",
+    "9:16",
+    "9:17"
+   ]
+  },
+  {
+   "rubrik": "Formerna för näringsidkarens återbetalning",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:18"
+   ]
+  },
+  {
+   "rubrik": "Ändring av ett digitalt innehåll eller en digital tjänst",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:19",
+    "9:20"
+   ]
+  },
+  {
+   "rubrik": "Ytterligare bestämmelser",
+   "kapitel": "9",
+   "paragrafer": [
+    "9:21"
+   ]
+  }
+ ]
+}

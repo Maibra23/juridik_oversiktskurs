@@ -1,0 +1,437 @@
+{
+ "forkortning": "KöpL",
+ "namn": "Köplag",
+ "sfs": "1990:931",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1990-931.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Tillämpningsområde",
+   "kapitel": null,
+   "paragrafer": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "rubrik": "Avtalsfrihet",
+   "kapitel": null,
+   "paragrafer": [
+    "3"
+   ]
+  },
+  {
+   "rubrik": "Konsumentköp",
+   "kapitel": null,
+   "paragrafer": [
+    "4"
+   ]
+  },
+  {
+   "rubrik": "Internationella köp",
+   "kapitel": null,
+   "paragrafer": [
+    "5"
+   ]
+  },
+  {
+   "rubrik": "Hämtningsköp",
+   "kapitel": null,
+   "paragrafer": [
+    "6"
+   ]
+  },
+  {
+   "rubrik": "Transportköp",
+   "kapitel": null,
+   "paragrafer": [
+    "7",
+    "8"
+   ]
+  },
+  {
+   "rubrik": "Tiden för avlämnandet",
+   "kapitel": null,
+   "paragrafer": [
+    "9"
+   ]
+  },
+  {
+   "rubrik": "Rätt att hålla inne varan",
+   "kapitel": null,
+   "paragrafer": [
+    "10"
+   ]
+  },
+  {
+   "rubrik": "Kostnaderna för varan",
+   "kapitel": null,
+   "paragrafer": [
+    "11"
+   ]
+  },
+  {
+   "rubrik": "Vad risken innebär",
+   "kapitel": null,
+   "paragrafer": [
+    "12"
+   ]
+  },
+  {
+   "rubrik": "Riskens övergång",
+   "kapitel": null,
+   "paragrafer": [
+    "13",
+    "14"
+   ]
+  },
+  {
+   "rubrik": "Varor under transport",
+   "kapitel": null,
+   "paragrafer": [
+    "15"
+   ]
+  },
+  {
+   "rubrik": "Öppet köp",
+   "kapitel": null,
+   "paragrafer": [
+    "16"
+   ]
+  },
+  {
+   "rubrik": "Varans beskaffenhet",
+   "kapitel": null,
+   "paragrafer": [
+    "17",
+    "18"
+   ]
+  },
+  {
+   "rubrik": "Befintligt skick",
+   "kapitel": null,
+   "paragrafer": [
+    "19"
+   ]
+  },
+  {
+   "rubrik": "Undersökning av varan före köpet",
+   "kapitel": null,
+   "paragrafer": [
+    "20"
+   ]
+  },
+  {
+   "rubrik": "Avgörande tidpunkt för bedömningen av om fel föreligger",
+   "kapitel": null,
+   "paragrafer": [
+    "21"
+   ]
+  },
+  {
+   "rubrik": "Påföljderna",
+   "kapitel": null,
+   "paragrafer": [
+    "22"
+   ]
+  },
+  {
+   "rubrik": "Fullgörelse",
+   "kapitel": null,
+   "paragrafer": [
+    "23",
+    "24"
+   ]
+  },
+  {
+   "rubrik": "Hävning",
+   "kapitel": null,
+   "paragrafer": [
+    "25",
+    "26"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "27",
+    "28"
+   ]
+  },
+  {
+   "rubrik": "Meddelande om hävning och skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "29"
+   ]
+  },
+  {
+   "rubrik": "Påföljderna",
+   "kapitel": null,
+   "paragrafer": [
+    "30"
+   ]
+  },
+  {
+   "rubrik": "Undersökning av varan efter avlämnandet",
+   "kapitel": null,
+   "paragrafer": [
+    "31"
+   ]
+  },
+  {
+   "rubrik": "Reklamation",
+   "kapitel": null,
+   "paragrafer": [
+    "32",
+    "33"
+   ]
+  },
+  {
+   "rubrik": "Avhjälpande och omleverans",
+   "kapitel": null,
+   "paragrafer": [
+    "34",
+    "35",
+    "36"
+   ]
+  },
+  {
+   "rubrik": "Prisavdrag och hävning",
+   "kapitel": null,
+   "paragrafer": [
+    "37",
+    "38",
+    "39"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "40"
+   ]
+  },
+  {
+   "rubrik": "Påföljder vid rättsligt fel",
+   "kapitel": null,
+   "paragrafer": [
+    "41"
+   ]
+  },
+  {
+   "rubrik": "Rätt att hålla inne betalningen",
+   "kapitel": null,
+   "paragrafer": [
+    "42"
+   ]
+  },
+  {
+   "rubrik": "Partiellt avtalsbrott",
+   "kapitel": null,
+   "paragrafer": [
+    "43"
+   ]
+  },
+  {
+   "rubrik": "Hävning vid successiv leverans",
+   "kapitel": null,
+   "paragrafer": [
+    "44"
+   ]
+  },
+  {
+   "rubrik": "Prisets bestämmande",
+   "kapitel": null,
+   "paragrafer": [
+    "45",
+    "46",
+    "47"
+   ]
+  },
+  {
+   "rubrik": "Betalningen",
+   "kapitel": null,
+   "paragrafer": [
+    "48",
+    "49",
+    "50"
+   ]
+  },
+  {
+   "rubrik": "Påföljderna",
+   "kapitel": null,
+   "paragrafer": [
+    "51"
+   ]
+  },
+  {
+   "rubrik": "Krav på betalning och annan fullgörelse",
+   "kapitel": null,
+   "paragrafer": [
+    "52",
+    "53"
+   ]
+  },
+  {
+   "rubrik": "Hävning på grund av dröjsmål med betalningen",
+   "kapitel": null,
+   "paragrafer": [
+    "54"
+   ]
+  },
+  {
+   "rubrik": "Hävning på grund av bristande medverkan",
+   "kapitel": null,
+   "paragrafer": [
+    "55"
+   ]
+  },
+  {
+   "rubrik": "Hävning vid successiv leverans",
+   "kapitel": null,
+   "paragrafer": [
+    "56"
+   ]
+  },
+  {
+   "rubrik": "Skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "57",
+    "58"
+   ]
+  },
+  {
+   "rubrik": "Meddelande om hävning och skadestånd",
+   "kapitel": null,
+   "paragrafer": [
+    "59"
+   ]
+  },
+  {
+   "rubrik": "Specifikation",
+   "kapitel": null,
+   "paragrafer": [
+    "60"
+   ]
+  },
+  {
+   "rubrik": "Stoppningsrätt",
+   "kapitel": null,
+   "paragrafer": [
+    "61"
+   ]
+  },
+  {
+   "rubrik": "Hävning",
+   "kapitel": null,
+   "paragrafer": [
+    "62",
+    "63"
+   ]
+  },
+  {
+   "rubrik": "Verkningar av hävning och omleverans",
+   "kapitel": null,
+   "paragrafer": [
+    "64",
+    "65"
+   ]
+  },
+  {
+   "rubrik": "Bortfall av rätt till hävning och omleverans",
+   "kapitel": null,
+   "paragrafer": [
+    "66"
+   ]
+  },
+  {
+   "rubrik": "Allmänt",
+   "kapitel": null,
+   "paragrafer": [
+    "67"
+   ]
+  },
+  {
+   "rubrik": "Prisskillnad",
+   "kapitel": null,
+   "paragrafer": [
+    "68",
+    "69"
+   ]
+  },
+  {
+   "rubrik": "Begränsning av skadan och nedsättning av skadeståndet",
+   "kapitel": null,
+   "paragrafer": [
+    "70"
+   ]
+  },
+  {
+   "rubrik": "Ränta",
+   "kapitel": null,
+   "paragrafer": [
+    "71"
+   ]
+  },
+  {
+   "rubrik": "Säljarens vårdplikt",
+   "kapitel": null,
+   "paragrafer": [
+    "72"
+   ]
+  },
+  {
+   "rubrik": "Köparens vårdplikt",
+   "kapitel": null,
+   "paragrafer": [
+    "73"
+   ]
+  },
+  {
+   "rubrik": "Förvaring hos tredje man",
+   "kapitel": null,
+   "paragrafer": [
+    "74"
+   ]
+  },
+  {
+   "rubrik": "Ersättning för vårdkostnader",
+   "kapitel": null,
+   "paragrafer": [
+    "75"
+   ]
+  },
+  {
+   "rubrik": "Försäljning av varan",
+   "kapitel": null,
+   "paragrafer": [
+    "76",
+    "77",
+    "78"
+   ]
+  },
+  {
+   "rubrik": "Avkastning",
+   "kapitel": null,
+   "paragrafer": [
+    "79",
+    "80",
+    "81"
+   ]
+  },
+  {
+   "rubrik": "Vissa meddelanden",
+   "kapitel": null,
+   "paragrafer": [
+    "82"
+   ]
+  }
+ ]
+}

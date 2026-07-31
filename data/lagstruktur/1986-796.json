@@ -1,0 +1,51 @@
+{
+ "forkortning": "GFL",
+ "namn": "Lag om godtrosförvärv av lösöre",
+ "sfs": "1986:796",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-1986-796.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Inledande bestämmelser",
+   "kapitel": null,
+   "paragrafer": [
+    "1"
+   ]
+  },
+  {
+   "rubrik": "Godtrosförvärv av äganderätt",
+   "kapitel": null,
+   "paragrafer": [
+    "2",
+    "3"
+   ]
+  },
+  {
+   "rubrik": "Hävd",
+   "kapitel": null,
+   "paragrafer": [
+    "4"
+   ]
+  },
+  {
+   "rubrik": "Lösen",
+   "kapitel": null,
+   "paragrafer": [
+    "5",
+    "6",
+    "7"
+   ]
+  },
+  {
+   "rubrik": "Godtrosförvärv av panträtt",
+   "kapitel": null,
+   "paragrafer": [
+    "8"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,97 @@
+{
+ "forkortning": "LFF",
+ "namn": "Lag om framtidsfullmakter",
+ "sfs": "2017:310",
+ "kalla": "https://data.riksdagen.se/dokument/sfs-2017-310.json",
+ "kallnamn": "Riksdagens öppna data",
+ "hamtad": "2026-07-31",
+ "licens": "Författningstext, undantagen upphovsrätt enligt 9 § upphovsrättslagen. Hämtad från Riksdagens öppna data. Källa: Sveriges riksdag.",
+ "kapitelindelad": false,
+ "kapitel": [],
+ "moment": [
+  {
+   "rubrik": "Innebörden av en framtidsfullmakt",
+   "kapitel": null,
+   "paragrafer": [
+    "1",
+    "2"
+   ]
+  },
+  {
+   "rubrik": "Upprättande av en framtidsfullmakt",
+   "kapitel": null,
+   "paragrafer": [
+    "3",
+    "4",
+    "5"
+   ]
+  },
+  {
+   "rubrik": "Ändring och återkallelse av en framtidsfullmakt",
+   "kapitel": null,
+   "paragrafer": [
+    "6",
+    "7",
+    "8"
+   ]
+  },
+  {
+   "rubrik": "Hur en framtidsfullmakt träder i kraft",
+   "kapitel": null,
+   "paragrafer": [
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14"
+   ]
+  },
+  {
+   "rubrik": "Fullmaktshavarens fullgörande av uppdraget",
+   "kapitel": null,
+   "paragrafer": [
+    "15",
+    "16",
+    "17",
+    "18",
+    "19",
+    "20"
+   ]
+  },
+  {
+   "rubrik": "Förhållandet till tredje man",
+   "kapitel": null,
+   "paragrafer": [
+    "21",
+    "22"
+   ]
+  },
+  {
+   "rubrik": "Granskning av fullmaktshavarens verksamhet",
+   "kapitel": null,
+   "paragrafer": [
+    "23",
+    "24",
+    "25",
+    "26"
+   ]
+  },
+  {
+   "rubrik": "En framtidsfullmakts verkan i vissa situationer",
+   "kapitel": null,
+   "paragrafer": [
+    "27",
+    "28"
+   ]
+  },
+  {
+   "rubrik": "Fullmaktshavarens rätt att låta någon annan rättshandla för fullmaktsgivaren",
+   "kapitel": null,
+   "paragrafer": [
+    "29",
+    "30"
+   ]
+  }
+ ]
+}

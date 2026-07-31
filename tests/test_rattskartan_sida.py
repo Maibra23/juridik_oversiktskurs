@@ -64,7 +64,7 @@ def test_sidan_ror_inte_llm_vid_rendering(sida):
 
 def test_alla_tre_flikarna_har_innehall(sida):
     """Systemet, Falltypsguide och Nyckelbegrepp ska alla vara fulla."""
-    # Flik 1: ett områdesträd av expanders (avdelningar + delområden).
+    # Flik 1: ett områdesträd av expanders (huvudgrenar + delområden).
     assert len(sida.expander) > 5
 
     # Flik 2: falltypsguiden som tabell.

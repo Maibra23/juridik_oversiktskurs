@@ -88,8 +88,8 @@ Sidan har tre flikar i fast ordning:
 
 **Taxonomigrafens visuella kanaler.** Hierarkin bärs av tre oberoende kanaler, aldrig av ikoner:
 
-* **Färg = avdelning.** Bokens fyra avdelningar har var sin färg ur paletten. Nyckeln `avdelning` per område i `data/rattssystem.json` är källan; färgerna definieras i `utils/taxonomi_ui.py`.
-* **Storlek = nivå.** Roten störst (26 px), lagarna minst (13 px).
+* **Färg = huvudgren.** Rättens två huvudgrenar har var sin färg: offentlig rätt (`#6B6459`) och civilrätt (`#2C5F8A`). Färgen ärvs nedåt genom hela grenen, så en nods färg alltid svarar på frågan "offentlig rätt eller civilrätt?". Källan är trädets toppgren i `data/rattssystem.json`; färgerna definieras som `GRENFARGER` i `utils/taxonomi_ui.py`.
+* **Storlek = nivå.** Roten störst (26 px), lagarna minst (13 px). Trädet är ojämnt djupt (upp till sex nivåer på civilrättssidan), så storleken följer djupet, inte en fast nivålista.
 * **Form = grupp.** Lagar är cirklar, strukturnoder rutor.
 
 Paragrafguld används **enbart** för lagnoder, aldrig för någon strukturnivå. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum eller lag, och den kopplingen får inte brytas av navigeringsfärger. Färglegenden ritas som riktiga färgrutor (`.jok-swatch`), aldrig som prosa i en caption.

@@ -329,12 +329,19 @@ varken LLM, token eller genomförda övningar.
 
 ### Flik 1 — Systemet
 
-Hela taxonomin över svensk rätt som interaktiv graf: rot → avdelning →
-rättsområde → delområde → lag. 47 noder, 46 kanter, ett strikt träd.
+Hela taxonomin över svensk rätt som interaktiv graf, byggd efter rättens
+doktrinära systematik: roten **Svensk rätt** delas i **offentlig rätt** (statsrätt,
+förvaltningsrätt, straffrätt, process- och exekutionsrätt) och **civilrätt**, där
+civilrätten följer spinen förmögenhetsrätt → obligationsrätt / sakrätt. Trädet är
+ojämnt djupt — sex nivåer på civilrättssidan (t.ex. Civilrätt → Förmögenhetsrätt →
+Obligationsrätt → Speciell avtalsrätt → Köp- och konsumenträtt → KöpL), färre på den
+offentliga. 46 noder, 45 kanter, ett strikt träd. Juridisk metod ingår inte i kartan;
+den nås via sidopanelen.
 
 **Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
 Strukturnoder saknar länk och är avsiktligt inerta. Under grafen ligger
-områdesträdet som hopfällbara expandrar med ett kort per lag.
+områdesträdet som hopfällbara expandrar med brödsmula och ett kort per lag.
+Överst finns en **återställningsknapp** som tömmer sök- och områdesfiltren.
 
 Går grafbiblioteket inte att ladda (kräver internet) visas ett meddelande om
 det, och områdesträdet fungerar ändå.
@@ -385,7 +392,7 @@ innehåll fungerar ändå.
 
 | Graf | Sida | Innehåll | Interaktion |
 |---|---|---|---|
-| **Rättssystemets taxonomi** | `16_Rattskartan` | 47 noder, 46 kanter, strikt träd: rot → avdelning → rättsområde → delområde → lag | Zooma, dra, klicka. **Guldfärgade lagnoder öppnar lagen.nu i ny flik.** Strukturnoder är avsiktligt inerta |
+| **Rättssystemets taxonomi** | `16_Rattskartan` | 46 noder, 45 kanter, strikt träd med ojämnt djup: rot → offentlig rätt / civilrätt → … → lag | Zooma, dra, klicka. **Guldfärgade lagnoder öppnar lagen.nu i ny flik.** Strukturnoder är avsiktligt inerta |
 | **Din kunskapskarta** | `10_Kunskapskarta` | Dina genomförda fall och deras lagrum | Zooma, dra. Lagrum som återkommer i flera fall blir gemensamma noder |
 
 Nodstorleken i taxonomigrafen följer djupet (26 px i roten ned till 13 px för

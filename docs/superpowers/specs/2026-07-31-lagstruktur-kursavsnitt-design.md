@@ -83,6 +83,15 @@ Dess `kapitel[].nummer` blir alltså `"2"` medan `kapitel[].paragrafer` är plat
 nycklar (`"10"`, `"11"`, …), inte `"2:10"`. Paragrafnyckelns form styrs av lagens
 numrering, aldrig av om en kapitelrubrik råkar finnas.
 
+Uppmätt vid implementationen av Task 1, och tvärtemot vad den här specen först
+antog: **källan märker AvtL:s paragrafer `K2P10`**, med kapitelprefix, trots att
+numreringen löper obruten 1–41 genom hela lagen. Formen kan därför inte läsas ur
+ankaret. Parsern tar `kapitelindelad` som argument och hämtar värdet ur
+lagrumsregistret, som är sanningskällan för den frågan. Gör den inte det får AvtL
+nycklar som varken korpusen (`data/lagtext/1915-218.json`, platta nycklar) eller
+kursavsnitten (`kapitel: null`) går att foga ihop med, och samtliga AvtL-avsnitt
+skulle se överskjutande ut i kontrollen.
+
 ## Datamodell: `data/lagstruktur/<sfs>.json`
 
 ```json

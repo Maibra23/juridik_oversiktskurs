@@ -46,8 +46,13 @@
 - Consumes: inget (första uppgiften).
 - Produces:
   - `rensa_html(html: str) -> str`
-  - `paragrafnyckel(ankarnamn: str) -> str | None`
-  - `extrahera_struktur(html: str) -> tuple[list[dict], list[dict]]` som returnerar `(kapitel, moment)`. Varje kapitel är `{"nummer": str, "rubrik": str, "paragrafer": list[str]}`. Varje moment är `{"rubrik": str, "kapitel": str | None, "paragrafer": list[str]}`.
+  - `paragrafnyckel(ankarnamn: str, *, kapitelindelad: bool = True) -> str | None`
+  - `extrahera_struktur(html: str, *, kapitelindelad: bool) -> tuple[list[dict], list[dict]]` som returnerar `(kapitel, moment)`. Varje kapitel är `{"nummer": str, "rubrik": str, "paragrafer": list[str]}`. Varje moment är `{"rubrik": str, "kapitel": str | None, "paragrafer": list[str]}`.
+
+**Rättat under implementationen:** `kapitelindelad` var inte med i den ursprungliga
+signaturen. Källan visade sig märka AvtL:s paragrafer `K2P10` trots löpande
+numrering 1–41, så nyckelns form kan inte läsas ur ankaret — den måste komma från
+lagrumsregistret. Anroparen (Task 2) skickar `lag["kapitelindelad"]`.
 
 - [ ] **Step 1: Spara fixturerna**
 

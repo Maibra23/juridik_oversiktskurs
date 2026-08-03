@@ -102,7 +102,7 @@
           "beskrivning": "Den legala arvsordningen (arvsklasser)",
           "kapitel": "2",
           "paragraf_fran": "1",
-          "paragraf_till": "5",
+          "paragraf_till": "4",
           "lagen_nu_url": "https://lagen.nu/1958:637#K2P1",
           "verifiera": false
         },
@@ -126,17 +126,17 @@
           "beskrivning": "Formkrav för testamente",
           "kapitel": "10",
           "paragraf_fran": "1",
-          "paragraf_till": "10",
+          "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1958:637#K10P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Laglott och bröstarvinges skydd",
           "kapitel": "7",
           "paragraf_fran": "1",
-          "paragraf_till": "9",
+          "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1958:637#K7P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -156,12 +156,12 @@
           "verifiera": true
         },
         {
-          "beskrivning": "Uppsåt, oaktsamhet och ansvarsfrihetsgrunder",
+          "beskrivning": "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)",
           "kapitel": "24",
           "paragraf_fran": "1",
-          "paragraf_till": "13",
+          "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1962:700#K24P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om brott mot liv och hälsa",
@@ -297,9 +297,9 @@
           "beskrivning": "Principalansvar och det allmännas ansvar",
           "kapitel": "3",
           "paragraf_fran": "1",
-          "paragraf_till": "12",
+          "paragraf_till": "11",
           "lagen_nu_url": "https://lagen.nu/1972:207#K3P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Arbetstagares skadeståndsansvar",
@@ -501,9 +501,9 @@
           "beskrivning": "Återvinning till konkursbo",
           "kapitel": "4",
           "paragraf_fran": "1",
-          "paragraf_till": "22",
+          "paragraf_till": "21",
           "lagen_nu_url": "https://lagen.nu/1987:672#K4P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -558,9 +558,9 @@
           "beskrivning": "Andelar och lotter vid bodelning",
           "kapitel": "11",
           "paragraf_fran": "1",
-          "paragraf_till": "13",
+          "paragraf_till": "11",
           "lagen_nu_url": "https://lagen.nu/1987:230#K11P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -710,12 +710,12 @@
           "verifiera": true
         },
         {
-          "beskrivning": "Väckande av talan och rättegångshinder",
+          "beskrivning": "Väckande av talan",
           "kapitel": "13",
           "paragraf_fran": "1",
-          "paragraf_till": "17",
+          "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1942:740#K13P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om bevisning: allmänna bestämmelser (fri bevisprövning)",
@@ -729,9 +729,9 @@
           "beskrivning": "Om rättegångskostnad",
           "kapitel": "18",
           "paragraf_fran": "1",
-          "paragraf_till": "18",
+          "paragraf_till": "16",
           "lagen_nu_url": "https://lagen.nu/1942:740#K18P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om åtal och förundersökning i brottmål",
@@ -795,17 +795,17 @@
           "beskrivning": "Inledande bestämmelser (aktiebolag som juridisk person, ansvarsfrihet)",
           "kapitel": "1",
           "paragraf_fran": "1",
-          "paragraf_till": "15",
+          "paragraf_till": "14",
           "lagen_nu_url": "https://lagen.nu/2005:551#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Bildande av aktiebolag",
           "kapitel": "2",
           "paragraf_fran": "1",
-          "paragraf_till": "36",
+          "paragraf_till": "31",
           "lagen_nu_url": "https://lagen.nu/2005:551#K2P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Aktiekapital och aktier",
@@ -925,9 +925,9 @@
           "beskrivning": "Påföljder vid fel (avhjälpande, prisavdrag, hävning)",
           "kapitel": "5",
           "paragraf_fran": "1",
-          "paragraf_till": "20",
+          "paragraf_till": "11",
           "lagen_nu_url": "https://lagen.nu/2022:260#K5P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Påföljder vid säljarens dröjsmål",

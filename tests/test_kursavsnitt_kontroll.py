@@ -126,6 +126,31 @@ def test_kontrollera_alla_tacker_hela_registret():
     assert all(isinstance(a, Avvikelse) for a in avvikelser)
 
 
+def test_varje_kursavsnitt_pekar_pa_ett_kapitel_som_finns():
+    """En kapitelindelad lags avsnitt måste peka på ett verkligt kapitel.
+
+    Överskjutandetestet fångar paragrafer utanför lagen, men inte ett avsnitt
+    som pekar på ett kapitel som inte existerar alls -- då blir hela
+    anspråket okänt och avsnittet skulle visas utan ryggrad i lagkortet.
+    """
+    from utils.lagrum import lagrum_register
+    from utils.lagstruktur import ladda_lagstruktur
+
+    strukturer = ladda_lagstruktur()
+    fel = []
+    for forkortning, lag in sorted(lagrum_register().items()):
+        if not lag.kapitelindelad:
+            continue
+        nummer = {k.nummer for k in strukturer[forkortning].kapitel}
+        for avsnitt in lag.kursavsnitt:
+            if avsnitt.kapitel is not None and avsnitt.kapitel not in nummer:
+                fel.append(
+                    f"{forkortning}: {avsnitt.beskrivning!r} pekar på "
+                    f"{avsnitt.kapitel} kap., som inte finns i lagen"
+                )
+    assert fel == [], "\n".join(fel)
+
+
 def test_inga_kursavsnitt_pekar_utanfor_lagen():
     """Bärande invariant: inget kursavsnitt får påstå paragrafer som inte finns.
 

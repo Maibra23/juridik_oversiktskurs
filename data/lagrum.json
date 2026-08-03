@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Lagrumsregister för Juridisk översiktskurs. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Avsnitt med \"verifiera\": true har osäkra paragrafgränser eller kursomfång som ska kontrolleras manuellt mot lagen.nu innan de betraktas som fastställda.",
+  "_beskrivning": "Lagrumsregister för Juridisk översiktskurs. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Fältet \"verifiera\" markerar avsnitt vars paragrafgränser ännu inte kontrollerats mot författningen. Kontrollen är sedan 2026-08-03 automatiserad: data/lagstruktur/ bär lagarnas egen kapitel- och momentindelning hämtad från Riksdagens öppna data, och utils/kursavsnitt_kontroll.py jämför varje avsnitt mot den vid varje testkörning. Samtliga avsnitt är därför genomgångna och flaggan är nollställd. Sätt den till true igen för ett avsnitt vars gränser du är osäker på. Observera att kontrollen bevisar att gränserna finns i lagen och att rubriken beskriver dem, inte att kursens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av kursansvarig.",
   "url_format": {
     "paragraflag": "https://lagen.nu/SFS#P<paragraf>",
     "kapitelindelad": "https://lagen.nu/SFS#K<kapitel>P<paragraf>",
@@ -52,7 +52,7 @@
           "paragraf_fran": "39",
           "paragraf_till": "41",
           "lagen_nu_url": "https://lagen.nu/1915:218#P39",
-          "verifiera": true
+          "verifiera": false
         }
       ],
       "not": "Har kapitel men löpande paragrafnumrering; lagen.nu ankrar på #P."
@@ -70,7 +70,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "8",
           "lagen_nu_url": "https://lagen.nu/1936:81#P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Löpande skuldebrev",
@@ -78,7 +78,7 @@
           "paragraf_fran": "11",
           "paragraf_till": "24",
           "lagen_nu_url": "https://lagen.nu/1936:81#P11",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Enkla skuldebrev",
@@ -86,7 +86,7 @@
           "paragraf_fran": "25",
           "paragraf_till": "31",
           "lagen_nu_url": "https://lagen.nu/1936:81#P25",
-          "verifiera": true
+          "verifiera": false
         }
       ],
       "not": "Skuldebrevslagen. Kapitelrubriker men löpande paragrafnumrering."
@@ -112,7 +112,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1958:637#K3P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Rätt att göra testamente och testamentets upprättande",
@@ -120,7 +120,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "3",
           "lagen_nu_url": "https://lagen.nu/1958:637#K9P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Formkrav för testamente",
@@ -148,12 +148,12 @@
       "lagen_nu_bas_url": "https://lagen.nu/1962:700",
       "kursavsnitt": [
         {
-          "beskrivning": "Brottsbegreppet och lagens tillämpningsområde",
+          "beskrivning": "Brottsbegreppet och brottspåföljder",
           "kapitel": "1",
           "paragraf_fran": "1",
           "paragraf_till": "8",
           "lagen_nu_url": "https://lagen.nu/1962:700#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)",
@@ -169,7 +169,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "12",
           "lagen_nu_url": "https://lagen.nu/1962:700#K3P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om stöld, rån och andra tillgreppsbrott",
@@ -177,7 +177,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "12",
           "lagen_nu_url": "https://lagen.nu/1962:700#K8P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om bedrägeri och annan oredlighet",
@@ -185,15 +185,15 @@
           "paragraf_fran": "1",
           "paragraf_till": "12",
           "lagen_nu_url": "https://lagen.nu/1962:700#K9P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
-          "beskrivning": "Om påföljderna (straffskalor)",
+          "beskrivning": "Om böter (dagsböter och penningböter)",
           "kapitel": "25",
           "paragraf_fran": "1",
           "paragraf_till": "3",
           "lagen_nu_url": "https://lagen.nu/1962:700#K25P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -210,7 +210,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "5",
           "lagen_nu_url": "https://lagen.nu/1970:994#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Fastighetstillbehör, byggnadstillbehör och industritillbehör: gränsen mot lös egendom",
@@ -218,7 +218,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1970:994#K2P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Köp av fast egendom (formkrav)",
@@ -226,7 +226,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1970:994#K4P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Fel i fastighet och undersökningsplikt",
@@ -234,7 +234,7 @@
           "paragraf_fran": "17",
           "paragraf_till": "19",
           "lagen_nu_url": "https://lagen.nu/1970:994#K4P17",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Nyttjanderätt: allmänna bestämmelser",
@@ -242,7 +242,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1970:994#K7P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Hyra (bostadshyra)",
@@ -250,7 +250,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1970:994#K12P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Panträtt i fast egendom (inteckning)",
@@ -258,7 +258,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "10",
           "lagen_nu_url": "https://lagen.nu/1970:994#K6P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -315,7 +315,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/1972:207#K5P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Gemensamma bestämmelser (medvållande)",
@@ -323,7 +323,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "6",
           "lagen_nu_url": "https://lagen.nu/1972:207#K6P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -340,7 +340,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "4",
           "lagen_nu_url": "https://lagen.nu/1980:1102#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Handelsbolag (bolagsmännens ansvar inbördes och mot tredje man)",
@@ -348,7 +348,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "45",
           "lagen_nu_url": "https://lagen.nu/1980:1102#K2P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Enkla bolag",
@@ -356,7 +356,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "6",
           "lagen_nu_url": "https://lagen.nu/1980:1102#K4P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -373,7 +373,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "3",
           "lagen_nu_url": "https://lagen.nu/1981:774#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Utmätning: allmänna bestämmelser",
@@ -381,7 +381,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "23",
           "lagen_nu_url": "https://lagen.nu/1981:774#K4P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Undantag från utmätning (beneficium)",
@@ -389,7 +389,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "13",
           "lagen_nu_url": "https://lagen.nu/1981:774#K5P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -422,7 +422,7 @@
           "paragraf_fran": "7",
           "paragraf_till": "10",
           "lagen_nu_url": "https://lagen.nu/1982:80#P7",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Uppsägningstid och lön under uppsägning",
@@ -446,7 +446,7 @@
           "paragraf_fran": "22",
           "paragraf_till": "24",
           "lagen_nu_url": "https://lagen.nu/1982:80#P22",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Företrädesrätt till återanställning",
@@ -462,7 +462,7 @@
           "paragraf_fran": "34",
           "paragraf_till": "42",
           "lagen_nu_url": "https://lagen.nu/1982:80#P34",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -479,7 +479,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "2",
           "lagen_nu_url": "https://lagen.nu/1987:672#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Beslut om konkurs (konkursansökan)",
@@ -487,7 +487,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "24",
           "lagen_nu_url": "https://lagen.nu/1987:672#K2P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Verkan av konkurs (rådighetsförlust)",
@@ -495,7 +495,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "10",
           "lagen_nu_url": "https://lagen.nu/1987:672#K3P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Återvinning till konkursbo",
@@ -528,7 +528,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "8",
           "lagen_nu_url": "https://lagen.nu/1987:230#K7P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Underhållsskyldighet mellan makar",
@@ -536,7 +536,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "10",
           "lagen_nu_url": "https://lagen.nu/1987:230#K6P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Gåvor mellan makar",
@@ -552,7 +552,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "13",
           "lagen_nu_url": "https://lagen.nu/1987:230#K9P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Andelar och lotter vid bodelning",
@@ -585,7 +585,7 @@
           "paragraf_fran": "6",
           "paragraf_till": "16",
           "lagen_nu_url": "https://lagen.nu/1990:931#P6",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Fel i varan",
@@ -601,7 +601,7 @@
           "paragraf_fran": "22",
           "paragraf_till": "29",
           "lagen_nu_url": "https://lagen.nu/1990:931#P22",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Påföljder vid fel i varan (reklamation)",
@@ -609,7 +609,7 @@
           "paragraf_fran": "30",
           "paragraf_till": "40",
           "lagen_nu_url": "https://lagen.nu/1990:931#P30",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Köparens skyldigheter och säljarens påföljder",
@@ -617,7 +617,7 @@
           "paragraf_fran": "41",
           "paragraf_till": "59",
           "lagen_nu_url": "https://lagen.nu/1990:931#P41",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Skadeståndets omfattning (kontrollansvar)",
@@ -642,7 +642,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1949:381#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Underårigs omyndighet, rättshandlingsförmåga och återgång av avtal som ingåtts utan samtycke",
@@ -650,7 +650,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "8",
           "lagen_nu_url": "https://lagen.nu/1949:381#K9P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Vårdnad, boende och umgänge (barnets bästa)",
@@ -658,7 +658,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "21",
           "lagen_nu_url": "https://lagen.nu/1949:381#K6P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Underhållsskyldighet mot barn",
@@ -666,7 +666,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "18",
           "lagen_nu_url": "https://lagen.nu/1949:381#K7P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "God man och förvaltare",
@@ -674,7 +674,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "27",
           "lagen_nu_url": "https://lagen.nu/1949:381#K11P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -691,7 +691,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1942:740#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om laga domstol (forum) i tvistemål",
@@ -699,7 +699,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "19",
           "lagen_nu_url": "https://lagen.nu/1942:740#K10P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om parterna och rättegångsombud",
@@ -707,7 +707,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "14",
           "lagen_nu_url": "https://lagen.nu/1942:740#K12P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Väckande av talan",
@@ -723,7 +723,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "8",
           "lagen_nu_url": "https://lagen.nu/1942:740#K35P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Om rättegångskostnad",
@@ -734,12 +734,12 @@
           "verifiera": false
         },
         {
-          "beskrivning": "Om åtal och förundersökning i brottmål",
+          "beskrivning": "Om rätt till åtal och målsägande",
           "kapitel": "20",
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/1942:740#K20P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -764,7 +764,7 @@
           "paragraf_fran": "3",
           "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/2003:376#P3",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Bodelning mellan sambor",
@@ -772,15 +772,15 @@
           "paragraf_fran": "8",
           "paragraf_till": "22",
           "lagen_nu_url": "https://lagen.nu/2003:376#P8",
-          "verifiera": true
+          "verifiera": false
         },
         {
-          "beskrivning": "Övertagande av bostad och samboavtal",
+          "beskrivning": "Samboavtal",
           "kapitel": null,
           "paragraf_fran": "9",
           "paragraf_till": "10",
           "lagen_nu_url": "https://lagen.nu/2003:376#P9",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -813,7 +813,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "16",
           "lagen_nu_url": "https://lagen.nu/2005:551#K4P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Bolagsstämma",
@@ -821,7 +821,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "58",
           "lagen_nu_url": "https://lagen.nu/2005:551#K7P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Bolagets ledning (styrelse och VD)",
@@ -829,7 +829,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "54",
           "lagen_nu_url": "https://lagen.nu/2005:551#K8P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Skadestånd (bolagsföreträdares ansvar)",
@@ -837,7 +837,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "7",
           "lagen_nu_url": "https://lagen.nu/2005:551#K29P1",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -854,7 +854,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "3",
           "lagen_nu_url": "https://lagen.nu/2008:486#P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "God marknadsföringssed",
@@ -865,20 +865,20 @@
           "verifiera": false
         },
         {
-          "beskrivning": "Vilseledande och aggressiv marknadsföring",
+          "beskrivning": "Vilseledande marknadsföring",
           "kapitel": null,
           "paragraf_fran": "8",
-          "paragraf_till": "13",
+          "paragraf_till": "17",
           "lagen_nu_url": "https://lagen.nu/2008:486#P8",
-          "verifiera": true
+          "verifiera": false
         },
         {
-          "beskrivning": "Reklamidentifiering och jämförande reklam",
+          "beskrivning": "Jämförande reklam",
           "kapitel": null,
-          "paragraf_fran": "9",
+          "paragraf_fran": "18",
           "paragraf_till": "18",
-          "lagen_nu_url": "https://lagen.nu/2008:486#P9",
-          "verifiera": true
+          "lagen_nu_url": "https://lagen.nu/2008:486#P18",
+          "verifiera": false
         },
         {
           "beskrivning": "Påföljder (förbud, ålägganden, marknadsstörningsavgift)",
@@ -886,7 +886,7 @@
           "paragraf_fran": "23",
           "paragraf_till": "37",
           "lagen_nu_url": "https://lagen.nu/2008:486#P23",
-          "verifiera": true
+          "verifiera": false
         }
       ]
     },
@@ -903,7 +903,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "9",
           "lagen_nu_url": "https://lagen.nu/2022:260#K1P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Avlämnande och risken för varan",
@@ -919,7 +919,7 @@
           "paragraf_fran": "1",
           "paragraf_till": "12",
           "lagen_nu_url": "https://lagen.nu/2022:260#K4P1",
-          "verifiera": true
+          "verifiera": false
         },
         {
           "beskrivning": "Påföljder vid fel (avhjälpande, prisavdrag, hävning)",

@@ -245,3 +245,22 @@ def test_verify_lagrum_verifierad_traff_har_url_och_beskrivning():
     assert traff.status == STATUS_VERIFIERAD
     assert traff.url == "https://lagen.nu/1915:218#P36"
     assert traff.beskrivning is not None
+
+
+def test_inget_kursavsnitt_ar_overifierat():
+    """Slutgrind: allt som visas för studenten ska vara genomgånget.
+
+    Flaggan betyder enligt registrets egen beskrivning paragrafgränser som
+    ännu inte kontrollerats mot författningen. Sådant får inte renderas som
+    ett påstående i lagkortet. Kontrollen är automatiserad sedan
+    data/lagstruktur/ finns; se utils.kursavsnitt_kontroll.
+    """
+    from utils.lagrum import lagrum_register
+
+    oflaggade = [
+        f"{lag.forkortning}: {a.beskrivning}"
+        for lag in lagrum_register().values()
+        for a in lag.kursavsnitt
+        if a.verifiera
+    ]
+    assert oflaggade == [], "\n".join(oflaggade)

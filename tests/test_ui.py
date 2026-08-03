@@ -152,3 +152,127 @@ def test_tutortext_escapar_html_fran_modellen():
 
     html_ut, _ = _tutortext_html("Farligt <script>alert(1)</script> svar.")
     assert "<script>" not in html_ut
+
+
+# --- Lagkortets kursavsnitt --------------------------------------------------
+
+
+def _grupp(kapitel, rubrik, spann, avsnittsrubrik, url="https://lagen.nu/1:1"):
+    from utils.lagkort_avsnitt import Avsnittsrad, Kapitelgrupp
+
+    return Kapitelgrupp(kapitel, rubrik, (Avsnittsrad(spann, avsnittsrubrik, url),))
+
+
+def test_lagkortet_renderar_kursavsnitt_med_kapitelrubrik():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="KKöpL",
+        namn="Konsumentköplag",
+        sfs="2022:260",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/2022:260",
+        kursavsnitt=(
+            _grupp(
+                "3",
+                "Näringsidkarens dröjsmål",
+                "1–6 §§",
+                "Påföljder vid säljarens dröjsmål",
+                "https://lagen.nu/2022:260#K3P1",
+            ),
+        ),
+        tackning="kursen täcker 6 av lagens 9 kapitel",
+    )
+    assert "3 kap. Näringsidkarens dröjsmål" in html
+    assert "1–6 §§" in html
+    assert "Påföljder vid säljarens dröjsmål" in html
+    assert "kursen täcker 6 av lagens 9 kapitel" in html
+
+
+def test_lagkortet_utan_kursavsnitt_ser_ut_som_forr():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="X",
+        namn="X",
+        sfs="1:1",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1:1",
+    )
+    assert "KURSAVSNITT" not in html
+
+
+def test_lagkortet_escapar_avsnittsrubriker():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="X",
+        namn="X",
+        sfs="1:1",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1:1",
+        kursavsnitt=(_grupp(None, "", "1 §", "<script>alert(1)</script>"),),
+    )
+    assert "<script>alert" not in html
+    assert "&lt;script&gt;" in html
+
+
+def test_kapitellos_grupp_renderar_ingen_kapitelrubrik():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="KöpL",
+        namn="Köplag",
+        sfs="1990:931",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1990:931",
+        kursavsnitt=(
+            _grupp(
+                None,
+                "",
+                "22–29 §§",
+                "Påföljder vid säljarens dröjsmål",
+                "https://lagen.nu/1990:931#P22",
+            ),
+        ),
+    )
+    assert "kap." not in html
+    assert "22–29 §§" in html
+
+
+def test_avsnittsspannet_lankar_till_lagen_nu():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="AvtL",
+        namn="Avtalslagen",
+        sfs="1915:218",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1915:218",
+        kursavsnitt=(
+            _grupp(None, "", "10–27 §§", "Fullmakt", "https://lagen.nu/1915:218#P10"),
+        ),
+    )
+    assert 'href="https://lagen.nu/1915:218#P10"' in html
+    assert 'target="_blank"' in html
+
+
+def test_lagkortet_sager_att_urvalet_foljer_kursen():
+    """Utan noten läses listan som om lagen tog slut där."""
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="X",
+        namn="X",
+        sfs="1:1",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1:1",
+        kursavsnitt=(_grupp(None, "", "1 §", "Något"),),
+    )
+    assert "Urvalet följer kursen, inte hela lagen." in html

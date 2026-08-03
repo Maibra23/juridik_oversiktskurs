@@ -225,6 +225,33 @@ def inject_css() -> None:
         .jok-lagkort p {{ font-size: 15px; line-height: 1.55; margin: .45rem 0 0 0; }}
         .jok-lagkort .nar {{ font-size: 14px; color: #4A453D; margin-top: .4rem; }}
         .jok-lagkort .nar strong {{ color: var(--bla); }}
+        .jok-lagkort .avsnitt {{
+            margin-top: .7rem; padding-top: .6rem;
+            border-top: 1px solid rgba(107, 100, 89, .18);
+        }}
+        .jok-lagkort .avsnittsrubrik {{
+            font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+            color: #6B6459; display: flex; justify-content: space-between;
+            gap: 1rem; margin-bottom: .35rem;
+        }}
+        .jok-lagkort .tackning {{ text-transform: none; letter-spacing: 0; }}
+        .jok-lagkort .kapitelrad {{
+            font-size: 13px; font-weight: 600; color: var(--bla);
+            margin: .45rem 0 .2rem 0;
+        }}
+        .jok-lagkort .avsnittsrad {{
+            display: flex; gap: .6rem; font-size: 14px; line-height: 1.5;
+            padding: .1rem 0 .1rem .6rem;
+        }}
+        .jok-lagkort .avsnittsrad .spann {{
+            flex: 0 0 6.5rem; color: var(--guld); font-variant-numeric: tabular-nums;
+            text-decoration: none; font-weight: 600;
+        }}
+        .jok-lagkort .avsnittsrad .spann:hover {{ text-decoration: underline; }}
+        .jok-lagkort .avsnittstext {{ color: #4A453D; }}
+        .jok-lagkort .avsnittsnot {{
+            font-size: 12px; color: #6B6459; margin-top: .5rem; font-style: italic;
+        }}
 
         /* Begreppskort (flik Nyckelbegrepp). */
         .jok-begrepp {{
@@ -530,8 +557,14 @@ def render_lagkort(
     nar: str,
     url: str,
     relaterade: tuple[str, ...] = (),
+    kursavsnitt: tuple = (),
+    tackning: str = "",
 ) -> str:
-    """Kort för en lag i områdesträdet: vad den täcker och när den övervägs."""
+    """Kort för en lag i områdesträdet: vad den täcker och när den övervägs.
+
+    ``kursavsnitt`` är Kapitelgrupp-poster från utils.lagkort_avsnitt. Är den
+    tom renderas kortet precis som förr, utan tom avsnittsrubrik.
+    """
     rel = ""
     if relaterade:
         rel = (
@@ -545,10 +578,44 @@ def render_lagkort(
         f"<p>{html.escape(beskrivning)}</p>"
         f'<div class="nar"><strong>När övervägs den?</strong> {html.escape(nar)}</div>'
         f"{rel}"
+        f"{_avsnittsblock(kursavsnitt, tackning)}"
         f'<div class="nar"><a href="{html.escape(url)}" target="_blank">'
         f"Öppna {html.escape(forkortning)} på lagen.nu</a></div>"
         "</div>"
     )
+
+
+def _avsnittsblock(grupper: tuple, tackning: str) -> str:
+    """Kursavsnitten grupperade under lagens egna kapitelrubriker.
+
+    Guld är reserverat för lagrum, så paragrafspannet får paragrafguld medan
+    kapitelrubriken bär bläck. Se design_system.md avsnitt 1 och 4.
+    """
+    if not grupper:
+        return ""
+
+    tack = f'<span class="tackning">{html.escape(tackning)}</span>' if tackning else ""
+    delar = [
+        f'<div class="avsnitt"><div class="avsnittsrubrik">KURSAVSNITT{tack}</div>'
+    ]
+    for grupp in grupper:
+        if grupp.kapitel:
+            rubrik = f"{grupp.kapitel} kap."
+            if grupp.rubrik:
+                rubrik = f"{rubrik} {grupp.rubrik}"
+            delar.append(f'<div class="kapitelrad">{html.escape(rubrik)}</div>')
+        for rad in grupp.avsnitt:
+            delar.append(
+                '<div class="avsnittsrad">'
+                f'<a class="spann" href="{html.escape(rad.url)}" target="_blank">'
+                f"{html.escape(rad.spann)}</a>"
+                f'<span class="avsnittstext">{html.escape(rad.rubrik)}</span>'
+                "</div>"
+            )
+    delar.append(
+        '<div class="avsnittsnot">Urvalet följer kursen, inte hela lagen.</div></div>'
+    )
+    return "".join(delar)
 
 
 def render_begreppskort(

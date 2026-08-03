@@ -605,11 +605,22 @@ def _avsnittsblock(grupper: tuple, tackning: str) -> str:
                 rubrik = f"{rubrik} {grupp.rubrik}"
             delar.append(f'<div class="kapitelrad">{html.escape(rubrik)}</div>')
         for rad in grupp.avsnitt:
+            # Säger avsnittet samma sak som kapitelrubriken ovanför blir raden
+            # en upprepning. Då räcker spannet.
+            upprepning = (
+                grupp.rubrik
+                and rad.rubrik.casefold().strip() == grupp.rubrik.casefold().strip()
+            )
+            text = (
+                ""
+                if upprepning
+                else f'<span class="avsnittstext">{html.escape(rad.rubrik)}</span>'
+            )
             delar.append(
                 '<div class="avsnittsrad">'
                 f'<a class="spann" href="{html.escape(rad.url)}" target="_blank">'
                 f"{html.escape(rad.spann)}</a>"
-                f'<span class="avsnittstext">{html.escape(rad.rubrik)}</span>'
+                f"{text}"
                 "</div>"
             )
     delar.append(

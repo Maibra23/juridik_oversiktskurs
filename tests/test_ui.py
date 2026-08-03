@@ -276,3 +276,53 @@ def test_lagkortet_sager_att_urvalet_foljer_kursen():
         kursavsnitt=(_grupp(None, "", "1 §", "Något"),),
     )
     assert "Urvalet följer kursen, inte hela lagen." in html
+
+
+def test_avsnittsrubrik_som_upprepar_kapitelrubriken_utelamnas():
+    """BrB 3 kap. heter "Om brott mot liv och hälsa" och avsnittet likaså.
+
+    Att skriva ut båda ger en synlig dubblering i kortet; spannet räcker.
+    """
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="BrB",
+        namn="Brottsbalk",
+        sfs="1962:700",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1962:700",
+        kursavsnitt=(
+            _grupp(
+                "3",
+                "Om brott mot liv och hälsa",
+                "1–12 §§",
+                "Om brott mot liv och hälsa",
+            ),
+        ),
+    )
+    assert html.count("Om brott mot liv och hälsa") == 1
+    assert "1–12 §§" in html
+
+
+def test_avsnittsrubrik_som_skiljer_sig_star_kvar():
+    from utils.ui import render_lagkort
+
+    html = render_lagkort(
+        forkortning="BrB",
+        namn="Brottsbalk",
+        sfs="1962:700",
+        beskrivning="B",
+        nar="N",
+        url="https://lagen.nu/1962:700",
+        kursavsnitt=(
+            _grupp(
+                "24",
+                "Om allmänna grunder för ansvarsfrihet",
+                "1–9 §§",
+                "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)",
+            ),
+        ),
+    )
+    assert "Om allmänna grunder för ansvarsfrihet" in html
+    assert "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)" in html

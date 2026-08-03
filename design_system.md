@@ -92,6 +92,8 @@ Sidan har tre flikar i fast ordning:
 * **Storlek = nivå.** Roten störst (26 px), lagarna minst (13 px). Trädet är ojämnt djupt (upp till sex nivåer på civilrättssidan), så storleken följer djupet, inte en fast nivålista.
 * **Form = grupp.** Lagar är cirklar, strukturnoder rutor.
 
+**Lagkortets kursavsnitt.** Paragrafspannet bär paragrafguld eftersom det är ett lagrum; kapitelrubriken bär bläck eftersom den är struktur. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum, och kopplingen får inte brytas av navigeringsfärger. Täckningsraden ("kursen täcker 6 av lagens 38 kapitel") sätts i kapitälhöjd till höger om KURSAVSNITT-etiketten och är avsiktligt lågmäld — den ska kunna läsas, inte dominera kortet.
+
 Paragrafguld används **enbart** för lagnoder, aldrig för någon strukturnivå. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum eller lag, och den kopplingen får inte brytas av navigeringsfärger. Färglegenden ritas som riktiga färgrutor (`.jok-swatch`), aldrig som prosa i en caption.
 
 **Klickbarhet.** Endast noder med `url` är klickbara, och `url` sätts bara på lagnoder. Klick öppnar lagen.nu i ny flik; strukturnoder är inerta genom konstruktion, inte genom ett villkor i klickhanteraren.

@@ -343,6 +343,18 @@ Strukturnoder saknar länk och är avsiktligt inerta. Under grafen ligger
 områdesträdet som hopfällbara expandrar med brödsmula och ett kort per lag.
 Överst finns en **återställningsknapp** som tömmer sök- och områdesfiltren.
 
+Varje lagkort visar lagens **kursavsnitt**: vilka paragrafintervall kursen
+omfattar, med lagens egen rubrik för varje avsnitt och en djuplänk till
+lagen.nu. För kapitelindelade lagar grupperas avsnitten under lagens egna
+kapitelrubriker, hämtade ur `data/lagstruktur/`, och en **täckningsrad** anger
+hur stor del av lagen kursen berör ("kursen täcker 6 av lagens 38 kapitel").
+Raden är kortets ärlighetskrav: utan den läser studenten avsnittslistan som om
+lagen tog slut där. Under varje lista står "Urvalet följer kursen, inte hela
+lagen."
+
+Kapitlen visas i lagens egen ordning, inte i registrets redaktionella. En
+avsnittsrubrik som bara upprepar kapitelrubriken utelämnas; då räcker spannet.
+
 Går grafbiblioteket inte att ladda (kräver internet) visas ett meddelande om
 det, och områdesträdet fungerar ändå.
 

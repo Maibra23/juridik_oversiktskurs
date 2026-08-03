@@ -55,28 +55,40 @@ def _rad(lag: Lag, avsnitt: Kursavsnitt) -> Avsnittsrad:
     )
 
 
+def _sorteringsnyckel(avsnitt: Kursavsnitt) -> tuple[int, int]:
+    """Lagens egen ordning: kapitel först, sedan paragraf."""
+    kapitel = avsnitt.kapitel
+    return (int(kapitel) if kapitel and kapitel.isdigit() else 0, avsnitt.paragraf_fran)
+
+
 def gruppera_kursavsnitt(lag: Lag) -> tuple[Kapitelgrupp, ...]:
     """Gruppera lagens kursavsnitt under lagens egna kapitelrubriker.
 
     Lagar utan kapitelindelning ger exakt en grupp utan kapitel och utan
-    rubrik, så att vyn kan rendera båda formerna med samma slinga. Ordningen
-    följer registret: den är redaktionell och ska inte sorteras om.
+    rubrik, så att vyn kan rendera båda formerna med samma slinga.
+
+    Ordningen är lagens, inte registrets. Registret är redaktionellt sorterat
+    och kan lägga 6 kap. före 3 kap., vilket i ett lagkort läser som ett
+    slarvfel: en student som letar efter 3 kap. förväntar sig den mellan 2
+    och 4, precis som i författningen.
     """
     if not lag.kursavsnitt:
         return ()
+
+    ordnade = sorted(lag.kursavsnitt, key=_sorteringsnyckel)
 
     if not lag.kapitelindelad:
         return (
             Kapitelgrupp(
                 kapitel=None,
                 rubrik="",
-                avsnitt=tuple(_rad(lag, a) for a in lag.kursavsnitt),
+                avsnitt=tuple(_rad(lag, a) for a in ordnade),
             ),
         )
 
     ordning: list[str] = []
     per_kapitel: dict[str, list[Avsnittsrad]] = {}
-    for avsnitt in lag.kursavsnitt:
+    for avsnitt in ordnade:
         nyckel = avsnitt.kapitel or ""
         if nyckel not in per_kapitel:
             per_kapitel[nyckel] = []

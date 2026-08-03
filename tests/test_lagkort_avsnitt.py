@@ -49,10 +49,31 @@ def test_kapitellos_lag_ger_en_enda_ogrupperad_grupp():
     assert len(grupper[0].avsnitt) == len(lag.kursavsnitt)
 
 
-def test_avsnitten_behaller_registrets_ordning():
+def test_kapitlen_kommer_i_lagens_ordning():
+    """Registret är redaktionellt sorterat och kan lägga 6 kap. före 3 kap.
+
+    I ett lagkort läser det som ett slarvfel: en student som letar efter
+    3 kap. förväntar sig den mellan 2 och 4, precis som i författningen.
+    """
+    grupper = gruppera_kursavsnitt(lagrum_register()["KKöpL"])
+    nummer = [int(g.kapitel) for g in grupper]
+    assert nummer == sorted(nummer)
+
+
+def test_avsnitten_i_en_kapitellos_lag_kommer_i_paragrafordning():
     lag = lagrum_register()["KöpL"]
-    rubriker = [rad.rubrik for rad in gruppera_kursavsnitt(lag)[0].avsnitt]
-    assert rubriker == [a.beskrivning for a in lag.kursavsnitt]
+    forsta = [
+        int(rad.spann.split("–")[0].split(" ")[0])
+        for rad in gruppera_kursavsnitt(lag)[0].avsnitt
+    ]
+    assert forsta == sorted(forsta)
+
+
+def test_avsnitten_gar_inte_forlorade_vid_sortering():
+    lag = lagrum_register()["KKöpL"]
+    grupper = gruppera_kursavsnitt(lag)
+    rubriker = {rad.rubrik for g in grupper for rad in g.avsnitt}
+    assert rubriker == {a.beskrivning for a in lag.kursavsnitt}
 
 
 def test_avsnittsraden_bar_spann_rubrik_och_lank():

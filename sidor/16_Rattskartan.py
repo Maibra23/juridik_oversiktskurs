@@ -28,6 +28,7 @@ from utils.lagrum import (
     lagrum_register,
     validera_lagrum,
 )
+from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
 from utils.nyckelbegrepp import begrepp_per_omrade, ladda_begrepp, sok_begrepp
 from utils.prompts import LAS_FORDJUPNING, LAS_OVNING, build_begrepp_prompt
 from utils.rattskarta import delomraden, delomraden_med_vag, falltypsguide
@@ -133,6 +134,8 @@ with flik_system:
                         beskrivning=lag.beskrivning,
                         nar=lag.nar,
                         url=info.lagen_nu_bas_url,
+                        kursavsnitt=gruppera_kursavsnitt(info),
+                        tackning=tackningstext(info),
                     )
                 )
 

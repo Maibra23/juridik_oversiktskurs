@@ -169,7 +169,7 @@
       "forklaring": "Säljaren har normalt rätt att först försöka rätta till felet, avhjälpande går alltså före prisavdrag och hävning. Hävning kräver dessutom att avtalsbrottet är av väsentlig betydelse för köparen och att säljaren insett det, vilket är en hög tröskel. Skadestånd kan kombineras med de övriga påföljderna och täcker den ekonomiska förlust felet orsakat.",
       "exempel": "En ny soffa levereras med en riven klädsel. Köparen kan inte direkt häva köpet, utan säljaren får först erbjuda omklädsel eller en ny soffa. Först om avhjälpandet misslyckas blir prisavdrag eller hävning aktuellt.",
       "igenkanning": "Leta efter vad köparen faktiskt kräver, och om säljaren erbjudit sig att laga. Signalord: jag vill ha pengarna tillbaka signalerar en hävningsfråga, och då ska du alltid pröva väsentlighetskravet.",
-      "lagrum": ["30 § KöpL", "5 kap. 1 § KKöpL", "7 kap. 1 § KKöpL"],
+      "lagrum": ["30 § KöpL", "5 kap. 1 § KKöpL", "6 kap. 1 § KKöpL"],
       "se_aven": ["fel-i-vara"]
     },
     {
@@ -182,7 +182,7 @@
       "forklaring": "Dröjsmål ska hållas isär från fel: dröjsmål gäller när prestationen kommer för sent, fel gäller när den kommer i fel skick. Distinktionen styr vilka regler som blir norm och vilka påföljder som står till buds. Vid dröjsmål kan köparen kräva fullgörelse, hålla inne betalningen, häva och kräva skadestånd, men hävning kräver även här väsentlighet, eller att en satt tilläggstid löpt ut.",
       "exempel": "En köksleverans utlovad till den 1 mars kommer först den 20 april, trots påminnelser. Köparen har satt en tilläggsfrist till den 1 april som passerat, och kan då häva köpet.",
       "igenkanning": "Leta efter avtalade leveransdatum och faktiska datum. Signalord: skulle levereras senast, kom inte förrän, påminde flera gånger. När fakta räknar upp datum är dröjsmål nästan alltid rättsfrågan.",
-      "lagrum": ["22 § KöpL", "6 kap. 1 § KKöpL"],
+      "lagrum": ["22 § KöpL", "3 kap. 1 § KKöpL"],
       "se_aven": ["pafoljder-vid-fel"]
     },
     {

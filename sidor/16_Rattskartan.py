@@ -22,13 +22,13 @@ from __future__ import annotations
 
 import streamlit as st
 
+from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
 from utils.lagrum import (
     STATUS_VERIFIERAD,
     lagen_nu_url,
     lagrum_register,
     validera_lagrum,
 )
-from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
 from utils.nyckelbegrepp import begrepp_per_omrade, ladda_begrepp, sok_begrepp
 from utils.prompts import LAS_FORDJUPNING, LAS_OVNING, build_begrepp_prompt
 from utils.rattskarta import delomraden, delomraden_med_vag, falltypsguide

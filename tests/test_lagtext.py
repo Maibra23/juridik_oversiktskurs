@@ -16,10 +16,10 @@ from __future__ import annotations
 import pytest
 
 from utils.lagtext import (
-    har_lagtext,
     hamta_paragraftext,
-    lagtext_block,
+    har_lagtext,
     ladda_lagtext,
+    lagtext_block,
 )
 
 

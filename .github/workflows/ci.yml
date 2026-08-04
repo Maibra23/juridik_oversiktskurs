@@ -2,6 +2,11 @@
 # Ansvar: vid push och pull request köra lint (ruff), typkontroll (mypy på
 # utils/) och testsviten (pytest) på Python 3.11 utan HF-token, dvs. i
 # offlineläge. Inga deploy-steg här.
+#
+# Verktygen är pinnade. Opinnade var de en tickande bomb: ruff 0.16.0 breddade
+# sitt förval 2026-07-23 och sänkte lintsteget på oförändrad kod, vilket i sin
+# tur hoppade över typkontroll och tester i fem körningar. Regeluppsättningen
+# ligger i ruff.toml. Höj versionerna medvetet, inte av misstag.
 name: CI
 
 on:
@@ -19,7 +24,7 @@ jobs:
       - name: Installera beroenden
         run: |
           pip install -r requirements.txt
-          pip install pytest ruff mypy
+          pip install pytest==9.0.2 ruff==0.16.1 mypy==2.3.0
       - name: Lint
         run: ruff check .
       - name: Typkontroll

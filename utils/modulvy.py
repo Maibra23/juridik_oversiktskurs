@@ -19,6 +19,8 @@ import dataclasses
 
 import streamlit as st
 
+from utils.export import registrera_case_genomford
+from utils.generator import generera_case
 from utils.lagrum import (
     STATUS_OKAND_LAG,
     STATUS_VERIFIERAD,
@@ -26,8 +28,6 @@ from utils.lagrum import (
     lagen_nu_url,
     validera_lagrum,
 )
-from utils.export import registrera_case_genomford
-from utils.generator import generera_case
 from utils.obsidian import registrera_case_analys
 from utils.prompts import build_case_prompt, build_quiz_prompt
 from utils.quiz import (
@@ -36,8 +36,14 @@ from utils.quiz import (
     ratta_lagrumsjakt,
     registrera_mc_svar,
 )
-from utils.scenarier import Case, Flervalsfraga, Lagrumsjakt, Modulscenarier, ladda_modul
-from utils.svarighetsgrad import SVARIGHETSNIVAER, STANDARDNIVA, etikett_for
+from utils.scenarier import (
+    Case,
+    Flervalsfraga,
+    Lagrumsjakt,
+    Modulscenarier,
+    ladda_modul,
+)
+from utils.svarighetsgrad import STANDARDNIVA, SVARIGHETSNIVAER, etikett_for
 from utils.tutor import tutorknapp
 from utils.ui import (
     RNTS_STATUS_BEHOVER_MER,

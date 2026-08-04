@@ -15,8 +15,7 @@ from utils.graf import (
     bygg_graf,
 )
 from utils.graf_ui import _bygg_html
-from utils.obsidian import CaseAnalys, lagrumsnot  # noqa: F401
-from utils.obsidian import _lagrum_i_analys
+from utils.obsidian import CaseAnalys, _lagrum_i_analys, lagrumsnot  # noqa: F401
 from utils.scenarier import Case, CaseFacit
 
 

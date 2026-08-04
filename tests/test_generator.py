@@ -146,8 +146,8 @@ def test_standardklienten_gar_genom_cached_chat(monkeypatch):
 
 def test_standardklienten_ar_none_utan_token(monkeypatch):
     """Utan token ska generatorn falla tillbaka i stället för att krascha."""
-    from utils import generator as gen
     import utils.llm as llm_modul
+    from utils import generator as gen
 
     monkeypatch.setattr(llm_modul, "is_llm_available", lambda: False)
     assert gen._standardklient() is None
@@ -186,7 +186,7 @@ def test_sessionstak_ger_budgetbesked_inte_otillganglig():
     fångades av det generella grenen och studenten fick beskedet
     "LLM är inte tillgänglig just nu" utan att förstå att det var budgeten.
     """
-    from utils.generator import generera_case, LLM_EJ_TILLGANGLIG_NOTIS
+    from utils.generator import LLM_EJ_TILLGANGLIG_NOTIS, generera_case
     from utils.llm import SESSION_CAP_MESSAGE, LLMSessionCapError
 
     class TaketSlut:

@@ -26,7 +26,6 @@ from utils.llm import (
     verify_lagrum,
 )
 
-
 # --- Token och konfiguration ------------------------------------------------
 
 def test_get_hf_token_from_env(monkeypatch):

@@ -146,7 +146,7 @@ def tutorknapp(
     """
     import streamlit as st
 
-    from utils.llm import LLMSessionCapError, LLMUnavailableError, LLMDailyCapError
+    from utils.llm import LLMDailyCapError, LLMSessionCapError, LLMUnavailableError
     from utils.ui import (
         render_daily_cap_card,
         render_info,

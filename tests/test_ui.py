@@ -11,16 +11,15 @@ from __future__ import annotations
 import pytest
 
 from utils.ui import (
+    RNTS_STATUS_BEHOVER_MER,
     RNTS_STATUS_EJ_PABORJAD,
     RNTS_STATUS_GODKAND,
     RNTS_STATUS_PAGAR,
-    RNTS_STATUS_BEHOVER_MER,
     render_case,
     render_kort,
     render_lagrum_chip,
     render_rnts_steg,
 )
-
 
 # --- render_rnts_steg ---------------------------------------------------------
 

@@ -14,6 +14,7 @@ import json
 import pytest
 
 from utils.lagrum import STATUS_VERIFIERAD, validera_lagrum
+from utils.navigation import sida_finns
 from utils.nyckelbegrepp import (
     DATA_PATH,
     OBLIGATORISKA_FALT,
@@ -24,7 +25,6 @@ from utils.nyckelbegrepp import (
     ladda_begrepp,
     sok_begrepp,
 )
-from utils.navigation import sida_finns
 
 
 @pytest.fixture(scope="module")

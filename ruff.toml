@@ -1,0 +1,20 @@
+# Lintregler för juridik_oversiktskurs.
+#
+# Regeluppsättningen står uttryckligen här i stället för att ärvas från ruffs
+# förval. Skälet är inlärt: projektet hade ingen konfiguration alls, CI
+# installerade ruff opinnat, och när 0.16.0 breddade förvalet 2026-07-23 blev
+# lintsteget rött på kod som inte hade ändrats -- även på main. Fem CI-körningar
+# föll utan att någon rörde en rad, och eftersom lint går före typkontroll och
+# tester slutade hela sviten att köras.
+#
+# E4/E7/E9 + F är exakt det förval koden skrivits mot och är grön under. I
+# (isort) är tillagt för att projektets kodstil kräver sorterade importer.
+#
+# Att bredda listan är ett eget beslut, inte något som ska följa av att någon
+# uppgraderar ruff. Kandidater, med antal fynd uppmätta 2026-08-04 under 0.16.1:
+# BLE 20, ISC 12, UP 11, DTZ 5, S 5, EXE 3, B 6, SIM 4, E501 37.
+
+line-length = 88
+
+[lint]
+select = ["E4", "E7", "E9", "F", "I"]

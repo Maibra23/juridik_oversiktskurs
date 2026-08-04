@@ -24,7 +24,6 @@ from utils.lagrum import (
     verify_lagrum,
 )
 
-
 # --- Register ---------------------------------------------------------------
 
 def test_register_laddas_med_21_lagar():

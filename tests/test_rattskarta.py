@@ -24,7 +24,6 @@ from utils.rattskarta import (
     toppgrenar,
 )
 
-
 # --- Datamodell och grundning ------------------------------------------------
 
 def test_rattssystemet_laddar_med_toppgrenar():

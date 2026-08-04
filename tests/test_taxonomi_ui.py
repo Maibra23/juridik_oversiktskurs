@@ -16,8 +16,8 @@ import pytest
 from utils.lagrum import lagrum_register
 from utils.rattssystem_graf import GRUPP_LAG, bygg_taxonomigraf
 from utils.taxonomi_ui import (
-    GRENFARGER,
     _LAGFARG,
+    GRENFARGER,
     _vis_noder,
     bygg_html,
     farglegend_html,

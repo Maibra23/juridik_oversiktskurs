@@ -21,7 +21,6 @@ from __future__ import annotations
 
 from utils.granskning import granska_tutorsvar
 
-
 UNDERLAG = ("1 § AvtL", "4 § AvtL")
 
 

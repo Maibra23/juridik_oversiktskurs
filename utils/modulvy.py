@@ -85,6 +85,8 @@ def svarighetsvaljare(key: str) -> str:
         "genererar.",
     )
     # segmented_control returnerar None om studenten avmarkerar valet.
+    if val is None:
+        return STANDARDNIVA
     return _SVARIGHET_NYCKEL_FOR.get(val, STANDARDNIVA)
 
 

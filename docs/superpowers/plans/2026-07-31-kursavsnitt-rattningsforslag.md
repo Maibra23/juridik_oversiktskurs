@@ -2,7 +2,9 @@
 
 **Datum:** 2026-07-31
 **Underlag:** `python3.11 scripts/verifiera_kursavsnitt.py --typ OVERSKJUTANDE`
-**Status:** Förslag. Varje rad kräver ditt godkännande innan `data/lagrum.json` ändras.
+**Status:** Genomfört 2026-08-03. Samtliga 15 rader är godkända och tillämpade i
+`data/lagrum.json` — grupp A i commit 9530677, grupp B i 5aa0f9a. För båda raderna
+med not valdes den snävare rubriken framför att utöka kursen.
 
 Alla fakta om vad ett kapitel heter och hur många paragrafer det har kommer ur
 `data/lagstruktur/`, hämtat från Riksdagens öppna data. Inget juridiskt innehåll är
@@ -70,13 +72,34 @@ kontroll klagar, och de har matat tutorns vitlista sedan de skrevs.
 snäva rubrikerna till det som faktiskt ingår. Vilket som är rätt beror på vad kursen
 ska pröva, och det avgör du.
 
-## Vad som inte ingår i det här förslaget
+## Vad som inte ingick i det här förslaget
 
 - De 15 `FOR_SNAV`, 9 `RUBRIKAVVIKELSE` och 50 `SPANNER_OVER_MOMENT` är underlag, inte
-  fel. De behöver ingen åtgärd för att överskjutandetestet ska bli grönt.
-- `verifiera: false` sätts per avsnitt först när du gått igenom det, oavsett om det
-  fanns i listan ovan. 78 avsnitt bär flaggan; bara 15 är överskjutande.
-- 14 paragrafer saknas i `data/lagtext/` trots att de ingår i kursen och finns i lagen
-  (ABL 8:6–8:7, BrB 1:7 och 8:3, FB 1:6 och 7:11, KonkL 2:23, LAS 24, RB 1:7, 1:9 och
-  12:10, SkbrL 8, ÄB 7:6, ÄktB 2:2). Det är ett hämtningsproblem i korpusen, inte ett
-  gränsproblem, och hanteras separat.
+  fel. De behövde ingen åtgärd för att överskjutandetestet skulle bli grönt.
+- `verifiera: false` sätts per avsnitt först när det gåtts igenom, oavsett om det fanns
+  i listan ovan. Vid skrivandet bar 78 avsnitt flaggan; bara 15 var överskjutande. De 62
+  som återstod efter den här genomgången togs i commit 985f73b, och flaggan är nu
+  nollställd på samtliga 105 och omdefinierad — se planens Task 5.
+
+## Efterkontroll: de 14 "saknade" paragraferna var upphävda
+
+Det här dokumentet påstod ursprungligen att 14 paragrafer saknas i `data/lagtext/`
+"trots att de ingår i kursen och finns i lagen", och kallade det ett hämtningsproblem
+som hanteras separat. **Påståendet var fel.** En kontroll mot Riksdagens öppna data
+2026-08-04 visar att samtliga 14 är upphävda:
+
+| Paragraf | Upphävd genom | Paragraf | Upphävd genom |
+|---|---|---|---|
+| ABL 8:6, 8:7 | 2014:539 | RB 1:7 | 1990:443 |
+| BrB 1:7 | 1988:942 | RB 1:9 | 2000:172 |
+| BrB 8:3 | 1987:791 | RB 12:10 | 2020:918 |
+| FB 1:6 | 2018:1279 | SkbrL 8 | 1976:189 |
+| FB 7:11 | 1996:1031 | ÄB 7:6 | upphörde att gälla 1978:855 |
+| KonkL 2:23 | 2025:796 | ÄktB 2:2 | 1988:1254 |
+| LAS 24 | 1984:1008 | | |
+
+De syns i `data/lagstruktur/` därför att källan behåller paragrafankaret för att bära
+upphävandenoten. `scripts/hamta_lagtext.py` lagrar bara paragrafer med brödtext
+(`if text:`), och utelämnar dem alltså med rätta. Korpusen är komplett; ingen åtgärd
+behövs. Ett kursavsnitt får spänna över en upphävd paragraf — spannet följer lagens
+kapitel, inte vilka nummer som fortfarande bär text.

@@ -1,7 +1,11 @@
 # Lagstruktur och kursavsnitt i lagkortet (projekt D)
 
 **Datum:** 2026-07-31
-**Status:** Design godkänd, väntar på spec-granskning
+**Status:** Genomförd 2026-08-03 (commit c5541c3–f88dfa3). Samtliga komponenter nedan
+finns, alla tre faser är avslutade och grindtestet är grönt. En avvikelse mot
+designen: `kursavsnitt_grupperade` ligger inte i `utils/lagstruktur.py` utan i egna
+`utils/lagkort_avsnitt.py` (`gruppera_kursavsnitt`, `tackningstext`,
+`formatera_spann`), enligt projektets regel om många små moduler.
 **Omfång:** Projekt D av fyra. A (svårighetsgrad) och B+C (Rättskartans ombyggnad) är klara.
 
 ## Problem

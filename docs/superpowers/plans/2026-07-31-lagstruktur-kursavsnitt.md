@@ -1,5 +1,9 @@
 # Lagstruktur och kursavsnitt i lagkortet — implementationsplan
 
+**Status:** Genomförd 2026-08-03. Samtliga sju tasks är avslutade och committade
+(c5541c3, e7eb098, f996ba6, 56a4a36, 15001c1, 9530677, 5aa0f9a, 985f73b, 5cef83c,
+f88dfa3). Testsviten är grön och grindtestet mot `verifiera: true` är på plats.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Visa kursavsnitten i Rättskartans lagkort, grupperade under lagens verkliga kapitel, efter att samtliga 105 avsnitt verifierats mot lagens faktiska struktur.
@@ -54,7 +58,7 @@ signaturen. Källan visade sig märka AvtL:s paragrafer `K2P10` trots löpande
 numrering 1–41, så nyckelns form kan inte läsas ur ankaret — den måste komma från
 lagrumsregistret. Anroparen (Task 2) skickar `lag["kapitelindelad"]`.
 
-- [ ] **Step 1: Spara fixturerna**
+- [x] **Step 1: Spara fixturerna**
 
 De tre formerna måste finnas som fixturer innan parsern skrivs. Kör en gång, med nätverk:
 
@@ -74,7 +78,7 @@ PY
 
 Förväntat: tre filer, ungefär 69 kB, 25 kB och 8 kB.
 
-- [ ] **Step 2: Skriv de fallerande testerna**
+- [x] **Step 2: Skriv de fallerande testerna**
 
 ```python
 """Tester för strukturparsern (utils.lagstruktur_extrahering).
@@ -207,12 +211,12 @@ def test_paragrafer_forekommer_bara_en_gang_per_rubrik(kkopl):
         assert len(post["paragrafer"]) == len(set(post["paragrafer"]))
 ```
 
-- [ ] **Step 3: Kör testerna och se dem falla**
+- [x] **Step 3: Kör testerna och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_lagstruktur_extrahering.py -v`
 Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.lagstruktur_extrahering'`
 
-- [ ] **Step 4: Skriv parsern**
+- [x] **Step 4: Skriv parsern**
 
 ```python
 """Läs lagens kapitel- och momentrubriker ur källans HTML.
@@ -331,12 +335,12 @@ def extrahera_struktur(html: str) -> tuple[list[dict], list[dict]]:
     )
 ```
 
-- [ ] **Step 5: Kör testerna och se dem passera**
+- [x] **Step 5: Kör testerna och se dem passera**
 
 Kör: `python3.11 -m pytest tests/test_lagstruktur_extrahering.py -v`
 Förväntat: PASS, 14 tester.
 
-- [ ] **Step 6: Committa**
+- [x] **Step 6: Committa**
 
 ```bash
 git add utils/lagstruktur_extrahering.py tests/test_lagstruktur_extrahering.py tests/fixtures/
@@ -360,7 +364,7 @@ moment), AvtL (bara kapitel, löpande numrering) och PreskL (bara moment)."
 - Consumes: `utils.lagstruktur_extrahering.extrahera_struktur`.
 - Produces: `data/lagstruktur/<sfs med bindestreck>.json` med nycklarna `forkortning`, `sfs`, `kalla`, `kallnamn`, `hamtad`, `licens`, `kapitel`, `moment`.
 
-- [ ] **Step 1: Skriv hämtaren**
+- [x] **Step 1: Skriv hämtaren**
 
 ```python
 #!/usr/bin/env python3
@@ -510,7 +514,7 @@ if __name__ == "__main__":
     raise SystemExit(main())
 ```
 
-- [ ] **Step 2: Kör hämtaren för en lag och granska utfallet**
+- [x] **Step 2: Kör hämtaren för en lag och granska utfallet**
 
 Kör: `python3.11 scripts/hamta_lagstruktur.py --lag KKöpL`
 Förväntat: `KKöpL     8 kapitel    56 moment   [kapitel och moment]`
@@ -518,14 +522,14 @@ Förväntat: `KKöpL     8 kapitel    56 moment   [kapitel och moment]`
 Öppna `data/lagstruktur/2022-260.json` och kontrollera att `kapitel[2]` är
 `{"nummer": "3", "rubrik": "Näringsidkarens dröjsmål", "paragrafer": ["3:1", ...]}`.
 
-- [ ] **Step 3: Hämta samtliga 21 lagar**
+- [x] **Step 3: Hämta samtliga 21 lagar**
 
 Kör: `python3.11 scripts/hamta_lagstruktur.py --uppdatera`
 Förväntat: 21 rader, ingen med `INGEN STRUKTUR`. Hämtningen tar drygt 20 sekunder på grund av pausen mellan anropen.
 
 Anteckna vilken form varje lag fick. Specen klassificerade sju lagar empiriskt (KKöpL, BrB, UB, AvtL, KöpL, LAS, PreskL) och lämnade fjorton öppna — den här körningen avgör dem. Får någon lag `INGEN STRUKTUR`, stanna och undersök källan innan du går vidare; den lagen kan behöva en egen form i parsern.
 
-- [ ] **Step 4: Committa**
+- [x] **Step 4: Committa**
 
 ```bash
 git add scripts/hamta_lagstruktur.py data/lagstruktur/
@@ -555,7 +559,7 @@ faktiskt berör. Endast rubriker och paragrafnummer, ingen paragraftext."
   - `antal_kapitel(forkortning: str) -> int`
   - `paragrafnycklar(forkortning: str) -> frozenset[str]`
 
-- [ ] **Step 1: Skriv de fallerande testerna**
+- [x] **Step 1: Skriv de fallerande testerna**
 
 ```python
 """Tester för läsningen av lagstrukturen (utils.lagstruktur).
@@ -672,12 +676,12 @@ def test_datakatalogen_ar_committad():
     assert len(list(DATA_DIR.glob("*.json"))) == 21
 ```
 
-- [ ] **Step 2: Kör testerna och se dem falla**
+- [x] **Step 2: Kör testerna och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_lagstruktur.py -v`
 Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.lagstruktur'`
 
-- [ ] **Step 3: Skriv modulen**
+- [x] **Step 3: Skriv modulen**
 
 ```python
 """Läs-API mot lagstrukturen i data/lagstruktur/.
@@ -842,17 +846,17 @@ def paragrafnycklar(forkortning: str) -> frozenset[str]:
     )
 ```
 
-- [ ] **Step 4: Kör testerna och se dem passera**
+- [x] **Step 4: Kör testerna och se dem passera**
 
 Kör: `python3.11 -m pytest tests/test_lagstruktur.py -v`
 Förväntat: PASS, 14 tester.
 
-- [ ] **Step 5: Kör hela sviten så inget annat gått sönder**
+- [x] **Step 5: Kör hela sviten så inget annat gått sönder**
 
 Kör: `python3.11 -m pytest -q`
 Förväntat: alla tester passerar (630 före den här grenen, plus de nya).
 
-- [ ] **Step 6: Committa**
+- [x] **Step 6: Committa**
 
 ```bash
 git add utils/lagstruktur.py tests/test_lagstruktur.py
@@ -883,7 +887,7 @@ en tom lucka utan ett felaktigt påstående om hur lagen är uppbyggd."
 
 **Denna uppgift lämnar sviten RÖD med avsikt.** Överskjutandetestet mäter 25 kända avvikelser. Rättningen sker i Task 5 och är användarens beslut, inte implementatörens.
 
-- [ ] **Step 1: Skriv de fallerande testerna**
+- [x] **Step 1: Skriv de fallerande testerna**
 
 ```python
 """Tester för försoningen mellan kursavsnitt och lagens struktur.
@@ -1011,12 +1015,12 @@ def test_inga_kursavsnitt_pekar_utanfor_lagen():
     assert fel == [], "\n".join(f"{a.forkortning}: {a.avsnitt} — {a.detalj}" for a in fel)
 ```
 
-- [ ] **Step 2: Kör testerna och se dem falla**
+- [x] **Step 2: Kör testerna och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_kursavsnitt_kontroll.py -v`
 Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.kursavsnitt_kontroll'`
 
-- [ ] **Step 3: Skriv kontrollagret**
+- [x] **Step 3: Skriv kontrollagret**
 
 ```python
 """Jämför kursavsnitten i data/lagrum.json mot lagens faktiska struktur.
@@ -1155,7 +1159,7 @@ def kontrollera_alla() -> tuple[Avvikelse, ...]:
     return tuple(avvikelser)
 ```
 
-- [ ] **Step 4: Skriv rapportskriptet**
+- [x] **Step 4: Skriv rapportskriptet**
 
 ```python
 #!/usr/bin/env python3
@@ -1212,19 +1216,19 @@ if __name__ == "__main__":
     raise SystemExit(main())
 ```
 
-- [ ] **Step 5: Kör testerna — enhetstesterna passerar, invarianten faller**
+- [x] **Step 5: Kör testerna — enhetstesterna passerar, invarianten faller**
 
 Kör: `python3.11 -m pytest tests/test_kursavsnitt_kontroll.py -v`
 Förväntat: alla tester PASS **utom** `test_inga_kursavsnitt_pekar_utanfor_lagen`, som FAIL med en lista över de kursavsnitt som pekar utanför lagen (omkring 25 stycken, mätta mot korpusen; siffran kan skilja något mot strukturen som täcker hela lagen).
 
 Detta är den avsedda röda fasen. Gå inte vidare genom att ändra testet.
 
-- [ ] **Step 6: Skriv ut rapporten och spara den som underlag**
+- [x] **Step 6: Skriv ut rapporten och spara den som underlag**
 
 Kör: `python3.11 scripts/verifiera_kursavsnitt.py > /tmp/kursavsnitt-rapport.txt; tail -8 /tmp/kursavsnitt-rapport.txt`
 Förväntat: en sammanfattning med antal per avvikelsetyp.
 
-- [ ] **Step 7: Committa**
+- [x] **Step 7: Committa**
 
 ```bash
 git add utils/kursavsnitt_kontroll.py scripts/verifiera_kursavsnitt.py tests/test_kursavsnitt_kontroll.py
@@ -1250,7 +1254,7 @@ bedömning av kursens omfång, inte en textjämförelse."
 
 **Detta är projektets mänskliga grind.** En implementatör får inte tysta flaggorna på egen hand. Juridiskt innehåll får inte hittas på, och kursens omfång är kursansvarigs beslut.
 
-- [ ] **Step 1: Gå igenom rapporten avsnitt för avsnitt**
+- [x] **Step 1: Gå igenom rapporten avsnitt för avsnitt**
 
 För varje avvikelse, avgör vilket som gäller:
 - Gränsen är fel → rätta `paragraf_fran`/`paragraf_till` i `data/lagrum.json`.
@@ -1259,19 +1263,19 @@ För varje avvikelse, avgör vilket som gäller:
 
 Sätt `"verifiera": false` på varje avsnitt som gåtts igenom.
 
-- [ ] **Step 2: Kör kontrollen igen tills överskjutandelistan är tom**
+- [x] **Step 2: Kör kontrollen igen tills överskjutandelistan är tom**
 
 Kör: `python3.11 scripts/verifiera_kursavsnitt.py --typ OVERSKJUTANDE`
 Förväntat: `0 totalt`
 
 Kvarvarande avvikelser av typen `FOR_SNAV`, `RUBRIKAVVIKELSE` och `SPANNER_OVER_MOMENT` är inte fel i sig — de är underlag. Bara överskjutande gränser är alltid fel.
 
-- [ ] **Step 3: Kör hela sviten**
+- [x] **Step 3: Kör hela sviten**
 
 Kör: `python3.11 -m pytest -q`
 Förväntat: alla tester passerar, inklusive `test_inga_kursavsnitt_pekar_utanfor_lagen`.
 
-- [ ] **Step 4: Committa**
+- [x] **Step 4: Committa**
 
 ```bash
 git add data/lagrum.json
@@ -1303,7 +1307,7 @@ som inte finns."
   - `tackningstext(lag: Lag) -> str`
   - `render_lagkort(..., kursavsnitt: tuple[Kapitelgrupp, ...] = (), tackning: str = "")`
 
-- [ ] **Step 1: Skriv de fallerande testerna för grupperingen**
+- [x] **Step 1: Skriv de fallerande testerna för grupperingen**
 
 ```python
 """Tester för grupperingen av kursavsnitt inför lagkortet."""
@@ -1365,12 +1369,12 @@ def test_tackningstext_ar_tom_for_kapitellos_lag():
     assert tackningstext(lagrum_register()["KöpL"]) == ""
 ```
 
-- [ ] **Step 2: Kör och se dem falla**
+- [x] **Step 2: Kör och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_lagkort_avsnitt.py -v`
 Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.lagkort_avsnitt'`
 
-- [ ] **Step 3: Skriv grupperingen**
+- [x] **Step 3: Skriv grupperingen**
 
 ```python
 """Förbered kursavsnitten för visning i lagkortet.
@@ -1483,12 +1487,12 @@ def tackningstext(lag: Lag) -> str:
     return f"kursen täcker {berorda} av lagens {totalt} kapitel"
 ```
 
-- [ ] **Step 4: Kör och se dem passera**
+- [x] **Step 4: Kör och se dem passera**
 
 Kör: `python3.11 -m pytest tests/test_lagkort_avsnitt.py -v`
 Förväntat: PASS, 8 tester.
 
-- [ ] **Step 5: Skriv de fallerande testerna för renderingen**
+- [x] **Step 5: Skriv de fallerande testerna för renderingen**
 
 Lägg till i `tests/test_ui.py`:
 
@@ -1559,12 +1563,12 @@ def test_kapitellos_grupp_renderar_ingen_kapitelrubrik():
     assert "22–29 §§" in html
 ```
 
-- [ ] **Step 6: Kör och se dem falla**
+- [x] **Step 6: Kör och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_ui.py -k lagkort -v`
 Förväntat: FAIL med `TypeError: render_lagkort() got an unexpected keyword argument 'kursavsnitt'`
 
-- [ ] **Step 7: Utöka renderaren**
+- [x] **Step 7: Utöka renderaren**
 
 Ersätt `render_lagkort` i `utils/ui.py` (rad 525-551) med:
 
@@ -1640,7 +1644,7 @@ def _avsnittsblock(grupper: tuple, tackning: str) -> str:
     return "".join(delar)
 ```
 
-- [ ] **Step 8: Lägg till CSS**
+- [x] **Step 8: Lägg till CSS**
 
 Lägg till efter `.jok-lagkort .nar strong` (rad 227 i `utils/ui.py`), inne i samma f-sträng — dubbla klammerparenteser eftersom blocket är en f-sträng:
 
@@ -1676,12 +1680,12 @@ Lägg till efter `.jok-lagkort .nar strong` (rad 227 i `utils/ui.py`), inne i sa
 
 `--guld` och `--bla` är definierade i `:root` på rad 50-52 i samma f-sträng och kan användas som de står.
 
-- [ ] **Step 9: Kör testerna och se dem passera**
+- [x] **Step 9: Kör testerna och se dem passera**
 
 Kör: `python3.11 -m pytest tests/test_ui.py tests/test_lagkort_avsnitt.py -v`
 Förväntat: PASS.
 
-- [ ] **Step 10: Committa**
+- [x] **Step 10: Committa**
 
 ```bash
 git add utils/lagkort_avsnitt.py utils/ui.py tests/test_lagkort_avsnitt.py tests/test_ui.py
@@ -1707,7 +1711,7 @@ kursen berör, så att listan inte läses som hela lagen."
 - Consumes: `utils.lagkort_avsnitt.gruppera_kursavsnitt`, `utils.lagkort_avsnitt.tackningstext`.
 - Produces: inget nytt API.
 
-- [ ] **Step 1: Skriv de fallerande testerna**
+- [x] **Step 1: Skriv de fallerande testerna**
 
 Lägg till i `tests/test_rattskartan_sida.py`:
 
@@ -1744,12 +1748,12 @@ def test_inget_kursavsnitt_ar_overifierat():
     assert oflaggade == [], "\n".join(oflaggade)
 ```
 
-- [ ] **Step 2: Kör och se dem falla**
+- [x] **Step 2: Kör och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_rattskartan_sida.py -k kursavsnitt tests/test_lagrum.py -k overifierat -v`
 Förväntat: FAIL — sidan renderar ännu inte avsnitten. (Grindtestet i `test_lagrum.py` passerar redan om Task 5 är utförd.)
 
-- [ ] **Step 3: Koppla in avsnitten på sidan**
+- [x] **Step 3: Koppla in avsnitten på sidan**
 
 I `sidor/16_Rattskartan.py`, ersätt anropet till `render_lagkort` (rad ~126-135):
 
@@ -1776,17 +1780,17 @@ Lägg till importen bland de befintliga importerna överst i filen:
 from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
 ```
 
-- [ ] **Step 4: Kör testerna och se dem passera**
+- [x] **Step 4: Kör testerna och se dem passera**
 
 Kör: `python3.11 -m pytest tests/test_rattskartan_sida.py tests/test_lagrum.py -v`
 Förväntat: PASS.
 
-- [ ] **Step 5: Kör hela sviten**
+- [x] **Step 5: Kör hela sviten**
 
 Kör: `python3.11 -m pytest -q`
 Förväntat: alla tester passerar.
 
-- [ ] **Step 6: Granska i appen**
+- [x] **Step 6: Granska i appen**
 
 Kör: `python3.11 -m streamlit run Hem.py`
 
@@ -1797,7 +1801,7 @@ Kör: `python3.11 -m streamlit run Hem.py`
 - Täckningsraden syns för kapitelindelade lagar, saknas för kapitellösa.
 - Noten "Urvalet följer kursen, inte hela lagen." står under varje lista.
 
-- [ ] **Step 7: Uppdatera dokumentationen**
+- [x] **Step 7: Uppdatera dokumentationen**
 
 I `APPGUIDE.md`, avsnitt 9 ("Flik 1 — Systemet"), lägg till efter stycket om områdesträdet:
 
@@ -1819,7 +1823,7 @@ regel som i avsnitt 1: guld betyder alltid lagrum, och kopplingen får inte
 brytas av navigeringsfärger.
 ```
 
-- [ ] **Step 8: Committa**
+- [x] **Step 8: Committa**
 
 ```bash
 git add sidor/16_Rattskartan.py tests/test_rattskartan_sida.py tests/test_lagrum.py APPGUIDE.md design_system.md

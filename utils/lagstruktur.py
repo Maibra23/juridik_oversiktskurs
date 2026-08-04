@@ -148,13 +148,22 @@ def antal_kapitel(forkortning: str) -> int:
     return 0 if struktur is None else len(struktur.kapitel)
 
 
+def paragrafnycklar_i(struktur: Lagstruktur) -> frozenset[str]:
+    """Alla paragrafnycklar en struktur nämner, oavsett rubriknivå.
+
+    Kapitel och moment slås ihop var för sig i stället för att packas upp i
+    samma tupel: de är skilda typer utan gemensam bas, och en hopslagen tupel
+    skulle bara vara ``object`` för typkontrollen.
+    """
+    return frozenset(
+        {nyckel for kap in struktur.kapitel for nyckel in kap.paragrafer}
+        | {nyckel for mom in struktur.moment for nyckel in mom.paragrafer}
+    )
+
+
 def paragrafnycklar(forkortning: str) -> frozenset[str]:
     """Alla paragrafnycklar lagen faktiskt har, enligt källan."""
     struktur = ladda_lagstruktur().get(forkortning)
     if struktur is None:
         return frozenset()
-    return frozenset(
-        nyckel
-        for post in (*struktur.kapitel, *struktur.moment)
-        for nyckel in post.paragrafer
-    )
+    return paragrafnycklar_i(struktur)

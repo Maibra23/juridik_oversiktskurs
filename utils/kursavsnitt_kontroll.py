@@ -16,7 +16,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from utils.lagrum import Kursavsnitt, Lag, lagrum_register
-from utils.lagstruktur import Lagstruktur, Moment, ladda_lagstruktur
+from utils.lagstruktur import (
+    Lagstruktur,
+    Moment,
+    ladda_lagstruktur,
+    paragrafnycklar_i,
+)
 
 TYP_OVERSKJUTANDE = "OVERSKJUTANDE"
 TYP_FOR_SNAV = "FOR_SNAV"
@@ -71,11 +76,7 @@ def _moment_som_overlappar(
 
 def kontrollera_lag(lag: Lag, struktur: Lagstruktur) -> tuple[Avvikelse, ...]:
     """Alla avvikelser mellan en lags kursavsnitt och dess struktur."""
-    finns = frozenset(
-        nyckel
-        for post in (*struktur.kapitel, *struktur.moment)
-        for nyckel in post.paragrafer
-    )
+    finns = paragrafnycklar_i(struktur)
 
     avvikelser: list[Avvikelse] = []
     for avsnitt in lag.kursavsnitt:

@@ -19,6 +19,7 @@ from utils.lagstruktur import (
     kapitelrubrik,
     ladda_lagstruktur,
     paragrafnycklar,
+    paragrafnycklar_i,
 )
 
 
@@ -108,6 +109,14 @@ def test_paragrafnycklar_samlar_bade_kapitel_och_moment():
     nycklar = paragrafnycklar("KKöpL")
     assert "3:1" in nycklar
     assert "99:1" not in nycklar
+
+
+def test_paragrafnycklar_i_tar_med_moment_som_inget_kapitel_namner():
+    """Nycklarna slås ihop över båda rubriknivåerna, inte bara kapitlen."""
+    struktur = ladda_lagstruktur()["KKöpL"]
+    ur_kapitel = {n for kap in struktur.kapitel for n in kap.paragrafer}
+    ur_moment = {n for mom in struktur.moment for n in mom.paragrafer}
+    assert paragrafnycklar_i(struktur) == frozenset(ur_kapitel | ur_moment)
 
 
 def test_trasig_fil_kastar_vid_inlasning():

@@ -82,7 +82,7 @@ def test_varje_begrepp_far_sin_egen_tutorknapp(sida):
 
     nycklar = [k.key for k in sida.button if k.key]
     assert len(nycklar) == len(set(nycklar)), "dubblerade knappnycklar"
-    # En nycklad tutorknapp per begrepp. Återställningsknappen överst saknar
+    # En nycklad tutorknapp per begrepp. Flikarnas rensningsknappar saknar
     # nyckel och räknas därför inte in här.
     assert len(nycklar) == len(ladda_begrepp())
 
@@ -110,3 +110,15 @@ def test_lagkorten_visar_tackningsraden(sida):
     """Utan den läser studenten avsnittslistan som om lagen tog slut där."""
     allt = " ".join(el.proto.body for el in sida.get("html"))
     assert "av lagens" in allt
+
+
+def test_ingen_sidovergripande_aterstallningsknapp(sida):
+    """Kartans vy återställs i iframen; sidknappen rörde bara filtren."""
+    etiketter = [k.label for k in sida.button]
+    assert "↺ Återställ" not in etiketter
+
+
+def test_varje_filterflik_har_sin_egen_rensningsknapp(sida):
+    etiketter = [k.label for k in sida.button]
+    assert "↺ Rensa sökningen" in etiketter
+    assert "↺ Rensa filtren" in etiketter

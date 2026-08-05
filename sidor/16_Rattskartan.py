@@ -74,18 +74,10 @@ render_sidhjalp(
     )
 )
 
-# Återställ hela sidan till utgångsläget: tömmer sökrutor och områdesfilter.
-# Expandrarna fälls ihop automatiskt, eftersom deras öppna läge styrs av om
-# ett filter är aktivt (se Nyckelbegrepp nedan).
-_RESET_NYCKLAR = ("falltyp_sok", "begrepp_sok", "begrepp_omrade")
-_, kol_reset = st.columns([5, 1])
-with kol_reset:
-    if st.button("↺ Återställ", use_container_width=True,
-                 help="Töm sökrutor och områdesfilter och fäll ihop allt."):
-        for _nyckel in _RESET_NYCKLAR:
-            st.session_state.pop(_nyckel, None)
-        st.rerun()
-
+# Ingen sidövergripande återställning här: den knappen låg ovanför flikraden
+# och tömde sökrutor som hör hemma i två andra flikar, så på fliken Systemet
+# såg den ut att inte göra någonting. Varje flik rensar nu sina egna filter,
+# och kartans vy återställs i grafen med knappen i dess övre högra hörn.
 flik_system, flik_falltyp, flik_begrepp = st.tabs(
     ["Systemet", "Falltypsguide", "Nyckelbegrepp"]
 )
@@ -156,6 +148,12 @@ with flik_falltyp:
         help="Filtrerar tabellen på både situationsbeskrivningen och lagens "
         "förkortning.",
     )
+
+    # Rensar bara den här flikens sökruta. Kartans vy återställs i grafen,
+    # med knappen i dess övre högra hörn.
+    if st.button("↺ Rensa sökningen", help="Töm sökrutan ovan."):
+        st.session_state.pop("falltyp_sok", None)
+        st.rerun()
 
     guide = falltypsguide()
     q = (fras or "").strip().lower()
@@ -301,6 +299,11 @@ with flik_begrepp:
             key="begrepp_omrade",
             help="Begränsa till ett delområde.",
         )
+
+    if st.button("↺ Rensa filtren", help="Töm sökrutan och områdesfiltret."):
+        for _nyckel in ("begrepp_sok", "begrepp_omrade"):
+            st.session_state.pop(_nyckel, None)
+        st.rerun()
 
     traffar = sok_begrepp(sokfras)
     if valt_omrade != "Alla områden":

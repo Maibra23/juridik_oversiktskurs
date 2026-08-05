@@ -42,20 +42,87 @@
   };
   const network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
 
-  // Endast lagnoder bär url och är därmed klickbara. Strukturnoder är
-  // inerta tills fokuseringen kopplas på.
+  // --- Fokusering ----------------------------------------------------------
+  //
+  // Tre skikt enligt specen: den fokuserade grenen och kedjan upp mot roten
+  // är skarpa, allt annat tonas ned. Kedjans kanter markeras i guld, så att
+  // systematiken från "Svensk rätt" och ned syns.
+
+  const kantensForalder = new Map(kanter.map((k) => [k.to, k.from]));
+  const allaNodId = noder.map((n) => n.id);
+
+  function satOpacitet(idn, opacitet) {
+    nodes.update(idn.map((id) => ({ id: id, opacity: opacitet })));
+  }
+
+  function markeraKedjan(kedja, fokusId) {
+    // Kanten in till varje nod i kedjan, plus kanten in till den fokuserade
+    // noden själv -- annars slutar spåret ett steg för tidigt.
+    const noderIKedjan = kedja.concat(fokusId ? [fokusId] : []);
+    const uppdateringar = edges.get().map(function (kant) {
+      const iKedjan =
+        noderIKedjan.includes(kant.to) &&
+        kantensForalder.get(kant.to) === kant.from;
+      return {
+        id: kant.id,
+        color: {
+          color: iKedjan ? JOK_GRAFKONFIG.kedjefarg : JOK_GRAFKONFIG.kantfarg,
+        },
+        width: iKedjan ? JOK_GRAFKONFIG.kedjebredd : 1,
+      };
+    });
+    edges.update(uppdateringar);
+  }
+
+  function fokusera(nodId) {
+    const skikt = beraknaSkikt(noder, nodId);
+    if (!skikt.fokus.length) return;
+    satOpacitet(skikt.fokus.concat(skikt.kedja), 1);
+    satOpacitet(skikt.bakgrund, JOK_GRAFKONFIG.bakgrundsopacitet);
+    markeraKedjan(skikt.kedja, nodId);
+    network.fit({
+      nodes: skikt.fokus,
+      maxZoomLevel: JOK_GRAFKONFIG.maxFokusSkala,
+      animation: { duration: JOK_GRAFKONFIG.animeringMs },
+    });
+  }
+
+  function aterstall() {
+    satOpacitet(allaNodId, 1);
+    markeraKedjan([], null);
+    network.fit({ animation: { duration: JOK_GRAFKONFIG.animeringMs } });
+  }
+
   network.on("click", function (params) {
-    if (!params.nodes.length) return;
-    const nod = nodes.get(params.nodes[0]);
-    if (nod && nod.url) {
-      window.open(nod.url, "_blank", "noopener,noreferrer");
+    // Tom yta återställer vyn.
+    if (!params.nodes.length) {
+      aterstall();
+      return;
     }
+    const nod = nodes.get(params.nodes[0]);
+    if (!nod) return;
+
+    // Lagnoder är löv och har ingenting att zooma in i: de öppnar lagen.nu,
+    // precis som innan fokuseringen fanns.
+    if (nod.url) {
+      window.open(nod.url, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // Roten omfattar allt, så att fokusera den är per definition utgångsläget.
+    if (!nod.foralder) {
+      aterstall();
+      return;
+    }
+    fokusera(nod.id);
   });
 
-  // Handmarkören signalerar vilka noder som går att öppna.
+  // Handmarkören signalerar vilka noder som svarar på klick: lagnoderna
+  // öppnar lagen.nu, strukturnoderna fokuserar. Roten gör varken eller.
   network.on("hoverNode", function (params) {
     const nod = nodes.get(params.node);
-    container.style.cursor = nod && nod.url ? "pointer" : "default";
+    const klickbar = Boolean(nod && (nod.url || nod.foralder));
+    container.style.cursor = klickbar ? "pointer" : "default";
   });
   network.on("blurNode", function () {
     container.style.cursor = "default";

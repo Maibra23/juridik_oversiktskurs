@@ -42,6 +42,11 @@
   };
   const network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
 
+  // Knappen är dold i markupen och visas först här, så att den aldrig lovar
+  // interaktivitet i fallbacken där vis-network saknas.
+  const aterstallKnapp = document.getElementById("jok-aterstall-vy");
+  aterstallKnapp.hidden = false;
+
   // --- Fokusering ----------------------------------------------------------
   //
   // Tre skikt enligt specen: den fokuserade grenen och kedjan upp mot roten
@@ -92,6 +97,34 @@
     markeraKedjan([], null);
     network.fit({ animation: { duration: JOK_GRAFKONFIG.animeringMs } });
   }
+
+  aterstallKnapp.addEventListener("click", aterstall);
+  document.addEventListener("keydown", function (handelse) {
+    if (handelse.key === "Escape") aterstall();
+  });
+
+  // --- Zoomgolv ------------------------------------------------------------
+  //
+  // vis-network har inget globalt zoomtak: minZoom/maxZoom finns bara som
+  // argument till fit(). Golvet klampas därför i zoom-händelsen. Det härleds
+  // ur den första fit():en i stället för att hårdkodas, så att det följer med
+  // containerns bredd och trädets storlek.
+  let minSkala = null;
+  // moveTo() utlöser i sin tur zoom-händelsen. Utan den här spärren skulle
+  // klampningen anropa sig själv i en loop.
+  let klampar = false;
+
+  network.once("afterDrawing", function () {
+    minSkala = network.getScale() * JOK_GRAFKONFIG.minSkalaFaktor;
+  });
+  network.on("zoom", function () {
+    if (minSkala === null || klampar) return;
+    if (network.getScale() < minSkala) {
+      klampar = true;
+      network.moveTo({ scale: minSkala });
+      klampar = false;
+    }
+  });
 
   network.on("click", function (params) {
     // Tom yta återställer vyn.

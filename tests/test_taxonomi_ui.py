@@ -224,3 +224,22 @@ def test_logikfilen_baddas_in_fore_dom_filen(html):
     dom = _las_js("taxonomigraf.js").strip()
     assert logik in html and dom in html
     assert html.index(logik) < html.index(dom)
+
+
+# --- Kartans egen återställning ---------------------------------------------
+
+
+def test_overlayknappen_finns_i_grafen(html):
+    assert "jok-aterstall-vy" in html
+    assert "Återställ vyn" in html
+
+
+def test_overlayknappen_ligger_inuti_grafcontainern(html):
+    """Knappen ska följa med grafens ram, inte flyta ovanpå sidan."""
+    assert html.index('id="taxonomigraf"') < html.index("jok-aterstall-vy")
+
+
+def test_overlayknappen_ar_dold_tills_vis_laddat(html):
+    """I CDN-fallbacken får ingen knapp stå kvar och lova interaktivitet."""
+    knapp_start = html.index("jok-aterstall-vy")
+    assert "hidden" in html[knapp_start : knapp_start + 200]

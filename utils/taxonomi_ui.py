@@ -172,8 +172,17 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
     konfig_json = _json_for_html(grafkonfig())
 
     return f"""
-<div id="taxonomigraf" style="height:{hojd}px;border:1px solid #E5E0D8;
-     border-radius:8px;background:#FFFFFF;"></div>
+<div style="position:relative;">
+  <div id="taxonomigraf" style="height:{hojd}px;border:1px solid #E5E0D8;
+       border-radius:8px;background:#FFFFFF;"></div>
+  <button id="jok-aterstall-vy" type="button" hidden
+          title="Visa hela kartan igen (Esc)"
+          style="position:absolute;top:12px;right:12px;padding:.4rem .7rem;
+                 background:#FFFFFF;border:1px solid #E5E0D8;border-radius:8px;
+                 color:#2C5F8A;font-family:serif;font-size:14px;cursor:pointer;">
+    ↺ Återställ vyn
+  </button>
+</div>
 <script src="{_VIS_NETWORK_CDN}"></script>
 <script>
   const noder = {noder_json};

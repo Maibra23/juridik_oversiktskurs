@@ -214,3 +214,13 @@ def test_saknad_js_fil_ger_tydligt_fel():
 
     with pytest.raises(FileNotFoundError, match="Grafens JavaScript saknas"):
         _las_js("finns_inte.js")
+
+
+def test_logikfilen_baddas_in_fore_dom_filen(html):
+    """DOM-lagret anropar beraknaSkikt, så logiken måste komma först."""
+    from utils.taxonomi_ui import _las_js
+
+    logik = _las_js("taxonomigraf_logik.js").strip()
+    dom = _las_js("taxonomigraf.js").strip()
+    assert logik in html and dom in html
+    assert html.index(logik) < html.index(dom)

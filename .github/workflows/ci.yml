@@ -1,7 +1,12 @@
 # CI-workflow för juridik_oversiktskurs.
 # Ansvar: vid push och pull request köra lint (ruff), typkontroll (mypy på
 # utils/) och testsviten (pytest) på Python 3.11 utan HF-token, dvs. i
-# offlineläge. Inga deploy-steg här.
+# offlineläge, samt JS-testerna för grafens skiktlogik. Inga deploy-steg här.
+#
+# JS-testerna kör med nodes inbyggda testlöpare och kräver inga beroenden.
+# De täcker enbart utils/static/taxonomigraf_logik.js, som är DOM-fri.
+# Grafens DOM-lager testas inte här: det hämtar vis-network från CDN, och
+# CI kör offline, så ett webbläsartest hade fallit av skäl som inte rör koden.
 #
 # Verktygen är pinnade. Opinnade var de en tickande bomb: ruff 0.16.0 breddade
 # sitt förval 2026-07-23 och sänkte lintsteget på oförändrad kod, vilket i sin
@@ -31,3 +36,8 @@ jobs:
         run: mypy --ignore-missing-imports utils
       - name: Tester
         run: pytest -q
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: JS-tester
+        run: node --test tests/js/

@@ -182,6 +182,9 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
   const container = document.getElementById("taxonomigraf");
 </script>
 <script>
+{_las_js("taxonomigraf_logik.js")}
+</script>
+<script>
 {_las_js("taxonomigraf.js")}
 </script>
 """

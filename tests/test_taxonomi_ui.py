@@ -191,3 +191,26 @@ def test_inga_magiska_tal_i_konfigurationen():
         "kedjebredd",
         "kantfarg",
     }
+
+
+# --- JavaScript som egen fil ------------------------------------------------
+
+
+def test_js_filen_finns():
+    from utils.taxonomi_ui import _JS_KATALOG
+
+    assert (_JS_KATALOG / "taxonomigraf.js").is_file()
+
+
+def test_js_baddas_in_i_html(html):
+    """Innehållet ska ligga i svaret, inte länkas — iframen är sandboxad."""
+    from utils.taxonomi_ui import _las_js
+
+    assert _las_js("taxonomigraf.js").strip() in html
+
+
+def test_saknad_js_fil_ger_tydligt_fel():
+    from utils.taxonomi_ui import _las_js
+
+    with pytest.raises(FileNotFoundError, match="Grafens JavaScript saknas"):
+        _las_js("finns_inte.js")

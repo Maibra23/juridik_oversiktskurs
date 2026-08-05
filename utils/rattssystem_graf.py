@@ -64,6 +64,10 @@ class TaxNod(TypedDict, total=False):
     label: str
     grupp: str
     niva: int
+    # Förälderns nod-id, tom sträng för roten. Renderingen härleder både
+    # förfäderskedja och ättlingar ur det här fältet i stället för att gå
+    # igenom kantlistan; se utils/static/taxonomigraf_logik.js.
+    foralder: str
     toppgren: str
     titel: str
     url: str
@@ -112,6 +116,7 @@ def bygg_taxonomigraf() -> Taxonomigraf:
             "label": ROT_LABEL,
             "grupp": GRUPP_ROT,
             "niva": 0,
+            "foralder": "",
             "toppgren": "",
             "titel": "Svensk rätts doktrinära indelning.",
         }
@@ -129,6 +134,7 @@ def bygg_taxonomigraf() -> Taxonomigraf:
                 "label": gren.namn,
                 "grupp": GRUPP_GREN,
                 "niva": niva,
+                "foralder": foralder_id,
                 "toppgren": gren.toppgren,
                 "titel": titel,
             }
@@ -148,6 +154,7 @@ def bygg_taxonomigraf() -> Taxonomigraf:
                     "forkortning": lag.forkortning,
                     "grupp": GRUPP_LAG,
                     "niva": niva + 1,
+                    "foralder": gid,
                     "toppgren": gren.toppgren,
                     "titel": (
                         f"{info.namn} (SFS {info.sfs}). "

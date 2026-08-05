@@ -236,3 +236,29 @@ def test_falltypsguiden_paverkar_inte_vaultens_markdown():
     not_md = rattskarta_not()
     assert "kronofogden utmätning" not in not_md.lower()
     assert "| Situationen | Börja här |" in not_md
+
+
+# --- Släktskap --------------------------------------------------------------
+
+
+def test_varje_nods_foralder_matchar_kantlistan(graf):
+    """foralder ska vara härledd ur samma träd som kanterna, inte gissad."""
+    per_id = {n["id"]: n for n in graf["noder"]}
+    for kant in graf["kanter"]:
+        barn = per_id[kant["till"]]
+        assert barn["foralder"] == kant["fran"], (
+            f"{barn['label']} pekar på {barn['foralder']}, "
+            f"men kanten kommer från {kant['fran']}"
+        )
+
+
+def test_endast_roten_saknar_foralder(graf):
+    """Ett strikt träd har exakt en nod utan förälder."""
+    utan = [n["id"] for n in graf["noder"] if not n["foralder"]]
+    assert utan == [ROT_ID]
+
+
+def test_alla_noder_bar_faltet(graf):
+    """Saknas fältet på någon nod faller JS-sidans föräldrakarta tyst."""
+    for nod in graf["noder"]:
+        assert "foralder" in nod, f"{nod['label']} saknar foralder"

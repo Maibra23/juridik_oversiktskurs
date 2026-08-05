@@ -17,7 +17,13 @@ from utils.lagrum import lagrum_register
 from utils.rattssystem_graf import GRUPP_LAG, bygg_taxonomigraf
 from utils.taxonomi_ui import (
     _LAGFARG,
+    BAKGRUNDSOPACITET,
+    FOKUS_ANIMERING_MS,
     GRENFARGER,
+    KEDJEBREDD,
+    KEDJEFARG,
+    MAX_FOKUS_SKALA,
+    MIN_SKALA_FAKTOR,
     _vis_noder,
     bygg_html,
     farglegend_html,
@@ -145,3 +151,43 @@ def test_script_taggar_escapas_i_json():
     assert "<\\/script>" in ut
     # Datat ska fortfarande gå att parsa tillbaka i webbläsaren.
     assert json.loads(ut.replace("<\\/", "</"))[0]["label"].startswith("</script>")
+
+
+# --- Konfiguration ----------------------------------------------------------
+
+
+def test_vis_noder_bar_foralder(graf):
+    """Utan foralder kan JS:en inte bygga sin föräldrakarta."""
+    for vis_nod, kall_nod in zip(_vis_noder(graf), graf["noder"]):
+        assert vis_nod["foralder"] == kall_nod["foralder"]
+
+
+def test_konfigurationen_baddas_in(html):
+    assert "JOK_GRAFKONFIG" in html
+
+
+def test_konfigurationen_bar_alla_varden():
+    from utils.taxonomi_ui import grafkonfig
+
+    konfig = grafkonfig()
+    assert konfig["bakgrundsopacitet"] == BAKGRUNDSOPACITET
+    assert konfig["minSkalaFaktor"] == MIN_SKALA_FAKTOR
+    assert konfig["maxFokusSkala"] == MAX_FOKUS_SKALA
+    assert konfig["animeringMs"] == FOKUS_ANIMERING_MS
+    assert konfig["kedjefarg"] == KEDJEFARG
+    assert konfig["kedjebredd"] == KEDJEBREDD
+
+
+def test_inga_magiska_tal_i_konfigurationen():
+    """Varje värde ska komma från en namngiven konstant, inte skrivas två gånger."""
+    from utils.taxonomi_ui import grafkonfig
+
+    assert set(grafkonfig()) == {
+        "bakgrundsopacitet",
+        "minSkalaFaktor",
+        "maxFokusSkala",
+        "animeringMs",
+        "kedjefarg",
+        "kedjebredd",
+        "kantfarg",
+    }

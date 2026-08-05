@@ -59,6 +59,35 @@ _LAGFARG = {"bg": "#B8860B", "kant": "#8A6608", "text": "#FFFFFF"}
 # till minsta storleken.
 _STORLEK = {0: 26, 1: 22, 2: 18, 3: 16, 4: 14, 5: 13, 6: 12}
 
+# --- Interaktionens inställningar -------------------------------------------
+#
+# Alla värden som styr fokusering och zoom ligger här och skickas till
+# JavaScripten som ett enda objekt. JS-filerna innehåller inga egna tal.
+
+# Bakgrundsnodernas opacitet när en gren är fokuserad. 0,15 räcker för att
+# formen ska anas utan att konkurrera med den fokuserade grenen.
+BAKGRUNDSOPACITET = 0.15
+
+# Zoomgolv. Skalan efter den första fit() gånger den här faktorn är så långt
+# ut studenten får gå. Golvet härleds i stället för att hårdkodas, så att det
+# följer med containerns bredd och trädets storlek.
+MIN_SKALA_FAKTOR = 0.9
+
+# Tak för den *automatiska* fokuseringen. Utan det fyller en ensam nod utan
+# ättlingar hela rutan. Handzoomning inåt är fortfarande obegränsad.
+MAX_FOKUS_SKALA = 1.6
+
+# Animeringstid vid fokus och återställning.
+FOKUS_ANIMERING_MS = 400
+
+# Förfäderskedjans kanter. Guld är lagens färg i appen, men det här är en
+# kant och inte en nod, så kopplingen bryts inte (design_system.md avsnitt 1).
+KEDJEFARG = "#B8860B"
+KEDJEBREDD = 3
+
+# Kanternas normalfärg, samma som tidigare låg inbäddad i optionsobjektet.
+KANTFARG = "#C9BFA8"
+
 
 def _json_for_html(data: object) -> str:
     """Serialisera till JSON säkert för inbäddning i en <script>-tagg."""
@@ -74,6 +103,23 @@ def _nodfarg(nod: TaxNod) -> dict[str, str]:
     return GRENFARGER.get(nod.get("toppgren", ""), _ROTFARG)
 
 
+def grafkonfig() -> dict[str, object]:
+    """Inställningarna som skickas till grafens JavaScript.
+
+    Nycklarna är camelCase eftersom de läses av JS-sidan; värdena kommer
+    uteslutande från modulkonstanterna ovan.
+    """
+    return {
+        "bakgrundsopacitet": BAKGRUNDSOPACITET,
+        "minSkalaFaktor": MIN_SKALA_FAKTOR,
+        "maxFokusSkala": MAX_FOKUS_SKALA,
+        "animeringMs": FOKUS_ANIMERING_MS,
+        "kedjefarg": KEDJEFARG,
+        "kedjebredd": KEDJEBREDD,
+        "kantfarg": KANTFARG,
+    }
+
+
 def _vis_noder(graf: Taxonomigraf) -> list[dict]:
     """Omvandla taxonominoder till vis-network-noder med färg och form."""
     ut = []
@@ -86,6 +132,7 @@ def _vis_noder(graf: Taxonomigraf) -> list[dict]:
                 "label": nod["label"],
                 "title": nod.get("titel", ""),
                 "url": nod.get("url", ""),
+                "foralder": nod.get("foralder", ""),
                 "shape": "dot" if nod["grupp"] == GRUPP_LAG else "box",
                 "size": _STORLEK.get(niva, 13),
                 "color": {"background": farg["bg"], "border": farg["kant"]},
@@ -105,6 +152,7 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
     kanter_json = _json_for_html(
         [{"from": k["fran"], "to": k["till"]} for k in graf["kanter"]]
     )
+    konfig_json = _json_for_html(grafkonfig())
 
     return f"""
 <div id="taxonomigraf" style="height:{hojd}px;border:1px solid #E5E0D8;
@@ -114,6 +162,7 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
   (function() {{
     const noder = {noder_json};
     const kanter = {kanter_json};
+    const JOK_GRAFKONFIG = {konfig_json};
     const container = document.getElementById("taxonomigraf");
     if (typeof vis === "undefined") {{
       container.innerHTML =
@@ -133,7 +182,7 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
       }},
       nodes: {{ borderWidth: 1, shadow: false }},
       edges: {{
-        color: {{ color: "#C9BFA8" }}, width: 1,
+        color: {{ color: JOK_GRAFKONFIG.kantfarg }}, width: 1,
         smooth: {{ type: "cubicBezier", forceDirection: "vertical" }}
       }},
       physics: false,

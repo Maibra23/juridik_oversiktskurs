@@ -123,3 +123,18 @@ def test_avtalsratt_alla_mc_har_exakt_ett_ratt():
         # Kastar om någon fråga saknar exakt ett rätt svar.
         idx = ratt_alternativ_index(fraga)
         assert 0 <= idx < len(fraga.alternativ)
+
+
+def test_lagrumsjakt_accepterar_fullt_lagnamn_mot_forkortningsfacit():
+    # Facit är skrivet med förkortning, studenten svarar med fullt namn.
+    jakt = Lagrumsjakt(id="lj8", situation="?", facit_lagrum=("4 § AvtL",))
+    res = ratta_lagrumsjakt(jakt, "Jag tror det är 4 § avtalslagen.")
+    assert res.korrekt is True
+    assert res.status == STATUS_VERIFIERAD
+
+
+def test_lagrumsjakt_accepterar_alternativ_forkortning():
+    jakt = Lagrumsjakt(id="lj9", situation="?", facit_lagrum=("3 kap. 1 § KKöpL",))
+    res = ratta_lagrumsjakt(jakt, "3 kap. 1 § KKL")
+    assert res.korrekt is True
+    assert res.status == STATUS_VERIFIERAD

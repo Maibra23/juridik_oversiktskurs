@@ -58,6 +58,7 @@ class Lag:
     kapitelindelad: bool
     lagen_nu_bas_url: str
     kursavsnitt: tuple[Kursavsnitt, ...]
+    aliaser: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -156,6 +157,7 @@ def _validera_ra_lag(rad: dict) -> Lag:
         kapitelindelad=bool(rad["kapitelindelad"]),
         lagen_nu_bas_url=rad["lagen_nu_bas_url"],
         kursavsnitt=tuple(avsnitt),
+        aliaser=tuple(rad.get("aliaser", [])),
     )
 
 

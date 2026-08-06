@@ -296,3 +296,37 @@ def test_inget_kursavsnitt_ar_overifierat():
         if a.verifiera
     ]
     assert oflaggade == [], "\n".join(oflaggade)
+
+
+# --- Aliasfält på Lag ---------------------------------------------------
+
+
+def test_validera_ra_lag_las_alias_falt():
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "aliaser": ["testlagen", "TL"],
+        "kursavsnitt": [],
+    }
+    lag = _validera_ra_lag(rad)
+    assert lag.aliaser == ("testlagen", "TL")
+
+
+def test_validera_ra_lag_alias_falt_default_tomt():
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "kursavsnitt": [],
+    }
+    lag = _validera_ra_lag(rad)
+    assert lag.aliaser == ()

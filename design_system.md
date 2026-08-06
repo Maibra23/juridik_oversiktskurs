@@ -151,3 +151,19 @@ Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("S
 ## 6. Ton och mikrocopy
 
 Saklig, varm och kortfattad svenska. Du tilltal. Inga utropstecken i bedömningar. Exempel: "Din norm stämmer. Tillämpningen behöver koppla ond tro till att köparen kände till felet." Systemmeddelanden om budget förklarar alltid vad som fortfarande fungerar.
+
+## 7. Framsteg och kontinuitet
+
+Framstegen är sessionsbundna: allt ligger i `st.session_state` och försvinner när
+fliken stängs. Målgruppen är publik och anonym, så det finns ingen inloggning och
+därmed ingen ärlig serverlagring per student.
+
+Regeln: **säg det rent ut, och peka på lösningen i samma andetag.** "Framstegen
+gäller den här sessionen. Stänger du fliken är de borta — ladda ner dem nedan för
+att behålla dem." Aldrig bara antytt i en rubrik. En student som förlorat en
+timmes arbete utan varning kommer inte tillbaka, och tillit är en förutsättning
+för ansträngning.
+
+Obsidianvalvet är därför inte en teknisk detalj utan kursens repetitionsmekanism,
+och framställs som det ("Läs om det du gjort i morgon"). Tomma tillstånd visar
+aldrig nedladdningsknappar för innehåll som inte finns.

@@ -25,13 +25,7 @@ from utils.navigation import SENAST_BESOKT_NYCKEL, cta_mal, sida_for_namn
 from utils.obsidian import bygg_valv, hamta_case_analyser
 from utils.quiz import alla_resultat
 from utils.texter import antal_med_enhet
-from utils.ui import (
-    footer_note,
-    hero,
-    pipeline_steps,
-    render_info,
-    section_heading,
-)
+from utils.ui import footer_note, hero, section_heading
 
 
 def render_landing() -> None:
@@ -47,25 +41,15 @@ def render_landing() -> None:
         )
     )
 
-    # Disclaimer högt upp: appen ger inte juridisk rådgivning (PRD 4).
-    render_info(
-        "Ett studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
+    # Disclaimer högt upp: appen ger inte juridisk rådgivning (PRD 4). Den
+    # fullständiga texten står i footer_note(); kravet var synlighet, inte
+    # dominans, så här räcker en caption.
+    st.caption(
+        "Studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
     )
 
     _render_cta()
     _render_framsteg()
-
-    st.html(section_heading("ARBETSGÅNG", "Så arbetar du i varje modul"))
-    st.html(
-        pipeline_steps(
-            [
-                "Läs scenariot",
-                "Skriv din RNTS-analys",
-                "Be tutorn granska",
-                "Öva lagrum och quiz",
-            ]
-        )
-    )
 
     st.html(footer_note())
 
@@ -103,58 +87,83 @@ def _render_cta() -> None:
 
 
 def _render_framsteg() -> None:
-    """Framstegssektion: quizresultat och genomförda case, med export."""
-    st.html(section_heading("FRAMSTEG", "Dina resultat den här sessionen"))
+    """Framstegssektion: tre tal, en ärlig rad om sessionen, och exporten.
 
+    Tomt tillstånd visar ingenting alls utom en mening: en förstagångsbesökare
+    ska mötas av exakt en handling, inte av nedladdningsknappar för en rapport
+    som ännu är tom.
+    """
     resultat = alla_resultat()
     case_bok = genomforda_case()
+
     if not resultat and not case_bok:
-        st.info(
-            "Inga resultat ännu. Öppna en modul, besvara quizfrågor eller "
-            "fyll i en RNTS-analys så samlas dina framsteg här."
+        st.caption(
+            "När du börjat öva visas dina framsteg här."
         )
-    else:
-        for modul, (ratt, besvarade) in sorted(resultat.items()):
-            andel = ratt / besvarade if besvarade else 0.0
-            st.progress(andel, text=f"{modul}: {ratt}/{besvarade} rätt på quiz")
-        for modul, case_ids in sorted(case_bok.items()):
-            st.markdown(
-                f"- **{modul}**: "
-                + antal_med_enhet(
-                    len(case_ids), "genomfört rättsfall", "genomförda rättsfall"
-                )
-            )
+        return
 
-        kol_md, kol_xlsx = st.columns(2)
-        with kol_md:
-            st.download_button(
-                "Ladda ner rapport (Markdown)",
-                data=bygg_markdown_rapport(resultat_till_svar(), case_bok),
-                file_name="studierapport.md",
-                mime="text/markdown",
-            )
-        with kol_xlsx:
-            st.download_button(
-                "Ladda ner rapport (Excel)",
-                data=bygg_excel_rapport(resultat_till_svar(), case_bok),
-                file_name="studierapport.xlsx",
-                mime="application/vnd.openxmlformats-officedocument."
-                "spreadsheetml.sheet",
-            )
+    st.html(section_heading("FRAMSTEG", "Så här långt"))
 
-    # Obsidianvalvet är värdefullt redan utan analyser: Rättskartan, en
-    # klickbar och hopfällbar karta över rättssystemet, följer alltid med.
+    moduler = len(pabborjade_moduler())
+    fall = sum(len(ids) for ids in case_bok.values())
+    ratt = sum(r for r, _b in resultat.values())
+    besvarade = sum(b for _r, b in resultat.values())
+
+    delar = [
+        antal_med_enhet(moduler, "modul påbörjad", "moduler påbörjade"),
+        antal_med_enhet(fall, "rättsfall genomfört", "rättsfall genomförda"),
+    ]
+    if besvarade:
+        delar.append(f"{ratt}/{besvarade} rätt på quiz")
+    st.markdown(" · ".join(delar))
+
+    st.caption(
+        "Framstegen gäller den här sessionen. Stänger du fliken är de borta — "
+        "ladda ner dem nedan för att behålla dem."
+    )
+    _render_export(resultat, case_bok)
+
+
+def _render_export(
+    resultat: dict[str, tuple[int, int]], case_bok: dict[str, tuple[str, ...]]
+) -> None:
+    """Exportknapparna: valvet primärt, rapporterna sekundära.
+
+    Obsidianvalvet ligger först och får mest vikt eftersom det är den
+    pedagogiskt intressanta exporten: Rättskartan följer alltid med, varje
+    RNTS-analys blir en egen not, och noterna binds ihop av sina lagrum. Det
+    är appens enda väg till repetition över tid.
+    """
+    st.html(section_heading("TA MED DIG", "Läs om det du gjort i morgon"))
     st.download_button(
         "Ladda ner Obsidianvalv med Rättskartan (zip)",
         data=bygg_valv(hamta_case_analyser()),
         file_name="juridik_valv.zip",
         mime="application/zip",
+        type="primary",
     )
-    st.info(
-        "Packa upp zipen och öppna mappen **Juridik** som ett valv i Obsidian. "
-        "**Rättskartan** är en klickbar karta över rättssystemet, och varje "
+    st.caption(
+        "Packa upp zipen och öppna mappen Juridik som ett valv i Obsidian. "
+        "Rättskartan är en klickbar karta över rättssystemet, och varje "
         "genomförd RNTS-analys blir en egen not."
     )
+
+    kol_md, kol_xlsx = st.columns(2)
+    with kol_md:
+        st.download_button(
+            "Rapport (Markdown)",
+            data=bygg_markdown_rapport(resultat_till_svar(), case_bok),
+            file_name="studierapport.md",
+            mime="text/markdown",
+        )
+    with kol_xlsx:
+        st.download_button(
+            "Rapport (Excel)",
+            data=bygg_excel_rapport(resultat_till_svar(), case_bok),
+            file_name="studierapport.xlsx",
+            mime="application/vnd.openxmlformats-officedocument."
+            "spreadsheetml.sheet",
+        )
 
 
 def resultat_till_svar() -> dict[str, dict[str, bool]]:

@@ -20,7 +20,8 @@ from utils.export import (
     bygg_markdown_rapport,
     genomforda_case,
 )
-from utils.navigation import SENAST_BESOKT_NYCKEL, cta_mal
+from utils.framsteg import pabborjade_moduler
+from utils.navigation import SENAST_BESOKT_NYCKEL, cta_mal, sida_for_namn
 from utils.obsidian import bygg_valv, hamta_case_analyser
 from utils.quiz import alla_resultat
 from utils.texter import antal_med_enhet
@@ -70,7 +71,7 @@ def render_landing() -> None:
 
 
 def _render_cta() -> None:
-    """Startsidans enda call-to-action: fortsätt eller kom igång.
+    """Startsidans enda call-to-action: ett kort som svarar på vad och varför.
 
     Modulerna nås i övrigt uteslutande via sidopanelen: en andra länklista
     här skulle bara upprepa den, i en annan ordning, med olika omfattning.
@@ -79,7 +80,7 @@ def _render_cta() -> None:
         senast = st.session_state.get(SENAST_BESOKT_NYCKEL)
     except Exception:
         senast = None
-    mal = cta_mal(senast)
+    mal = cta_mal(senast, pabborjade_moduler())
 
     st.html(
         section_heading(
@@ -87,9 +88,18 @@ def _render_cta() -> None:
             "Fortsätt där du var" if mal.ateruppta else "Kom igång",
         )
     )
+    if mal.skal:
+        st.caption(mal.skal)
     prefix = "Fortsätt" if mal.ateruppta else "Börja med"
     if st.button(f"{prefix}: {mal.titel} →", type="primary"):
         st.switch_page(mal.sida)
+
+    # Den sekundära vägen: har studenten en pågående modul som inte är målet,
+    # ska den vara nåbar utan att konkurrera med den primära knappen.
+    if not mal.ateruppta and senast and senast != mal.titel:
+        sida = sida_for_namn(senast)
+        if sida:
+            st.page_link(sida, label=f"Fortsätt där du var: {senast}")
 
 
 def _render_framsteg() -> None:

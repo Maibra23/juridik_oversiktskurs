@@ -29,10 +29,17 @@ class Modul:
 
     ``sida`` är sökvägen relativt projektroten, t.ex. "sidor/2_Avtalsratt.py".
     None betyder att modulen är planerad men ännu inte byggd.
+
+    ``kursmodul`` skiljer kursens rättsområden (de som har övningsinnehåll i
+    data/scenarier och därmed en plats i kursordningen) från verktygssidor som
+    Hem, Rättskartan och Kunskapskarta. Startsidans "nästa steg" rör sig bara
+    genom kursmoduler; tests/test_navigation.py vaktar att mängden är exakt
+    densamma som scenariodatans moduler.
     """
 
     namn: str
     sida: str | None = None
+    kursmodul: bool = False
 
     @property
     def planerad(self) -> bool:
@@ -58,7 +65,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
         "START OCH METOD",
         (
             Modul("Hem", "sidor/0_Hem.py"),
-            Modul("Juridisk metod", "sidor/1_Juridisk_metod.py"),  # kap 1
+            Modul(
+                "Juridisk metod", "sidor/1_Juridisk_metod.py", kursmodul=True
+            ),  # kap 1
             Modul("Rättskartan", "sidor/16_Rattskartan.py"),
         ),
     ),
@@ -76,7 +85,11 @@ NAV_TRAD: tuple[Grupp, ...] = (
         (
             Grupp(
                 "Personrätt",
-                (Modul("Personrätt", "sidor/12_Personratt.py"),),  # kap 5
+                (
+                    Modul(
+                        "Personrätt", "sidor/12_Personratt.py", kursmodul=True
+                    ),  # kap 5
+                ),
             ),
             Grupp(
                 "Förmögenhetsrätt",
@@ -84,17 +97,23 @@ NAV_TRAD: tuple[Grupp, ...] = (
                     Modul(
                         "Allmän förmögenhetsrätt",
                         "sidor/13_Allman_formogenhetsratt.py",
+                        kursmodul=True,
                     ),  # kap 6
                     Grupp(
                         "Kontraktsrätt",
                         (
-                            Modul("Avtalsrätt", "sidor/2_Avtalsratt.py"),  # kap 7
+                            Modul(
+                                "Avtalsrätt", "sidor/2_Avtalsratt.py", kursmodul=True
+                            ),  # kap 7
                             Modul(
                                 "Köp- och konsumenträtt",
                                 "sidor/3_Kop_och_konsumentratt.py",
+                                kursmodul=True,
                             ),  # kap 8
                             Modul(
-                                "Fastighetsrätt", "sidor/14_Fastighetsratt.py"
+                                "Fastighetsrätt",
+                                "sidor/14_Fastighetsratt.py",
+                                kursmodul=True,
                             ),  # kap 9
                         ),
                     ),
@@ -102,16 +121,22 @@ NAV_TRAD: tuple[Grupp, ...] = (
                         "Ersättningsrätt",
                         (
                             Modul(
-                                "Skadeståndsrätt", "sidor/4_Skadestandsratt.py"
+                                "Skadeståndsrätt",
+                                "sidor/4_Skadestandsratt.py",
+                                kursmodul=True,
                             ),  # kap 10
                         ),
                     ),
                     Grupp(
                         "Näringsrätt",
                         (
-                            Modul("Arbetsrätt", "sidor/5_Arbetsratt.py"),  # kap 11
                             Modul(
-                                "Associationsrätt", "sidor/6_Associationsratt.py"
+                                "Arbetsrätt", "sidor/5_Arbetsratt.py", kursmodul=True
+                            ),  # kap 11
+                            Modul(
+                                "Associationsrätt",
+                                "sidor/6_Associationsratt.py",
+                                kursmodul=True,
                             ),  # kap 12
                         ),
                     ),
@@ -119,7 +144,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
                         "Kredit- och obeståndsrätt",
                         (
                             Modul(
-                                "Fordringsrätt", "sidor/15_Fordringsratt.py"
+                                "Fordringsrätt",
+                                "sidor/15_Fordringsratt.py",
+                                kursmodul=True,
                             ),
                         ),  # kap 15-17
                     ),
@@ -131,6 +158,7 @@ NAV_TRAD: tuple[Grupp, ...] = (
                     Modul(
                         "Familje- och successionsrätt",
                         "sidor/7_Familje_och_arvsratt.py",
+                        kursmodul=True,
                     ),  # kap 18-21
                 ),
             ),
@@ -140,7 +168,9 @@ NAV_TRAD: tuple[Grupp, ...] = (
         "STRAFF- OCH PROCESSRÄTT",
         (
             Modul(
-                "Straff- och processrätt", "sidor/8_Straff_och_processratt.py"
+                "Straff- och processrätt",
+                "sidor/8_Straff_och_processratt.py",
+                kursmodul=True,
             ),  # kap 22
         ),
     ),
@@ -192,6 +222,28 @@ def sida_for_namn(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> str | None:
     return None
 
 
+def kursmoduler(noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[Modul, ...]:
+    """Kursens rättsområdesmoduler i trädets ordning.
+
+    Trädets ordning är kursbokens kapitelordning, så den här tupeln ÄR
+    kursordningen. Verktygssidor (Hem, Rättskartan, Kunskapstest,
+    Kunskapskarta, Kunskapsutmaning) ingår inte.
+    """
+    return tuple(m for m in alla_moduler(noder) if m.kursmodul and m.sida)
+
+
+def nasta_kursmodul(pabborjade: frozenset[str]) -> Modul | None:
+    """Första kursmodulen studenten ännu inte börjat på, i kursordning.
+
+    None betyder att alla kursmoduler är påbörjade — då har startsidan inget
+    nytt att föreslå och faller tillbaka på att återuppta.
+    """
+    for modul in kursmoduler():
+        if modul.namn not in pabborjade:
+            return modul
+    return None
+
+
 # --- Startsidans call-to-action ----------------------------------------------
 #
 # Startsidan visar en enda knapp: fortsätt i senast besökta modul, eller
@@ -217,24 +269,57 @@ def registrera_besok(session_state: MutableMapping[str, object], titel: str) -> 
 
 @dataclass(frozen=True)
 class CtaMal:
-    """Startsidans call-to-action: vart den pekar och varför."""
+    """Startsidans call-to-action: vart den pekar och varför.
+
+    ``skal`` är en mening som visas i kortet, så att en student som vill något
+    annat gör ett informerat val i stället för att känna sig olydig.
+    """
 
     titel: str
     sida: str
     ateruppta: bool
+    skal: str = ""
 
 
-def cta_mal(senast_besokt: str | None) -> CtaMal:
+def cta_mal(
+    senast_besokt: str | None,
+    pabborjade: frozenset[str] = frozenset(),
+) -> CtaMal:
     """Bestäm startsidans call-to-action.
 
-    Pekar mot den senast besökta modulen i sessionen om namnet fortfarande
-    går att slå upp mot en byggd sida, annars mot kursens första modul
-    (FALLBACK_CTA_TITEL/-SIDA) — antingen för att sessionen är ny eller för
-    att det sparade namnet inte längre pekar på något (t.ex. efter en
-    ombyggnad av navigeringsträdet).
+    Föredrar **nästa ej påbörjade kursmodul i kursordning**, eftersom det är den
+    enda av de två signalerna som faktiskt leder studenten framåt: senast
+    besökta modul kan vara en modul studenten råkade öppna, och pekar man dit
+    varje gång låses studenten fast där. Kursordningen är trädets ordning i
+    NAV_TRAD, som följer kursbokens kapitelordning.
+
+    Är alla kursmoduler påbörjade finns inget nytt att föreslå, och vi återupptar
+    den senast besökta modulen i stället. Går den inte att slå upp (ny session,
+    eller ett sparat namn som inte längre finns efter en ombyggnad av trädet)
+    faller vi tillbaka på FALLBACK_CTA_TITEL/-SIDA.
     """
+    nasta = nasta_kursmodul(pabborjade)
+    if nasta is not None and nasta.sida:
+        return CtaMal(
+            nasta.namn,
+            nasta.sida,
+            False,
+            "Nästa i kursen efter det du redan gjort.",
+        )
+
     if senast_besokt:
         sida = sida_for_namn(senast_besokt)
         if sida:
-            return CtaMal(senast_besokt, sida, True)
-    return CtaMal(FALLBACK_CTA_TITEL, FALLBACK_CTA_SIDA, False)
+            return CtaMal(
+                senast_besokt,
+                sida,
+                True,
+                "Du har varit inne i alla kursmoduler. Fortsätt där du var.",
+            )
+
+    return CtaMal(
+        FALLBACK_CTA_TITEL,
+        FALLBACK_CTA_SIDA,
+        False,
+        "Kursens första modul. Börja här om du är ny.",
+    )

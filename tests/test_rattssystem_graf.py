@@ -148,6 +148,41 @@ def test_samma_lag_i_tva_grenar_ger_tva_distinkta_noder():
     assert "avtalsratt" in a and "kop_och_konsumentratt" in b
 
 
+def test_kop_och_hyra_av_fast_egendom_finns_under_speciell_avtalsratt():
+    from utils.rattskarta import hitta_gren
+
+    kop = hitta_gren("kop_av_fast_egendom")
+    hyra = hitta_gren("hyra_av_fast_egendom")
+    assert kop is not None, "kop_av_fast_egendom saknas i trädet"
+    assert hyra is not None, "hyra_av_fast_egendom saknas i trädet"
+    assert kop.ar_lov and hyra.ar_lov
+    assert [lag.forkortning for lag in kop.lagar] == ["JB"]
+    assert [lag.forkortning for lag in hyra.lagar] == ["JB"]
+    assert "4 kap" in kop.lagar[0].beskrivning
+    assert "12 kap" in hyra.lagar[0].beskrivning
+
+
+def test_fastighetsratt_ar_nu_enbart_sakrattslig():
+    from utils.rattskarta import hitta_gren
+
+    fastighet = hitta_gren("fastighetsratt")
+    assert fastighet is not None
+    assert "köp" not in fastighet.beskrivning.lower()
+    assert "hyra" not in fastighet.beskrivning.lower()
+    assert fastighet.lagar[0].forkortning == "JB"
+
+
+def test_jb_forekommer_som_tre_distinkta_lagnoder(graf):
+    from utils.rattssystem_graf import lag_id
+
+    jb_noder = {n["id"] for n in graf["noder"] if n.get("forkortning") == "JB"}
+    assert jb_noder == {
+        lag_id("fastighetsratt", "JB"),
+        lag_id("kop_av_fast_egendom", "JB"),
+        lag_id("hyra_av_fast_egendom", "JB"),
+    }
+
+
 # --- Taxonomiträdet ---------------------------------------------------------
 
 

@@ -175,6 +175,38 @@
                       ]
                     },
                     {
+                      "id": "kop_av_fast_egendom",
+                      "namn": "Köp av fast egendom",
+                      "beskrivning": "Köp, byte och gåva av fastighet: formkrav, fullbordan och fel i fastighet. Den obligationsrättsliga delen av jordabalken.",
+                      "nar": "Frågan gäller köp av fastighet (formkraven i 4 kap. JB) eller fel i fastigheten efter tillträde.",
+                      "lagar": [
+                        {
+                          "forkortning": "JB",
+                          "beskrivning": "Jordabalkens 4 kap. reglerar köp av fast egendom: formkrav för giltigt köp, fullbordan och fel i fastighet.",
+                          "nar": "Frågan rör formkraven för ett fastighetsköp eller fel i fastigheten efter tillträdet.",
+                          "relaterade": [
+                            "AvtL"
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "hyra_av_fast_egendom",
+                      "namn": "Hyra av fast egendom",
+                      "beskrivning": "Hyra av bostad och lokal: besittningsskydd, uppsägning och hyresvillkor. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
+                      "nar": "Frågan gäller ett hyresförhållande för fast egendom — besittningsskydd, uppsägning eller villkoren i hyresavtalet.",
+                      "lagar": [
+                        {
+                          "forkortning": "JB",
+                          "beskrivning": "Jordabalkens 12 kap. (hyreslagen) reglerar hyra av bostad och lokal: besittningsskydd, uppsägning och hyresvillkor.",
+                          "nar": "Frågan rör ett hyresförhållande: besittningsskydd, uppsägning av hyresgäst eller hyresvillkorens giltighet.",
+                          "relaterade": [
+                            "AvtL"
+                          ]
+                        }
+                      ]
+                    },
+                    {
                       "id": "arbetsratt",
                       "namn": "Arbetsrätt",
                       "beskrivning": "Förhållandet mellan arbetsgivare och arbetstagare, särskilt anställningens skydd.",
@@ -378,15 +410,14 @@
         {
           "id": "fastighetsratt",
           "namn": "Fastighetsrätt",
-          "beskrivning": "Fast egendom: köp av fastighet, fel, nyttjanderätter och panträtt. Spänner över både obligationsrätt (fastighetsköpet) och sakrätt (panträtt och servitut).",
-          "nar": "Tvisten gäller mark eller byggnad. Formkraven och gränsen mot lös egendom avgör ofta utgången.",
+          "beskrivning": "Fast egendom som sakrättsligt objekt: fastighetstillbehör, servitut och panträtt.",
+          "nar": "Frågan gäller vad som räknas som fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt — inte själva köpet eller hyresförhållandet.",
           "lagar": [
             {
               "forkortning": "JB",
-              "beskrivning": "Jordabalken reglerar fast egendom: formkrav vid fastighetsköp, fel i fastighet, hyra, servitut och panträtt.",
-              "nar": "Frågan rör köp av fastighet (formkraven i 4 kap.), fel i fastighet eller rättigheter som belastar fastigheten.",
+              "beskrivning": "Jordabalken reglerar fast egendom sakrättsligt: fastighetstillbehör, servitut och panträtt.",
+              "nar": "Frågan rör vad som är fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt.",
               "relaterade": [
-                "AvtL",
                 "ÄktB"
               ]
             }

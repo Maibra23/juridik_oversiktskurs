@@ -68,7 +68,7 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 * **render_case(scenario)**: scenariokort med rubrik, faktatext, diskret metadatarad (modul, svårighetsgrad, uppskattad tid) och en tunn guldlinje överst.
 * **render_tutortext(text, rapport)**: tutorsvar där verifierade lagrum ersatts av chips och overifierade avsnitt fått gul markering. RNTS rubrikerna i svaret renderas som små kapitäler i myndighetsblått.
 * **render_varning(text)** och **render_info(text)**: gula respektive blå informationskort, används för budgettak, stale förklaringar och disclaimer.
-* **render_statuspanel()**: sidopanelens LLM status som en rad. Utökas med anrop kvar i sessionen och i dag först när tutorn är otillgänglig eller mindre än en fjärdedel av något tak återstår; modellnamnet visas bara i det utökade läget.
+* **render_statuspanel()**: sidopanelens LLM status som en rad. I normalläget står det bara att tutorn är tillgänglig. Raden utökas först när något faktiskt är begränsat, och säger då olika saker: är tutorn otillgänglig namnger den vad som ändå fungerar utan den, och återstår mindre än en fjärdedel av något tak visar den anrop kvar i sessionen och i dag. Modellnamnet visas bara i det utökade läget.
 * **render_quizfraga(fraga)**: fråga i kort, alternativ som radio, efter rättning färgas valt alternativ grönt eller rött och en förklaringsexpander visas per alternativ.
 
 ## 4. Layout och navigering

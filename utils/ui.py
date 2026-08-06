@@ -452,8 +452,39 @@ def render_daily_cap_card() -> None:
 
 # --- Statuspanel och sidopanel ----------------------------------------------
 
+# Under den här andelen återstående anrop är budgeten värd att visa i detalj.
+STATUS_TROSKEL = 0.25
+
+
+def statusrad(
+    tillganglig: bool, sess: int, sess_tak: int, dag: int, dag_tak: int
+) -> tuple[str, bool]:
+    """Sidopanelens statustext, och om detaljerna bör visas.
+
+    Ren funktion så att tröskellogiken kan testas utan Streamlit. Detaljerna
+    visas bara när de betyder något: när tutorn är otillgänglig, eller när
+    mindre än en fjärdedel av något tak återstår. Driftinformation ska inte
+    konkurrera med navigeringen i normalläget.
+    """
+    if not tillganglig:
+        return (
+            "Tutorn är inte tillgänglig. Quiz, lagrumslänkar och facit "
+            "fungerar som vanligt.",
+            True,
+        )
+
+    def _lagt(kvar: int, tak: int) -> bool:
+        if tak <= 0:
+            return True
+        return kvar / tak < STATUS_TROSKEL
+
+    if _lagt(sess, sess_tak) or _lagt(dag, dag_tak):
+        return (f"Tutorn: {sess} anrop kvar i sessionen, {dag} i dag.", True)
+    return ("Tutorn: tillgänglig", False)
+
+
 def render_statuspanel() -> None:
-    """LLM-status i sidopanelen: modell, anrop kvar i sessionen, dagsbudget."""
+    """LLM-status i sidopanelen: en rad, som utökas bara när den behöver det."""
     from utils.llm import (
         SESSION_CALL_CAP,
         get_active_model,
@@ -462,41 +493,17 @@ def render_statuspanel() -> None:
     )
     from utils.llm_budget import get_daily_calls_remaining, get_daily_cap
 
-    tillganglig = is_llm_available()
-    prick = "Tillgänglig" if tillganglig else "Ej konfigurerad"
-    modell = get_active_model().split("/")[-1]
-    sess = get_session_calls_remaining()
-    dag = get_daily_calls_remaining()
-
-    st.html(
-        '<div class="jok-status">'
-        f'<div class="rad"><span>LLM-tutor</span><span class="prick">{prick}</span></div>'
-        f'<div class="rad"><span>Modell</span><span>{html.escape(modell)}</span></div>'
-        f'<div class="rad"><span>Anrop kvar i sessionen</span><span>{sess}/{SESSION_CALL_CAP}</span></div>'
-        f'<div class="rad"><span>Anrop kvar i dag</span><span>{dag}/{get_daily_cap()}</span></div>'
-        "</div>"
+    text, expandera = statusrad(
+        is_llm_available(),
+        get_session_calls_remaining(),
+        SESSION_CALL_CAP,
+        get_daily_calls_remaining(),
+        get_daily_cap(),
     )
-
-
-def _render_model_selector() -> None:
-    """Modellväljare (8B/14B) under en expander i sidopanelen."""
-    from utils.llm import (
-        ALTERNATIVE_MODEL,
-        DEFAULT_MODEL,
-        MODEL_SESSION_KEY,
-        get_active_model,
-    )
-
-    with st.expander("Byt modell", expanded=False):
-        val = st.radio(
-            "Välj modell",
-            options=(DEFAULT_MODEL, ALTERNATIVE_MODEL),
-            format_func=lambda m: m.split("/")[-1],
-            index=(0 if get_active_model() == DEFAULT_MODEL else 1),
-            key="_jok_modellval",
-            label_visibility="collapsed",
-        )
-        st.session_state[MODEL_SESSION_KEY] = val
+    st.caption(text)
+    if expandera:
+        modell = get_active_model().split("/")[-1]
+        st.caption(f"Modell: {modell}")
 
 
 def _render_nod(nod: "Nod", niva: int) -> None:
@@ -539,11 +546,15 @@ def render_sidopanel() -> None:
 
 
 def render_sidebar() -> None:
-    """Sidopanelens innehåll: navigeringsträd, LLM-status och modellväljare.
+    """Sidopanelens innehåll: navigeringsträd och en rad LLM-status.
 
     Anropas en gång per körning från streamlit_app.py, som registrerar
     samma sidor i st.navigation med position="hidden" så att Streamlits
     egen platta sidlista inte ritas parallellt med trädet.
+
+    Modellväljaren är borttagen: 8B/14B är ett val ingen student kan grunda,
+    och mätningen i projektets historik visade att 14B inte var bättre — bara
+    långsammare. Standardmodellen sätts i utils/llm.py.
     """
     with st.sidebar:
         st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')
@@ -552,4 +563,3 @@ def render_sidebar() -> None:
         render_sidopanel()
         st.divider()
         render_statuspanel()
-        _render_model_selector()

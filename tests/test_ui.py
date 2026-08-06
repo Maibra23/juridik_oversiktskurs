@@ -22,6 +22,7 @@ from utils.ui import (
     render_kort,
     render_lagrum_chip,
     render_rnts_steg,
+    statusrad,
 )
 
 # --- render_rnts_steg ---------------------------------------------------------
@@ -359,3 +360,33 @@ def test_inga_hardkodade_typstorlekar():
     """
     hardkodade = re.findall(r"font-size:\s*(\d+)px", _css())
     assert not hardkodade, f"hårdkodade typstorlekar kvar: {sorted(set(hardkodade))}"
+
+
+# --- statusrad ------------------------------------------------------------
+
+def test_statusrad_normalfall_ar_kort_och_inte_expanderad():
+    text, expandera = statusrad(True, 40, 40, 300, 300)
+    assert text == "Tutorn: tillgänglig"
+    assert expandera is False
+
+
+def test_statusrad_expanderar_nar_sessionen_narmar_sig_taket():
+    _text, expandera = statusrad(True, 9, 40, 300, 300)
+    assert expandera is True
+
+
+def test_statusrad_expanderar_nar_dagsbudgeten_narmar_sig_taket():
+    _text, expandera = statusrad(True, 40, 40, 70, 300)
+    assert expandera is True
+
+
+def test_statusrad_otillganglig_sager_vad_som_anda_fungerar():
+    text, expandera = statusrad(False, 40, 40, 300, 300)
+    assert "inte tillgänglig" in text
+    assert expandera is True
+
+
+def test_statusrad_tal_noll_tak_utan_division_med_noll():
+    text, expandera = statusrad(True, 0, 0, 0, 0)
+    assert text
+    assert expandera is True

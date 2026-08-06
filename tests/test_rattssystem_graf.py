@@ -183,6 +183,39 @@ def test_jb_forekommer_som_tre_distinkta_lagnoder(graf):
     }
 
 
+def test_transportavtal_leasing_licensavtal_ar_lagfria_placeholders():
+    from utils.rattskarta import hitta_gren
+
+    forvantad_text = {
+        "transportavtal": "vägtransport",
+        "leasing": "leasinglag",
+        "licensavtal": "upphovsrättslagen",
+    }
+    for gren_id, text in forvantad_text.items():
+        gren = hitta_gren(gren_id)
+        assert gren is not None, f"{gren_id} saknas i trädet"
+        assert gren.ar_lov
+        assert gren.lagar == ()
+        assert text in gren.beskrivning.lower()
+        assert "inga lagrum ur kursens register" in gren.nar.lower()
+
+
+def test_speciell_avtalsratt_har_sju_avtalstyper_i_ratt_ordning():
+    from utils.rattskarta import hitta_gren
+
+    speciell = hitta_gren("speciell_avtalsratt")
+    assert speciell is not None
+    assert [g.id for g in speciell.grenar] == [
+        "kop_och_konsumentratt",
+        "kop_av_fast_egendom",
+        "hyra_av_fast_egendom",
+        "transportavtal",
+        "leasing",
+        "arbetsratt",
+        "licensavtal",
+    ]
+
+
 # --- Taxonomiträdet ---------------------------------------------------------
 
 

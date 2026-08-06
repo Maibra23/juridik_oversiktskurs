@@ -207,6 +207,20 @@
                       ]
                     },
                     {
+                      "id": "transportavtal",
+                      "namn": "Transportavtal",
+                      "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
+                      "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                      "lagar": []
+                    },
+                    {
+                      "id": "leasing",
+                      "namn": "Leasing",
+                      "beskrivning": "Ingen särskild leasinglag finns i Sverige. Avtalet bedöms utifrån allmänna avtalsrättsliga principer, med försiktig analogi till köplagen eller konsumentköplagen. Konsumentkreditlagen (2010:1846) kan bli tillämplig om leasingen i realiteten är ett avbetalningsköp.",
+                      "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer — det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                      "lagar": []
+                    },
+                    {
                       "id": "arbetsratt",
                       "namn": "Arbetsrätt",
                       "beskrivning": "Förhållandet mellan arbetsgivare och arbetstagare, särskilt anställningens skydd.",
@@ -222,6 +236,13 @@
                           ]
                         }
                       ]
+                    },
+                    {
+                      "id": "licensavtal",
+                      "namn": "Licensavtal",
+                      "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
+                      "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                      "lagar": []
                     }
                   ]
                 },

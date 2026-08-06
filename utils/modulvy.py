@@ -157,11 +157,11 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
     tangenttryck i RNTS-fälten, och ett fall som bytts ut mitt i skrivandet
     vore obrukbart.
     """
-    st.html(render_tranar(tranar_etikett("rattsfall")))
-
     if not modul.case:
         st.info("Inga rättsfall i den här modulen ännu.")
         return
+
+    st.html(render_tranar(tranar_etikett("rattsfall")))
 
     n_case = f"gen_case_{filnamn}"
     n_notis = f"gen_notis_{filnamn}"

@@ -152,6 +152,8 @@ Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("S
   `utils/rnts.py`, som också är den enda platsen där stegens namn står. Skälet är
   pedagogiskt: utan etiketten ser studenten fyra separata övningstyper i stället
   för fyra ingångar till samma förmåga.
+* TRÄNAR-raden ritas alltid efter flikens tomhetskontroll, aldrig före: en flik
+  utan övningsinnehåll ska inte annonsera vad den skulle ha tränat.
 
 ## 6. Ton och mikrocopy
 

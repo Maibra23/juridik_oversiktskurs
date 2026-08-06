@@ -3,19 +3,30 @@
 Testar de komponenter som returnerar HTML-strängar utan Streamlit-anrop:
 RNTS-steppern (render_rnts_steg), scenariokortet (render_case) och
 lagrumschipen. Rendering till skärm (st.html) testas inte här utan i
-röktesterna som importerar sidorna i bare mode — med ett undantag:
+röktesterna som importerar sidorna i bare mode — med två undantag:
 render_sidopanel testas genom att st.html/st.page_link/st.session_state
 monkeypatchas, se avsnittet om aktiv rubrikkedja nedan för varför AppTest
-inte kan användas där.
+inte kan användas där, och samma mönster används för
+utils.modulvy._rendera_rattsfall i avsnittet om TRÄNAR-raden längst ner.
 """
 
 from __future__ import annotations
 
+import contextlib
 import re
 
 import pytest
 
 import utils.css
+from utils import modulvy
+from utils.scenarier import (
+    Alternativ,
+    Case,
+    CaseFacit,
+    Flervalsfraga,
+    Lagrumsjakt,
+    Modulscenarier,
+)
 from utils.ui import (
     RNTS_STATUS_BEHOVER_MER,
     RNTS_STATUS_EJ_PABORJAD,
@@ -472,4 +483,90 @@ def test_render_sidopanel_utan_aktiv_sida_har_ingen_aktiv_klass(monkeypatch):
 
     assert not any("aktiv" in rad for rad in html_rader), (
         "Ordet 'aktiv' förekom i utdatan trots att ingen sida är öppen."
+    )
+
+
+# --- _rendera_rattsfall: TRÄNAR-raden ligger efter tomhetskontrollen ----------
+#
+# En modul utan rättsfall ska inte annonsera vad fliken skulle ha tränat: raden
+# ska ligga efter `if not modul.case: ... return`, inte före. Alla åtta
+# scenariofiler i data/scenarier har rättsfall i dag, så utan det här testet
+# kunde asymmetrin ligga vilande utan att något annat i sviten märkte den.
+
+_DUMMY_ALTERNATIV = Alternativ(text="Ja", korrekt=True, forklaring="För att.", lagrum=None)
+_DUMMY_FRAGA = Flervalsfraga(id="f1", fraga="Fråga?", alternativ=(_DUMMY_ALTERNATIV,))
+_DUMMY_JAKT = Lagrumsjakt(id="j1", situation="En situation.", facit_lagrum=("1 § AvtL",))
+_DUMMY_FACIT = CaseFacit(
+    rattsfraga="Fråga?",
+    lagrum=("1 § AvtL",),
+    tillampningspunkter=("Punkt.",),
+    slutsats="Svar.",
+)
+_DUMMY_CASE = Case(
+    id="c1",
+    rubrik="Rubrik",
+    svarighetsgrad="grund",
+    uppskattad_tid_min=5,
+    scenariotext="Text.",
+    facit=_DUMMY_FACIT,
+)
+
+
+def _rattsfall_html(monkeypatch: pytest.MonkeyPatch, modul: Modulscenarier) -> list[str]:
+    """Kör _rendera_rattsfall utanför AppTest och samla den ritade HTML:en.
+
+    Samma skäl som _sidopanel_html ovan: AppTest saknar sidkontext för
+    st.button/st.selectbox/st.columns. Fliken monkeypatchas i stället direkt
+    på streamlit-modulen (st.html samlar HTML-strängarna, st.session_state
+    blir en vanlig dict, resten blir no-ops som inte tar någon gren), och
+    rendera_case_ovning stubbas ut eftersom testet gäller TRÄNAR-radens
+    placering i _rendera_rattsfall, inte hela case-flödet den funktionen
+    i sin tur ritar.
+    """
+    import streamlit as st
+
+    html_rader: list[str] = []
+    monkeypatch.setattr(st, "html", lambda s: html_rader.append(s))
+    monkeypatch.setattr(st, "info", lambda *a, **k: None)
+    monkeypatch.setattr(st, "session_state", {})
+    monkeypatch.setattr(st, "segmented_control", lambda *a, **k: None)
+    monkeypatch.setattr(
+        st,
+        "columns",
+        lambda spec: tuple(
+            contextlib.nullcontext()
+            for _ in range(spec if isinstance(spec, int) else len(spec))
+        ),
+    )
+    monkeypatch.setattr(st, "button", lambda *a, **k: False)
+    monkeypatch.setattr(st, "selectbox", lambda label, options, **k: options[0])
+    monkeypatch.setattr(modulvy, "rendera_case_ovning", lambda *a, **k: None)
+
+    modulvy._rendera_rattsfall("test", modul)
+    return html_rader
+
+
+def test_rattsfall_utan_case_ritar_ingen_tranar_rad(monkeypatch):
+    """Tom case-tupel: ingen TRÄNAR-rad, trots innehåll i de andra två flikarna."""
+    modul = Modulscenarier(
+        modul="test", case=(), flervalsfragor=(_DUMMY_FRAGA,), lagrumsjakt=(_DUMMY_JAKT,)
+    )
+    html_rader = _rattsfall_html(monkeypatch, modul)
+
+    assert not any("jok-tranar" in rad for rad in html_rader), (
+        "TRÄNAR-raden ritades trots att modulen saknar rättsfall att träna på."
+    )
+
+
+def test_rattsfall_med_case_ritar_tranar_rad(monkeypatch):
+    """Motsatsen till testet ovan: med ett rättsfall ska raden faktiskt ritas.
+
+    Utan den här kontrollen skulle testet ovan även godkänna en
+    implementation som aldrig ritar TRÄNAR-raden alls.
+    """
+    modul = Modulscenarier(modul="test", case=(_DUMMY_CASE,), flervalsfragor=(), lagrumsjakt=())
+    html_rader = _rattsfall_html(monkeypatch, modul)
+
+    assert any("jok-tranar" in rad for rad in html_rader), (
+        "TRÄNAR-raden ritades inte trots att modulen har ett rättsfall."
     )

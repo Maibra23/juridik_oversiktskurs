@@ -29,6 +29,7 @@ from utils.navigation import (
     kursmoduler,
     nasta_kursmodul,
     registrera_besok,
+    rubrikkedja,
     sida_finns,
     sida_for_namn,
 )
@@ -219,3 +220,19 @@ def test_cta_mal_okand_senast_besokt_faller_tillbaka_pa_kursordning():
     assert mal.titel == FALLBACK_CTA_TITEL
     assert mal.sida == FALLBACK_CTA_SIDA
     assert mal.ateruppta is False
+
+
+# --- rubrikkedja -----------------------------------------------------------
+
+def test_rubrikkedja_for_djupt_nastlad_modul():
+    assert rubrikkedja("Avtalsrätt") == (
+        "CIVILRÄTT", "Förmögenhetsrätt", "Kontraktsrätt",
+    )
+
+
+def test_rubrikkedja_for_modul_direkt_under_kategori():
+    assert rubrikkedja("Juridisk metod") == ("START OCH METOD",)
+
+
+def test_rubrikkedja_for_okand_modul_ar_tom():
+    assert rubrikkedja("Modul som inte finns") == ()

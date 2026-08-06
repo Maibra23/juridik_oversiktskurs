@@ -506,12 +506,13 @@ def render_statuspanel() -> None:
         st.caption(f"Modell: {modell}")
 
 
-def _render_nod(nod: "Nod", niva: int) -> None:
+def _render_nod(nod: "Nod", niva: int, aktiv_kedja: frozenset[str] = frozenset()) -> None:
     """Rita en nod i navigeringsträdet rekursivt.
 
     ``niva`` är djupet under huvudkategorin: 1 = underkategori, 2 och nedåt
     = undergren. Moduler ritas som länkar, planerade moduler som gråtonad
-    text med "(kommer)".
+    text med "(kommer)". Grupper som omsluter den öppna sidan får klassen
+    ``aktiv`` och full bläckvikt, så att studenten ser var i trädet den är.
     """
     if isinstance(nod, Modul):
         if nod.sida is None:
@@ -523,9 +524,11 @@ def _render_nod(nod: "Nod", niva: int) -> None:
         return
 
     klass = "jok-nav-under" if niva <= 1 else "jok-nav-gren"
+    if nod.namn in aktiv_kedja:
+        klass += " aktiv"
     st.html(f'<div class="{klass}">{html.escape(nod.namn)}</div>')
     for barn in nod.barn:
-        _render_nod(barn, niva + 1)
+        _render_nod(barn, niva + 1, aktiv_kedja)
 
 
 def render_sidopanel() -> None:
@@ -536,13 +539,26 @@ def render_sidopanel() -> None:
     sektioner per huvudkategori, eftersom en panel som måste öppnas döljer
     kursens struktur i stället för att visa den. Nivåerna skiljs åt med
     indrag och färgstyrka enligt design_system.md 4.1.
+
+    Rubrikerna ovanför den öppna sidan får full bläckvikt via klassen ``aktiv``.
+    Ingen färg och ingen ikon: guld är reserverat för lagrum, och hierarkin ska
+    bäras av vikt och indrag.
     """
+    from utils.navigation import rubrikkedja
+
+    try:
+        aktiv = st.session_state.get("_jok_aktiv_sida") or ""
+    except Exception:
+        aktiv = ""
+    aktiv_kedja = frozenset(rubrikkedja(aktiv)) if aktiv else frozenset()
+
     for kategori in NAV_TRAD:
-        st.html(
-            f'<div class="jok-nav-kategori">{html.escape(kategori.namn)}</div>'
-        )
+        klass = "jok-nav-kategori"
+        if kategori.namn in aktiv_kedja:
+            klass += " aktiv"
+        st.html(f'<div class="{klass}">{html.escape(kategori.namn)}</div>')
         for barn in kategori.barn:
-            _render_nod(barn, niva=1)
+            _render_nod(barn, niva=1, aktiv_kedja=aktiv_kedja)
 
 
 def render_sidebar() -> None:

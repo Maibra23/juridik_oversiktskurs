@@ -214,6 +214,21 @@ def sida_finns(sida: str) -> bool:
     return (ROT / sida).is_file()
 
 
+def rubrikkedja(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[str, ...]:
+    """Namnen på grupperna som omsluter modulen, yttersta först.
+
+    Sidopanelen använder kedjan för att ge den öppna sidans förfäder full
+    bläckvikt, så att studenten hittar sin plats i ett träd som är fyra nivåer
+    djupt. Tom tupel om modulnamnet inte finns i trädet.
+    """
+    for nod in noder:
+        if isinstance(nod, Modul):
+            continue
+        if any(m.namn == namn for m in alla_moduler(nod.barn)):
+            return (nod.namn,) + rubrikkedja(namn, nod.barn)
+    return ()
+
+
 def sida_for_namn(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> str | None:
     """Sökvägen för en byggd moduls namn, eller None om den saknas eller är planerad."""
     for n, s in zip(byggda_namn(noder), byggda_sidor(noder)):

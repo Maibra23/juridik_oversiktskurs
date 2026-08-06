@@ -169,6 +169,13 @@ CSS_MALL = """
         .jok-nav-kommer {{
             font-size: var(--t-etikett); color: #9A9384; margin: .1rem 0 .1rem .6rem;
         }}
+        /* Förfäderna till den öppna sidan får full bläckvikt, så att studenten
+           hittar sin plats i ett fyra nivåer djupt träd. Ingen färg, ingen
+           ikon: guld är reserverat för lagrum. */
+        .jok-nav-under.aktiv, .jok-nav-gren.aktiv {{
+            color: var(--bl); font-weight: 700;
+        }}
+        .jok-nav-kategori.aktiv {{ color: var(--bl); }}
         /* Färglegend för taxonomigrafen: riktiga färgrutor, inte prosa. */
         .jok-legend {{
             display: flex; flex-wrap: wrap; gap: .5rem 1.1rem;

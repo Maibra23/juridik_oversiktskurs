@@ -3,7 +3,10 @@
 Testar de komponenter som returnerar HTML-strängar utan Streamlit-anrop:
 RNTS-steppern (render_rnts_steg), scenariokortet (render_case) och
 lagrumschipen. Rendering till skärm (st.html) testas inte här utan i
-röktesterna som importerar sidorna i bare mode.
+röktesterna som importerar sidorna i bare mode — med ett undantag:
+render_sidopanel testas genom att st.html/st.page_link/st.session_state
+monkeypatchas, se avsnittet om aktiv rubrikkedja nedan för varför AppTest
+inte kan användas där.
 """
 
 from __future__ import annotations
@@ -22,6 +25,7 @@ from utils.ui import (
     render_kort,
     render_lagrum_chip,
     render_rnts_steg,
+    render_sidopanel,
     statusrad,
 )
 
@@ -390,3 +394,82 @@ def test_statusrad_tal_noll_tak_utan_division_med_noll():
     text, expandera = statusrad(True, 0, 0, 0, 0)
     assert text
     assert expandera is True
+
+
+# --- render_sidopanel: aktiv rubrikkedja (design_system.md 4.1) ---------------
+#
+# Testar kopplingen hela vägen: st.session_state["_jok_aktiv_sida"] ->
+# rubrikkedja -> klassen "aktiv" i den HTML render_sidopanel ritar. Utan de
+# här testerna kan kopplingen tystna (t.ex. om nyckeln av misstag bar en
+# sökväg i stället för ett modulnamn) utan att någon test i sviten märker
+# det: rubrikkedja är väl testad i tests/test_navigation.py, men ingenting
+# body-testade själva anropskedjan i render_sidopanel förrän nu.
+
+
+def _sidopanel_html(monkeypatch: pytest.MonkeyPatch, session_state: dict) -> list[str]:
+    """Kör render_sidopanel utanför AppTest och samla den ritade HTML:en.
+
+    AppTest kan inte köra den här funktionen: render_sidopanel anropar
+    st.page_link för varje modullöv i trädet, och st.page_link kastar
+    KeyError: 'url_pathname' under AppTest eftersom testverktyget saknar den
+    sidkontext ett riktigt multipage-appbygge ger (samma begränsning som
+    tests/test_rattskartan_sida.py dokumenterar för sidor/16_Rattskartan.py,
+    som har samma problem med samma anrop). Testet kör i stället funktionen
+    direkt och monkeypatchar tre saker på streamlit-modulen: st.html samlar
+    varje sträng i en lista i stället för att rita den, st.page_link blir en
+    no-op så att modullöven inte kraschar, och st.session_state blir en
+    vanlig dict med det värde testet vill undersöka.
+    """
+    import streamlit as st
+
+    html_rader: list[str] = []
+    monkeypatch.setattr(st, "html", lambda s: html_rader.append(s))
+    monkeypatch.setattr(st, "page_link", lambda *a, **k: None)
+    monkeypatch.setattr(st, "session_state", session_state)
+
+    render_sidopanel()
+    return html_rader
+
+
+def _klass_for(html_rader: list[str], namn: str) -> str:
+    """Klassattributet för den rad vars textinnehåll är exakt ``namn``."""
+    for rad in html_rader:
+        match = re.search(rf'<div class="([^"]*)">{re.escape(namn)}</div>', rad)
+        if match:
+            return match.group(1)
+    raise AssertionError(f"Ingen rad för {namn!r} hittades i {html_rader}")
+
+
+def test_render_sidopanel_markerar_hela_rubrikkedjan_som_aktiv(monkeypatch):
+    """Avtalsrätt öppen: dess tre förfäder (i var sitt <div>) ska bära aktiv."""
+    html_rader = _sidopanel_html(monkeypatch, {"_jok_aktiv_sida": "Avtalsrätt"})
+
+    for namn in ("CIVILRÄTT", "Förmögenhetsrätt", "Kontraktsrätt"):
+        klass = _klass_for(html_rader, namn)
+        assert "aktiv" in klass.split(), f"{namn!r} fick inte klassen aktiv: {klass!r}"
+
+
+def test_render_sidopanel_grupp_utanfor_kedjan_ar_inte_aktiv(monkeypatch):
+    """Grupper som inte omsluter den öppna sidan ska aldrig bära aktiv.
+
+    Utan den här kontrollen skulle testet ovan även godkänna en
+    implementation som (felaktigt) sätter aktiv på varje grupp i trädet.
+    Personrätt och Ersättningsrätt är särskilt viktiga negativa fall: de
+    ligger som syskon till en aktiv gren (Förmögenhetsrätt respektive
+    Kontraktsrätt) och skulle avslöja en implementation som markerar en hel
+    förälder-nivå i stället för bara de faktiska förfäderna.
+    """
+    html_rader = _sidopanel_html(monkeypatch, {"_jok_aktiv_sida": "Avtalsrätt"})
+
+    for namn in ("STRAFF- OCH PROCESSRÄTT", "Personrätt", "Ersättningsrätt"):
+        klass = _klass_for(html_rader, namn)
+        assert "aktiv" not in klass.split(), f"{namn!r} fick oväntat klassen aktiv: {klass!r}"
+
+
+def test_render_sidopanel_utan_aktiv_sida_har_ingen_aktiv_klass(monkeypatch):
+    """Tom session_state (ny session, eller en sida utanför trädet): inget aktiv alls."""
+    html_rader = _sidopanel_html(monkeypatch, {})
+
+    assert not any("aktiv" in rad for rad in html_rader), (
+        "Ordet 'aktiv' förekom i utdatan trots att ingen sida är öppen."
+    )

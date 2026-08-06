@@ -16,6 +16,7 @@ på uttryckligt knapptryck och dess svar renderas med verifierade lagrumschips.
 from __future__ import annotations
 
 import dataclasses
+from typing import Mapping
 
 import streamlit as st
 
@@ -258,11 +259,14 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         user_prompt=user_prompt,
         etikett="Be tutorn granska min analys",
         underlag=tuple(case.facit.lagrum),
-        reservhanvisning="Öppna **Visa facit (utan tutor)** nedan så länge.",
+        reservhanvisning="Tryck på **Jag har försökt — visa facit** nedan så länge.",
     )
 
-    with st.expander("Visa facit (utan tutor)"):
-        _rendera_facit(case)
+    # Facit efter försök, inte före: en jämförelse är bara lärorik om studenten
+    # har något eget att jämföra med.
+    if _rendera_facitgrind(f"case_{modul}_{case.id}"):
+        with st.expander("Facit (utan tutor)", expanded=True):
+            _rendera_facit(case)
 
 
 def _rnts_formular(case: Case) -> dict[str, str]:
@@ -452,6 +456,27 @@ def _jakt_ratta_nyckel(modul: str, jakt_id: str) -> str:
     return f"jakt_rattad_{modul}_{jakt_id}"
 
 
+def facit_upplast(nyckel: str, session_state: Mapping[str, object]) -> bool:
+    """Har studenten uttryckligen valt att se facit för den här uppgiften?
+
+    En grind, inte ett lås: ett klick räcker. Poängen är att facit inte ska vara
+    gratis *innan* studenten försökt, eftersom generationseffekten är hela skälet
+    att appen låter dem skriva själva först. Låset är per uppgift, så att ett
+    öppnat facit inte avslöjar alla andra.
+    """
+    return bool(session_state.get(f"facit_upplast_{nyckel}"))
+
+
+def _rendera_facitgrind(nyckel: str, rubrik: str = "Jag har försökt — visa facit") -> bool:
+    """Rita upplåsningsknappen och returnera True när facit får visas."""
+    if facit_upplast(nyckel, st.session_state):
+        return True
+    if st.button(rubrik, key=f"facit_knapp_{nyckel}"):
+        st.session_state[f"facit_upplast_{nyckel}"] = True
+        return True
+    return False
+
+
 def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     st.markdown(f"**{nr}.** {jakt.situation}")
     svar = st.text_input(
@@ -481,9 +506,12 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
                 st.error("Inte rätt lagrum ännu.")
             if jakt.ledtrad:
                 st.caption(f"Ledtråd: {jakt.ledtrad}")
-        with st.expander("Visa facit"):
-            for ref in jakt.facit_lagrum:
-                _lagrum_chip_rad(ref)
+        if _rendera_facitgrind(
+            f"jakt_{modul}_{jakt.id}", "Jag har försökt — visa facit"
+        ):
+            with st.expander("Facit", expanded=True):
+                for ref in jakt.facit_lagrum:
+                    _lagrum_chip_rad(ref)
 
 
 # --- Hjälpare ---------------------------------------------------------------

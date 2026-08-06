@@ -37,6 +37,7 @@ from utils.quiz import (
     ratta_lagrumsjakt,
     registrera_mc_svar,
 )
+from utils.rnts import RNTS_STEG, tranar_etikett
 from utils.scenarier import (
     Case,
     Flervalsfraga,
@@ -56,14 +57,18 @@ from utils.ui import (
     render_case,
     render_lagrum_chip,
     render_rnts_steg,
+    render_tranar,
     render_varning,
 )
 
+# Etiketterna kommer ur utils.rnts.RNTS_STEG så att stegens namn står på exakt
+# ett ställe i projektet. Normfältet bär ett tillägg eftersom formen ("4 § AvtL")
+# är det studenten oftast fastnar på.
 RNTS_FALT = (
-    ("rattsfragan", "Rättsfrågan", "Vilken rättslig fråga ska besvaras?"),
-    ("norm", "Norm (ange lagrum)", "Vilka lagrum är tillämpliga? T.ex. 4 § AvtL"),
-    ("tillampning", "Tillämpning", "Hur tillämpas normen på omständigheterna?"),
-    ("slutsats", "Slutsats", "Vad blir svaret på rättsfrågan?"),
+    ("rattsfragan", RNTS_STEG[0], "Vilken rättslig fråga ska besvaras?"),
+    ("norm", f"{RNTS_STEG[1]} (ange lagrum)", "T.ex. 4 § AvtL eller 2 kap. 1 § SkL"),
+    ("tillampning", RNTS_STEG[2], "Hur tillämpas normen på omständigheterna?"),
+    ("slutsats", RNTS_STEG[3], "Vad blir svaret på rättsfrågan?"),
 )
 
 # Etikett -> nyckel för svårighetsväljaren. Nycklarna ägs av utils.svarighetsgrad.
@@ -152,6 +157,8 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
     tangenttryck i RNTS-fälten, och ett fall som bytts ut mitt i skrivandet
     vore obrukbart.
     """
+    st.html(render_tranar(tranar_etikett("rattsfall")))
+
     if not modul.case:
         st.info("Inga rättsfall i den här modulen ännu.")
         return
@@ -375,6 +382,8 @@ def _rendera_quiz(modul: Modulscenarier) -> None:
         st.info("Inga quizfrågor i den här modulen ännu.")
         return
 
+    st.html(render_tranar(tranar_etikett("quiz")))
+
     ratt, besvarade = modulresultat(modul.modul)
     st.markdown(f"**Resultat:** {ratt} rätt av {besvarade} besvarade.")
     st.divider()
@@ -441,6 +450,8 @@ def _rendera_lagrumsjakt(modul: Modulscenarier) -> None:
     if not modul.lagrumsjakt:
         st.info("Ingen lagrumsjakt i den här modulen ännu.")
         return
+
+    st.html(render_tranar(tranar_etikett("lagrumsjakt")))
 
     st.caption(
         "Skriv vilket lagrum situationen handlar om. Rättningen är deterministisk "

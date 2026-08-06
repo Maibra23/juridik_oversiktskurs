@@ -147,6 +147,11 @@ Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("S
 * Alternativa utfall i slutsatser markeras med prefixet "Alternativt:" i kursiv, aldrig gömda i löptext.
 * Tomma tillstånd: innan studenten skrivit något visar tutorpanelen en kort instruktion om RNTS i stället för en tom yta.
 * Fel och varningar formuleras alltid handlingsorienterat ("Kontrollera paragrafen på lagen.nu") och aldrig skuldbeläggande.
+* Varje övningsaktivitet inleds med en dämpad kapitälrad som säger vilket
+  RNTS-steg den tränar ("TRÄNAR: NORM"). Avbildningen aktivitet -> steg ägs av
+  `utils/rnts.py`, som också är den enda platsen där stegens namn står. Skälet är
+  pedagogiskt: utan etiketten ser studenten fyra separata övningstyper i stället
+  för fyra ingångar till samma förmåga.
 
 ## 6. Ton och mikrocopy
 

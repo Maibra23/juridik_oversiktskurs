@@ -25,6 +25,7 @@ import streamlit as st
 
 from utils.css import CSS_MALL
 from utils.navigation import NAV_TRAD, Modul, Nod
+from utils.rnts import RNTS_STEG
 
 APP_VERSION = "0.1.0"
 APP_UPDATED = "2026-07-08"
@@ -167,12 +168,23 @@ def render_varning(text: str) -> None:
     st.html(f'<div class="jok-varning">{html.escape(text)}</div>')
 
 
+def render_tranar(text: str) -> str:
+    """Kapitälsetikett som säger vilket RNTS-steg en aktivitet tränar.
+
+    Dämpad med avsikt: den ska kunna läsas en gång och sedan ignoreras, inte
+    konkurrera med uppgiften. Se utils.rnts för avbildningen.
+    """
+    return f'<div class="jok-tranar">{html.escape(text)}</div>'
+
+
 # Tutorsvaren kommer som lättviktig markdown från modellen (fetstil, kursiv,
 # ###-rubriker). Utan konvertering skulle studenten se råa asterisker.
 _MD_RUBRIK = re.compile(r"^#{1,4}\s*(.+?)\s*$", re.MULTILINE)
 _MD_FET = re.compile(r"\*\*(.+?)\*\*")
 _MD_KURSIV = re.compile(r"(?<!\*)\*([^*\n]+)\*(?!\*)")
-_RNTS_RUBRIKTITLAR = ("Rättsfrågan", "Norm", "Tillämpning", "Slutsats")
+# Hämtas ur utils.rnts.RNTS_STEG så att stegens namn står på exakt ett ställe
+# i projektet (se den modulens docstring).
+_RNTS_RUBRIKTITLAR = RNTS_STEG
 
 
 def _md_till_html(kropp: str) -> str:

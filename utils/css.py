@@ -272,5 +272,14 @@ CSS_MALL = """
             margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--ram);
             font-size: var(--t-etikett); color: #6B6459; max-width: 46rem;
         }}
+
+        /* Vilket RNTS-steg en aktivitet tränar. Dämpad kapitälrad: informativ
+           en gång, därefter tyst. */
+        .jok-tranar {{
+            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+            font-size: var(--t-etikett); letter-spacing: .1em;
+            text-transform: uppercase; color: #6B6459;
+            margin: var(--s3) 0 var(--s2) 0;
+        }}
         </style>
         """

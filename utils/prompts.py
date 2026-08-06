@@ -26,6 +26,7 @@ from collections.abc import Iterable
 from typing import cast
 
 from utils.lagrum import Lag, lagrum_register
+from utils.rnts import RNTS_STEG
 from utils.svarighetsgrad import STANDARDNIVA
 from utils.svarighetsgrad import instruktion_for as svarighetsinstruktion_for
 from utils.svarighetsgrad import normalisera as normalisera_svarighet
@@ -34,8 +35,10 @@ from utils.svarighetsgrad import normalisera as normalisera_svarighet
 # nedströms tester som en mjuk gräns.
 MAX_SVARSLANGD_ORD = 400
 
-# RNTS-rubrikerna i den ordning tutorn måste använda dem.
-RNTS_RUBRIKER = ("Rättsfrågan", "Norm", "Tillämpning", "Slutsats")
+# RNTS-rubrikerna i den ordning tutorn måste använda dem. Hämtas ur
+# utils.rnts.RNTS_STEG så att stegens namn står på exakt ett ställe i
+# projektet (se den modulens docstring).
+RNTS_RUBRIKER = RNTS_STEG
 
 # Begreppsfördjupningar hålls kortare än fallgranskningar: de kompletterar
 # en text studenten redan har framför sig.

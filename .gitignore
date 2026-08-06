@@ -8,6 +8,10 @@ __pycache__/
 # macOS skräpfiler.
 .DS_Store
 
+# Scratch-arbetsyta för superpowers subagent-driven-development (ledger,
+# review-paket, task briefs). Inte del av projektets historik.
+.superpowers/
+
 # Lokala Claude Code-inställningar (maskinspecifika sökvägar och
 # permission-listor). Delas inte: .claude/settings.json är den gemensamma.
 .claude/settings.local.json

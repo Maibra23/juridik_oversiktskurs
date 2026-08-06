@@ -378,3 +378,43 @@ def test_bygg_alias_karta_kastar_vid_kolliderande_alias():
     }
     with pytest.raises(ValueError, match="dubbel"):
         _bygg_alias_karta(register)
+
+
+# --- Alias: fulla lagnamn och alternativa förkortningar mot riktiga registret
+
+@pytest.mark.parametrize(
+    "text,forkortning",
+    [
+        ("36 § avtalslagen", "AvtL"),
+        ("avtalslagen 36 §", "AvtL"),
+        ("1 kap. 1 § brottsbalken", "BrB"),
+        ("brottsbalken 1 kap. 1 §", "BrB"),
+        ("3 § köplagen", "KöpL"),
+        ("3 kap. 1 § KKL", "KKöpL"),
+        ("10 § PreskrL", "PreskL"),
+    ],
+)
+def test_extrahera_kant_alias_normaliseras_till_forkortning(text, forkortning):
+    (ref,) = extrahera_lagrum(text)
+    assert ref.forkortning == forkortning
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["36 § AVTALSLAGEN", "36 § Avtalslagen", "avtalslagen 36 §"],
+)
+def test_extrahera_alias_skiftlagesokansligt(text):
+    (ref,) = extrahera_lagrum(text)
+    assert ref.forkortning == "AvtL"
+
+
+def test_validera_verifierad_med_fullt_lagnamn():
+    assert validera_lagrum("36 § avtalslagen") == STATUS_VERIFIERAD
+
+
+def test_validera_verifierad_med_alternativ_forkortning():
+    assert validera_lagrum("3 kap. 1 § KKL") == STATUS_VERIFIERAD
+
+
+def test_lagen_nu_url_med_fullt_lagnamn_ar_samma_som_forkortning():
+    assert lagen_nu_url("36 § avtalslagen") == lagen_nu_url("36 § AvtL")

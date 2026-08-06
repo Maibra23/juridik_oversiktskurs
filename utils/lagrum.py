@@ -150,6 +150,17 @@ def _validera_ra_lag(rad: dict) -> Lag:
             )
         )
 
+    ra_aliaser = rad.get("aliaser", [])
+    if not isinstance(ra_aliaser, list):
+        raise ValueError(
+            f"'aliaser' måste vara en lista i {rad['forkortning']}: {ra_aliaser!r}"
+        )
+    for a in ra_aliaser:
+        if not isinstance(a, str) or not re.fullmatch(r"[A-Za-zÅÄÖåäö]+", a):
+            raise ValueError(
+                f"Alias måste vara ett enda ord med bokstäver i {rad['forkortning']}: {a!r}"
+            )
+
     return Lag(
         forkortning=rad["forkortning"],
         namn=rad["namn"],
@@ -157,7 +168,7 @@ def _validera_ra_lag(rad: dict) -> Lag:
         kapitelindelad=bool(rad["kapitelindelad"]),
         lagen_nu_bas_url=rad["lagen_nu_bas_url"],
         kursavsnitt=tuple(avsnitt),
-        aliaser=tuple(rad.get("aliaser", [])),
+        aliaser=tuple(ra_aliaser),
     )
 
 

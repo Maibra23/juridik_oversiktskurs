@@ -332,6 +332,74 @@ def test_validera_ra_lag_alias_falt_default_tomt():
     assert lag.aliaser == ()
 
 
+def test_validera_ra_lag_aliaser_som_strang_kastar():
+    """En sträng itereras tecken för tecken och skulle tyst släppa igenom
+    skräp som "36 § a" som VERIFIERAD. Måste stoppas vid inläsning."""
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "aliaser": "avtalslagen",
+        "kursavsnitt": [],
+    }
+    with pytest.raises(ValueError, match="TestL"):
+        _validera_ra_lag(rad)
+
+
+def test_validera_ra_lag_aliaser_med_icke_strang_element_kastar():
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "aliaser": [123],
+        "kursavsnitt": [],
+    }
+    with pytest.raises(ValueError, match="TestL"):
+        _validera_ra_lag(rad)
+
+
+def test_validera_ra_lag_aliaser_med_flerordsfras_kastar():
+    """Regexerna fångar aldrig mer än ett ord som förkortning, så en
+    flerordsfras i registret är dödvikt som aldrig kan matcha."""
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "aliaser": ["lagen om anställningsskydd"],
+        "kursavsnitt": [],
+    }
+    with pytest.raises(ValueError, match="TestL"):
+        _validera_ra_lag(rad)
+
+
+def test_validera_ra_lag_giltiga_aliaser_ok():
+    from utils.lagrum import _validera_ra_lag
+
+    rad = {
+        "forkortning": "TestL",
+        "namn": "Testlag",
+        "sfs": "2026:1",
+        "kapitelindelad": False,
+        "lagen_nu_bas_url": "https://lagen.nu/2026:1",
+        "aliaser": ["avtalslagen", "AL"],
+        "kursavsnitt": [],
+    }
+    lag = _validera_ra_lag(rad)
+    assert lag.aliaser == ("avtalslagen", "AL")
+
+
 # --- _bygg_alias_karta --------------------------------------------------
 
 def test_bygg_alias_karta_loser_alias_till_forkortning():
@@ -378,6 +446,12 @@ def test_bygg_alias_karta_kastar_vid_kolliderande_alias():
     }
     with pytest.raises(ValueError, match="dubbel"):
         _bygg_alias_karta(register)
+
+
+def test_riktiga_registret_har_kollisionsfria_alias():
+    from utils.lagrum import _bygg_alias_karta, lagrum_register
+
+    _bygg_alias_karta(lagrum_register())  # kastar vid kollision
 
 
 # --- Alias: fulla lagnamn och alternativa förkortningar mot riktiga registret

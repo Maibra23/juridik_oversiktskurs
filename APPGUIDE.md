@@ -335,8 +335,11 @@ förvaltningsrätt, straffrätt, process- och exekutionsrätt) och **civilrätt*
 civilrätten följer spinen förmögenhetsrätt → obligationsrätt / sakrätt. Trädet är
 ojämnt djupt — sex nivåer på civilrättssidan (t.ex. Civilrätt → Förmögenhetsrätt →
 Obligationsrätt → Speciell avtalsrätt → Köp- och konsumenträtt → KöpL), färre på den
-offentliga. 46 noder, 45 kanter, ett strikt träd. Juridisk metod ingår inte i kartan;
-den nås via sidopanelen.
+offentliga. Speciell avtalsrätt rymmer sju avtalstyper (köp- och konsumenträtt, köp
+respektive hyra av fast egendom, arbetsrätt, transportavtal, leasing och
+licensavtal); de tre sistnämnda saknar egna lagrum i kursens register och pekar
+bara ut området. 53 noder, 52 kanter, ett strikt träd. Juridisk metod ingår inte i
+kartan; den nås via sidopanelen.
 
 **Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
 **Strukturnoder fokuserar sin gren** vid klick: grenen och alla dess

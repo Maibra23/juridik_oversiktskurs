@@ -462,6 +462,7 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     rattad_nyckel = _jakt_ratta_nyckel(modul, jakt.id)
     if st.button("Rätta", key=f"jakt_ratta_{modul}_{jakt.id}"):
         st.session_state[rattad_nyckel] = True
+
     # Rättningen renderas utanför knappblocket: den ska överleva att studenten
     # klickar någon annanstans på sidan. Streamlit kör om hela skriptet vid
     # varje interaktion, och det som bara ritas i knappens egen rerun försvinner.
@@ -480,9 +481,9 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
                 st.error("Inte rätt lagrum ännu.")
             if jakt.ledtrad:
                 st.caption(f"Ledtråd: {jakt.ledtrad}")
-    with st.expander("Visa facit"):
-        for ref in jakt.facit_lagrum:
-            _lagrum_chip_rad(ref)
+        with st.expander("Visa facit"):
+            for ref in jakt.facit_lagrum:
+                _lagrum_chip_rad(ref)
 
 
 # --- Hjälpare ---------------------------------------------------------------

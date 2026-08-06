@@ -8,8 +8,11 @@ röktesterna som importerar sidorna i bare mode.
 
 from __future__ import annotations
 
+import re
+
 import pytest
 
+import utils.css
 from utils.ui import (
     RNTS_STATUS_BEHOVER_MER,
     RNTS_STATUS_EJ_PABORJAD,
@@ -325,3 +328,34 @@ def test_avsnittsrubrik_som_skiljer_sig_star_kvar():
     )
     assert "Om allmänna grunder för ansvarsfrihet" in html
     assert "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)" in html
+
+
+# --- Design-tokens: typskala och spacingskala (design_system.md 2.1, 2.2) ------
+
+def _css() -> str:
+    """Plocka ut CSS-mallen ur utils.css utan att köra Streamlit.
+
+    CSS_MALL flyttades ut ur inject_css() till en egen modul (se
+    utils/css.py) för att hålla utils/ui.py under radtaket, så källan läses
+    härifrån i stället för från inject_css.
+    """
+    import inspect
+    return inspect.getsource(utils.css)
+
+
+def test_alla_tokens_ar_deklarerade():
+    css = _css()
+    for token in ("--t-hero", "--t-h2", "--t-h3", "--t-brod", "--t-ui",
+                  "--t-etikett", "--s1", "--s2", "--s3", "--s4", "--s5",
+                  "--s6", "--s7"):
+        assert f"{token}:" in css, f"token {token} saknas i :root"
+
+
+def test_inga_hardkodade_typstorlekar():
+    """font-size ska referera en token, aldrig ett px-tal.
+
+    Tokendeklarationerna i :root skrivs som `--t-hero: 28px`, inte som
+    `font-size:`, så de matchas inte av mönstret och behöver inget undantag.
+    """
+    hardkodade = re.findall(r"font-size:\s*(\d+)px", _css())
+    assert not hardkodade, f"hårdkodade typstorlekar kvar: {sorted(set(hardkodade))}"

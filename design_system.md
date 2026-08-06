@@ -35,6 +35,29 @@ font = "serif"
 * Storlekar: brödtext 17px med radavstånd 1.65 (långläsning), rubriknivåer 28/22/18px, chips och metadata 14px.
 * Maxbredd för löptext: 46rem. Scenariotext får aldrig löpa över hela skärmbredden.
 
+### 2.1 Typskala
+
+Sex steg, en roll var, deklarerade som CSS-variabler i `:root` i CSS-mallen
+`utils/css.py` (injiceras av `inject_css()` i `utils/ui.py`). Inga px-värden
+för `font-size` får förekomma utanför den deklarationen; `tests/test_ui.py`
+vaktar det.
+
+| Token | px | Roll |
+|---|---|---|
+| `--t-hero` | 28 | Sidrubrik, en per sida |
+| `--t-h2` | 22 | Avsnittsrubrik |
+| `--t-h3` | 18 | Kortrubrik |
+| `--t-brod` | 17 | Brödtext, scenarier |
+| `--t-ui` | 15 | Kontroller, kortmetadata |
+| `--t-etikett` | 13 | Kapitäler, chips, metadata |
+
+### 2.2 Spacingskala
+
+4px-bas: `--s1` 4, `--s2` 8, `--s3` 12, `--s4` 16, `--s5` 24, `--s6` 32,
+`--s7` 48. Regeln som gör skalan meningsfull: **avstånd inom en grupp är alltid
+mindre än avstånd mellan grupper.** Närhet är den starkaste grupperingssignal
+som finns, och den bär struktur utan att kräva ramar.
+
 ## 3. Komponentbibliotek (utils/ui.py)
 
 Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur den centrala CSS strängen.

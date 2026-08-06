@@ -199,9 +199,33 @@
       "lagrum": ["1 kap. 1 § JB", "2 kap. 1 § JB", "2 kap. 2 § JB"]
     },
     {
+      "id": "pantratt-i-fastighet",
+      "term": "Panträtt i fast egendom (inteckning)",
+      "omrade_id": "fastighetsratt",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Panträtt i en fastighet uppkommer genom att ägaren söker inteckning i fastigheten och lämnar det pantbrev som utfärdas som säkerhet till en fordringsägare.",
+      "forklaring": "Panträtten är sakrättslig: den gäller mot alla, även en senare köpare av fastigheten, och ger fordringsägaren förmånsrätt till betalning ur fastighetens värde vid utmätning eller konkurs. Ordningen mellan flera panthavare styrs av när inteckningarna söktes, äldre inteckningar går normalt före yngre.",
+      "exempel": "En bank lånar ut pengar mot att låntagaren pantsätter sitt pantbrev i huset. Säljer låntagaren senare huset utan att lösa lånet, kvarstår bankens panträtt i fastigheten oavsett vem som äger den.",
+      "igenkanning": "Leta efter lån mot säkerhet i en fastighet, pantbrev eller inteckning i beskrivningen. Signalord: pantsatte huset, tog ett bolån, pantbrevet, inteckningen.",
+      "lagrum": ["6 kap. 1 § JB"]
+    },
+    {
+      "id": "servitut",
+      "term": "Servitut",
+      "omrade_id": "fastighetsratt",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Ett servitut är en rätt för en fastighet (den härskande) att på ett visst begränsat sätt använda en annan fastighet (den tjänande), t.ex. en väg eller en brunn.",
+      "forklaring": "Servitutet är knutet till fastigheterna, inte till de personer som äger dem för tillfället, och följer alltså med vid ägarbyte. Det skiljer sig från ett personligt nyttjandeavtal, som bara gäller mellan de ursprungliga parterna. Servitut kan bildas genom avtal mellan fastighetsägarna eller genom myndighetsbeslut (officialservitut).",
+      "exempel": "Fastighet A saknar egen utfart till allmän väg och har därför rätt att köra över fastighet B:s mark. Rätten gäller oavsett vem som senare köper A eller B.",
+      "igenkanning": "Leta efter att en fastighet använder en annans mark för väg, brunn eller ledning, och efter att rätten sägs gälla oavsett ägarbyte. Signalord: rätt att använda grannens väg, oavsett vem som äger fastigheten.",
+      "lagrum": ["7 kap. 1 § JB"]
+    },
+    {
       "id": "formkrav-vid-fastighetskop",
       "term": "Formkrav vid fastighetsköp",
-      "omrade_id": "fastighetsratt",
+      "omrade_id": "kop_av_fast_egendom",
       "kapitel": "Kap. 9",
       "modul_sida": "sidor/14_Fastighetsratt.py",
       "definition": "Ett köp av fast egendom måste ske genom en skriftlig köpehandling som anger fastigheten och köpeskillingen, innehåller en överlåtelseförklaring och är underskriven av både säljare och köpare.",
@@ -211,9 +235,22 @@
       "lagrum": ["4 kap. 1 § JB"]
     },
     {
+      "id": "pafoljder-vid-fel-i-fastighet",
+      "term": "Påföljder vid fel i fastighet",
+      "omrade_id": "kop_av_fast_egendom",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Är fastigheten felaktig kan köparen kräva avdrag på köpeskillingen eller, vid ett väsentligt fel, häva köpet. Skadestånd förutsätter att säljaren orsakat felet eller kände till det.",
+      "forklaring": "Till skillnad från köp av lös egendom är avhjälpande (att säljaren reparerar felet) inte en lagstadgad påföljd vid fastighetsköp, eftersom köpet normalt sker i befintligt skick. Köparens rätt till påföljd begränsas alltid av undersökningsplikten: ett fel som köparen borde ha upptäckt kan inte åberopas alls.",
+      "exempel": "Efter tillträdet upptäcks ett dolt rötskadat bjälklag som ingen kunnat se vid en normal besiktning. Köparen kan kräva prisavdrag motsvarande reparationskostnaden.",
+      "igenkanning": "Leta efter att ett fel upptäcks efter tillträdet och efter vad köparen kräver: pengar tillbaka, hävning eller skadestånd. Signalord: efter tillträdet upptäcktes, krävde avdrag på köpeskillingen, ville häva köpet.",
+      "lagrum": ["4 kap. 19 § JB"],
+      "se_aven": ["undersokningsplikt-fastighet"]
+    },
+    {
       "id": "undersokningsplikt-fastighet",
       "term": "Köparens undersökningsplikt vid fastighetsköp",
-      "omrade_id": "fastighetsratt",
+      "omrade_id": "kop_av_fast_egendom",
       "kapitel": "Kap. 9",
       "modul_sida": "sidor/14_Fastighetsratt.py",
       "definition": "Köparen av en fastighet får inte åberopa fel som hen borde ha upptäckt vid en tillräckligt noggrann undersökning av fastigheten.",
@@ -221,7 +258,44 @@
       "exempel": "En köpare ser fuktfläckar på källarväggen men undersöker inte saken närmare. När omfattande fuktskador upptäcks efter tillträdet kan hen inte åberopa dem: fläckarna var en varningssignal som utlöste en utvidgad undersökningsplikt.",
       "igenkanning": "Leta efter besiktning, synliga skador, lukt eller andra varningstecken i beskrivningen av visningen, och efter vad säljaren sagt uttryckligen. Signalord: det luktade instängt, det fanns en fläck, mäklaren nämnde att.",
       "lagrum": ["4 kap. 19 § JB"],
-      "se_aven": ["undersokningsplikt-och-reklamation"]
+      "se_aven": ["pafoljder-vid-fel-i-fastighet"]
+    },
+    {
+      "id": "hyresavtalets-ingaende",
+      "term": "Hyresavtalets ingående",
+      "omrade_id": "hyra_av_fast_egendom",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Hyra är en upplåtelse av hus eller del av hus mot ersättning. Till skillnad från köp av fastighet finns inget formkrav: ett hyresavtal kan ingås muntligen.",
+      "forklaring": "Avsaknaden av formkrav är ett medvetet kontrastpunkt mot fastighetsköpet: hyresförhållanden är många, återkommande och sällan lika ekonomiskt ödesdigra som ett fastighetsköp, så lagstiftaren har inte krävt skriftform. I praktiken avtalas hyresvillkoren ändå oftast skriftligt, men ett muntligt hyresavtal är fullt giltigt och bindande.",
+      "exempel": "En hyresvärd och en hyresgäst kommer muntligen överens om hyra av en lägenhet och hyresgästen flyttar in. Avtalet är giltigt trots att inget skrivits ner, till skillnad från om det varit ett fastighetsköp.",
+      "igenkanning": "Leta efter att någon upplåter en bostad eller lokal mot ersättning, och kontrollera att inget formkrav ställs på avtalet. Signalord: kom överens om att hyra, flyttade in, betalade hyra varje månad.",
+      "skillnaden": "Köp av fastighet kräver skriftlig form (4 kap. JB). Hyra av fastighet är formfritt (12 kap. JB).",
+      "lagrum": ["12 kap. 1 § JB"]
+    },
+    {
+      "id": "hyrestid-och-uppsagningstid",
+      "term": "Hyrestid och uppsägningstid",
+      "omrade_id": "hyra_av_fast_egendom",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Ett hyresavtal gäller antingen på bestämd tid, och upphör då normalt vid hyrestidens slut, eller tills vidare, och måste då sägas upp för att upphöra. Uppsägningstidens längd beror på avtalstypen.",
+      "forklaring": "Bostadshyresgästen har ett längre gående skydd mot kortare uppsägningstider än en lokalhyresgäst, eftersom bostaden är den enskildes hem. Ett avtal på bestämd tid som ingåtts för längre tid än ett år måste ändå sägas upp för att upphöra vid hyrestidens slut.",
+      "exempel": "En bostadshyresgäst med avtal tills vidare vill flytta och säger upp avtalet i god tid innan önskad avflyttning, enligt den uppsägningstid som gäller för bostadshyra.",
+      "igenkanning": "Leta efter att ett hyresförhållande ska upphöra och efter om avtalet gällde bestämd tid eller tills vidare. Signalord: sa upp lägenheten, avtalet löpte ut, ville flytta ut i förtid.",
+      "lagrum": ["12 kap. 7 § JB"]
+    },
+    {
+      "id": "tyst-forlangning-av-hyresavtal",
+      "term": "Tyst förlängning av hyresavtal",
+      "omrade_id": "hyra_av_fast_egendom",
+      "kapitel": "Kap. 9",
+      "modul_sida": "sidor/14_Fastighetsratt.py",
+      "definition": "Ett hyresavtal på bestämd tid som ingen part säger upp i tid förlängs automatiskt, i regel på samma villkor som tidigare, i stället för att bara upphöra.",
+      "forklaring": "Regeln skyddar hyresgästen mot att stå utan bostad eller lokal bara för att ingen part agerat aktivt, och skyddar samtidigt hyresvärden mot att behöva agera aktivt för att behålla en hyresgäst hen vill ha kvar. Den slår alltså igenom parternas passivitet snarare än att kräva ett nytt avtal.",
+      "exempel": "Ett lokalhyresavtal löper ut utan att någon av parterna sagt upp det. Hyresförhållandet fortsätter automatiskt i stället för att lokalen står tom.",
+      "igenkanning": "Leta efter att ett hyresavtal löpt ut utan uppsägning och att hyresförhållandet ändå fortsätter. Signalord: ingen sa upp avtalet, fortsatte att bo kvar, hyresvärden tog emot hyran som vanligt.",
+      "lagrum": ["12 kap. 8 § JB"]
     },
     {
       "id": "culparegeln",

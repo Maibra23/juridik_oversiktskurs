@@ -193,13 +193,13 @@
                     {
                       "id": "hyra_av_fast_egendom",
                       "namn": "Hyra av fast egendom",
-                      "beskrivning": "Hyra av bostad och lokal: besittningsskydd, uppsägning och hyresvillkor. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
-                      "nar": "Frågan gäller ett hyresförhållande för fast egendom — besittningsskydd, uppsägning eller villkoren i hyresavtalet.",
+                      "beskrivning": "Hyra av bostad och lokal: avtalets ingående, hyrestid och uppsägningstid. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
+                      "nar": "Frågan gäller ett hyresförhållande för fast egendom — vad som räknas som hyra, hyrestidens längd eller uppsägning.",
                       "lagar": [
                         {
                           "forkortning": "JB",
-                          "beskrivning": "Jordabalkens 12 kap. (hyreslagen) reglerar hyra av bostad och lokal: besittningsskydd, uppsägning och hyresvillkor.",
-                          "nar": "Frågan rör ett hyresförhållande: besittningsskydd, uppsägning av hyresgäst eller hyresvillkorens giltighet.",
+                          "beskrivning": "Jordabalkens 12 kap. §§ 1–9 reglerar hyresavtalets ingående, hyrestid och uppsägningstid.",
+                          "nar": "Frågan rör ett hyresförhållande: vad som räknas som hyra, hyrestidens bestämmande eller uppsägningstidens längd.",
                           "relaterade": [
                             "AvtL"
                           ]

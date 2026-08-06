@@ -447,6 +447,11 @@ def _rendera_lagrumsjakt(modul: Modulscenarier) -> None:
         st.divider()
 
 
+def _jakt_ratta_nyckel(modul: str, jakt_id: str) -> str:
+    """Sessionsnyckel som minns att studenten har rättat en jaktfråga."""
+    return f"jakt_rattad_{modul}_{jakt_id}"
+
+
 def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     st.markdown(f"**{nr}.** {jakt.situation}")
     svar = st.text_input(
@@ -454,7 +459,13 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
         key=f"jakt_svar_{modul}_{jakt.id}",
         placeholder="T.ex. 4 § AvtL eller 2 kap. 1 § SkL",
     )
+    rattad_nyckel = _jakt_ratta_nyckel(modul, jakt.id)
     if st.button("Rätta", key=f"jakt_ratta_{modul}_{jakt.id}"):
+        st.session_state[rattad_nyckel] = True
+    # Rättningen renderas utanför knappblocket: den ska överleva att studenten
+    # klickar någon annanstans på sidan. Streamlit kör om hela skriptet vid
+    # varje interaktion, och det som bara ritas i knappens egen rerun försvinner.
+    if st.session_state.get(rattad_nyckel):
         res = ratta_lagrumsjakt(jakt, svar)
         if res.korrekt:
             st.success("Rätt lagrum!")
@@ -469,9 +480,9 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
                 st.error("Inte rätt lagrum ännu.")
             if jakt.ledtrad:
                 st.caption(f"Ledtråd: {jakt.ledtrad}")
-        with st.expander("Visa facit"):
-            for ref in jakt.facit_lagrum:
-                _lagrum_chip_rad(ref)
+    with st.expander("Visa facit"):
+        for ref in jakt.facit_lagrum:
+            _lagrum_chip_rad(ref)
 
 
 # --- Hjälpare ---------------------------------------------------------------

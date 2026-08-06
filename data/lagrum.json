@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Lagrumsregister för Juridisk översiktskurs. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Fältet \"verifiera\" markerar avsnitt vars paragrafgränser ännu inte kontrollerats mot författningen. Kontrollen är sedan 2026-08-03 automatiserad: data/lagstruktur/ bär lagarnas egen kapitel- och momentindelning hämtad från Riksdagens öppna data, och utils/kursavsnitt_kontroll.py jämför varje avsnitt mot den vid varje testkörning. Samtliga avsnitt är därför genomgångna och flaggan är nollställd. Sätt den till true igen för ett avsnitt vars gränser du är osäker på. Observera att kontrollen bevisar att gränserna finns i lagen och att rubriken beskriver dem, inte att kursens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av kursansvarig.",
+  "_beskrivning": "Lagrumsregister för Juridisk översiktskurs. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Fältet \"verifiera\" markerar avsnitt vars paragrafgränser ännu inte kontrollerats mot författningen. Kontrollen är sedan 2026-08-03 automatiserad: data/lagstruktur/ bär lagarnas egen kapitel- och momentindelning hämtad från Riksdagens öppna data, och utils/kursavsnitt_kontroll.py jämför varje avsnitt mot den vid varje testkörning. Samtliga avsnitt är därför genomgångna och flaggan är nollställd. Sätt den till true igen för ett avsnitt vars gränser du är osäker på. Observera att kontrollen bevisar att gränserna finns i lagen och att rubriken beskriver dem, inte att kursens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av kursansvarig. Fältet \"aliaser\" listar andra sätt studenter kan skriva lagen på (fullt vardagligt namn, etablerade alternativa förkortningar) och är handförfattat, inte grammatiskt härlett -- se docs/superpowers/specs/2026-08-06-lagrumsjakt-alias-matching-design.md.",
   "url_format": {
     "paragraflag": "https://lagen.nu/SFS#P<paragraf>",
     "kapitelindelad": "https://lagen.nu/SFS#K<kapitel>P<paragraf>",
@@ -13,6 +13,9 @@
       "sfs": "1915:218",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1915:218",
+      "aliaser": [
+        "avtalslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Slutande av avtal (anbud och accept)",
@@ -63,6 +66,9 @@
       "sfs": "1936:81",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1936:81",
+      "aliaser": [
+        "skuldebrevslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Allmänna bestämmelser om skuldebrev",
@@ -97,6 +103,9 @@
       "sfs": "1958:637",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1958:637",
+      "aliaser": [
+        "ärvdabalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Den legala arvsordningen (arvsklasser)",
@@ -146,6 +155,9 @@
       "sfs": "1962:700",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1962:700",
+      "aliaser": [
+        "brottsbalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Brottsbegreppet och brottspåföljder",
@@ -203,6 +215,9 @@
       "sfs": "1970:994",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1970:994",
+      "aliaser": [
+        "jordabalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Fast egendom och dess gränser",
@@ -268,6 +283,9 @@
       "sfs": "1972:207",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1972:207",
+      "aliaser": [
+        "skadeståndslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser",
@@ -333,6 +351,9 @@
       "sfs": "1980:1102",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1980:1102",
+      "aliaser": [
+        "handelsbolagslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser (definitioner)",
@@ -366,6 +387,9 @@
       "sfs": "1981:774",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1981:774",
+      "aliaser": [
+        "utsökningsbalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och exekutionstitlar",
@@ -399,6 +423,9 @@
       "sfs": "1982:80",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1982:80",
+      "aliaser": [
+        "anställningsskyddslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Lagens tillämpningsområde och undantag",
@@ -472,6 +499,9 @@
       "sfs": "1987:672",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1987:672",
+      "aliaser": [
+        "konkurslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och obeståndsbegreppet",
@@ -513,6 +543,9 @@
       "sfs": "1987:230",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1987:230",
+      "aliaser": [
+        "äktenskapsbalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Äktenskapshinder",
@@ -570,6 +603,9 @@
       "sfs": "1990:931",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1990:931",
+      "aliaser": [
+        "köplagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Tillämpningsområde och avtalsfrihet (dispositivitet)",
@@ -635,6 +671,9 @@
       "sfs": "1949:381",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1949:381",
+      "aliaser": [
+        "föräldrabalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Faderskap och föräldraskap",
@@ -684,6 +723,9 @@
       "sfs": "1942:740",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/1942:740",
+      "aliaser": [
+        "rättegångsbalken"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Domstolarnas instansordning och sammansättning",
@@ -749,6 +791,9 @@
       "sfs": "2003:376",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/2003:376",
+      "aliaser": [
+        "sambolagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Vad som avses med sambor",
@@ -790,6 +835,9 @@
       "sfs": "2005:551",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/2005:551",
+      "aliaser": [
+        "aktiebolagslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser (aktiebolag som juridisk person, ansvarsfrihet)",
@@ -847,6 +895,9 @@
       "sfs": "2008:486",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/2008:486",
+      "aliaser": [
+        "marknadsföringslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Lagens syfte och definitioner",
@@ -896,6 +947,10 @@
       "sfs": "2022:260",
       "kapitelindelad": true,
       "lagen_nu_bas_url": "https://lagen.nu/2022:260",
+      "aliaser": [
+        "konsumentköplagen",
+        "KKL"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och tillämpningsområde",
@@ -954,6 +1009,9 @@
       "sfs": "1986:796",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1986:796",
+      "aliaser": [
+        "godtrosförvärvslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Godtrosförvärv av lösöre: överlåtelse från icke-ägare, besittning och god tro",
@@ -987,6 +1045,9 @@
       "sfs": "2017:310",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/2017:310",
+      "aliaser": [
+        "framtidsfullmaktslagen"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Vad en framtidsfullmakt är, vem som får upprätta en och formkraven",
@@ -1012,6 +1073,10 @@
       "sfs": "1981:130",
       "kapitelindelad": false,
       "lagen_nu_bas_url": "https://lagen.nu/1981:130",
+      "aliaser": [
+        "preskriptionslagen",
+        "PreskrL"
+      ],
       "kursavsnitt": [
         {
           "beskrivning": "Preskriptionstid: tio år, men tre år för konsumentfordringar",

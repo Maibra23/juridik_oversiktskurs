@@ -115,10 +115,10 @@ def test_lagkorten_visar_tackningsraden(sida):
 def test_ingen_sidovergripande_aterstallningsknapp(sida):
     """Kartans vy återställs i iframen; sidknappen rörde bara filtren."""
     etiketter = [k.label for k in sida.button]
-    assert "↺ Återställ" not in etiketter
+    assert "Återställ" not in etiketter
 
 
 def test_varje_filterflik_har_sin_egen_rensningsknapp(sida):
     etiketter = [k.label for k in sida.button]
-    assert "↺ Rensa sökningen" in etiketter
-    assert "↺ Rensa filtren" in etiketter
+    assert "Rensa sökningen" in etiketter
+    assert "Rensa filtren" in etiketter

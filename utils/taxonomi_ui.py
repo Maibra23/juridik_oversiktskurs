@@ -180,7 +180,7 @@ def bygg_html(graf: Taxonomigraf, hojd: int = 620) -> str:
           style="position:absolute;top:12px;right:12px;padding:.4rem .7rem;
                  background:#FFFFFF;border:1px solid #E5E0D8;border-radius:8px;
                  color:#2C5F8A;font-family:serif;font-size:14px;cursor:pointer;">
-    ↺ Återställ vyn
+    Återställ vyn
   </button>
 </div>
 <script src="{_VIS_NETWORK_CDN}"></script>

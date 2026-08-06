@@ -72,7 +72,13 @@ Regler:
 * Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att kursens omfattning syns utan att ge trasiga länkar.
 * Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer kursens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång.
 * Paragrafguld (`--guld`) används aldrig i navigeringen. Guld är reserverat för lagrum enligt avsnitt 1.
-* Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag och färgstyrka.
+* Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag
+  och färgstyrka. **Förbudet gäller hela appen**, inte bara navigeringen: inga
+  emoji, inga dekorativa glyfer (tärningar, rundpilar, statusprickar) och inga
+  teckenbaserade ikoner i komponenter. Tillstånd ritas med CSS-form, som
+  RNTS-steppern gör. Enda dokumenterade undantaget är `page_icon` i
+  `streamlit_app.py`: webbläsarflikens identitet är inte appkrom, och där gör en
+  ikon något ett ord inte kan. `tests/test_sprak.py` vaktar regeln.
 
 ## 4.2 Rättskartan: appens orienteringssida
 

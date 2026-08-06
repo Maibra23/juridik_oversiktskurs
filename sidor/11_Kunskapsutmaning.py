@@ -52,7 +52,7 @@ moduler = list(visningsnamn)
 
 st.html(section_heading("VÄLJ", "Vad vill du öva på?"))
 
-kol_val, kol_slump = st.columns([3, 1])
+kol_val, kol_slump = st.columns([3, 1], vertical_alignment="bottom")
 with kol_val:
     vald_stem = st.selectbox(
         "Rättsområde",
@@ -61,8 +61,7 @@ with kol_val:
         key="utmaning_val",
     )
 with kol_slump:
-    st.caption("&nbsp;", unsafe_allow_html=True)
-    overraska = st.button("🎲 Överraska mig", use_container_width=True)
+    overraska = st.button("Överraska mig", use_container_width=True)
 
 # Svårigheten väljs alltid av studenten. Överraska mig slumpar bara modulen,
 # inte nivån: studenten behåller kontrollen över hur svårt fallet blir.

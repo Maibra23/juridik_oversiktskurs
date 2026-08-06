@@ -151,7 +151,7 @@ with flik_falltyp:
 
     # Rensar bara den här flikens sökruta. Kartans vy återställs i grafen,
     # med knappen i dess övre högra hörn.
-    if st.button("↺ Rensa sökningen", help="Töm sökrutan ovan."):
+    if st.button("Rensa sökningen", help="Töm sökrutan ovan."):
         st.session_state.pop("falltyp_sok", None)
         st.rerun()
 
@@ -300,7 +300,7 @@ with flik_begrepp:
             help="Begränsa till ett delområde.",
         )
 
-    if st.button("↺ Rensa filtren", help="Töm sökrutan och områdesfiltret."):
+    if st.button("Rensa filtren", help="Töm sökrutan och områdesfiltret."):
         for _nyckel in ("begrepp_sok", "begrepp_omrade"):
             st.session_state.pop(_nyckel, None)
         st.rerun()

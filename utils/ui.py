@@ -146,9 +146,27 @@ def inject_css() -> None:
             font-size: 11px; line-height: 1; flex: 0 0 auto;
             border: 2px solid var(--ram); background: var(--panel); color: transparent;
         }}
-        .jok-rnts .steg.pagar .ikon {{ border-color: var(--bla); background: var(--bla); color: #fff; }}
-        .jok-rnts .steg.godkand .ikon {{ border-color: var(--gron); background: var(--gron); color: #fff; }}
-        .jok-rnts .steg.behover-mer .ikon {{ border-color: var(--varn-mork); background: var(--varn-bg); color: var(--varn-mork); }}
+        .jok-rnts .steg.pagar .ikon {{
+            border-color: var(--bla); background: var(--bla);
+        }}
+        .jok-rnts .steg.godkand .ikon {{
+            border-color: var(--gron); background: var(--gron);
+        }}
+        /* Bocken ritas som två kanter roterade 45 grader, inte som en teckenglyf (U+2713). */
+        .jok-rnts .steg.godkand .ikon::after {{
+            content: ""; display: block; width: .3rem; height: .55rem;
+            margin: .12rem auto 0 auto; transform: rotate(45deg);
+            border-right: 2px solid #fff; border-bottom: 2px solid #fff;
+        }}
+        .jok-rnts .steg.behover-mer .ikon {{
+            border-color: var(--varn-mork); background: var(--varn-bg);
+        }}
+        /* Utropstecknet som stapel och punkt, av samma skäl som bocken. */
+        .jok-rnts .steg.behover-mer .ikon::after {{
+            content: ""; display: block; width: 2px; height: .45rem;
+            margin: .2rem auto 0 auto; background: var(--varn-mork);
+            box-shadow: 0 .18rem 0 0 var(--varn-mork);
+        }}
         .jok-status {{ font-size: 14px; line-height: 1.5; }}
         .jok-status .rad {{ display: flex; justify-content: space-between; }}
         .jok-status .prick {{ font-weight: 600; }}
@@ -323,12 +341,15 @@ RNTS_STATUS_PAGAR = "pagar"               # blå: under arbete
 RNTS_STATUS_GODKAND = "godkand"           # grön bock
 RNTS_STATUS_BEHOVER_MER = "behover-mer"   # gul: behöver mer
 
-_RNTS_IKONER = {
-    RNTS_STATUS_EJ_PABORJAD: "",
-    RNTS_STATUS_PAGAR: "●",
-    RNTS_STATUS_GODKAND: "✓",
-    RNTS_STATUS_BEHOVER_MER: "!",
-}
+# Tillstånden ritas med CSS (fyllning, ram, en ren bockform), inte med
+# teckenglyfer: ikonförbudet i design_system.md 4.1 gäller hela appen. Klassen
+# på .steg styr utseendet; ikonelementet är avsiktligt tomt.
+_RNTS_TILLSTAND = (
+    RNTS_STATUS_EJ_PABORJAD,
+    RNTS_STATUS_PAGAR,
+    RNTS_STATUS_GODKAND,
+    RNTS_STATUS_BEHOVER_MER,
+)
 
 
 def render_rnts_steg(steg: tuple[tuple[str, str], ...]) -> str:
@@ -339,13 +360,13 @@ def render_rnts_steg(steg: tuple[tuple[str, str], ...]) -> str:
     """
     rader = []
     for etikett, status in steg:
-        if status not in _RNTS_IKONER:
+        if status not in _RNTS_TILLSTAND:
             raise ValueError(
                 f"Okänd RNTS-status {status!r} för steget {etikett!r}. "
-                f"Tillåtna: {sorted(_RNTS_IKONER)}"
+                f"Tillåtna: {sorted(_RNTS_TILLSTAND)}"
             )
         rader.append(
-            f'<div class="steg {status}"><span class="ikon">{_RNTS_IKONER[status]}</span>'
+            f'<div class="steg {status}"><span class="ikon"></span>'
             f"<span>{html.escape(etikett)}</span></div>"
         )
     return f'<div class="jok-rnts">{"".join(rader)}</div>'
@@ -676,7 +697,7 @@ def render_statuspanel() -> None:
     from utils.llm_budget import get_daily_calls_remaining, get_daily_cap
 
     tillganglig = is_llm_available()
-    prick = "🟢 Tillgänglig" if tillganglig else "⚪ Ej konfigurerad"
+    prick = "Tillgänglig" if tillganglig else "Ej konfigurerad"
     modell = get_active_model().split("/")[-1]
     sess = get_session_calls_remaining()
     dag = get_daily_calls_remaining()

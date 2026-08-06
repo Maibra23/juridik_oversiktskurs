@@ -129,7 +129,8 @@ def lagrumsnot(ref: str) -> str:
         kropp.append(f"[Öppna på lagen.nu]({url})")
     else:
         kropp.append(
-            f"⚠️ Kunde inte verifieras mot kursens lagrumsregister (status {status}). "
+            f"Ej verifierad: kunde inte verifieras mot kursens lagrumsregister "
+            f"(status {status}). "
             "Kontrollera lagrummet själv innan du litar på det."
         )
     kropp += ["", "---", "", DISCLAIMER, ""]

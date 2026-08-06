@@ -298,7 +298,7 @@ tiden och därför är som störst precis när det riskerar att förloras.
 
 ### Steg för steg
 
-1. Välj rättsområde i rullistan, eller tryck **🎲 Överraska mig**.
+1. Välj rättsområde i rullistan, eller tryck **Överraska mig**.
 2. Tryck **Generera nytt rättsfall**.
 3. Appen anropar LLM, **verifierar varje lagrum i facit mot registret**, och
    visar fallet först därefter.
@@ -347,7 +347,7 @@ undernivåer centreras och behåller full skärpa, kedjan upp till roten markera
 med fetare guldkant så att systematiken syns, och allt annat tonas ned till 15 %
 opacitet. Roten "Svensk rätt" omfattar allt och återställer därför i stället.
 
-Vyn återställs på tre sätt: knappen **↺ Återställ vyn** i grafens övre högra
+Vyn återställs på tre sätt: knappen **Återställ vyn** i grafens övre högra
 hörn, tangenten **Esc**, eller klick på tom yta. Ingen av dem laddar om sidan —
 grafen ligger i en iframe och sköter sin egen vy. **Utzoomningen har ett golv**
 på 90 % av den skala där hela trädet får plats, så kartan kan inte krympas till
@@ -356,7 +356,7 @@ nod fylla hela rutan.
 
 Under grafen ligger områdesträdet som hopfällbara expandrar med brödsmula och
 ett kort per lag. Sök- och områdesfiltren rensas numera **i den flik som äger
-dem** ("↺ Rensa sökningen" i Falltypsguide, "↺ Rensa filtren" i Nyckelbegrepp).
+dem** ("Rensa sökningen" i Falltypsguide, "Rensa filtren" i Nyckelbegrepp).
 Tidigare låg en gemensam knapp ovanför flikraden; på fliken Systemet såg den ut
 att inte göra någonting, eftersom den bara rörde de två andra flikarnas filter.
 

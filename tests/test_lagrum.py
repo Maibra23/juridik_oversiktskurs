@@ -330,3 +330,51 @@ def test_validera_ra_lag_alias_falt_default_tomt():
     }
     lag = _validera_ra_lag(rad)
     assert lag.aliaser == ()
+
+
+# --- _bygg_alias_karta --------------------------------------------------
+
+def test_bygg_alias_karta_loser_alias_till_forkortning():
+    from utils.lagrum import Lag, _bygg_alias_karta
+
+    register = {
+        "AvtL": Lag(
+            forkortning="AvtL",
+            namn="Testnamn",
+            sfs="1915:218",
+            kapitelindelad=False,
+            lagen_nu_bas_url="https://lagen.nu/1915:218",
+            kursavsnitt=(),
+            aliaser=("avtalslagen",),
+        ),
+    }
+    karta = _bygg_alias_karta(register)
+    assert karta["avtalslagen"] == "AvtL"
+    assert karta["avtl"] == "AvtL"
+
+
+def test_bygg_alias_karta_kastar_vid_kolliderande_alias():
+    from utils.lagrum import Lag, _bygg_alias_karta
+
+    register = {
+        "AvtL": Lag(
+            forkortning="AvtL",
+            namn="Testnamn A",
+            sfs="1915:218",
+            kapitelindelad=False,
+            lagen_nu_bas_url="https://lagen.nu/1915:218",
+            kursavsnitt=(),
+            aliaser=("dubbel",),
+        ),
+        "SkL": Lag(
+            forkortning="SkL",
+            namn="Testnamn B",
+            sfs="1972:207",
+            kapitelindelad=True,
+            lagen_nu_bas_url="https://lagen.nu/1972:207",
+            kursavsnitt=(),
+            aliaser=("dubbel",),
+        ),
+    }
+    with pytest.raises(ValueError, match="dubbel"):
+        _bygg_alias_karta(register)

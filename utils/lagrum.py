@@ -186,10 +186,31 @@ def giltiga_forkortningar() -> frozenset[str]:
     return frozenset(lagrum_register().keys())
 
 
+def _bygg_alias_karta(register: dict[str, Lag]) -> dict[str, str]:
+    """Bygg en gemena-till-kanonisk-karta ur ett register.
+
+    Nyckel är förkortningen eller ett alias i gemener, värdet lagens
+    kanoniska förkortning. Kastar ValueError om två lagar delar samma
+    sökord (skiftlägesokänsligt) i stället för att tyst låta
+    registrets iterationsordning avgöra vilken lag som "vinner".
+    """
+    karta: dict[str, str] = {}
+    for lag in register.values():
+        for ord_ in (lag.forkortning, *lag.aliaser):
+            nyckel = ord_.lower()
+            if nyckel in karta and karta[nyckel] != lag.forkortning:
+                raise ValueError(
+                    f"Alias '{ord_}' är tvetydigt: pekar på både "
+                    f"'{karta[nyckel]}' och '{lag.forkortning}'."
+                )
+            karta[nyckel] = lag.forkortning
+    return karta
+
+
 @lru_cache(maxsize=1)
 def _forkortning_gemener_karta() -> dict[str, str]:
-    """Karta från gemener till registrets kanoniska skiftläge, t.ex. 'skl' -> 'SkL'."""
-    return {forkortning.lower(): forkortning for forkortning in giltiga_forkortningar()}
+    """Karta från gemener (förkortning eller alias) till kanonisk förkortning."""
+    return _bygg_alias_karta(lagrum_register())
 
 
 def _normalisera_forkortning(rå: str) -> str:

@@ -20,48 +20,54 @@ kan testas utan Streamlit-runtime.
 
 - **Inga nya beroenden.** `requirements.txt` ändras inte. Enbart Streamlit.
 - **Inga ikoner, emoji eller dekorativa glyfer** någonstans i appen. Enda
-  dokumenterade undantag: `page_icon="⚖️"` i `streamlit_app.py` (webbläsarflikens
-  identitet). Nivåer och tillstånd bärs av indrag, storlek, färgstyrka och CSS-form.
-- **Guld (`--guld`, `#B8860B`) betyder alltid lagrum**, aldrig något annat. Aldrig i
-  navigering.
+dokumenterade undantag: `page_icon="⚖️"` i `streamlit_app.py` (webbläsarflikens
+identitet). Nivåer och tillstånd bärs av indrag, storlek, färgstyrka och CSS-form.
+- **Guld (**`--guld`**,** `#B8860B`**) betyder alltid lagrum**, aldrig något annat. Aldrig i
+navigering.
 - **All användarsynlig text på svenska**, du-tilltal, inga utropstecken i
-  bedömningar. Fel formuleras handlingsorienterat, aldrig skuldbeläggande.
+bedömningar. Fel formuleras handlingsorienterat, aldrig skuldbeläggande.
 - **Maxbredd 46rem** för löptext. Brödtext 17px/1.65.
 - **Deterministiskt först:** ingen ändring får göra en LLM nödvändig för något som
-  i dag fungerar utan den.
+i dag fungerar utan den.
 - **Filstorlek:** håll filer under 800 rader. `utils/ui.py` är i dag 768 rader —
-  växer den över 800 i en task, bryt ut den CSS-strängen enligt Task 5.
+växer den över 800 i en task, bryt ut den CSS-strängen enligt Task 5.
 - **Testkommando:** `python3 -m pytest -q`. Hela sviten (798 test vid start) ska
-  vara grön före varje commit.
+vara grön före varje commit.
 - **Lintkommando:** `python3 -m ruff check .` enligt `ruff.toml`.
 - **Committa efter varje grön task**, meddelandeformat `<type>: <beskrivning>` på
-  svenska (feat, fix, refactor, docs, test, chore).
+svenska (feat, fix, refactor, docs, test, chore).
+
+
 
 ## Filstruktur
 
-| Fil | Ansvar | Tasks |
-|---|---|---|
-| `utils/navigation.py` | Navigeringsträd + kursordning + startsidans CTA-mål. Ren data. | 1 |
-| `utils/framsteg.py` (ny) | Ren funktion: vilka moduler är påbörjade? Läser böckerna, inte session_state. | 1, 8 |
-| `utils/ui.py` | Delade komponenter, CSS-tokens, sidopanel, statuspanel. | 4, 5, 6, 7, 10 |
-| `utils/rnts.py` (ny) | RNTS-stegens namn och vilken aktivitet som tränar vilket steg. | 9 |
-| `utils/modulvy.py` | Modulsidans tre flikar, facitgrindar, TRÄNAR-etiketter, ingress. | 2, 3, 9, 10 |
-| `sidor/0_Hem.py` | Startsidans CTA, framsteg, tomt tillstånd. | 1, 8 |
-| `sidor/11_Kunskapsutmaning.py` | Glyf bort, justeringshack bort. | 4 |
-| `sidor/16_Rattskartan.py` | Glyfer bort i två Rensa-knappar. | 4 |
-| `tests/test_sprak.py` | Språk-QA. Utökas med glyfvakt och `sidor/`. | 4 |
-| `tests/test_navigation.py` | Kursordning, nästa modul, CTA-mål. | 1 |
-| `tests/test_framsteg.py` (ny) | Påbörjade moduler. | 1 |
-| `tests/test_rnts.py` (ny) | RNTS-etiketter per aktivitet. | 9 |
-| `tests/test_ui.py` | Tokens, statuspanel, aktiv rubrikkedja. | 5, 6, 7 |
-| `tests/test_modulvy.py` (ny) | Facitgrindar. | 2, 3 |
-| `design_system.md` | Uppdateras i den task som ändrar en dokumenterad regel. | 4, 5, 6, 9 |
+
+| Fil                            | Ansvar                                                                        | Tasks          |
+| ------------------------------ | ----------------------------------------------------------------------------- | -------------- |
+| `utils/navigation.py`          | Navigeringsträd + kursordning + startsidans CTA-mål. Ren data.                | 1              |
+| `utils/framsteg.py` (ny)       | Ren funktion: vilka moduler är påbörjade? Läser böckerna, inte session_state. | 1, 8           |
+| `utils/ui.py`                  | Delade komponenter, CSS-tokens, sidopanel, statuspanel.                       | 4, 5, 6, 7, 10 |
+| `utils/rnts.py` (ny)           | RNTS-stegens namn och vilken aktivitet som tränar vilket steg.                | 9              |
+| `utils/modulvy.py`             | Modulsidans tre flikar, facitgrindar, TRÄNAR-etiketter, ingress.              | 2, 3, 9, 10    |
+| `sidor/0_Hem.py`               | Startsidans CTA, framsteg, tomt tillstånd.                                    | 1, 8           |
+| `sidor/11_Kunskapsutmaning.py` | Glyf bort, justeringshack bort.                                               | 4              |
+| `sidor/16_Rattskartan.py`      | Glyfer bort i två Rensa-knappar.                                              | 4              |
+| `tests/test_sprak.py`          | Språk-QA. Utökas med glyfvakt och `sidor/`.                                   | 4              |
+| `tests/test_navigation.py`     | Kursordning, nästa modul, CTA-mål.                                            | 1              |
+| `tests/test_framsteg.py` (ny)  | Påbörjade moduler.                                                            | 1              |
+| `tests/test_rnts.py` (ny)      | RNTS-etiketter per aktivitet.                                                 | 9              |
+| `tests/test_ui.py`             | Tokens, statuspanel, aktiv rubrikkedja.                                       | 5, 6, 7        |
+| `tests/test_modulvy.py` (ny)   | Facitgrindar.                                                                 | 2, 3           |
+| `design_system.md`             | Uppdateras i den task som ändrar en dokumenterad regel.                       | 4, 5, 6, 9     |
+
 
 **Ordning.** Task 1 och 4 först (de bär mest värde och minst risk). Task 5 före 6
 och 7, eftersom de senare använder tokens. Task 9 sist av de funktionella, eftersom
 den rör flest anropsställen.
 
 ---
+
+
 
 ## Task 1: Kursordning och ett sant nästa steg
 
@@ -72,6 +78,7 @@ Associationsrätt skickas dit för alltid. Kursordningen finns redan i `NAV_TRAD
 används aldrig.
 
 **Files:**
+
 - Modify: `utils/navigation.py` (dataklassen `Modul` rad 26–40, `cta_mal` rad 227–240)
 - Create: `utils/framsteg.py`
 - Create: `tests/test_framsteg.py`
@@ -79,14 +86,15 @@ används aldrig.
 - Modify: `sidor/0_Hem.py` (`_render_cta` rad 72–92)
 
 **Interfaces:**
+
 - Produces: `Modul.kursmodul: bool` (default `False`); `kursmoduler() -> tuple[Modul, ...]`;
-  `nasta_kursmodul(pabborjade: frozenset[str]) -> Modul | None`;
-  `cta_mal(senast_besokt: str | None, pabborjade: frozenset[str] = frozenset()) -> CtaMal`
-  där `CtaMal` får det nya fältet `skal: str`;
-  `utils.framsteg.pabborjade_moduler() -> frozenset[str]`.
+`nasta_kursmodul(pabborjade: frozenset[str]) -> Modul | None`;
+`cta_mal(senast_besokt: str | None, pabborjade: frozenset[str] = frozenset()) -> CtaMal`
+där `CtaMal` får det nya fältet `skal: str`;
+`utils.framsteg.pabborjade_moduler() -> frozenset[str]`.
 - Consumes: `utils.quiz.alla_resultat() -> dict[str, tuple[int, int]]` och
-  `utils.export.genomforda_case() -> dict[str, tuple[str, ...]]`. Båda är nycklade på
-  modulens **visningsnamn** ("Avtalsrätt"), identiskt med `byggda_namn()`.
+`utils.export.genomforda_case() -> dict[str, tuple[str, ...]]`. Båda är nycklade på
+modulens **visningsnamn** ("Avtalsrätt"), identiskt med `byggda_namn()`.
 
 - [ ] **Step 1: Skriv det failande testet för kursmoduler och ordning**
 
@@ -299,6 +307,8 @@ def pabborjade_moduler() -> frozenset[str]:
 
 - [ ] **Step 8: Kör testet och se att det passerar**
 
+
+
 Run: `python3 -m pytest tests/test_framsteg.py -q`
 Expected: PASS (5 test)
 
@@ -481,6 +491,8 @@ git commit -m "feat: startsidans nästa steg följer kursordningen i stället f�
 
 ---
 
+
+
 ## Task 2: Facitexpandern i lagrumsjakten försvinner (verklig bugg)
 
 Spec: avsnitt 5 "Lagrumsjakten", avsnitt 9 punkt 3.
@@ -491,13 +503,15 @@ trycktes och försvinner vid nästa interaktion — studenten tappar facit genom
 klicka någon annanstans på sidan.
 
 **Files:**
+
 - Modify: `utils/modulvy.py` (`_rendera_jaktfraga` rad 450–474)
 - Create: `tests/test_modulvy.py`
 
 **Interfaces:**
+
 - Consumes: `utils.scenarier.Lagrumsjakt`, `utils.quiz.ratta_lagrumsjakt`.
 - Produces: `_jakt_ratta_nyckel(modul: str, jakt_id: str) -> str` — sessionsnyckeln
-  som minns att studenten har rättat. Task 3 använder samma mönster.
+som minns att studenten har rättat. Task 3 använder samma mönster.
 
 - [ ] **Step 1: Skriv det failande testet**
 
@@ -603,6 +617,8 @@ git commit -m "fix: lagrumsjaktens facit försvinner inte längre vid nästa rer
 
 ---
 
+
+
 ## Task 3: Facit bakom ett försök
 
 Spec: avsnitt 7.4, avsnitt 9 punkt 9.
@@ -612,14 +628,16 @@ innan studenten skrivit något. Generationseffekten är appens hela premiss och 
 kringgås gratis. Grinden ska vara en avsiktsbekräftelse, inte ett lås.
 
 **Files:**
+
 - Modify: `utils/modulvy.py` (`rendera_case_ovning` rad 264–265, `_rendera_jaktfraga`)
 - Modify: `tests/test_modulvy.py`
 
 **Interfaces:**
+
 - Consumes: `_jakt_ratta_nyckel` från Task 2, `RNTS_FALT`.
 - Produces: `facit_upplast(nyckel: str, session_state: Mapping[str, object]) -> bool`
-  — ren funktion som avgör om facit får visas; och
-  `_rendera_facitgrind(nyckel: str, rubrik: str = ...) -> bool` som ritar knappen.
+— ren funktion som avgör om facit får visas; och
+`_rendera_facitgrind(nyckel: str, rubrik: str = ...) -> bool` som ritar knappen.
 
 - [ ] **Step 1: Skriv det failande testet**
 
@@ -734,6 +752,8 @@ git commit -m "feat: facit visas efter ett eget försök i stället för före"
 
 ---
 
+
+
 ## Task 4: Fäll ikonläckorna och sätt en vakt
 
 Spec: avsnitt 6 "Ikoner", avsnitt 9 punkt 4, ändring av `design_system.md` §4.1.
@@ -746,9 +766,10 @@ finns — appens sidor ligger i `sidor/` och är därför **helt ogranskade** av
 språk-QA:n i dag.
 
 **Files:**
+
 - Modify: `tests/test_sprak.py` (`_GRANSKADE_KATALOGER`, ny glyfvakt)
 - Modify: `utils/ui.py` (`_RNTS_IKONER` rad 326–331, CSS för `.jok-rnts .ikon`,
-  `render_statuspanel` rad 679)
+`render_statuspanel` rad 679)
 - Modify: `utils/obsidian.py` (rad 132)
 - Modify: `sidor/11_Kunskapsutmaning.py` (rad 62–65)
 - Modify: `sidor/16_Rattskartan.py` (rad 154, rad 303)
@@ -756,8 +777,9 @@ språk-QA:n i dag.
 - Modify: `design_system.md` (§4.1)
 
 **Interfaces:**
+
 - Produces: inget nytt publikt API. `_RNTS_IKONER` ersätts av CSS-klasser, så
-  `render_rnts_steg` behåller sin signatur `tuple[tuple[str, str], ...] -> str`.
+`render_rnts_steg` behåller sin signatur `tuple[tuple[str, str], ...] -> str`.
 
 - [ ] **Step 1: Utöka språkvakten till sidor/ och lägg till glyfvakten**
 
@@ -949,6 +971,8 @@ knapp som faktiskt finns.
 
 - [ ] **Step 7: Uppdatera design_system.md §4.1**
 
+
+
 Ersätt regelraden om ikoner:
 
 ```markdown
@@ -981,6 +1005,8 @@ tärning, två rundpilar och stepperns teckenikoner, som nu ritas med CSS."
 
 ---
 
+
+
 ## Task 5: Typ- och spacingtokens
 
 Spec: avsnitt 6 "Typografi" och "Spacing", avsnitt 9 punkt 5, nya §2.1 och §2.2.
@@ -990,13 +1016,15 @@ storlekar: 14, 12, 11px). Marginalerna är handsatta i tretton olika rem-värden
 avstånden signalerar ingen gruppering.
 
 **Files:**
+
 - Modify: `utils/ui.py` (`inject_css`, `:root`-blocket rad 50–55)
 - Modify: `tests/test_ui.py`
 - Modify: `design_system.md` (nya §2.1 och §2.2)
 
 **Interfaces:**
+
 - Produces: CSS-variablerna `--t-hero`, `--t-h2`, `--t-h3`, `--t-brod`, `--t-ui`,
-  `--t-etikett`, `--s1`…`--s7` i `:root`. Ingen Python-signatur ändras.
+`--t-etikett`, `--s1`…`--s7` i `:root`. Ingen Python-signatur ändras.
 
 - [ ] **Step 1: Skriv det failande testet**
 
@@ -1068,21 +1096,23 @@ I `inject_css()`, utöka `:root`:
 Gå igenom CSS-strängen och ersätt varje `font-size: Npx` med närmaste token.
 Avbildningen är:
 
-| Var | Från | Till |
-|---|---|---|
-| `.jok-hero h1` | 28px | `var(--t-hero)` |
-| `.jok-section h2` | 22px | `var(--t-h2)` |
-| `.jok-begrepp h3` | 19px | `var(--t-h3)` |
-| `.jok-kort h3`, `.jok-case h3` | 18px | `var(--t-h3)` |
-| `.jok-hero p`, `.jok-case p`, `.jok-summary` | 17px | `var(--t-brod)` |
-| `.jok-tutortext`, `.jok-begrepp .falt p` | 16px | `var(--t-brod)` |
-| `.jok-lagkort h4` | 16px | `var(--t-h3)` |
-| `.jok-varning`, `.jok-info`, `.jok-lagkort p`, `.jok-begrepp .skillnad` | 15px | `var(--t-ui)` |
+
+| Var                                                                                                                                                                                                                | Från | Till               |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------------------ |
+| `.jok-hero h1`                                                                                                                                                                                                     | 28px | `var(--t-hero)`    |
+| `.jok-section h2`                                                                                                                                                                                                  | 22px | `var(--t-h2)`      |
+| `.jok-begrepp h3`                                                                                                                                                                                                  | 19px | `var(--t-h3)`      |
+| `.jok-kort h3`, `.jok-case h3`                                                                                                                                                                                     | 18px | `var(--t-h3)`      |
+| `.jok-hero p`, `.jok-case p`, `.jok-summary`                                                                                                                                                                       | 17px | `var(--t-brod)`    |
+| `.jok-tutortext`, `.jok-begrepp .falt p`                                                                                                                                                                           | 16px | `var(--t-brod)`    |
+| `.jok-lagkort h4`                                                                                                                                                                                                  | 16px | `var(--t-h3)`      |
+| `.jok-varning`, `.jok-info`, `.jok-lagkort p`, `.jok-begrepp .skillnad`                                                                                                                                            | 15px | `var(--t-ui)`      |
 | `.jok-hero .eyebrow`, `.jok-section .eyebrow`, `.jok-chip`, `.jok-pipeline span`, `.jok-status`, `.jok-legend`, `.jok-rnts .steg`, `.jok-lagkort .nar`, `.jok-lagkort .avsnittsrad`, `.jok-begrepp .falt .etikett` | 14px | `var(--t-etikett)` |
-| `.jok-nav-kategori`, `.jok-nav-gren`, `.jok-lagkort .sfs`, `.jok-begrepp .kapitel`, `.jok-lagkort .avsnittsnot` | 12px | `var(--t-etikett)` |
-| `.jok-nav-under`, `.jok-nav-kommer`, `.jok-case .meta`, `.jok-footer`, `.jok-lagkort .kapitelrad` | 13px | `var(--t-etikett)` |
-| `.jok-lagkort .avsnittsrubrik` | 11px | `var(--t-etikett)` |
-| `.jok-rnts .ikon` | 11px | `var(--t-etikett)` |
+| `.jok-nav-kategori`, `.jok-nav-gren`, `.jok-lagkort .sfs`, `.jok-begrepp .kapitel`, `.jok-lagkort .avsnittsnot`                                                                                                    | 12px | `var(--t-etikett)` |
+| `.jok-nav-under`, `.jok-nav-kommer`, `.jok-case .meta`, `.jok-footer`, `.jok-lagkort .kapitelrad`                                                                                                                  | 13px | `var(--t-etikett)` |
+| `.jok-lagkort .avsnittsrubrik`                                                                                                                                                                                     | 11px | `var(--t-etikett)` |
+| `.jok-rnts .ikon`                                                                                                                                                                                                  | 11px | `var(--t-etikett)` |
+
 
 Notera att `.jok-begrepp h3` går från 19 till 18px och `.jok-lagkort h4` från 16
 till 18px — det är avsiktligt: skalan har sex steg, inte nio.
@@ -1134,6 +1164,8 @@ git commit -m "refactor: typ- och spacingskala som CSS-tokens"
 
 ---
 
+
+
 ## Task 6: Statuspanelen till en rad, modellväljaren ut
 
 Spec: avsnitt 4 "Statuspanel", avsnitt 9 punkt 7.
@@ -1143,14 +1175,15 @@ som navigeringen. "Anrop kvar i sessionen 40/40" betyder ingenting för en publi
 besökare. Modellväljaren 8B/14B är utvecklaryta i en publik app.
 
 **Files:**
+
 - Modify: `utils/ui.py` (`render_statuspanel` rad 668–691, `_render_model_selector`
-  rad 694–712, `render_sidebar` rad 754–768)
+rad 694–712, `render_sidebar` rad 754–768)
 - Modify: `tests/test_ui.py`
 - Modify: `design_system.md` (§4, punkten om sidopanelen)
 
 **Interfaces:**
-- Produces: `statusrad(tillganglig: bool, sess: int, sess_tak: int, dag: int,
-  dag_tak: int) -> tuple[str, bool]` — ren funktion som ger (text, ska_expanderas).
+
+- Produces: `statusrad(tillganglig: bool, sess: int, sess_tak: int, dag: int, dag_tak: int) -> tuple[str, bool]` — ren funktion som ger (text, ska_expanderas).
 - `render_statuspanel()` behåller sin signatur (inga argument, returnerar None).
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -1315,6 +1348,8 @@ git commit -m "refactor: statuspanelen till en rad, modellväljaren ut ur sidopa
 
 ---
 
+
+
 ## Task 7: Aktiv rubrikkedja i sidopanelen
 
 Spec: avsnitt 4 "Aktiv sida i sammanhang", avsnitt 9 punkt 8.
@@ -1325,13 +1360,15 @@ redan — `streamlit_app.py:63` lägger `_jok_aktiv_sida` i session_state och in
 läser det.
 
 **Files:**
+
 - Modify: `utils/navigation.py` (ny ren funktion)
 - Modify: `utils/ui.py` (`_render_nod`, `render_sidopanel`, CSS)
 - Modify: `tests/test_navigation.py`
 
 **Interfaces:**
+
 - Produces: `rubrikkedja(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[str, ...]`
-  — namnen på alla grupper som innehåller modulen, från yttersta till innersta.
+— namnen på alla grupper som innehåller modulen, från yttersta till innersta.
 - Consumes: `st.session_state["_jok_aktiv_sida"]` (satt av `streamlit_app.py`).
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -1473,6 +1510,8 @@ git commit -m "feat: sidopanelen visar var i trädet den öppna sidan ligger"
 
 ---
 
+
+
 ## Task 8: Startsidans tomma tillstånd och sessionens flyktighet
 
 Spec: avsnitt 3 punkt 5, avsnitt 9 punkterna 6 och 10, ny §7 i `design_system.md`.
@@ -1484,12 +1523,14 @@ sida vars uppgift är *börja här*. Och att framstegen försvinner när fliken 
 sägs bara indirekt, i en rubrik.
 
 **Files:**
+
 - Modify: `sidor/0_Hem.py` (`_render_framsteg` rad 95–147, `render_landing` rad 36–69)
 - Modify: `design_system.md` (ny §7)
 
 **Interfaces:**
+
 - Consumes: `utils.framsteg.pabborjade_moduler` (Task 1), `alla_resultat`,
-  `genomforda_case`, `bygg_valv`, `hamta_case_analyser`.
+`genomforda_case`, `bygg_valv`, `hamta_case_analyser`.
 
 - [ ] **Step 1: Dämpa friskrivningen i render_landing**
 
@@ -1641,6 +1682,7 @@ from utils.ui import footer_note, hero, section_heading
 - [ ] **Step 5: Verifiera sidan headless**
 
 Run:
+
 ```bash
 python3 -c "
 from streamlit.testing.v1 import AppTest
@@ -1652,6 +1694,7 @@ print('nedladdningar:', len(at.get('download_button')))
 assert len(knappar) == 1, f'tomt tillstånd ska ha exakt en knapp, har {knappar}'
 "
 ```
+
 Expected: exakt en knapp (CTA:n), noll nedladdningsknappar.
 
 Ser du `KeyError: 'url_pathname'` beror det på att session_state sattes före
@@ -1693,6 +1736,8 @@ git commit -m "feat: startsidan säger att framstegen är sessionsbundna och tys
 
 ---
 
+
+
 ## Task 9: TRÄNAR-etiketter gör RNTS synligt
 
 Spec: avsnitt 7.1, avsnitt 9 punkt 2.
@@ -1702,6 +1747,7 @@ fyra. Ingen av dem säger det, så studenten samlar övningar utan att se att de
 bygger samma förmåga.
 
 **Files:**
+
 - Create: `utils/rnts.py`
 - Create: `tests/test_rnts.py`
 - Modify: `utils/modulvy.py` (`RNTS_FALT` rad 61–66, de tre flikfunktionerna)
@@ -1709,12 +1755,13 @@ bygger samma förmåga.
 - Modify: `design_system.md` (§5)
 
 **Interfaces:**
+
 - Produces: `utils.rnts.RNTS_STEG: tuple[str, ...]`;
-  `utils.rnts.AKTIVITETSSTEG: dict[str, tuple[str, ...]]`;
-  `utils.rnts.tranar_etikett(aktivitet: str) -> str`;
-  `utils.ui.render_tranar(text: str) -> str`.
+`utils.rnts.AKTIVITETSSTEG: dict[str, tuple[str, ...]]`;
+`utils.rnts.tranar_etikett(aktivitet: str) -> str`;
+`utils.ui.render_tranar(text: str) -> str`.
 - Consumes: `RNTS_FALT` i `utils/modulvy.py` behåller sina fyra etiketter, men
-  hämtar stegnamnen från `utils.rnts.RNTS_STEG` så att de bara står på ett ställe.
+hämtar stegnamnen från `utils.rnts.RNTS_STEG` så att de bara står på ett ställe.
 
 - [ ] **Step 1: Skriv det failande testet**
 
@@ -1923,6 +1970,8 @@ git commit -m "feat: varje aktivitet visar vilket RNTS-steg den tränar"
 
 ---
 
+
+
 ## Task 10: Död kod och modulingressen
 
 Spec: avsnitt 5 "Kort och behållare", avsnitt 9 punkterna 11 och 12.
@@ -1934,6 +1983,7 @@ ger samma mening på alla tolv modulsidor — en mening som är sann för alla m
 bär ingen information om någon.
 
 **Files:**
+
 - Modify: `utils/ui.py` (`summary_box` rad 296–298, `render_kort` rad 301–307, docstring)
 - Modify: `tests/test_ui.py` (ta bort testen för borttagen kod)
 - Modify: `utils/scenarier.py` (`Modulscenarier`, `ladda_modul`)
@@ -1941,8 +1991,9 @@ bär ingen information om någon.
 - Modify: `tests/test_scenarier.py`
 
 **Interfaces:**
+
 - Produces: `Modulscenarier.ingress: str = ""` (nytt, valfritt fält);
-  `_ingress(modul: Modulscenarier) -> str`.
+`_ingress(modul: Modulscenarier) -> str`.
 - Removes: `utils.ui.render_kort`, `utils.ui.summary_box`.
 
 - [ ] **Step 1: Ta bort den döda koden**
@@ -2138,6 +2189,7 @@ Expected: PASS
 - [ ] **Step 10: Verifiera modulsidan headless**
 
 Run:
+
 ```bash
 python3 -c "
 from streamlit.testing.v1 import AppTest
@@ -2146,6 +2198,7 @@ assert not at.exception, at.exception
 print('flikar:', len(at.tabs))
 "
 ```
+
 Expected: inget undantag.
 
 - [ ] **Step 11: Commit**
@@ -2156,7 +2209,11 @@ git add utils/ui.py utils/scenarier.py utils/modulvy.py tests/test_ui.py \
 git commit -m "refactor: ta bort död kod och ge modulingressen en egen datakälla"
 ```
 
+
+
 ---
+
+
 
 ## Slutkontroll
 
@@ -2166,6 +2223,7 @@ git commit -m "refactor: ta bort död kod och ge modulingressen en egen datakäl
 python3 -m pytest -q
 python3 -m ruff check .
 ```
+
 Expected: allt grönt, antalet test ≥ 798 + de nya.
 
 - [ ] **Step 2: Manuell genomgång i appen**
@@ -2175,17 +2233,18 @@ python3 -m streamlit run streamlit_app.py
 ```
 
 Kontrollera i ordning:
+
 1. Startsidan i ny session: exakt **en** knapp, ingen nedladdning, friskrivningen
-   som caption, skälet under NÄSTA STEG.
+  som caption, skälet under NÄSTA STEG.
 2. Klicka CTA:n → hamnar i Juridisk metod. Sidopanelen: START OCH METOD i
-   bläckvikt.
+  bläckvikt.
 3. Öppna Avtalsrätt. Varje flik har en TRÄNAR-rad. Sidopanelen: CIVILRÄTT,
-   Förmögenhetsrätt och Kontraktsrätt i bläckvikt.
+  Förmögenhetsrätt och Kontraktsrätt i bläckvikt.
 4. Lagrumsjakt: skriv fel lagrum, tryck Rätta, klicka sedan i en annan flik och
-   tillbaka — rättningen ska fortfarande vara kvar.
+  tillbaka — rättningen ska fortfarande vara kvar.
 5. Facit kräver ett klick på "Jag har försökt".
 6. Fyll i alla fyra RNTS-fält → gå till Hem: framstegsraden visar tal, och raden
-   om att sessionen är flyktig står där, med Obsidianvalvet under.
+  om att sessionen är flyktig står där, med Obsidianvalvet under.
 7. Inga emoji eller glyfer någonstans i UI:t.
 8. Sidopanelen: en statusrad, ingen modellväljare.
 
@@ -2204,21 +2263,23 @@ git commit -m "docs: etapp 1 av UX-omdesignen genomförd"
 
 ---
 
+
+
 ## Kvarstår till senare etapper
 
 Ur specens avsnitt 9, **inte** i den här planen:
 
-* **Etapp 2 (hög effekt / medelinsats), punkt 13–22:** RNTS-panelen på startsidan,
-  sidopanelen i tre plan, sammanslagningen Kunskapstest + Kunskapskarta →
-  *Framsteg och samband*, flikrampen, `render_quizfraga`, en enda
-  aviseringsuppsättning, vågrät stepper med sanna statusar, kortsystemet,
-  framstegsmarkering per modul, ett-steg-i-taget-läge.
-* **Etapp 3 (hög effekt / stor insats), punkt 23–26:** författade worked examples
-  per modul, onboarding för anonym förstagångsbesökare, falltypsguiden som ingång.
-  Punkt 24 (framstegsmodell per RNTS-steg) bör **inte** byggas som en
-  kvalitetsmodell — se invändning 11.1 i specen.
-* **Framtida idéer:** bokmärkbar framstegslänk via `st.query_params`
-  (invändning 11.7 — potentiellt den mest värdefulla åtgärden i hela specen),
-  tillgänglighetsgenomgång med riktiga hjälpmedel, tidsuppskattning per modul.
+- **Etapp 2 (hög effekt / medelinsats), punkt 13–22:** RNTS-panelen på startsidan,
+sidopanelen i tre plan, sammanslagningen Kunskapstest + Kunskapskarta →
+*Framsteg och samband*, flikrampen, `render_quizfraga`, en enda
+aviseringsuppsättning, vågrät stepper med sanna statusar, kortsystemet,
+framstegsmarkering per modul, ett-steg-i-taget-läge.
+- **Etapp 3 (hög effekt / stor insats), punkt 23–26:** författade worked examples
+per modul, onboarding för anonym förstagångsbesökare, falltypsguiden som ingång.
+Punkt 24 (framstegsmodell per RNTS-steg) bör **inte** byggas som en
+kvalitetsmodell — se invändning 11.1 i specen.
+- **Framtida idéer:** bokmärkbar framstegslänk via `st.query_params`
+(invändning 11.7 — potentiellt den mest värdefulla åtgärden i hela specen),
+tillgänglighetsgenomgång med riktiga hjälpmedel, tidsuppskattning per modul.
 
 Varje etapp får sin egen plan enligt samma mönster.

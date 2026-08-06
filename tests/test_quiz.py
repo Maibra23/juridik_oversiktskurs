@@ -94,6 +94,21 @@ def test_lagrumsjakt_tomt_svar():
     assert res.status == STATUS_EJ_VALIDERBAR
 
 
+def test_lagrumsjakt_accepterar_gemener_forkortning():
+    # Studenten kan lagrummet men skriver förkortningen i fel skiftläge.
+    jakt = Lagrumsjakt(id="lj6", situation="?", facit_lagrum=("4 § AvtL",))
+    res = ratta_lagrumsjakt(jakt, "jag tror det är 4 § avtl.")
+    assert res.korrekt is True
+    assert res.status == STATUS_VERIFIERAD
+
+
+def test_lagrumsjakt_accepterar_versal_forkortning():
+    jakt = Lagrumsjakt(id="lj7", situation="?", facit_lagrum=("2 kap. 1 § SkL",))
+    res = ratta_lagrumsjakt(jakt, "2 kap. 1 § SKL")
+    assert res.korrekt is True
+    assert res.status == STATUS_VERIFIERAD
+
+
 def test_lagrumsjakt_flera_facit_delvis():
     jakt = Lagrumsjakt(id="lj5", situation="?", facit_lagrum=("10 § AvtL", "11 § AvtL"))
     res = ratta_lagrumsjakt(jakt, "10 § AvtL")

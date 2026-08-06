@@ -129,6 +129,39 @@ def test_extrahera_blandad_ordning_i_samma_text():
     assert [r.paragraf for r in refs] == ["1", "36"]
 
 
+# --- Skiftlägesokänslig förkortning ------------------------------------------
+
+def test_extrahera_gemener_normaliseras_till_kanoniskt_skiftlage():
+    (ref,) = extrahera_lagrum("36 § avtl")
+    assert ref.forkortning == "AvtL"
+
+
+def test_extrahera_versaler_normaliseras_till_kanoniskt_skiftlage():
+    (ref,) = extrahera_lagrum("3 kap. 1 § SKL")
+    assert ref.forkortning == "SkL"
+
+
+def test_extrahera_omvand_gemener_normaliseras():
+    (ref,) = extrahera_lagrum("skl 3 kap. 1 §")
+    assert ref.forkortning == "SkL"
+
+
+def test_validera_gement_okant_ord_ar_ej_validerbart():
+    # "xyz" är gement och motsvarar ingen registrerad lag i något skiftläge,
+    # så det tolkas inte alls som ett lagrum (samma som "Pizzalagen" hade
+    # gjort om ordet varit versalinlett hade det däremot gett OKAND_LAG,
+    # se test_verify_lagrum_markerar_pahittad_lag).
+    assert validera_lagrum("5 § xyz") == STATUS_EJ_VALIDERBAR
+
+
+@pytest.mark.parametrize(
+    "text",
+    ["36 § avtl", "36 § AVTL", "36 § AvTl", "avtl 36 §", "AVTL 36 §"],
+)
+def test_validera_verifierad_oavsett_skiftlage(text):
+    assert validera_lagrum(text) == STATUS_VERIFIERAD
+
+
 def test_validera_omvand_verifierad():
     assert validera_lagrum("AvtL 36 §") == STATUS_VERIFIERAD
 

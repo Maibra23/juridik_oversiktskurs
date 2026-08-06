@@ -86,24 +86,25 @@ class Lagrumstraff:
 
 # Fångar svenska lagrumshänvisningar:
 #   "36 § AvtL", "3 kap. 1 § SkL", "7 kap 1 § ÄktB", "28 till 30 §§ AvtL"
-# Förkortningen måste börja på versal och bestå av bokstäver (t.ex. AvtL,
-# SkL, ÄktB, ÄB, KKöpL). Verifiering av att den finns i registret sker
-# separat i validera_lagrum.
+# Förkortningen består av bokstäver i valfritt skiftläge (t.ex. AvtL, avtl,
+# AVTL) och normaliseras till registrets kanoniska skiftläge i
+# _ref_fran_match. Verifiering av att den finns i registret sker separat i
+# validera_lagrum.
 LAGRUM_PATTERN = re.compile(
     r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
     r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
     r"§{1,2}\s*"
-    r"(?P<forkortning>[A-ZÅÄÖ][A-Za-zÅÄÖåäö]+)"
+    r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)"
 )
 
 # Omvänd ordning där modellen skriver förkortningen först, t.ex.
 # "AvtL 36 §", "AvtL 28–30 §§", "SkL 3 kap. 1 §". Denna form är tvetydig
-# (vilket versalinlett ord som helst kan föregå ett paragrafnummer), så
-# träffar accepteras endast om förkortningen finns i registret. Se
-# extrahera_lagrum för den filtreringen.
+# (vilket ord som helst kan föregå ett paragrafnummer), så träffar
+# accepteras endast om förkortningen finns i registret (skiftlägesokänsligt).
+# Se extrahera_lagrum för den filtreringen.
 LAGRUM_PATTERN_OMVAND = re.compile(
-    r"(?P<forkortning>[A-ZÅÄÖ][A-Za-zÅÄÖåäö]+)\s+"
+    r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)\s+"
     r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
     r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
@@ -183,12 +184,29 @@ def giltiga_forkortningar() -> frozenset[str]:
     return frozenset(lagrum_register().keys())
 
 
+@lru_cache(maxsize=1)
+def _forkortning_gemener_karta() -> dict[str, str]:
+    """Karta från gemener till registrets kanoniska skiftläge, t.ex. 'skl' -> 'SkL'."""
+    return {forkortning.lower(): forkortning for forkortning in giltiga_forkortningar()}
+
+
+def _normalisera_forkortning(rå: str) -> str:
+    """Normalisera en tolkad förkortning till registrets skiftläge.
+
+    Studenter skriver ibland förkortningen i fel skiftläge ("skl", "AVTL").
+    Finns en skiftlägesokänslig träff i registret används dess kanoniska
+    form; annars returneras texten oförändrad så att genuint okända lagar
+    fortfarande flaggas OKAND_LAG i stället för att tyst passera.
+    """
+    return _forkortning_gemener_karta().get(rå.lower(), rå)
+
+
 # --- Extrahering ------------------------------------------------------------
 
 def _ref_fran_match(m: re.Match[str]) -> Lagrumsref:
     """Bygg en Lagrumsref ur en regexträff (samma grupper i båda mönstren)."""
     return Lagrumsref(
-        forkortning=m.group("forkortning"),
+        forkortning=_normalisera_forkortning(m.group("forkortning")),
         paragraf=m.group("paragraf"),
         kapitel=m.group("kapitel"),
         paragraf_till=m.group("paragraf_till"),
@@ -199,25 +217,36 @@ def _ref_fran_match(m: re.Match[str]) -> Lagrumsref:
 def extrahera_lagrum(text: str) -> tuple[Lagrumsref, ...]:
     """Parsa alla lagrumshänvisningar ur en text till kanonisk form.
 
-    Fångar både kanonisk ordning ("36 § AvtL") och omvänd ordning där
-    förkortningen står först ("AvtL 36 §"). Kanoniska träffar har företräde:
-    en omvänd träff hoppas över om den överlappar en kanonisk, och accepteras
-    bara om förkortningen finns i registret (skydd mot falska positiva som
-    "Bestämmelsen 5 §").
+    Fångar både kanonisk ordning ("36 § AvtL", "36 § avtl") och omvänd
+    ordning där förkortningen står först ("AvtL 36 §"). En kandidat
+    accepteras om förkortningen antingen finns i registret (oavsett
+    skiftläge, t.ex. "avtl"/"AVTL"/"AvtL") eller är versalinledd — det
+    senare bevarar hallucinationsskyddet för påhittade lagnamn ("Pizzalagen")
+    utan att öppna för att ett vanligt gement ord efter "§" ("är", "reglerar")
+    tolkas som en förkortning.
+
+    Kanoniska träffar har företräde: en omvänd träff hoppas över om den
+    överlappar en kanonisk.
     """
     if not text:
         return ()
+
+    kanda_gemener = _forkortning_gemener_karta()
+
+    def _godtagen(forkortning: str) -> bool:
+        return forkortning.lower() in kanda_gemener or forkortning[:1].isupper()
 
     traffar: list[tuple[int, Lagrumsref]] = []
     upptagna: list[tuple[int, int]] = []
 
     for m in LAGRUM_PATTERN.finditer(text):
+        if not _godtagen(m.group("forkortning")):
+            continue
         traffar.append((m.start(), _ref_fran_match(m)))
         upptagna.append((m.start(), m.end()))
 
-    kanda = giltiga_forkortningar()
     for m in LAGRUM_PATTERN_OMVAND.finditer(text):
-        if m.group("forkortning") not in kanda:
+        if m.group("forkortning").lower() not in kanda_gemener:
             continue
         start, slut = m.start(), m.end()
         if any(start < o_slut and o_start < slut for o_start, o_slut in upptagna):

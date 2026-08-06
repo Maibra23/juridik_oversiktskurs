@@ -42,6 +42,12 @@
   };
   const network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
 
+  // Grafen ritas på en canvas och har därför ingen DOM att klicka på utifrån.
+  // Instansen exponeras för att vyn ska gå att verifiera i webbläsaren (se
+  // docs/superpowers/plans/2026-08-05-rattskartan-interaktion.md, Task 8).
+  // Appen läser aldrig själv den här variabeln.
+  window.jokTaxonomigraf = network;
+
   // Knappen är dold i markupen och visas först här, så att den aldrig lovar
   // interaktivitet i fallbacken där vis-network saknas.
   const aterstallKnapp = document.getElementById("jok-aterstall-vy");

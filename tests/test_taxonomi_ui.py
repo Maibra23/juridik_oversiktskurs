@@ -243,3 +243,12 @@ def test_overlayknappen_ar_dold_tills_vis_laddat(html):
     """I CDN-fallbacken får ingen knapp stå kvar och lova interaktivitet."""
     knapp_start = html.index("jok-aterstall-vy")
     assert "hidden" in html[knapp_start : knapp_start + 200]
+
+
+def test_grafinstansen_exponeras_for_verifiering(html):
+    """Grafen ritas på canvas och har ingen DOM att klicka på utifrån.
+
+    Utan den här kroken går vyn inte att verifiera i webbläsaren, och
+    checklistan i planens Task 8 kan inte köras om.
+    """
+    assert "window.jokTaxonomigraf = network;" in html

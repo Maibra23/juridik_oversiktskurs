@@ -339,9 +339,23 @@ offentliga. 46 noder, 45 kanter, ett strikt träd. Juridisk metod ingår inte i 
 den nås via sidopanelen.
 
 **Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
-Strukturnoder saknar länk och är avsiktligt inerta. Under grafen ligger
-områdesträdet som hopfällbara expandrar med brödsmula och ett kort per lag.
-Överst finns en **återställningsknapp** som tömmer sök- och områdesfiltren.
+**Strukturnoder fokuserar sin gren** vid klick: grenen och alla dess
+undernivåer centreras och behåller full skärpa, kedjan upp till roten markeras
+med fetare guldkant så att systematiken syns, och allt annat tonas ned till 15 %
+opacitet. Roten "Svensk rätt" omfattar allt och återställer därför i stället.
+
+Vyn återställs på tre sätt: knappen **↺ Återställ vyn** i grafens övre högra
+hörn, tangenten **Esc**, eller klick på tom yta. Ingen av dem laddar om sidan —
+grafen ligger i en iframe och sköter sin egen vy. **Utzoomningen har ett golv**
+på 90 % av den skala där hela trädet får plats, så kartan kan inte krympas till
+en oläslig prick. Fokuseringen har ett motsvarande tak, annars skulle en ensam
+nod fylla hela rutan.
+
+Under grafen ligger områdesträdet som hopfällbara expandrar med brödsmula och
+ett kort per lag. Sök- och områdesfiltren rensas numera **i den flik som äger
+dem** ("↺ Rensa sökningen" i Falltypsguide, "↺ Rensa filtren" i Nyckelbegrepp).
+Tidigare låg en gemensam knapp ovanför flikraden; på fliken Systemet såg den ut
+att inte göra någonting, eftersom den bara rörde de två andra flikarnas filter.
 
 Varje lagkort visar lagens **kursavsnitt**: vilka paragrafintervall kursen
 omfattar, med lagens egen rubrik för varje avsnitt och en djuplänk till
@@ -356,7 +370,15 @@ Kapitlen visas i lagens egen ordning, inte i registrets redaktionella. En
 avsnittsrubrik som bara upprepar kapitelrubriken utelämnas; då räcker spannet.
 
 Går grafbiblioteket inte att ladda (kräver internet) visas ett meddelande om
-det, och områdesträdet fungerar ändå.
+det, och områdesträdet fungerar ändå. Återställningsknappen visas då inte alls:
+den ritas dold och tas fram först när vis-network har laddat, så att den aldrig
+lovar en interaktivitet som inte finns.
+
+Grafens JavaScript ligger i `utils/static/` och bäddas in i iframen av
+`utils/taxonomi_ui.py`. Skiktberäkningen (vad som hör till grenen, kedjan
+respektive bakgrunden) är DOM-fri och ligger i `taxonomigraf_logik.js`, som
+testas med `node --test tests/js/`. DOM-lagret testas inte i CI: CI kör offline
+och grafen hämtar vis-network från CDN.
 
 ### Flik 2 — Falltypsguide
 

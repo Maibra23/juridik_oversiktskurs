@@ -1,7 +1,12 @@
 # Rättskartans grafinteraktion: fokus, zoomgolv och återställning
 
 **Datum:** 2026-08-05
-**Status:** Godkänd design, ej påbörjad.
+**Status:** Genomförd 2026-08-05 (commit 4d2e57a–HEAD). Samtliga komponenter finns
+och hela checklistan är verifierad i webbläsaren. Två avvikelser mot designen:
+grafinstansen exponeras som `window.jokTaxonomigraf` (grafen ritas på en canvas
+och har ingen DOM att klicka på utifrån, så vyn gick annars inte att verifiera),
+och skiktlogiken laddas i testet med `new Function` i stället för `node:vm` —
+en vm-sandlåda är ett eget realm vars arrayer `deepStrictEqual` underkänner.
 **Omfång:** Taxonomigrafen på Rättskartans flik "Systemet" och sidans
 återställningsknapp. Rör inte grafens data, färgsättning eller de tre flikarnas
 övriga innehåll.
@@ -195,12 +200,17 @@ JS-beteendet verifieras i stället manuellt mot appen som körs, enligt denna li
 5. `↺ Återställ vyn` och `Escape` → båda återställer, sidan laddas inte om.
 6. Ladda vis-network-CDN:en avstängd → fallbacktexten visas, ingen JS-krasch.
 
-## Känd risk att undersöka
+## Känd risk att undersöka — avskriven 2026-08-05
 
-Streamlit kan tänkas montera om iframen vid varje omkörning av skriptet. Skriver
-studenten i Falltypsguidens sökruta körs sidan om, och om iframen då byggs på nytt
-nollställs fokus och zoom. Det undersöks under implementationen och rapporteras;
-det åtgärdas inte inom detta omfång.
+Farhågan var att Streamlit monterar om iframen vid varje omkörning, så att fokus
+och zoom nollställs när studenten skriver i en annan fliks sökruta.
+
+**Den inträffar inte.** Uppmätt: en markör sattes på `window` inuti iframen, en
+gren fokuserades, sökrutan i Falltypsguide fylldes i och kördes (omkörningen
+bekräftad genom att värdet slog igenom), och därefter lästes grafen om. Markören
+hade samma värde och fokusläget var oförändrat (skala 1,0 och 24 nedtonade noder
+före och efter). Streamlit återanvänder alltså iframen när HTML:en är oförändrad.
+Ingen åtgärd behövs.
 
 ## Utanför omfånget
 

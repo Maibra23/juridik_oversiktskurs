@@ -1,7 +1,12 @@
-"""Startsida: hero-block, modulkarta, arbetsgång och framsteg.
+"""Startsida: hero-block, en enda call-to-action, framsteg och arbetsgång.
 
 Registreras som standardsida i sidregistret i streamlit_app.py. CSS och
 sidopanel injiceras centralt av ingångspunkten, inte här.
+
+Modullistan visas inte här: sidopanelen (utils.navigation.NAV_TRAD) är
+appens enda navigering. Startsidan gör i stället det sidopanelen inte kan
+— visa var du är i kursen och ge dig ett enda tydligt nästa steg — så att
+de två aldrig konkurrerar om att vara "kartan över kursen".
 
 Ingen affärslogik: all LLM-, lagrums- och scenariologik ligger i utils/.
 """
@@ -15,113 +20,17 @@ from utils.export import (
     bygg_markdown_rapport,
     genomforda_case,
 )
+from utils.navigation import SENAST_BESOKT_NYCKEL, cta_mal
 from utils.obsidian import bygg_valv, hamta_case_analyser
 from utils.quiz import alla_resultat
 from utils.texter import antal_med_enhet
 from utils.ui import (
     footer_note,
     hero,
-    module_map,
     pipeline_steps,
     render_info,
     section_heading,
 )
-
-# Paretourvalet: tolv P0-moduler (PRD avsnitt 5.1) och sidfilerna de länkar
-# till. Ordningen speglar bokens kapitelföljd.
-MODULER = [
-    {
-        "roll": "Grund",
-        "titel": "Juridisk metod",
-        "tag": "Kap. 1",
-        "beskrivning": "Rättskälleläran, lagtolkning och RNTS-strukturen.",
-        "sida": "sidor/1_Juridisk_metod.py",
-    },
-    {
-        "roll": "Person",
-        "titel": "Personrätt",
-        "tag": "Kap. 5",
-        "beskrivning": "Rättskapacitet, underårigas avtal och framtidsfullmakt.",
-        "sida": "sidor/12_Personratt.py",
-    },
-    {
-        "roll": "Egendom",
-        "titel": "Allmän förmögenhetsrätt",
-        "tag": "Kap. 6",
-        "beskrivning": "Äganderättens övergång, godtrosförvärv och lösningsrätt.",
-        "sida": "sidor/13_Allman_formogenhetsratt.py",
-    },
-    {
-        "roll": "Avtal",
-        "titel": "Avtalsrätt",
-        "tag": "Kap. 7",
-        "beskrivning": "Anbud och accept, fullmakt, ogiltighet och 36 § AvtL.",
-        "sida": "sidor/2_Avtalsratt.py",
-    },
-    {
-        "roll": "Köp",
-        "titel": "Köp- och konsumenträtt",
-        "tag": "Kap. 8",
-        "beskrivning": "KöpL mot KKöpL, dröjsmål, fel och påföljder.",
-        "sida": "sidor/3_Kop_och_konsumentratt.py",
-    },
-    {
-        "roll": "Fastighet",
-        "titel": "Fastighetsrätt",
-        "tag": "Kap. 9",
-        "beskrivning": "Tillbehör, formkrav vid köp och undersökningsplikt.",
-        "sida": "sidor/14_Fastighetsratt.py",
-    },
-    {
-        "roll": "Skadestånd",
-        "titel": "Skadeståndsrätt",
-        "tag": "Kap. 10",
-        "beskrivning": "Culparegeln, adekvat kausalitet och principalansvar.",
-        "sida": "sidor/4_Skadestandsratt.py",
-    },
-    {
-        "roll": "Arbete",
-        "titel": "Arbetsrätt",
-        "tag": "Kap. 11",
-        "beskrivning": "Anställningsformer, uppsägning mot avsked och diskriminering.",
-        "sida": "sidor/5_Arbetsratt.py",
-    },
-    {
-        "roll": "Bolag",
-        "titel": "Associationsrätt",
-        "tag": "Kap. 12",
-        "beskrivning": "Bolagsformerna och personligt ansvar i olika bolag.",
-        "sida": "sidor/6_Associationsratt.py",
-    },
-    {
-        "roll": "Fordringar",
-        "titel": "Fordringsrätt",
-        "tag": "Kap. 15-17",
-        "beskrivning": "Löpande mot enkla skuldebrev, preskription och obestånd.",
-        "sida": "sidor/15_Fordringsratt.py",
-    },
-    {
-        "roll": "Familj & arv",
-        "titel": "Familje- och successionsrätt",
-        "tag": "Kap. 18–21",
-        "beskrivning": "Bodelning, arvsordning, laglott och testamente.",
-        "sida": "sidor/7_Familje_och_arvsratt.py",
-    },
-    {
-        "roll": "Straff & process",
-        "titel": "Straff- och processrätt",
-        "tag": "Kap. 22",
-        "beskrivning": "Brottsbegreppet, uppsåt mot oaktsamhet och ansvarsfrihet.",
-        "sida": "sidor/8_Straff_och_processratt.py",
-    },
-    {
-        "roll": "Pröva",
-        "titel": "Kunskapstest",
-        "tag": "Alla moduler",
-        "beskrivning": "Samlad resultatöversikt över dina quiz per modul.",
-        "sida": "sidor/9_Kunskapstest.py",
-    },
-]
 
 
 def render_landing() -> None:
@@ -142,14 +51,8 @@ def render_landing() -> None:
         "Ett studieverktyg, inte juridisk rådgivning. Mata inte in personuppgifter."
     )
 
-    st.html(section_heading("MODULER", "Tolv moduler där juridisk metod ger mest"))
-    st.html(module_map(MODULER))
-
-    # Riktiga navigeringslänkar under kartan (modulkorten är inte klickbara).
-    cols = st.columns(4)
-    for i, modul in enumerate(MODULER):
-        with cols[i % 4]:
-            st.page_link(modul["sida"], label=f'{modul["titel"]} →')
+    _render_cta()
+    _render_framsteg()
 
     st.html(section_heading("ARBETSGÅNG", "Så arbetar du i varje modul"))
     st.html(
@@ -163,9 +66,30 @@ def render_landing() -> None:
         )
     )
 
-    _render_framsteg()
-
     st.html(footer_note())
+
+
+def _render_cta() -> None:
+    """Startsidans enda call-to-action: fortsätt eller kom igång.
+
+    Modulerna nås i övrigt uteslutande via sidopanelen: en andra länklista
+    här skulle bara upprepa den, i en annan ordning, med olika omfattning.
+    """
+    try:
+        senast = st.session_state.get(SENAST_BESOKT_NYCKEL)
+    except Exception:
+        senast = None
+    mal = cta_mal(senast)
+
+    st.html(
+        section_heading(
+            "NÄSTA STEG",
+            "Fortsätt där du var" if mal.ateruppta else "Kom igång",
+        )
+    )
+    prefix = "Fortsätt" if mal.ateruppta else "Börja med"
+    if st.button(f"{prefix}: {mal.titel} →", type="primary"):
+        st.switch_page(mal.sida)
 
 
 def _render_framsteg() -> None:

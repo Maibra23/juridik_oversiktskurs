@@ -6,8 +6,8 @@ Ansvarar för allt visuellt som delas mellan sidorna:
 - render_sidebar / render_sidopanel / render_statuspanel: navigeringsträdet
   ur utils.navigation, modellväljare och räknare för återstående LLM-anrop
   (session + dagsbudget)
-- hero, section_heading, summary_box, module_map, pipeline_steps,
-  footer_note: HTML-byggstenar för landnings- och modulsidor
+- hero, section_heading, summary_box, pipeline_steps, footer_note:
+  HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
   informationskort när anropsbudgeten är slut
 - render_kort, render_case, render_lagrum_chip, render_varning,
@@ -89,28 +89,6 @@ def inject_css() -> None:
             font-family: Georgia, serif; color: var(--bl); font-size: 18px;
             margin: 0 0 .4rem 0;
         }}
-        .jok-modulrutnat {{
-            display: grid; grid-template-columns: repeat(2, 1fr);
-            gap: .8rem; margin: .6rem 0 1rem 0;
-        }}
-        @media (max-width: 640px) {{
-            .jok-modulrutnat {{ grid-template-columns: 1fr; }}
-        }}
-        .jok-modulkort {{
-            background: var(--panel); border: 1px solid var(--ram);
-            border-top: 3px solid var(--guld); border-radius: 12px;
-            padding: 1rem 1.2rem;
-        }}
-        .jok-modulkort .roll {{
-            font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px;
-            color: var(--bla); text-transform: uppercase; letter-spacing: .08em;
-        }}
-        .jok-modulkort h3 {{
-            font-family: Georgia, serif; font-size: 18px; color: var(--bl);
-            margin: .2rem 0 .1rem 0;
-        }}
-        .jok-modulkort .tag {{ font-size: 13px; color: #6B6459; }}
-        .jok-modulkort p {{ font-size: 15px; line-height: 1.55; margin: .4rem 0 0 0; }}
         .jok-pipeline {{ display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0; }}
         .jok-pipeline span {{
             background: var(--panel); border: 1px solid var(--ram);
@@ -371,20 +349,6 @@ def render_rnts_steg(steg: tuple[tuple[str, str], ...]) -> str:
             f"<span>{html.escape(etikett)}</span></div>"
         )
     return f'<div class="jok-rnts">{"".join(rader)}</div>'
-
-
-def module_map(nodes: list[dict[str, str]]) -> str:
-    """Rutnät av modulkort (2 kolumner, 1 på mobil)."""
-    kort = []
-    for n in nodes:
-        kort.append(
-            '<div class="jok-modulkort">'
-            f'<div class="roll">{html.escape(n.get("roll", ""))}</div>'
-            f'<h3>{html.escape(n.get("titel", ""))}</h3>'
-            f'<div class="tag">{html.escape(n.get("tag", ""))}</div>'
-            f'<p>{html.escape(n.get("beskrivning", ""))}</p></div>'
-        )
-    return f'<div class="jok-modulrutnat">{"".join(kort)}</div>'
 
 
 def pipeline_steps(steps: list[str]) -> str:

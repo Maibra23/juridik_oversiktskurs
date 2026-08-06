@@ -50,7 +50,7 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 
 ## 4. Layout och navigering
 
-* **Startsidan**: hjältesektion med kursnamn, en mening om metoden, tre nyckeltal (moduler, scenarier, din framsteg), därunder ett rutnät av modulkort (2 kolumner) med framstegsindikator per modul. Disclaimer i sidfoten.
+* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (fortsätt i senast besökta modul, eller kursens första modul för en ny session), framstegssektion (quizresultat, genomförda case, exportknappar) och arbetsgången i fyra steg. Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
 * **Modulsida**: tre flikar i fast ordning: Rättsfall, Quiz, Lagrumsjakt. Samma struktur i alla moduler så att navigationen blir automatisk.
 * **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Visa facit".
 * **Sidopanel**: modulnavigering överst, statuspanel nederst, modellväljare (8B/14B) under en expander.

@@ -30,6 +30,7 @@ st.set_page_config(
     menu_items={"Get Help": None, "Report a bug": None},
 )
 
+from utils.navigation import registrera_besok  # noqa: E402
 from utils.ui import inject_css, render_sidebar  # noqa: E402
 
 # Titeln är etiketten i webbläsarfliken. Sökvägen måste matcha filnamnet i
@@ -60,5 +61,6 @@ inject_css()
 # inte konkurrerar med det hierarkiska trädet i sidopanelen.
 aktiv_sida = st.navigation(SIDOR, position="hidden")
 st.session_state["_jok_aktiv_sida"] = aktiv_sida.title
+registrera_besok(st.session_state, aktiv_sida.title)
 render_sidebar()
 aktiv_sida.run()

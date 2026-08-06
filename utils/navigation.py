@@ -18,7 +18,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterator, MutableMapping, Union
 
 ROT = Path(__file__).resolve().parent.parent
 
@@ -182,3 +182,59 @@ def byggda_namn(noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[str, ...]:
 def sida_finns(sida: str) -> bool:
     """True om sökvägen pekar på en fil som finns i projektet."""
     return (ROT / sida).is_file()
+
+
+def sida_for_namn(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> str | None:
+    """Sökvägen för en byggd moduls namn, eller None om den saknas eller är planerad."""
+    for n, s in zip(byggda_namn(noder), byggda_sidor(noder)):
+        if n == namn:
+            return s
+    return None
+
+
+# --- Startsidans call-to-action ----------------------------------------------
+#
+# Startsidan visar en enda knapp: fortsätt i senast besökta modul, eller
+# börja kursens första modul om sessionen är ny. Logiken ligger här (ren
+# data/funktioner) i stället för i sidor/0_Hem.py, som enligt modulens egen
+# regel inte ska innehålla affärslogik.
+
+SENAST_BESOKT_NYCKEL = "_jok_senast_besokt"
+FALLBACK_CTA_TITEL = "Juridisk metod"
+FALLBACK_CTA_SIDA = "sidor/1_Juridisk_metod.py"
+
+
+def registrera_besok(session_state: MutableMapping[str, object], titel: str) -> None:
+    """Spara senast besökta modul i sessionen, om besöket inte gäller Hem.
+
+    Hem exkluderas: annars skulle startsidan skriva över sin egen källa till
+    "senast besökt" varje gång den visas, och knappen skulle aldrig peka
+    någon annanstans än till sig själv.
+    """
+    if titel != "Hem":
+        session_state[SENAST_BESOKT_NYCKEL] = titel
+
+
+@dataclass(frozen=True)
+class CtaMal:
+    """Startsidans call-to-action: vart den pekar och varför."""
+
+    titel: str
+    sida: str
+    ateruppta: bool
+
+
+def cta_mal(senast_besokt: str | None) -> CtaMal:
+    """Bestäm startsidans call-to-action.
+
+    Pekar mot den senast besökta modulen i sessionen om namnet fortfarande
+    går att slå upp mot en byggd sida, annars mot kursens första modul
+    (FALLBACK_CTA_TITEL/-SIDA) — antingen för att sessionen är ny eller för
+    att det sparade namnet inte längre pekar på något (t.ex. efter en
+    ombyggnad av navigeringsträdet).
+    """
+    if senast_besokt:
+        sida = sida_for_namn(senast_besokt)
+        if sida:
+            return CtaMal(senast_besokt, sida, True)
+    return CtaMal(FALLBACK_CTA_TITEL, FALLBACK_CTA_SIDA, False)

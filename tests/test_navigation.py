@@ -17,13 +17,18 @@ from pathlib import Path
 import pytest
 
 from utils.navigation import (
+    FALLBACK_CTA_SIDA,
+    FALLBACK_CTA_TITEL,
     NAV_TRAD,
     Grupp,
     Modul,
     alla_moduler,
     byggda_namn,
     byggda_sidor,
+    cta_mal,
+    registrera_besok,
     sida_finns,
+    sida_for_namn,
 )
 
 ROT = Path(__file__).resolve().parent.parent
@@ -103,4 +108,69 @@ def test_tradets_namn_matchar_sidregistret():
     assert set(byggda_namn()) == titlar, (
         f"Bara i trädet: {sorted(set(byggda_namn()) - titlar)}. "
         f"Bara i registret: {sorted(titlar - set(byggda_namn()))}."
+    )
+
+
+# --- sida_for_namn -----------------------------------------------------------
+
+def test_sida_for_namn_kand_modul():
+    assert sida_for_namn("Avtalsrätt") == "sidor/2_Avtalsratt.py"
+
+
+def test_sida_for_namn_okant_namn_ger_none():
+    assert sida_for_namn("Påhittad modul") is None
+
+
+def test_sida_for_namn_planerad_modul_ger_none():
+    """Statsrätt saknar sida i trädet och kan därför aldrig slås upp."""
+    assert sida_for_namn("Statsrätt") is None
+
+
+# --- registrera_besok ---------------------------------------------------------
+
+def test_registrera_besok_sparar_titel():
+    session_state: dict = {}
+    registrera_besok(session_state, "Avtalsrätt")
+    assert session_state["_jok_senast_besokt"] == "Avtalsrätt"
+
+
+def test_registrera_besok_ignorerar_hem():
+    session_state: dict = {}
+    registrera_besok(session_state, "Hem")
+    assert "_jok_senast_besokt" not in session_state
+
+
+def test_registrera_besok_hem_skriver_inte_over_tidigare_besok():
+    session_state = {"_jok_senast_besokt": "Avtalsrätt"}
+    registrera_besok(session_state, "Hem")
+    assert session_state["_jok_senast_besokt"] == "Avtalsrätt"
+
+
+# --- cta_mal -------------------------------------------------------------------
+
+def test_cta_mal_ny_session_ger_fallback():
+    mal = cta_mal(None)
+    assert (mal.titel, mal.sida, mal.ateruppta) == (
+        FALLBACK_CTA_TITEL,
+        FALLBACK_CTA_SIDA,
+        False,
+    )
+
+
+def test_cta_mal_kand_modul_ger_ateruppta():
+    mal = cta_mal("Avtalsrätt")
+    assert (mal.titel, mal.sida, mal.ateruppta) == (
+        "Avtalsrätt",
+        "sidor/2_Avtalsratt.py",
+        True,
+    )
+
+
+def test_cta_mal_okand_modul_faller_tillbaka():
+    """Ett borttaget eller felstavat modulnamn i sessionen ska inte krascha."""
+    mal = cta_mal("Modul som inte längre finns")
+    assert (mal.titel, mal.sida, mal.ateruppta) == (
+        FALLBACK_CTA_TITEL,
+        FALLBACK_CTA_SIDA,
+        False,
     )

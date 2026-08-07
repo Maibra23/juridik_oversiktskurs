@@ -831,20 +831,24 @@ Stänger fliken. Allt är borta.
 
 ### Hög effekt / låg insats
 
-| # | Åtgärd | Löser |
-|---|---|---|
-| 1 | `cta_mal()` föredrar nästa modul i kursordning, inte senast besökta | Svaghet 1 |
-| 2 | Kapitälrad `TRÄNAR: <RNTS-steg>` över varje aktivitet | Svaghet 2 |
-| 3 | Flytta facitexpandern ut ur `if st.button("Rätta")` (verklig bugg) | Avsnitt 5 |
-| 4 | Fäll de fyra ikonläckorna; besluta om `page_icon` | Ramen |
-| 5 | Typ- och spacingtokens som CSS-variabler | Avsnitt 6 |
-| 6 | Ta bort nedladdningsknappar ur tomt tillstånd | Svaghet 5 |
-| 7 | Statuspanelen till en rad; modellväljaren ut ur sidopanelen | Avsnitt 4 |
-| 8 | Markera aktiv sidas rubrikkedja (`_jok_aktiv_sida` finns redan) | Avsnitt 4 |
-| 9 | Facit bakom "Jag har försökt" | Avsnitt 7.4 |
-| 10 | Säg rent ut att framstegen gäller sessionen; exporten som svar | Svaghet 4 |
-| 11 | Ta bort död kod (`render_kort`, `summary_box`) eller gör den till primitiv | Avsnitt 5 |
-| 12 | Modulingressen säger något modulspecifikt, eller tas bort | Avsnitt 5 |
+Etapp 1 är genomförd. Punkterna 1–11 är gjorda som beskrivet nedan; punkt 12
+är delvis gjord (mekaniken finns, innehållet återstår). Planen för etappen
+ligger i `docs/superpowers/plans/2026-08-06-ux-omdesign-lag-insats.md`.
+
+| # | Åtgärd | Löser | Status |
+|---|---|---|---|
+| 1 | `cta_mal()` föredrar nästa modul i kursordning, inte senast besökta | Svaghet 1 | Genomfört (commit `944f554`) |
+| 2 | Kapitälrad `TRÄNAR: <RNTS-steg>` över varje aktivitet | Svaghet 2 | Genomfört (commit `71324b2`, placeringen i rättsfallsfliken rättad i `f043044`) |
+| 3 | Flytta facitexpandern ut ur `if st.button("Rätta")` (verklig bugg) | Avsnitt 5 | Genomfört (commit `81e2380`, uppföljning i `5a02f54`) |
+| 4 | Fäll de fyra ikonläckorna; besluta om `page_icon` | Ramen | Genomfört (commit `2665be3`) — sex glyfläckor fälldes, fler än de fyra som var kända vid granskningen, och `page_icon` är dokumenterat som appens enda avsiktliga undantag |
+| 5 | Typ- och spacingtokens som CSS-variabler | Avsnitt 6 | Genomfört (commit `830cacb`). CSS-strängen bröts samtidigt ut ur `utils/ui.py` till en egen modul, `utils/css.py`, eftersom `utils/ui.py` annars hade passerat planens gräns på 800 rader |
+| 6 | Ta bort nedladdningsknappar ur tomt tillstånd | Svaghet 5 | Genomfört (commit `734888e`) |
+| 7 | Statuspanelen till en rad; modellväljaren ut ur sidopanelen | Avsnitt 4 | Genomfört (commit `b155c15`) |
+| 8 | Markera aktiv sidas rubrikkedja (`_jok_aktiv_sida` finns redan) | Avsnitt 4 | Genomfört (commit `b8cf7be`) |
+| 9 | Facit bakom "Jag har försökt" | Avsnitt 7.4 | Genomfört (commit `9c7b13b`), för både rättsfallets och lagrumsjaktens facit |
+| 10 | Säg rent ut att framstegen gäller sessionen; exporten som svar | Svaghet 4 | Genomfört (commit `734888e`) |
+| 11 | Ta bort död kod (`render_kort`, `summary_box`) eller gör den till primitiv | Avsnitt 5 | Genomfört (commit `c86e13d`) — båda borttagna |
+| 12 | Modulingressen säger något modulspecifikt, eller tas bort | Avsnitt 5 | Mekaniken byggd och testad (commit `c86e13d`): `Modulscenarier.ingress` läses in och visas i hero om fältet finns. Ingen fil i `data/scenarier` sätter ännu fältet, så reservmeningen i `_ingress()` står kvar på alla tolv modulsidor tills innehållet skrivs |
 
 ### Hög effekt / medelinsats
 

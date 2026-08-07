@@ -505,6 +505,45 @@ def render_statuspanel() -> None:
         st.caption(f"Modell: {modell}")
 
 
+def _planerad_text(moduler: tuple["Modul", ...]) -> str:
+    """Namnen på flera planerade moduler sammanfogade till en mening.
+
+    Rättsområdenas namn är vanliga substantiv på svenska, så alla utom det
+    första skrivs med liten begynnelsebokstav: "Statsrätt och
+    förvaltningsrätt". Ett namn som inleds med två versaler (EU-rätt) lämnas
+    orört, eftersom det är en förkortning och inte ett substantiv.
+    """
+    namn: list[str] = []
+    for i, modul in enumerate(moduler):
+        n = modul.namn
+        if i and not n[:2].isupper():
+            n = n[0].lower() + n[1:]
+        namn.append(n)
+    if len(namn) == 1:
+        return namn[0]
+    return ", ".join(namn[:-1]) + " och " + namn[-1]
+
+
+def _rendera_barn(
+    barn: tuple["Nod", ...], niva: int, aktiv_kedja: frozenset[str]
+) -> None:
+    """Rita en grupps barn: byggda noder var för sig, planerade på en rad.
+
+    Planerade moduler slås ihop eftersom de inte går att öppna: två obyggda
+    rättsområden behöver inte två rader för att visa att de finns. Kursens
+    omfattning syns fortfarande, vilket är hela skälet att de står kvar
+    (design_system.md 4.1).
+    """
+    planerade = tuple(n for n in barn if isinstance(n, Modul) and n.sida is None)
+    for nod in barn:
+        if isinstance(nod, Modul) and nod.sida is None:
+            continue
+        _render_nod(nod, niva, aktiv_kedja)
+    if planerade:
+        text = html.escape(_planerad_text(planerade))
+        st.html(f'<div class="jok-nav-kommer">{text} (kommer)</div>')
+
+
 def _render_nod(nod: "Nod", niva: int, aktiv_kedja: frozenset[str] = frozenset()) -> None:
     """Rita en nod i navigeringsträdet rekursivt.
 
@@ -512,6 +551,19 @@ def _render_nod(nod: "Nod", niva: int, aktiv_kedja: frozenset[str] = frozenset()
     = undergren. Moduler ritas som länkar, planerade moduler som gråtonad
     text med "(kommer)". Grupper som omsluter den öppna sidan får klassen
     ``aktiv`` och full bläckvikt, så att studenten ser var i trädet den är.
+
+    En grupp vars enda barn är en modul med SAMMA namn ritar ingen egen
+    rubrik: raden skulle bara upprepa ordet direkt under sig självt, vilket
+    "Personrätt" gjorde bokstavligen. Gruppen finns kvar i NAV_TRAD, så
+    systematiken och rubrikkedja() är oförändrade — det är bara raden som
+    utgår.
+
+    Villkoret är avsiktligt namnidentitet och inte "har bara ett barn".
+    Modullänkar ritas av st.page_link och saknar indrag, så grupprubriken är
+    det enda som knyter en modul till sin gren. Fäller man Ersättningsrätt
+    hamnar Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår
+    då något juridiskt falskt: skadeståndsrätten är inte kontraktsrätt.
+    Rubriker som bär doktrin står kvar även när de bara har ett barn.
     """
     if isinstance(nod, Modul):
         if nod.sida is None:
@@ -522,12 +574,19 @@ def _render_nod(nod: "Nod", niva: int, aktiv_kedja: frozenset[str] = frozenset()
             st.page_link(nod.sida, label=nod.namn)
         return
 
+    if (
+        len(nod.barn) == 1
+        and isinstance(nod.barn[0], Modul)
+        and nod.barn[0].namn == nod.namn
+    ):
+        _render_nod(nod.barn[0], niva, aktiv_kedja)
+        return
+
     klass = "jok-nav-under" if niva <= 1 else "jok-nav-gren"
     if nod.namn in aktiv_kedja:
         klass += " aktiv"
     st.html(f'<div class="{klass}">{html.escape(nod.namn)}</div>')
-    for barn in nod.barn:
-        _render_nod(barn, niva + 1, aktiv_kedja)
+    _rendera_barn(nod.barn, niva + 1, aktiv_kedja)
 
 
 def render_sidopanel() -> None:
@@ -556,8 +615,23 @@ def render_sidopanel() -> None:
         if kategori.namn in aktiv_kedja:
             klass += " aktiv"
         st.html(f'<div class="{klass}">{html.escape(kategori.namn)}</div>')
-        for barn in kategori.barn:
-            _render_nod(barn, niva=1, aktiv_kedja=aktiv_kedja)
+        _rendera_barn(kategori.barn, 1, aktiv_kedja)
+
+
+def bred_sida() -> None:
+    """Häv den centrerade textkolumnen för sidor som behöver full bredd.
+
+    Innehållskolumnen är maxbreddad och centrerad (design_system.md 4), vilket
+    är rätt för löptext men fel för Rättskartan och Kunskapskartan: båda ritar
+    sin graf med components.html utan egen bredd, så grafen fyller behållaren
+    och skulle klämmas ihop till textbredd. Anropas överst på de sidorna.
+    """
+    st.html(
+        "<style>"
+        '[data-testid="stMainBlockContainer"], .main .block-container'
+        " { max-width: none; }"
+        "</style>"
+    )
 
 
 def render_sidebar() -> None:

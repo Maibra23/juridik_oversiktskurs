@@ -30,6 +30,17 @@ CSS_MALL = """
             --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
             --s5: 24px; --s6: 32px; --s7: 48px;
         }}
+        /* Innehållskolumnen: maxbreddad och centrerad (design_system.md 4).
+           Appen kör layout="wide" för att grafsidorna ska kunna häva gränsen
+           med utils.ui.bred_sida(); utan den här regeln ligger allt innehåll
+           tryckt mot vänsterkanten på en bred skärm, och Streamlits egna
+           widgets (captions, knappar, flikar) saknar breddtak helt, så
+           46rem-regeln gäller i praktiken bara appens egen HTML. Två
+           selektorer eftersom Streamlit bytt namn på behållaren mellan
+           versioner; requirements.txt låser bara streamlit>=1.37. */
+        [data-testid="stMainBlockContainer"], .main .block-container {{
+            max-width: 46rem; margin-left: auto; margin-right: auto;
+        }}
         .jok-hero {{
             max-width: 46rem; margin: 0 0 1.5rem 0;
         }}
@@ -135,22 +146,26 @@ CSS_MALL = """
            Nivåerna skiljs åt med indrag, storlek och färgstyrka, inte med
            ikoner: huvudkategori (versaler, blå) > underkategori (bläck)
            > undergren (grå) > modul (st.page_link). */
+        /* Sidopanelens vertikala rytm följer spacingskalan (2.2): avståndet
+           MELLAN grupper är alltid större än avståndet INOM en grupp, så
+           närheten bär strukturen utan att kräva ramar eller linjer. */
         .jok-nav-kategori {{
             font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
             font-size: var(--t-etikett); letter-spacing: .1em; text-transform: uppercase;
             color: var(--bla); font-weight: 700;
-            margin: 1.1rem 0 .2rem 0;
+            margin: var(--s5) 0 var(--s1) 0;
         }}
         .jok-nav-under {{
             font-size: var(--t-etikett); font-weight: 600; color: var(--bl);
-            margin: .5rem 0 .15rem 0;
+            margin: var(--s3) 0 var(--s1) 0;
         }}
         .jok-nav-gren {{
             font-size: var(--t-etikett); font-weight: 600; color: #6B6459;
-            letter-spacing: .02em; margin: .4rem 0 .15rem .6rem;
+            letter-spacing: .02em; margin: var(--s2) 0 var(--s1) var(--s3);
         }}
         .jok-nav-kommer {{
-            font-size: var(--t-etikett); color: #9A9384; margin: .1rem 0 .1rem .6rem;
+            font-size: var(--t-etikett); color: #9A9384;
+            margin: var(--s1) 0 var(--s1) var(--s3);
         }}
         /* Förfäderna till den öppna sidan får full bläckvikt, så att studenten
            hittar sin plats i ett fyra nivåer djupt träd. Ingen färg, ingen

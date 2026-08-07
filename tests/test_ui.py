@@ -459,14 +459,18 @@ def test_render_sidopanel_grupp_utanfor_kedjan_ar_inte_aktiv(monkeypatch):
 
     Utan den här kontrollen skulle testet ovan även godkänna en
     implementation som (felaktigt) sätter aktiv på varje grupp i trädet.
-    Personrätt och Ersättningsrätt är särskilt viktiga negativa fall: de
-    ligger som syskon till en aktiv gren (Förmögenhetsrätt respektive
-    Kontraktsrätt) och skulle avslöja en implementation som markerar en hel
-    förälder-nivå i stället för bara de faktiska förfäderna.
+    Näringsrätt är det viktiga negativa fallet: den ligger som syskon till en
+    aktiv gren (Kontraktsrätt) under samma förälder och skulle avslöja en
+    implementation som markerar en hel förälder-nivå i stället för bara de
+    faktiska förfäderna.
+
+    Ersättningsrätt och Personrätt användes tidigare som syskonfall, men båda
+    har numera bara ett barn och ritar därför ingen egen rubrik alls
+    (design_system.md 4.1). Näringsrätt har två barn och finns kvar.
     """
     html_rader = _sidopanel_html(monkeypatch, {"_jok_aktiv_sida": "Avtalsrätt"})
 
-    for namn in ("STRAFF- OCH PROCESSRÄTT", "Personrätt", "Ersättningsrätt"):
+    for namn in ("STRAFF- OCH PROCESSRÄTT", "TRÄNING", "Näringsrätt"):
         klass = _klass_for(html_rader, namn)
         assert "aktiv" not in klass.split(), f"{namn!r} fick oväntat klassen aktiv: {klass!r}"
 
@@ -604,4 +608,165 @@ def test_modulsida_ritar_hero_aven_om_inlasningen_misslyckas(monkeypatch):
     )
     assert any("jok-varning" in rad for rad in html_rader), (
         "Varningen om att övningsinnehållet inte gick att läsa saknas."
+    )
+
+
+# --- Sidopanelens kondensering (design_system.md 4.1) --------------------------
+
+
+def _sidopanel_rader(
+    monkeypatch: pytest.MonkeyPatch, session_state: dict | None = None
+) -> tuple[list[str], list[str]]:
+    """Kör render_sidopanel och samla både HTML-raderna och modullänkarnas namn.
+
+    _sidopanel_html ovan kastar bort modullänkarna, eftersom Task 7 bara behövde
+    grupprubrikerna. Kondenseringen måste kunna se båda: en fälld enbarnsgrupp
+    känns igen på att rubriken är borta MEN modulen finns kvar, och ett test som
+    bara ser rubrikerna kan inte skilja det från att hela grenen försvann.
+    """
+    import streamlit as st
+
+    html_rader: list[str] = []
+    lanknamn: list[str] = []
+    monkeypatch.setattr(st, "html", lambda s: html_rader.append(s))
+    monkeypatch.setattr(
+        st, "page_link", lambda sida, label="", **k: lanknamn.append(label)
+    )
+    monkeypatch.setattr(st, "session_state", session_state or {})
+
+    render_sidopanel()
+    return html_rader, lanknamn
+
+
+def _har_rubrik(html_rader: list[str], namn: str) -> bool:
+    """Sant om ``namn`` ritats som en egen grupprubrik."""
+    return any(
+        re.search(rf'<div class="[^"]*">{re.escape(namn)}</div>', rad)
+        for rad in html_rader
+    )
+
+
+def test_namndubblett_ritar_ingen_egen_rubrik(monkeypatch):
+    """Gruppen "Personrätt" omsluter en modul med exakt samma namn.
+
+    Panelen skrev alltså ut ordet två gånger i rad. Rubriken ska utebli, men
+    modulen ska finnas kvar som länk.
+    """
+    html_rader, lanknamn = _sidopanel_rader(monkeypatch)
+
+    assert not _har_rubrik(html_rader, "Personrätt"), (
+        "Gruppen Personrätt upprepar sin enda modul och ska inte ha en rubrikrad"
+    )
+    assert "Personrätt" in lanknamn, "Modulen Personrätt försvann när gruppen fälldes"
+
+
+def test_doktrinbarande_rubrik_behalls_aven_med_ett_barn(monkeypatch):
+    """Enbarnsgrupper med ett EGET namn måste behålla sin rubrik.
+
+    Modullänkar ritas av st.page_link och saknar indrag, så rubriken är det
+    enda som knyter en modul till sin gren. Fälls Ersättningsrätt hamnar
+    Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår då att
+    skadeståndsrätten är kontraktsrätt — juridiskt fel, och värre än den rad
+    som sparades. Samma sak för Fordringsrätt under Näringsrätt.
+    """
+    html_rader, _lanknamn = _sidopanel_rader(monkeypatch)
+
+    for grupp in ("Ersättningsrätt", "Kredit- och obeståndsrätt", "Familjerätt"):
+        assert _har_rubrik(html_rader, grupp), (
+            f"{grupp!r} bär doktrin och måste behålla sin rubrik även med ett barn"
+        )
+
+
+def test_flerbarnsgrupp_behaller_sin_rubrik(monkeypatch):
+    """Vakt mot att fälla allt: grupper med flera barn bär fortfarande struktur."""
+    html_rader, _lanknamn = _sidopanel_rader(monkeypatch)
+
+    for grupp in ("Förmögenhetsrätt", "Kontraktsrätt", "Näringsrätt"):
+        assert _har_rubrik(html_rader, grupp), (
+            f"{grupp!r} har flera barn och måste behålla sin rubrik"
+        )
+
+
+def test_planerade_moduler_slas_ihop_till_en_rad(monkeypatch):
+    """Statsrätt och förvaltningsrätt delar en enda dämpad rad.
+
+    Kursens omfattning ska synas (design_system.md 4.1), men två obyggda
+    moduler behöver inte två rader. OFFENTLIG RÄTT måste finnas kvar — utan
+    sina barn skulle hela kategorin annars falla ur systematiken.
+    """
+    html_rader, lanknamn = _sidopanel_rader(monkeypatch)
+
+    kommer = [rad for rad in html_rader if "(kommer)" in rad]
+    assert len(kommer) == 1, f"Förväntade en enda (kommer)-rad, fick {kommer}"
+    assert "Statsrätt" in kommer[0] and "örvaltningsrätt" in kommer[0], (
+        f"Båda de planerade modulerna ska stå på raden: {kommer[0]!r}"
+    )
+    assert _har_rubrik(html_rader, "OFFENTLIG RÄTT"), (
+        "OFFENTLIG RÄTT försvann när dess planerade moduler slogs ihop"
+    )
+    assert "Statsrätt" not in lanknamn, "En planerad modul får aldrig bli en länk"
+
+
+def test_kondenseringen_ritar_farre_rader_an_tradet_har_noder(monkeypatch):
+    """Sammanlagt: panelen ritar färre rader än trädet har noder.
+
+    Jämförelsetalet härleds ur NAV_TRAD i stället för att skrivas som en
+    magisk konstant, så att testet följer med när kursen växer. De fem raderna
+    som sparas är de fyra fällda enbarnsgrupperna plus den hopslagna
+    (kommer)-raden; skulle en av dem sluta fungera faller testet.
+    """
+    from utils.navigation import NAV_TRAD, Grupp
+
+    def rakna(noder: tuple) -> int:
+        antal = 0
+        for nod in noder:
+            antal += 1
+            if isinstance(nod, Grupp):
+                antal += rakna(nod.barn)
+        return antal
+
+    okondenserat = rakna(NAV_TRAD)
+    html_rader, lanknamn = _sidopanel_rader(monkeypatch)
+    ritade = len(html_rader) + len(lanknamn)
+
+    assert ritade < okondenserat, (
+        f"Panelen ritar {ritade} rader av {okondenserat} noder — inget kortades"
+    )
+    assert okondenserat - ritade >= 2, (
+        f"Bara {okondenserat - ritade} rader sparades; väntade minst 2 "
+        f"(namndubbletten Personrätt och den hopslagna kommer-raden)"
+    )
+
+
+# --- Centrerad innehållskolumn (design_system.md 4) ---------------------------
+
+
+def test_innehallskolumnen_ar_centrerad_och_begransad():
+    """Huvudkolumnen ska vara maxbreddad och centrerad, inte vänsterhängd.
+
+    Appen kör layout="wide", så utan den här regeln ligger allt innehåll
+    tryckt mot vänsterkanten på en bred skärm, och Streamlits egna widgets
+    (captions, knappar, flikar) saknar breddtak helt.
+    """
+    css = _css()
+    assert "stMainBlockContainer" in css, "Selektorn för Streamlit 1.50 saknas"
+    assert ".block-container" in css, "Reservselektorn för äldre Streamlit saknas"
+    assert "margin-left: auto" in css and "margin-right: auto" in css, (
+        "Kolumnen centreras inte"
+    )
+
+
+def test_bred_sida_haver_breddgransen(monkeypatch):
+    """Grafsidorna måste kunna ta full bredd igen."""
+    import streamlit as st
+
+    from utils.ui import bred_sida
+
+    rader: list[str] = []
+    monkeypatch.setattr(st, "html", lambda s: rader.append(s))
+    bred_sida()
+
+    assert rader, "bred_sida() ritade ingenting"
+    assert "max-width: none" in rader[0], (
+        f"Overriden häver inte breddgränsen: {rader[0]!r}"
     )

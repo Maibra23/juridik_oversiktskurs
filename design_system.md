@@ -61,6 +61,10 @@ det.
 mindre än avstånd mellan grupper.** Närhet är den starkaste grupperingssignal
 som finns, och den bär struktur utan att kräva ramar.
 
+Skalan styr sidopanelens vertikala rytm (4.1), där den gör mest nytta: ett träd
+fyra nivåer djupt blir läsbart av avstånden ensamma. Övriga marginaler är ännu
+handsatta och konverteras när respektive komponent ändå ändras.
+
 ## 3. Komponentbibliotek (utils/ui.py)
 
 Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur den centrala CSS strängen.
@@ -80,6 +84,7 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 
 ## 4. Layout och navigering
 
+* **Innehållskolumnen**: maxbreddad till 46 rem och centrerad i fönstret. Appen kör `layout="wide"` i `streamlit_app.py`, men behållaren begränsas i CSS i stället för att lämnas bred — annars ligger allt innehåll tryckt mot vänsterkanten på en bred skärm, och Streamlits egna widgets (captions, knappar, flikar) saknar breddtak helt, så 46 rem-regeln i avsnitt 2 gäller i praktiken bara appens egen HTML. Sidor som behöver full bredd häver gränsen med `utils.ui.bred_sida()`; i dag är det Rättskartan och Kunskapskartan, som båda ritar sin graf med `components.html` och skulle klämmas ihop till textbredd.
 * **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (pekar på nästa ej påbörjade kursmodul i kursordning, med en rad som säger varför; först när alla kursmoduler är påbörjade faller den tillbaka på senast besökta modul) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
 * **Modulsida**: tre flikar i fast ordning: Rättsfall, Quiz, Lagrumsjakt. Samma struktur i alla moduler så att navigationen blir automatisk.
 * **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Jag har försökt — visa facit" bakom en upplåsningsgrind — facit visas först efter klick, inte i en alltid synlig expander.
@@ -99,12 +104,14 @@ Sidopanelen speglar svensk rätts systematik i stället för filordningen i sido
 | Underkategori | Förmögenhetsrätt | `.jok-nav-under` | 13 px, halvfet, bläck (`--bl`). Marginal ovanför för att gruppera. |
 | Undergren | Kontraktsrätt | `.jok-nav-gren` | 12 px, halvfet, grå `#6B6459`, indrag 0.6 rem. |
 | Modul (byggd) | Avtalsrätt | `st.page_link` | Streamlits länkstil, ärver appens accentfärg. |
-| Modul (planerad) | Fastighetsrätt (kommer) | `.jok-nav-kommer` | 13 px, dämpad grå `#9A9384`, indrag 0.6 rem. Aldrig klickbar. |
+| Modul (planerad) | Statsrätt och förvaltningsrätt (kommer) | `.jok-nav-kommer` | 13 px, dämpad grå `#9A9384`, indrag `--s3`. Aldrig klickbar. En rad per grupp, inte en rad per modul. |
 
 Regler:
 
-* Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att kursens omfattning syns utan att ge trasiga länkar.
-* Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer kursens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång.
+* Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att kursens omfattning syns utan att ge trasiga länkar. **Flera planerade moduler i samma grupp delar en rad** ("Statsrätt och förvaltningsrätt (kommer)"): de går ändå inte att öppna, så de behöver inte var sin rad för att visa att de finns. Omfattningen syns, raderna kostar mindre.
+* **En grupp vars enda barn är en modul med samma namn ritar ingen egen rubrik.** Raden skulle bara upprepa ordet direkt under sig självt, vilket Personrätt gjorde bokstavligen. Gruppen finns kvar i `NAV_TRAD`, så systematiken och `rubrikkedja()` är oförändrade — det är bara raden som utgår. Villkoret är namnidentitet, **inte** "har bara ett barn": modullänkar ritas av `st.page_link` och saknar indrag, så grupprubriken är det enda som knyter en modul till sin gren. Fäller man Ersättningsrätt hamnar Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår då något juridiskt falskt. Rubriker som bär doktrin står kvar även med ett enda barn.
+* Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer kursens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång. Panelen kortas därför genom att ta bort upprepning, aldrig genom att gömma innehåll bakom ett klick.
+* Den vertikala rytmen följer spacingskalan i 2.2: avståndet mellan huvudkategorier (`--s5`) är större än mellan undergrenar (`--s2`), som i sin tur är större än mellan raderna inom en gren (`--s1`). Närheten bär grupperingen, så panelen klarar sig utan ramar och linjer.
 * Paragrafguld (`--guld`) används aldrig i navigeringen. Guld är reserverat för lagrum enligt avsnitt 1.
 * Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag
   och färgstyrka. **Förbudet gäller hela appen**, inte bara navigeringen: inga

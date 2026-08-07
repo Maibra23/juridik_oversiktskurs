@@ -738,35 +738,17 @@ def test_kondenseringen_ritar_farre_rader_an_tradet_har_noder(monkeypatch):
     )
 
 
-# --- Centrerad innehållskolumn (design_system.md 4) ---------------------------
+# --- Innehållskolumnens bredd (design_system.md 4) ----------------------------
 
 
-def test_innehallskolumnen_ar_centrerad_och_begransad():
-    """Huvudkolumnen ska vara maxbreddad och centrerad, inte vänsterhängd.
+def test_ingen_global_breddgrans_pa_huvudkolumnen():
+    """Appen kör layout="wide" och behållaren ska INTE begränsas i CSS.
 
-    Appen kör layout="wide", så utan den här regeln ligger allt innehåll
-    tryckt mot vänsterkanten på en bred skärm, och Streamlits egna widgets
-    (captions, knappar, flikar) saknar breddtak helt.
+    En centrerad, maxbreddad kolumn prövades och valdes bort: den gjorde varje
+    sida smal, inte bara löptexten. 46rem-regeln i avsnitt 2 gäller därför
+    appens egna innehållsblock (.jok-*), inte hela sidan.
     """
     css = _css()
-    assert "stMainBlockContainer" in css, "Selektorn för Streamlit 1.50 saknas"
-    assert ".block-container" in css, "Reservselektorn för äldre Streamlit saknas"
-    assert "margin-left: auto" in css and "margin-right: auto" in css, (
-        "Kolumnen centreras inte"
-    )
-
-
-def test_bred_sida_haver_breddgransen(monkeypatch):
-    """Grafsidorna måste kunna ta full bredd igen."""
-    import streamlit as st
-
-    from utils.ui import bred_sida
-
-    rader: list[str] = []
-    monkeypatch.setattr(st, "html", lambda s: rader.append(s))
-    bred_sida()
-
-    assert rader, "bred_sida() ritade ingenting"
-    assert "max-width: none" in rader[0], (
-        f"Overriden häver inte breddgränsen: {rader[0]!r}"
+    assert "stMainBlockContainer" not in css, (
+        "En global breddgräns på huvudkolumnen är medvetet bortvald"
     )

@@ -36,7 +36,6 @@ from utils.rattssystem_graf import bygg_taxonomigraf
 from utils.taxonomi_ui import render_farglegend, render_taxonomigraf
 from utils.tutor import tutorknapp
 from utils.ui import (
-    bred_sida,
     footer_note,
     hero,
     render_begreppskort,
@@ -46,11 +45,6 @@ from utils.ui import (
     render_sidhjalp,
     section_heading,
 )
-
-# Taxonomigrafen ritas med components.html och fyller behållaren, så den
-# centrerade textkolumnen skulle klämma ihop den till textbredd. Rättskartan
-# är appens orienteringssida och behöver bredden. Måste stå före grafen.
-bred_sida()
 
 st.html(
     hero(

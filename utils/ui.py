@@ -618,22 +618,6 @@ def render_sidopanel() -> None:
         _rendera_barn(kategori.barn, 1, aktiv_kedja)
 
 
-def bred_sida() -> None:
-    """Häv den centrerade textkolumnen för sidor som behöver full bredd.
-
-    Innehållskolumnen är maxbreddad och centrerad (design_system.md 4), vilket
-    är rätt för löptext men fel för Rättskartan och Kunskapskartan: båda ritar
-    sin graf med components.html utan egen bredd, så grafen fyller behållaren
-    och skulle klämmas ihop till textbredd. Anropas överst på de sidorna.
-    """
-    st.html(
-        "<style>"
-        '[data-testid="stMainBlockContainer"], .main .block-container'
-        " { max-width: none; }"
-        "</style>"
-    )
-
-
 def render_sidebar() -> None:
     """Sidopanelens innehåll: navigeringsträd och en rad LLM-status.
 

@@ -30,17 +30,6 @@ CSS_MALL = """
             --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px;
             --s5: 24px; --s6: 32px; --s7: 48px;
         }}
-        /* Innehållskolumnen: maxbreddad och centrerad (design_system.md 4).
-           Appen kör layout="wide" för att grafsidorna ska kunna häva gränsen
-           med utils.ui.bred_sida(); utan den här regeln ligger allt innehåll
-           tryckt mot vänsterkanten på en bred skärm, och Streamlits egna
-           widgets (captions, knappar, flikar) saknar breddtak helt, så
-           46rem-regeln gäller i praktiken bara appens egen HTML. Två
-           selektorer eftersom Streamlit bytt namn på behållaren mellan
-           versioner; requirements.txt låser bara streamlit>=1.37. */
-        [data-testid="stMainBlockContainer"], .main .block-container {{
-            max-width: 46rem; margin-left: auto; margin-right: auto;
-        }}
         .jok-hero {{
             max-width: 46rem; margin: 0 0 1.5rem 0;
         }}

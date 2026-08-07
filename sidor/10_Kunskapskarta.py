@@ -19,16 +19,11 @@ from utils.graf_ui import render_kunskapsgraf
 from utils.obsidian import hamta_case_analyser
 from utils.texter import antal_med_enhet
 from utils.ui import (
-    bred_sida,
     footer_note,
     hero,
     render_info,
     section_heading,
 )
-
-# Grafen ritas med components.html och fyller behållaren, så den centrerade
-# textkolumnen skulle klämma ihop den till textbredd. Måste stå före grafen.
-bred_sida()
 
 st.html(
     hero(

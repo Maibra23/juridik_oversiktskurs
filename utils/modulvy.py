@@ -106,17 +106,19 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
     ``titel``/``undertitel`` visas i sidhuvudet. CSS och sidopanel injiceras
     centralt av streamlit_app.py och upprepas inte här.
     """
-    st.html(hero(eyebrow=undertitel or "MODUL", title=titel, lead=_ingress(filnamn)))
-
+    eyebrow = undertitel or "MODUL"
     try:
         modul = ladda_modul(filnamn)
     except Exception as exc:  # noqa: BLE001 (vi vill visa ett vänligt fel i UI:t)
+        st.html(hero(eyebrow=eyebrow, title=titel, lead=""))
         render_varning(
             f"Kunde inte läsa övningsinnehållet för modulen ({exc}). "
             "Kontrollera scenariofilen."
         )
         st.html(footer_note())
         return
+
+    st.html(hero(eyebrow=eyebrow, title=titel, lead=_ingress(modul)))
 
     if not (modul.case or modul.flervalsfragor or modul.lagrumsjakt):
         render_varning(
@@ -136,7 +138,16 @@ def rendera_modulsida(filnamn: str, titel: str, undertitel: str = "") -> None:
     st.html(footer_note())
 
 
-def _ingress(filnamn: str) -> str:
+def _ingress(modul: Modulscenarier) -> str:
+    """Modulsidans ingress: modulens egen mening, annars en generell.
+
+    Fallbacken är avsiktligt generell men säger något som gäller: att varje
+    lagrum verifieras. Har modulen en egen ingress i data/scenarier väger den
+    tyngre, eftersom en mening som är sann för alla moduler inte informerar om
+    någon av dem.
+    """
+    if modul.ingress:
+        return modul.ingress
     return (
         "Läs scenariot, skriv din egen RNTS-analys och be tutorn granska den. "
         "Varje lagrum du och tutorn anger kontrolleras mot kursens lagrumslista."

@@ -33,7 +33,6 @@ from utils.ui import (
     RNTS_STATUS_GODKAND,
     RNTS_STATUS_PAGAR,
     render_case,
-    render_kort,
     render_lagrum_chip,
     render_rnts_steg,
     render_sidopanel,
@@ -102,11 +101,6 @@ def test_render_case_escapar_html():
 
 
 # --- Befintliga komponenter (regression) ---------------------------------------
-
-def test_render_kort_escapar_innehall():
-    html_ut = render_kort("Titel", "<script>alert(1)</script>")
-    assert "<script>" not in html_ut
-
 
 def test_render_lagrum_chip_verifierad_med_url():
     html_ut = render_lagrum_chip("36 § AvtL", url="https://lagen.nu/1915:218#P36")
@@ -569,4 +563,45 @@ def test_rattsfall_med_case_ritar_tranar_rad(monkeypatch):
 
     assert any("jok-tranar" in rad for rad in html_rader), (
         "TRÄNAR-raden ritades inte trots att modulen har ett rättsfall."
+    )
+
+
+# --- Modulsidans felväg (rendera_modulsida) -----------------------------------
+
+def _brusten_ladda_modul(namn: str) -> Modulscenarier:
+    raise ValueError("trasig fil")
+
+
+def _modulsida_html_vid_lasfel(monkeypatch: pytest.MonkeyPatch) -> list[str]:
+    """Kör rendera_modulsida med en ladda_modul som kastar och samla HTML:en.
+
+    Samma monkeypatch-mönster som _rattsfall_html ovan: AppTest saknar
+    sidkontext för st.tabs, så felvägen körs direkt mot streamlit-modulen
+    (st.html samlar HTML-strängarna) i stället.
+    """
+    import streamlit as st
+
+    html_rader: list[str] = []
+    monkeypatch.setattr(st, "html", lambda s: html_rader.append(s))
+    monkeypatch.setattr(modulvy, "ladda_modul", _brusten_ladda_modul)
+
+    modulvy.rendera_modulsida("trasig", "Avtalsrätt", "Modul")
+    return html_rader
+
+
+def test_modulsida_ritar_hero_aven_om_inlasningen_misslyckas(monkeypatch):
+    """Felvägen vid trasig scenariofil ska ändå rita hero, inte bara varningen.
+
+    Hero ritades tidigare före ladda_modul, men flyttades efter den för att
+    ingressen ska kunna komma ur modulens data (_ingress). Utan ett eget
+    hero-anrop på felvägen skulle en trasig modulsida tappa sin rubrik helt.
+    """
+    html_rader = _modulsida_html_vid_lasfel(monkeypatch)
+
+    assert any("jok-hero" in rad and "Avtalsrätt" in rad for rad in html_rader), (
+        "Hero med sidans rubrik ritades inte på felvägen när scenariofilen "
+        "inte gick att läsa."
+    )
+    assert any("jok-varning" in rad for rad in html_rader), (
+        "Varningen om att övningsinnehållet inte gick att läsa saknas."
     )

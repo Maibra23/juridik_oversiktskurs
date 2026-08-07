@@ -62,18 +62,22 @@ som finns, och den bär struktur utan att kräva ramar.
 
 Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur den centrala CSS strängen.
 
-* **render_kort(titel, innehall, ikon)**: vit panel med tunn ram, radie 12px, diskret skugga. Bas för scenarier och resultat.
 * **render_lagrum_chip(ref)**: guldkantad pill med paragrafsymbol, lagrummet i monospace och lagens fulla namn som tooltip. Klick öppnar lagen.nu i ny flik. Verifierad chip har guldram, overifierad chip har varningsbakgrund och prefixet "Ej verifierad:".
 * **render_rnts_steg(steg, status)**: fyrstegs vertikal stepper (Rättsfrågan, Norm, Tillämpning, Slutsats) med statusikoner: tom cirkel (ej påbörjad), blå (under arbete), grön bock (godkänd), gul (behöver mer). Visas till vänster om formuläret på bred skärm, ovanför på smal.
-* **render_case(scenario)**: scenariokort med rubrik, faktatext, diskret metadatarad (modul, svårighetsgrad, uppskattad tid) och en tunn guldlinje överst.
+* **render_case(rubrik, metadata, scenariotext)**: scenariokort med rubrik,
+  faktatext, diskret metadatarad (svårighetsgrad, uppskattad tid) och en tunn
+  guldlinje överst. Basen för alla innehållsblock. `render_kort` och
+  `summary_box` är borttagna: de användes inte, och `render_kort` bar en
+  ikonparameter som stred mot ikonförbudet i 4.1.
 * **render_tutortext(text, rapport)**: tutorsvar där verifierade lagrum ersatts av chips och overifierade avsnitt fått gul markering. RNTS rubrikerna i svaret renderas som små kapitäler i myndighetsblått.
 * **render_varning(text)** och **render_info(text)**: gula respektive blå informationskort, används för budgettak, stale förklaringar och disclaimer.
 * **render_statuspanel()**: sidopanelens LLM status som en rad. I normalläget står det bara att tutorn är tillgänglig. Raden utökas först när något faktiskt är begränsat, och säger då olika saker: är tutorn otillgänglig namnger den vad som ändå fungerar utan den, och återstår mindre än en fjärdedel av något tak visar den anrop kvar i sessionen och i dag. Modellnamnet visas bara i det utökade läget.
-* **render_quizfraga(fraga)**: fråga i kort, alternativ som radio, efter rättning färgas valt alternativ grönt eller rött och en förklaringsexpander visas per alternativ.
+* **render_quizfraga(fraga)**: ännu inte byggd. Quizfrågan ritas i dag direkt i
+  `utils/modulvy.py` med fet markdown och en radio. Komponenten ligger i etapp 2.
 
 ## 4. Layout och navigering
 
-* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (fortsätt i senast besökta modul, eller kursens första modul för en ny session), framstegssektion (quizresultat, genomförda case, exportknappar) och arbetsgången i fyra steg. Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
+* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (fortsätt i senast besökta modul, eller kursens första modul för en ny session) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
 * **Modulsida**: tre flikar i fast ordning: Rättsfall, Quiz, Lagrumsjakt. Samma struktur i alla moduler så att navigationen blir automatisk.
 * **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Visa facit".
 * **Sidopanel**: modulnavigering överst, en rad LLM-status nederst. Statusraden

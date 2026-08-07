@@ -72,3 +72,33 @@ def test_varje_alternativ_har_forklaring(avtalsratt):
     for q in avtalsratt.flervalsfragor:
         for a in q.alternativ:
             assert a.forklaring, f"Alternativ utan förklaring i {q.id}"
+
+
+# --- Ingress ------------------------------------------------------------------
+
+def test_modul_utan_ingress_far_tom_strang():
+    """Fältet är valfritt: befintliga scenariofiler ska läsas oförändrat."""
+    from utils.scenarier import ladda_modul
+
+    modul = ladda_modul("avtalsratt")
+    assert isinstance(modul.ingress, str)
+
+
+def test_ingress_lases_in_nar_den_finns(tmp_path, monkeypatch):
+    import json
+
+    from utils import scenarier
+
+    data = {
+        "modul": "Testmodul",
+        "ingress": "En mening om just den här modulen.",
+        "case": [],
+        "flervalsfragor": [],
+        "lagrumsjakt": [],
+    }
+    fil = tmp_path / "testmodul.json"
+    fil.write_text(json.dumps(data, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(scenarier, "SCENARIER_DIR", tmp_path)
+    assert scenarier.ladda_modul("testmodul").ingress == (
+        "En mening om just den här modulen."
+    )

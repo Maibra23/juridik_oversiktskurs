@@ -53,19 +53,6 @@ CSS_MALL = """
             font-family: Georgia, "Iowan Old Style", "Times New Roman", serif; color: var(--bl);
             font-size: var(--t-h2); margin: .2rem 0 0 0;
         }}
-        .jok-summary {{
-            max-width: 46rem; font-size: var(--t-brod); line-height: 1.65;
-            color: var(--bl); margin: .5rem 0 1rem 0;
-        }}
-        .jok-kort {{
-            background: var(--panel); border: 1px solid var(--ram);
-            border-radius: 12px; padding: 1.1rem 1.3rem; margin: .6rem 0;
-            box-shadow: 0 1px 3px rgba(26,35,50,.06);
-        }}
-        .jok-kort h3 {{
-            font-family: Georgia, serif; color: var(--bl); font-size: var(--t-h3);
-            margin: 0 0 .4rem 0;
-        }}
         .jok-pipeline {{ display: flex; flex-wrap: wrap; gap: .5rem; margin: .5rem 0; }}
         .jok-pipeline span {{
             background: var(--panel); border: 1px solid var(--ram);
@@ -144,10 +131,6 @@ CSS_MALL = """
             margin: .2rem auto 0 auto; background: var(--varn-mork);
             box-shadow: 0 .18rem 0 0 var(--varn-mork);
         }}
-        .jok-status {{ font-size: var(--t-etikett); line-height: 1.5; }}
-        .jok-status .rad {{ display: flex; justify-content: space-between; }}
-        .jok-status .prick {{ font-weight: 600; }}
-
         /* Navigeringshierarki i sidopanelen (design_system.md 4.1).
            Nivåerna skiljs åt med indrag, storlek och färgstyrka, inte med
            ikoner: huvudkategori (versaler, blå) > underkategori (bläck)

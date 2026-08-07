@@ -78,12 +78,18 @@ class Lagrumsjakt:
 
 @dataclass(frozen=True)
 class Modulscenarier:
-    """Allt övningsinnehåll för en modul."""
+    """Allt övningsinnehåll för en modul.
+
+    ``ingress`` är en valfri mening om just den här modulen, som modulsidans
+    hero visar. Saknas den faller sidan tillbaka på en generell formulering.
+    Fältet är valfritt så att befintliga scenariofiler läses oförändrat.
+    """
 
     modul: str
     case: tuple[Case, ...]
     flervalsfragor: tuple[Flervalsfraga, ...]
     lagrumsjakt: tuple[Lagrumsjakt, ...]
+    ingress: str = ""
 
 
 # --- Inläsning --------------------------------------------------------------
@@ -157,11 +163,18 @@ def ladda_fil(path: Path) -> Modulscenarier:
         data = json.load(f)
     _krav(isinstance(data, dict), f"Scenariofilen {path} måste innehålla ett objekt.")
 
+    ingress = data.get("ingress", "")
+    _krav(
+        isinstance(ingress, str),
+        f"Fältet 'ingress' i {path} måste vara en sträng, inte {type(ingress).__name__}.",
+    )
+
     return Modulscenarier(
         modul=str(data.get("modul", path.stem)),
         case=tuple(_bygg_case(c) for c in data.get("case", [])),
         flervalsfragor=tuple(_bygg_fraga(q) for q in data.get("flervalsfragor", [])),
         lagrumsjakt=tuple(_bygg_lagrumsjakt(lj) for lj in data.get("lagrumsjakt", [])),
+        ingress=ingress,
     )
 
 

@@ -6,12 +6,12 @@ Ansvarar för allt visuellt som delas mellan sidorna:
 - render_sidebar / render_sidopanel / render_statuspanel: navigeringsträdet
   ur utils.navigation, modellväljare och räknare för återstående LLM-anrop
   (session + dagsbudget)
-- hero, section_heading, summary_box, pipeline_steps, footer_note:
+- hero, section_heading, pipeline_steps, footer_note:
   HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
   informationskort när anropsbudgeten är slut
-- render_kort, render_case, render_lagrum_chip, render_varning,
-  render_info: återanvändbara block för scenarier, lagrum och meddelanden
+- render_case, render_lagrum_chip, render_varning, render_info:
+  återanvändbara block för scenarier, lagrum och meddelanden
 - render_rnts_steg: fyrstegs vertikal stepper (Rättsfrågan, Norm,
   Tillämpning, Slutsats) med statusikoner per design_system.md avsnitt 3
 """
@@ -75,20 +75,6 @@ def section_heading(eyebrow: str, title: str) -> str:
     return (
         f'<div class="jok-section"><div class="eyebrow">{html.escape(eyebrow)}</div>'
         f"<h2>{html.escape(title)}</h2></div>"
-    )
-
-
-def summary_box(text: str) -> str:
-    """Ingresstext i löpande maxbredd."""
-    return f'<div class="jok-summary">{html.escape(text)}</div>'
-
-
-def render_kort(titel: str, innehall: str, ikon: str = "") -> str:
-    """Vit panel med tunn ram. Bas för scenarier och resultat."""
-    prefix = f"{html.escape(ikon)} " if ikon else ""
-    return (
-        f'<div class="jok-kort"><h3>{prefix}{html.escape(titel)}</h3>'
-        f"<div>{html.escape(innehall)}</div></div>"
     )
 
 

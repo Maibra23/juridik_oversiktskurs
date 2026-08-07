@@ -39,8 +39,11 @@ font = "serif"
 
 Sex steg, en roll var, deklarerade som CSS-variabler i `:root` i CSS-mallen
 `utils/css.py` (injiceras av `inject_css()` i `utils/ui.py`). Inga px-värden
-för `font-size` får förekomma utanför den deklarationen; `tests/test_ui.py`
-vaktar det.
+för `font-size` får förekomma utanför den deklarationen, med ett dokumenterat
+undantag för `utils/taxonomi_ui.py`s vis-network-iframe: den ritas i en egen
+`components.html`-sandlåda dit appens `:root`-tokens inte når, så grafens
+egna px-värden ligger utanför regelns räckvidd. `tests/test_ui.py` vaktar
+det.
 
 | Token | px | Roll |
 |---|---|---|
@@ -77,9 +80,9 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 
 ## 4. Layout och navigering
 
-* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (fortsätt i senast besökta modul, eller kursens första modul för en ny session) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
+* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (pekar på nästa ej påbörjade kursmodul i kursordning, med en rad som säger varför; först när alla kursmoduler är påbörjade faller den tillbaka på senast besökta modul) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
 * **Modulsida**: tre flikar i fast ordning: Rättsfall, Quiz, Lagrumsjakt. Samma struktur i alla moduler så att navigationen blir automatisk.
-* **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Visa facit".
+* **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Jag har försökt — visa facit" bakom en upplåsningsgrind — facit visas först efter klick, inte i en alltid synlig expander.
 * **Sidopanel**: modulnavigering överst, en rad LLM-status nederst. Statusraden
   utökas med detaljer först när något faktiskt är begränsat (under en fjärdedel
   av ett tak återstår, eller tutorn är otillgänglig): driftinformation ska inte
@@ -88,7 +91,7 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 
 ## 4.1 Navigeringshierarki
 
-Sidopanelen speglar svensk rätts systematik i stället för filordningen i pages/. Trädet är data i `utils/navigation.py` och ritas av `render_sidopanel` i `utils/ui.py`. Fyra nivåer, som skiljs åt med indrag, storlek och färgstyrka, aldrig med ikoner:
+Sidopanelen speglar svensk rätts systematik i stället för filordningen i sidor/. Trädet är data i `utils/navigation.py` och ritas av `render_sidopanel` i `utils/ui.py`. Fyra nivåer, som skiljs åt med indrag, storlek och färgstyrka, aldrig med ikoner:
 
 | Nivå | Exempel | Komponent | Typografi och färg |
 |---|---|---|---|
@@ -113,7 +116,7 @@ Regler:
 
 ## 4.2 Rättskartan: appens orienteringssida
 
-Rättskartan (`pages/16_Rattskartan.py`) är kursens karta över rättssystemet och är fullständig på dag noll: den kräver varken tutor eller genomförda övningar. Den ska inte förväxlas med **Kunskapskartan**, som är studentens personliga graf och växer med de egna rättsfallen.
+Rättskartan (`sidor/16_Rattskartan.py`) är kursens karta över rättssystemet och är fullständig på dag noll: den kräver varken tutor eller genomförda övningar. Den ska inte förväxlas med **Kunskapskartan**, som är studentens personliga graf och växer med de egna rättsfallen.
 
 Sidan har tre flikar i fast ordning:
 
@@ -153,9 +156,9 @@ Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("S
 * Fel och varningar formuleras alltid handlingsorienterat ("Kontrollera paragrafen på lagen.nu") och aldrig skuldbeläggande.
 * Varje övningsaktivitet inleds med en dämpad kapitälrad som säger vilket
   RNTS-steg den tränar ("TRÄNAR: NORM"). Avbildningen aktivitet -> steg ägs av
-  `utils/rnts.py`, som också är den enda platsen där stegens namn står. Skälet är
-  pedagogiskt: utan etiketten ser studenten fyra separata övningstyper i stället
-  för fyra ingångar till samma förmåga.
+  `utils/rnts.py`, som också är den enda platsen i koden där stegens namn
+  definieras. Skälet är pedagogiskt: utan etiketten ser studenten fyra separata
+  övningstyper i stället för fyra ingångar till samma förmåga.
 * TRÄNAR-raden ritas alltid efter flikens tomhetskontroll, aldrig före: en flik
   utan övningsinnehåll ska inte annonsera vad den skulle ha tränat.
 

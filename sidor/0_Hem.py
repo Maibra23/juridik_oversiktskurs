@@ -1,4 +1,4 @@
-"""Startsida: hero-block, en enda call-to-action, framsteg och arbetsgång.
+"""Startsida: hero-block, en enda call-to-action och framsteg.
 
 Registreras som standardsida i sidregistret i streamlit_app.py. CSS och
 sidopanel injiceras centralt av ingångspunkten, inte här.
@@ -121,12 +121,10 @@ def _render_framsteg() -> None:
         "Framstegen gäller den här sessionen. Stänger du fliken är de borta — "
         "ladda ner dem nedan för att behålla dem."
     )
-    _render_export(resultat, case_bok)
+    _render_export(case_bok)
 
 
-def _render_export(
-    resultat: dict[str, tuple[int, int]], case_bok: dict[str, tuple[str, ...]]
-) -> None:
+def _render_export(case_bok: dict[str, tuple[str, ...]]) -> None:
     """Exportknapparna: valvet primärt, rapporterna sekundära.
 
     Obsidianvalvet ligger först och får mest vikt eftersom det är den

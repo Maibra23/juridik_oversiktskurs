@@ -513,10 +513,15 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     # Rättningen renderas utanför knappblocket: den ska överleva att studenten
     # klickar någon annanstans på sidan. Streamlit kör om hela skriptet vid
     # varje interaktion, och det som bara ritas i knappens egen rerun försvinner.
+    # Avsiktlig bieffekt: så länge rattad_nyckel är satt körs ratta_lagrumsjakt
+    # om vid *varje* efterföljande rerun, inklusive de studenten utlöser genom
+    # att fortsätta skriva i textfältet. Omdömet uppdateras alltså live utan
+    # ett nytt klick på Rätta — det var hela poängen med att lägga rättningen
+    # här i stället för i knappens egen rerun.
     if st.session_state.get(rattad_nyckel):
         res = ratta_lagrumsjakt(jakt, svar)
         if res.korrekt:
-            st.success("Rätt lagrum!")
+            st.success("Rätt lagrum.")
             for ref in res.traffade:
                 _lagrum_chip_rad(ref)
         else:

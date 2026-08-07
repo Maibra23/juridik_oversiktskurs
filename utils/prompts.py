@@ -36,9 +36,15 @@ from utils.svarighetsgrad import normalisera as normalisera_svarighet
 MAX_SVARSLANGD_ORD = 400
 
 # RNTS-rubrikerna i den ordning tutorn måste använda dem. Hämtas ur
-# utils.rnts.RNTS_STEG så att stegens namn står på exakt ett ställe i
-# projektet (se den modulens docstring).
+# utils.rnts.RNTS_STEG så att stegens namn står på exakt ett ställe i koden
+# (se den modulens docstring).
 RNTS_RUBRIKER = RNTS_STEG
+
+# RNTS-formulärets fältnamn (utils/modulvy.py RNTS_FALT), i samma ordning
+# som RNTS_STEG. Kartan nedan härleds ur RNTS_STEG i stället för att
+# upprepa stegens namn som en fjärde kopia: byts ett stegnamn i rnts.py
+# ska studentsvaret märkas med det nya namnet här också.
+_RNTS_NYCKELORDNING = ("rattsfragan", "norm", "tillampning", "slutsats")
 
 # Begreppsfördjupningar hålls kortare än fallgranskningar: de kompletterar
 # en text studenten redan har framför sig.
@@ -221,12 +227,7 @@ def _formatera_studentsvar(studentens_svar: object) -> str:
         return studentens_svar.strip() or "(studenten har inte skrivit något svar)"
 
     if isinstance(studentens_svar, dict):
-        nyckelkarta = {
-            "rattsfragan": "Rättsfrågan",
-            "norm": "Norm",
-            "tillampning": "Tillämpning",
-            "slutsats": "Slutsats",
-        }
+        nyckelkarta = dict(zip(_RNTS_NYCKELORDNING, RNTS_STEG))
         rader = []
         for nyckel, rubrik in nyckelkarta.items():
             varde = str(studentens_svar.get(nyckel, "")).strip()

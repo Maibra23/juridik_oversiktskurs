@@ -53,17 +53,17 @@ Två poster — Statsrätt och Förvaltningsrätt — visas som
 **planerade men obyggda**. De är medvetet kvar: kartan ska visa hela
 rättssystemet, även de delar kursen inte täcker.
 
-Längst ned i panelen ligger en statuspanel med modellväljare (Qwen3-8B eller
-14B) och kvarvarande LLM-anrop för sessionen.
+Längst ned i panelen ligger en statuspanel: en rad, som i normalläget bara
+säger att tutorn är tillgänglig och utökas med modellnamn och kvarvarande
+anrop först när något faktiskt är begränsat.
 
-### 1. Hem — orientering och framsteg
+### 1. Hem — orientering och nästa steg
 
-Du landar på `0_Hem`. Överst en disclaimer om att appen inte är juridisk
-rådgivning. Sedan ett rutnät av modulkort, arbetsgången som en vågrät
-stegindikator, och längst ned **Framsteg** — tomt vid första besöket.
-
-Modulkorten är avsiktligt **inte** klickbara; de riktiga länkarna ligger
-under kartan. Skälet är att korten är en översiktsbild, inte en meny.
+Du landar på `0_Hem`: hjältesektion, disclaimer, och **Nästa steg** — en
+enda call-to-action-knapp mot nästa ej påbörjade kursmodul, med en rad som
+säger varför. Längst ned **Framsteg**, osynligt tills du har något att visa.
+Ingen modullista och ingen arbetsgångsindikator: sidopanelen är appens enda
+navigering, så startsidan visar var du är i stället för att upprepa den.
 
 ### 2. Rättskartan — dit man bör gå härnäst
 
@@ -176,8 +176,8 @@ Sidhuvud, sedan tre flikar: **Rättsfall**, **Quiz**, **Lagrumsjakt**.
 6. **Steppern** markerar Norm som godkänd först när *alla* lagrum i fältet
    verifierats. Övriga steg räknas som påbörjade så snart de har text.
 7. **"Be tutorn granska min analys"** — enda stället där LLM anropas i fliken.
-8. **"Visa facit (utan tutor)"** i en expander: rättsfråga, lagrum som chips,
-   tillämpningspunkter och slutsats. Helt deterministiskt.
+8. **"Jag har försökt — visa facit"** låser upp facit: rättsfråga, lagrum,
+   tillämpning och slutsats. Deterministiskt, men gömt tills studenten klickar.
 
 **Viktigt:** ett rättsfall räknas som genomfört när alla fyra fälten har
 innehåll — **utan att tutorn behöver ha körts**. Det är den händelsen som
@@ -231,23 +231,21 @@ lagrumsregistret faller appen tillbaka på ett kuraterat fall och säger till.
 
 ### Vad du ser
 
-Sidhuvud, en disclaimer om att appen inte är juridisk rådgivning, en karta
-över modulerna, riktiga navigeringslänkar under kartan (modulkorten är
-avsiktligt inte klickbara), arbetsgången i fyra steg, och sist **Framsteg**.
+Hjältesektion med kursnamn och en mening om metoden, en disclaimer, **Nästa
+steg** (den enda call-to-action-knappen, se avsnitt 2), och sist **Framsteg**.
 
 ### Framstegssektionen
 
-- Progressbar per modul med quizresultat.
-- Lista över genomförda rättsfall per modul.
-- **Tre nedladdningar:** studierapport i Markdown, studierapport i Excel, och
-  ett Obsidianvalv som zip.
+Osynlig tills något finns att visa. Sedan: en sammanfattningsrad (påbörjade
+moduler, genomförda rättsfall, ev. quizresultat), en rad om att framstegen
+är sessionsbundna, och **tre nedladdningar** — Obsidianvalv som zip
+(primär), rapport i Markdown, rapport i Excel.
 
 Obsidianvalvet är värt att ladda ner **även med noll genomförda fall**, för
 Rättskartan följer alltid med: 28 filer, cirka 47 kB.
 
 ### Begränsningar
 
-- Rubriken säger "Tolv moduler" men sidan renderar **13 modulkort**.
 - Framstegen försvinner vid omladdning av webbläsaren (avsnitt 11).
 
 ---
@@ -459,9 +457,9 @@ känna igen en paragrafhänvisning på formen innan hen kan läsa den.
   (godkänd). Norm blir grön först när *alla* lagrum i fältet verifierats.
 - **Lagrumschips** — guldkantade piller. Verifierade chips länkar till
   lagen.nu; overifierade får varningsstil och prefixet "Ej verifierad:".
-- **Progressbar per modul** på Hem, med quizresultat.
-- **Modulrutnät** på Hem — kort i två kolumner, en på mobil.
-- **Stegindikator** för arbetsgången, vågrät.
+- **Framstegsraden** på Hem — en sammanfattning av påbörjade moduler,
+  genomförda rättsfall och quizresultat, synlig först när något finns att
+  visa.
 - **Begreppskort och lagkort** på Rättskartan.
 
 ### Vad som inte finns
@@ -521,9 +519,9 @@ uppgiftens underlag måste avvisas i texten för att svaret ska godkännas.
 
 Underkänns ett svar görs **ett** omförsök med skärpt instruktion. Underkänns
 även det visas inget svar alls, utan en varning som pekar mot sidans
-deterministiska underlag ("Öppna *Visa facit* nedan"). Den underkända texten
-sparas medvetet inte. Hellre inget svar än felaktig juridik: studenten kan
-inte skilja dem åt.
+deterministiska underlag ("Jag har försökt — visa facit" nedan). Den
+underkända texten sparas medvetet inte. Hellre inget svar än felaktig
+juridik: studenten kan inte skilja dem åt.
 
 Vid tveksamhet godkänns svaret. Ett tveksamt svar som släpps igenom kostar
 en varningsruta; ett korrekt svar som stoppas kostar undervisning.
@@ -629,8 +627,8 @@ ett litet underlag.
 
 Slutsatsen är att 8B förblir standard. Ordningen i avsnitt 15 håller: de
 billiga greppen — facit, lagtext, granskning — gav mätbara lyft, medan
-modellstorlek inte gjorde det. 14B är kvar som valbart alternativ i
-sidopanelen.
+modellstorlek inte gjorde det. 14B går fortfarande att slå på via
+`LLM_MODEL`, men sidopanelens modellväljare togs bort som utvecklaryta.
 
 ### Begreppsfördjupningen
 
@@ -694,7 +692,7 @@ det återkommande skolexemplet i den här appen.
 **Facit** — kursens kontrollerade lösning på ett rättsfall: rättsfråga,
 lagrum, tillämpningspunkter och slutsats. Deterministisk, skriven av
 människa, och sedan 2026-07-21 tutorns sanningsunderlag. Studenten når den
-via "Visa facit (utan tutor)".
+via knappen "Jag har försökt — visa facit".
 
 **Generationseffekten** — att själv formulera ett svar ger mätbart bättre
 retention än att läsa ett färdigt. Det är skälet till att tutorn aldrig körs
@@ -755,7 +753,8 @@ Koden är skriven på svenska. Dessa dyker upp oftast:
 5. **`use_container_width` är deprecerad** i 5 anrop i 3 filer; borttagningen
    passerade 2025-12-31.
 6. **Råa `st.success/info/warning`** i fyra filer, mot designsystemet.
-7. **"Tolv moduler" men 13 kort** på Hem.
+7. ~~**"Tolv moduler" men 13 kort** på Hem.~~ **Inaktuell:** modulkorten togs
+   bort när Hem byggdes om kring en enda call-to-action (avsnitt 5).
 8. **Rättskartan bygger 52 begreppskort vid varje rerun**, även hopfällda.
 
 ---
@@ -770,7 +769,7 @@ Koden är skriven på svenska. Dessa dyker upp oftast:
 | 4 | **Fler rättsfall i tunna moduler** | löpande | Svaghet 3 |
 | 5 | **Bygg det blandade slumptestet** som docstringen redan lovar | 1 d | Svaghet 4 |
 | 6 | **Städa `use_container_width` och råa statuskomponenter** | 2 h | Svagheterna 5, 6 |
-| 7 | **Rätta "Tolv moduler" till 13**, eller räkna listan i koden | 5 min | Svaghet 7 |
+| ~~7~~ | ~~**Rätta "Tolv moduler" till 13**, eller räkna listan i koden~~ | — | **Inaktuell.** Modulkorten finns inte längre; Hem visar i stället en enda call-to-action (svaghet 7 ovan, avsnitt 5) |
 | 8 | **Lat rendering av begreppskort** — bygg bara utfällt område | 3 h | Svaghet 8 |
 | 9 | **Logga granskningens utfall** så andelen stoppade svar går att mäta över tid | 3 h | Gör LLM-kvaliteten mätbar i stället för anekdotisk |
 | ~~10~~ | ~~**Större modell för tutorn**~~ | — | **Prövad och avfärdad.** Qwen3-14B var långsammare och behövde fler omförsök än 8B, se avsnitt 12 |

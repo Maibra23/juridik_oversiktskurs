@@ -1,8 +1,11 @@
 """RNTS-stegen och vilken aktivitet som tränar vilket steg.
 
 RNTS är appens ryggrad, inte ett formulär. Den här modulen är den enda platsen
-där stegens namn står, och den enda platsen där kopplingen aktivitet -> steg
-definieras, så att UI:t kan märka varje övning med vad den faktiskt bygger.
+i koden där stegens namn definieras, och den enda platsen där kopplingen
+aktivitet -> steg definieras, så att UI:t kan märka varje övning med vad den
+faktiskt bygger. Stegens namn står med rätta även i löptext på flera ställen
+(t.ex. utils/prompts.py, utils/obsidian.py, utils/modulvy.py) — det är bara
+koden som ska ha en enda källa.
 
 Poängen är pedagogisk: en student som ser "TRÄNAR: NORM" över lagrumsjakten
 förstår att jakten och Normfältet i rättsfallsanalysen är samma förmåga. Utan

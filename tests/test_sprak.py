@@ -86,7 +86,9 @@ def _glyfundantagen(fil: Path) -> bool:
     return any(relativ.startswith(f"{k}/") for k in _GLYFUNDANTAG_KATALOGER)
 
 
-@pytest.mark.parametrize("fil", _granskade_filer(), ids=lambda p: str(p))
+@pytest.mark.parametrize(
+    "fil", _granskade_filer(), ids=lambda p: str(p.relative_to(ROT))
+)
 def test_inga_ikoner_eller_emoji(fil: Path) -> None:
     """Ingen emoji eller dekorativ glyf i kod, data eller dokumentation.
 
@@ -94,7 +96,7 @@ def test_inga_ikoner_eller_emoji(fil: Path) -> None:
     """
     if _glyfundantagen(fil):
         pytest.skip("dokumenterat undantag, se _GLYFUNDANTAG")
-    text = fil.read_text(encoding="utf-8")
+    text = fil.read_text(encoding="utf-8", errors="replace")
     for glyf in _FORBJUDNA_GLYFER:
         assert glyf not in text, f"{fil}: förbjuden glyf {glyf!r}"
     traff = _EMOJI.search(text)

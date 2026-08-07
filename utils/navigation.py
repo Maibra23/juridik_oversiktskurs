@@ -83,6 +83,11 @@ NAV_TRAD: tuple[Grupp, ...] = (
     Grupp(
         "CIVILRÄTT",
         (
+            # Gruppen och dess enda modul heter båda "Personrätt". Det är
+            # avsiktligt, inte en dubblett: gruppen är en äkta förfader till
+            # modulen (rättsområdet innehåller bara ett kapitel i kursen), så
+            # rubrikkedja("Personrätt") ger korrekt ("CIVILRÄTT", "Personrätt").
+            # Ingen namnunikhetsvakt ska "fixa" detta.
             Grupp(
                 "Personrätt",
                 (

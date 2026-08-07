@@ -36,8 +36,9 @@ ALTERNATIVE_MODEL = "Qwen/Qwen3-14B"
 # Appen kör på exakt dessa två modeller: 8B som standard, 14B som
 # alternativ. Allt annat avvisas och faller tillbaka till standardmodellen.
 SUPPORTED_MODELS = (DEFAULT_MODEL, ALTERNATIVE_MODEL)
-# Session-state-nyckel som sidopanelens modellväljare sätter för att byta
-# modell i runtime utan att röra secrets eller env.
+# Session-state-nyckel för att byta modell i runtime utan att röra secrets
+# eller env. Sidopanelens modellväljare satte den tidigare; kontrollen togs
+# bort, men nyckeln och overridet fungerar fortfarande (t.ex. för tester).
 MODEL_SESSION_KEY = "llm_model"
 DEFAULT_PROVIDER = "auto"
 DEFAULT_TIMEOUT = 60
@@ -157,9 +158,11 @@ def normalize_model(model: str | None) -> str | None:
 def get_active_model() -> str:
     """Avgör vilken modell appen ska använda just nu.
 
-    Prioritet: sidopanelens runtime-override (session state) > LLM_MODEL
-    > standardmodellen. Ogiltiga värden ignoreras så att appen alltid kör
-    på antingen Qwen3-8B eller Qwen3-14B.
+    Prioritet: runtime-override i session state (MODEL_SESSION_KEY) >
+    LLM_MODEL > standardmodellen. Sidopanelen har ingen kontroll som sätter
+    overridet längre (den togs bort), men mekanismen fungerar fortfarande,
+    t.ex. för tester. Ogiltiga värden ignoreras så att appen alltid kör på
+    antingen Qwen3-8B eller Qwen3-14B.
     """
     try:
         import streamlit as st

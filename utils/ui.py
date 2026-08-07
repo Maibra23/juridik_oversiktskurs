@@ -4,8 +4,9 @@ Ansvarar för allt visuellt som delas mellan sidorna:
 - inject_css: appens gemensamma stilar (palett ur design_system.md,
   varningsbadge för overifierade lagrum, lagrumschips)
 - render_sidebar / render_sidopanel / render_statuspanel: navigeringsträdet
-  ur utils.navigation, modellväljare och räknare för återstående LLM-anrop
-  (session + dagsbudget)
+  ur utils.navigation och en statusrad för återstående LLM-anrop
+  (session + dagsbudget), som utökas med modellnamn först när något
+  faktiskt är begränsat
 - hero, section_heading, pipeline_steps, footer_note:
   HTML-byggstenar för landnings- och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska

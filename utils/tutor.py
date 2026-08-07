@@ -142,7 +142,8 @@ def tutorknapp(
     ``underlag`` är uppgiftens kända korrekta lagrum. Anges det granskas
     svaret före visning, och underkända svar visas inte alls.
     ``reservhanvisning`` pekar studenten mot det deterministiska underlag som
-    redan finns på sidan, t.ex. "Öppna *Visa facit* nedan".
+    redan finns på sidan, t.ex. "Tryck på *Jag har försökt — visa facit*
+    nedan så länge".
     """
     import streamlit as st
 

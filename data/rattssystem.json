@@ -136,113 +136,144 @@
                 {
                   "id": "speciell_avtalsratt",
                   "namn": "Speciell avtalsrätt",
-                  "beskrivning": "Reglerna för särskilda avtalstyper, som bygger på den allmänna avtalsrätten men har egna lagar.",
-                  "nar": "Avtalet tillhör en typ med egen reglering: köp, anställning, hyra och liknande.",
+                  "beskrivning": "Reglerna för särskilda avtalstyper, ordnade efter vad avtalet gör: överlåtelse (äganderätten övergår), upplåtelse (nyttjande upplåts) eller prestation (någon presterar något). Varje typ bygger på den allmänna avtalsrätten men har egna lagar.",
+                  "nar": "Avtalet tillhör en typ med egen reglering: köp, hyra, anställning och liknande. Fråga alltid först vilka parterna är — samma avtalstyp routas till olika lag beroende på om det är näringsidkare emellan (B2B), konsument mot näringsidkare (B2C) eller privatpersoner. Köp av samma sak är t.ex. KöpL mellan jämnstarka men konsumentköplagen när en konsument köper av ett företag.",
                   "grenar": [
                     {
-                      "id": "kop_och_konsumentratt",
-                      "namn": "Köp- och konsumenträtt",
-                      "beskrivning": "Reglerna när varor byter ägare: dröjsmål, fel, påföljder, reklamation och marknadsföring.",
-                      "nar": "Ett köp har gått snett. Avgör först om köparen är konsument, för det styr vilken lag som gäller.",
-                      "lagar": [
+                      "id": "overlatelseavtal",
+                      "namn": "Överlåtelse",
+                      "beskrivning": "Avtal där äganderätten övergår permanent: köp, byte och gåva av lös eller fast egendom.",
+                      "nar": "Frågan gäller att en sak byter ägare för gott. Avgör om det är lös eller fast egendom — och om köparen är konsument, för det styr vilken lag som gäller.",
+                      "grenar": [
                         {
-                          "forkortning": "KöpL",
-                          "beskrivning": "Köp av lös egendom mellan näringsidkare eller mellan privatpersoner: dröjsmål, fel i varan och påföljder. Dispositiv, så parternas avtal går före lagen.",
-                          "nar": "Köparen är inte konsument. Är köparen konsument gäller i stället konsumentköplagen.",
-                          "relaterade": [
-                            "KKöpL",
-                            "AvtL"
+                          "id": "kop_och_konsumentratt",
+                          "namn": "Köp- och konsumenträtt",
+                          "beskrivning": "Reglerna när varor byter ägare: dröjsmål, fel, påföljder, reklamation och marknadsföring.",
+                          "nar": "Ett köp har gått snett. Avgör först om köparen är konsument, för det styr vilken lag som gäller.",
+                          "lagar": [
+                            {
+                              "forkortning": "KöpL",
+                              "beskrivning": "Köp av lös egendom mellan näringsidkare eller mellan privatpersoner: dröjsmål, fel i varan och påföljder. Dispositiv, så parternas avtal går före lagen.",
+                              "nar": "Köparen är inte konsument. Är köparen konsument gäller i stället konsumentköplagen.",
+                              "relaterade": [
+                                "KKöpL",
+                                "AvtL"
+                              ]
+                            },
+                            {
+                              "forkortning": "KKöpL",
+                              "beskrivning": "Konsumentskydd när en privatperson köper varor av ett företag: fel, reklamation och påföljder. Tvingande till konsumentens förmån.",
+                              "nar": "En privatperson har köpt en vara av en näringsidkare. Avtalsvillkor som är sämre för konsumenten än lagen gäller inte.",
+                              "relaterade": [
+                                "KöpL",
+                                "MFL",
+                                "AvtL"
+                              ]
+                            },
+                            {
+                              "forkortning": "MFL",
+                              "beskrivning": "Regler mot vilseledande och aggressiv marknadsföring, riktade mot företags säljmetoder.",
+                              "nar": "Frågan gäller reklamen eller säljmetoden i sig, inte det enskilda köpeavtalet.",
+                              "relaterade": [
+                                "KKöpL"
+                              ]
+                            }
                           ]
                         },
                         {
-                          "forkortning": "KKöpL",
-                          "beskrivning": "Konsumentskydd när en privatperson köper varor av ett företag: fel, reklamation och påföljder. Tvingande till konsumentens förmån.",
-                          "nar": "En privatperson har köpt en vara av en näringsidkare. Avtalsvillkor som är sämre för konsumenten än lagen gäller inte.",
-                          "relaterade": [
-                            "KöpL",
-                            "MFL",
-                            "AvtL"
+                          "id": "kop_av_fast_egendom",
+                          "namn": "Köp av fast egendom",
+                          "beskrivning": "Köp, byte och gåva av fastighet: formkrav, fullbordan och fel i fastighet. Den obligationsrättsliga delen av jordabalken.",
+                          "nar": "Frågan gäller köp av fastighet (formkraven i 4 kap. JB) eller fel i fastigheten efter tillträde.",
+                          "lagar": [
+                            {
+                              "forkortning": "JB",
+                              "beskrivning": "Jordabalkens 4 kap. reglerar köp av fast egendom: formkrav för giltigt köp, fullbordan och fel i fastighet.",
+                              "nar": "Frågan rör formkraven för ett fastighetsköp eller fel i fastigheten efter tillträdet.",
+                              "relaterade": [
+                                "AvtL"
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "id": "upplatelseavtal",
+                      "namn": "Upplåtelse",
+                      "beskrivning": "Avtal där någon får nyttja en sak eller rättighet medan äganderätten stannar kvar: hyra, leasing och licens.",
+                      "nar": "Frågan gäller rätten att använda något som någon annan äger. Äganderätten övergår inte, bara nyttjandet.",
+                      "grenar": [
+                        {
+                          "id": "hyra_av_fast_egendom",
+                          "namn": "Hyra av fast egendom",
+                          "beskrivning": "Hyra av bostad och lokal: avtalets ingående, hyrestid och uppsägningstid. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
+                          "nar": "Frågan gäller ett hyresförhållande för fast egendom — vad som räknas som hyra, hyrestidens längd eller uppsägning. Är hyresgästen konsument bär jordabalkens 12 kap. tvingande skydd (besittningsskydd och skälig hyra).",
+                          "lagar": [
+                            {
+                              "forkortning": "JB",
+                              "beskrivning": "Jordabalkens 12 kap. §§ 1–9 reglerar hyresavtalets ingående, hyrestid och uppsägningstid.",
+                              "nar": "Frågan rör ett hyresförhållande: vad som räknas som hyra, hyrestidens bestämmande eller uppsägningstidens längd.",
+                              "relaterade": [
+                                "AvtL"
+                              ]
+                            }
                           ]
                         },
                         {
-                          "forkortning": "MFL",
-                          "beskrivning": "Regler mot vilseledande och aggressiv marknadsföring, riktade mot företags säljmetoder.",
-                          "nar": "Frågan gäller reklamen eller säljmetoden i sig, inte det enskilda köpeavtalet.",
-                          "relaterade": [
-                            "KKöpL"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "id": "kop_av_fast_egendom",
-                      "namn": "Köp av fast egendom",
-                      "beskrivning": "Köp, byte och gåva av fastighet: formkrav, fullbordan och fel i fastighet. Den obligationsrättsliga delen av jordabalken.",
-                      "nar": "Frågan gäller köp av fastighet (formkraven i 4 kap. JB) eller fel i fastigheten efter tillträde.",
-                      "lagar": [
+                          "id": "leasing",
+                          "namn": "Leasing",
+                          "beskrivning": "Ingen särskild leasinglag finns i Sverige. Avtalet bedöms utifrån allmänna avtalsrättsliga principer, med försiktig analogi till köplagen eller konsumentköplagen. Konsumentkreditlagen (2010:1846) kan bli tillämplig om leasingen i realiteten är ett avbetalningsköp.",
+                          "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer — det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "lagar": []
+                        },
                         {
-                          "forkortning": "JB",
-                          "beskrivning": "Jordabalkens 4 kap. reglerar köp av fast egendom: formkrav för giltigt köp, fullbordan och fel i fastighet.",
-                          "nar": "Frågan rör formkraven för ett fastighetsköp eller fel i fastigheten efter tillträdet.",
-                          "relaterade": [
-                            "AvtL"
-                          ]
+                          "id": "licensavtal",
+                          "namn": "Licensavtal",
+                          "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
+                          "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "lagar": []
                         }
                       ]
                     },
                     {
-                      "id": "hyra_av_fast_egendom",
-                      "namn": "Hyra av fast egendom",
-                      "beskrivning": "Hyra av bostad och lokal: avtalets ingående, hyrestid och uppsägningstid. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
-                      "nar": "Frågan gäller ett hyresförhållande för fast egendom — vad som räknas som hyra, hyrestidens längd eller uppsägning.",
-                      "lagar": [
+                      "id": "prestationsavtal",
+                      "namn": "Prestation och tjänst",
+                      "beskrivning": "Avtal där någon åtar sig en prestation eller ett varaktigt åtagande: transport, arbete och försäkring.",
+                      "nar": "Frågan gäller ett åtagande att prestera eller utföra något, inte att överlåta eller upplåta en sak.",
+                      "grenar": [
                         {
-                          "forkortning": "JB",
-                          "beskrivning": "Jordabalkens 12 kap. §§ 1–9 reglerar hyresavtalets ingående, hyrestid och uppsägningstid.",
-                          "nar": "Frågan rör ett hyresförhållande: vad som räknas som hyra, hyrestidens bestämmande eller uppsägningstidens längd.",
-                          "relaterade": [
-                            "AvtL"
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "id": "transportavtal",
-                      "namn": "Transportavtal",
-                      "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
-                      "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-                      "lagar": []
-                    },
-                    {
-                      "id": "leasing",
-                      "namn": "Leasing",
-                      "beskrivning": "Ingen särskild leasinglag finns i Sverige. Avtalet bedöms utifrån allmänna avtalsrättsliga principer, med försiktig analogi till köplagen eller konsumentköplagen. Konsumentkreditlagen (2010:1846) kan bli tillämplig om leasingen i realiteten är ett avbetalningsköp.",
-                      "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer — det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-                      "lagar": []
-                    },
-                    {
-                      "id": "arbetsratt",
-                      "namn": "Arbetsrätt",
-                      "beskrivning": "Förhållandet mellan arbetsgivare och arbetstagare, särskilt anställningens skydd.",
-                      "nar": "En anställning ingås, ändras eller avslutas.",
-                      "lagar": [
+                          "id": "transportavtal",
+                          "namn": "Transportavtal",
+                          "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
+                          "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "lagar": []
+                        },
                         {
-                          "forkortning": "LAS",
-                          "beskrivning": "Anställningsskydd: anställningsformer, krav på sakliga skäl för uppsägning, avsked vid grovt åsidosättande samt turordningsregler.",
-                          "nar": "Någon sägs upp, avskedas eller visstidsanställs. Skilj alltid uppsägning från avsked.",
-                          "relaterade": [
-                            "SkL",
-                            "AvtL"
+                          "id": "arbetsratt",
+                          "namn": "Arbetsrätt",
+                          "beskrivning": "Förhållandet mellan arbetsgivare och arbetstagare, särskilt anställningens skydd.",
+                          "nar": "En anställning ingås, ändras eller avslutas.",
+                          "lagar": [
+                            {
+                              "forkortning": "LAS",
+                              "beskrivning": "Anställningsskydd: anställningsformer, krav på sakliga skäl för uppsägning, avsked vid grovt åsidosättande samt turordningsregler.",
+                              "nar": "Någon sägs upp, avskedas eller visstidsanställs. Skilj alltid uppsägning från avsked.",
+                              "relaterade": [
+                                "SkL",
+                                "AvtL"
+                              ]
+                            }
                           ]
+                        },
+                        {
+                          "id": "forsakringsavtal",
+                          "namn": "Försäkringsavtal",
+                          "beskrivning": "Förhållandet mellan försäkringsbolaget och den försäkrade regleras i försäkringsavtalslagen (2005:104, FAL): avtalets ingående, upplysningsplikt, bolagets ansvar och rätten till ersättning.",
+                          "nar": "Frågan gäller skyldigheterna i själva försäkringsförhållandet — då är det speciell avtalsrätt. Gäller den i stället att driva in en fordran eller kräva säkerhet (skuldebrev, borgen, pant), är det fordrings- och krediträtt. FAL ingår inte i kursens lagrumsregister; kartan pekar bara ut området.",
+                          "lagar": []
                         }
                       ]
-                    },
-                    {
-                      "id": "licensavtal",
-                      "namn": "Licensavtal",
-                      "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
-                      "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-                      "lagar": []
                     }
                   ]
                 },

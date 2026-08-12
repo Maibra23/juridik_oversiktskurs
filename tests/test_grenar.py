@@ -72,11 +72,49 @@ def test_straffratt_och_process_ligger_under_offentlig_ratt():
         )
 
 
-def test_kop_och_arbetsratt_ar_speciell_avtalsratt():
+def test_speciell_avtalsratt_ordnad_i_tre_transaktionsfamiljer():
+    """Axis 1: speciell avtalsrätt grupperas efter vad avtalet gör med saken.
+
+    Överlåtelse (äganderätten övergår), upplåtelse (nyttjande upplåts) och
+    prestation (någon presterar). Leaf-id:na är oförändrade — bara föräldern
+    byts — så begreppslänkarna i nyckelbegrepp.json består.
+    """
     speciell = hitta_gren("speciell_avtalsratt")
     assert speciell is not None
-    barn_ider = {b.id for b in speciell.grenar}
-    assert {"kop_och_konsumentratt", "arbetsratt"} <= barn_ider
+    familj_ider = [b.id for b in speciell.grenar]
+    assert familj_ider == [
+        "overlatelseavtal",
+        "upplatelseavtal",
+        "prestationsavtal",
+    ]
+
+
+def test_avtalstyper_ligger_i_ratt_transaktionsfamilj():
+    forvantat = {
+        "overlatelseavtal": {"kop_och_konsumentratt", "kop_av_fast_egendom"},
+        "upplatelseavtal": {"hyra_av_fast_egendom", "leasing", "licensavtal"},
+        "prestationsavtal": {"transportavtal", "arbetsratt", "forsakringsavtal"},
+    }
+    for familj_id, barn in forvantat.items():
+        familj = hitta_gren(familj_id)
+        assert familj is not None, f"Transaktionsfamiljen {familj_id} saknas"
+        assert {b.id for b in familj.grenar} == barn, (
+            f"{familj_id} har fel avtalstyper"
+        )
+
+
+def test_speciell_avtalsratt_paminner_om_parterna():
+    """Axis 2 som kompakt hint: kartan nudgar användaren att fråga vilka
+
+    parterna är, eftersom samma avtalstyp routas till olika lag beroende på om
+    det är B2B, B2C eller privat. Ingen egen nod — bara text på grenen.
+    """
+    speciell = hitta_gren("speciell_avtalsratt")
+    assert speciell is not None
+    text = f"{speciell.beskrivning} {speciell.nar}".lower()
+    assert "part" in text and ("konsument" in text or "b2b" in text), (
+        "Partsöverlägget (vem avtalar?) saknas i speciell avtalsrätt"
+    )
 
 
 def test_obligationsratt_och_sakratt_ligger_under_formogenhetsratt():

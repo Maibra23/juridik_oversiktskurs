@@ -200,19 +200,35 @@ def test_transportavtal_leasing_licensavtal_ar_lagfria_placeholders():
         assert "inga lagrum ur kursens register" in gren.nar.lower()
 
 
-def test_speciell_avtalsratt_har_sju_avtalstyper_i_ratt_ordning():
+def test_speciell_avtalsratt_grupperad_i_transaktionsfamiljer():
+    """Axis 1: de sju avtalstyperna ligger nu under tre familjer, plus FAL.
+
+    Speciell avtalsrätt bär inte längre avtalstyperna direkt utan grupperar dem
+    efter vad avtalet gör med saken. Leaf-id:na är oförändrade, bara inbäddade
+    ett steg djupare, och försäkringsavtal tillkommer under prestation.
+    """
     from utils.rattskarta import hitta_gren
 
     speciell = hitta_gren("speciell_avtalsratt")
     assert speciell is not None
     assert [g.id for g in speciell.grenar] == [
+        "overlatelseavtal",
+        "upplatelseavtal",
+        "prestationsavtal",
+    ]
+
+    avtalstyper_i_ordning = [
+        typ.id for familj in speciell.grenar for typ in familj.grenar
+    ]
+    assert avtalstyper_i_ordning == [
         "kop_och_konsumentratt",
         "kop_av_fast_egendom",
         "hyra_av_fast_egendom",
-        "transportavtal",
         "leasing",
-        "arbetsratt",
         "licensavtal",
+        "transportavtal",
+        "arbetsratt",
+        "forsakringsavtal",
     ]
 
 

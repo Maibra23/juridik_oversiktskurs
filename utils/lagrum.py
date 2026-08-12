@@ -85,31 +85,48 @@ class Lagrumstraff:
 
 # --- Regex ------------------------------------------------------------------
 
+# Paragraf- och kapitelmarkörer accepteras både som tecken och utskrivna, för
+# att § inte ska krävas (tecknet är svårt att skriva på många tangentbord).
+# Utskrivna former: "paragrafen", "paragraf" och den säkra förkortningen
+# "par." (med punkt). Bart "p" utelämnas medvetet — det förväxlas för lätt med
+# vanlig text och skulle urholka hallucinationsspärren. Längsta alternativet
+# först så att t.ex. "paragrafen" matchar före "paragraf". Kapitel på samma
+# sätt: "kapitlet"/"kapitel" utöver "kap."/"kap".
+# (?i:...) gör bara markörorden skiftlägesokänsliga (Paragrafen/PARAGRAFEN),
+# i linje med att lagnamnen redan matchas oberoende av skiftläge. Resten av
+# mönstret förblir skiftlägeskänsligt. Den avslutande (?![a-zåäö]) på ordformerna
+# hindrar att "paragraf" nafsar ett prefix av "paragrafen" och lämnar "en"/"EN"
+# kvar som en påhittad förkortning; §-tecknet får däremot gränsa direkt mot
+# lagnamnet ("36 §AvtL") och har därför ingen sådan spärr.
+_PARAGRAF_MARKOR = r"(?i:§{1,2}|par\.|paragraf(?:erna|en)?(?![a-zåäö]))"
+_KAPITEL_MARKOR = r"(?i:kap\.|kapitlet|kapitel|kap(?![a-zåäö]))"
+
 # Fångar svenska lagrumshänvisningar:
 #   "36 § AvtL", "3 kap. 1 § SkL", "7 kap 1 § ÄktB", "28 till 30 §§ AvtL"
+#   "3 paragrafen SkbrL", "3 kapitlet 1 paragrafen skadeståndslagen"
 # Förkortningen består av bokstäver i valfritt skiftläge (t.ex. AvtL, avtl,
 # AVTL) och normaliseras till registrets kanoniska skiftläge i
 # _ref_fran_match. Verifiering av att den finns i registret sker separat i
 # validera_lagrum.
 LAGRUM_PATTERN = re.compile(
-    r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
+    r"(?:(?P<kapitel>\d+)\s*" + _KAPITEL_MARKOR + r"\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
     r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
-    r"§{1,2}\s*"
+    + _PARAGRAF_MARKOR + r"\s*"
     r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)"
 )
 
 # Omvänd ordning där modellen skriver förkortningen först, t.ex.
-# "AvtL 36 §", "AvtL 28–30 §§", "SkL 3 kap. 1 §". Denna form är tvetydig
-# (vilket ord som helst kan föregå ett paragrafnummer), så träffar
-# accepteras endast om förkortningen finns i registret (skiftlägesokänsligt).
-# Se extrahera_lagrum för den filtreringen.
+# "AvtL 36 §", "AvtL 28–30 §§", "SkL 3 kap. 1 §", "skuldebrevslagen 3 paragrafen".
+# Denna form är tvetydig (vilket ord som helst kan föregå ett paragrafnummer),
+# så träffar accepteras endast om förkortningen finns i registret
+# (skiftlägesokänsligt). Se extrahera_lagrum för den filtreringen.
 LAGRUM_PATTERN_OMVAND = re.compile(
     r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)\s+"
-    r"(?:(?P<kapitel>\d+)\s*kap\.?\s*)?"
+    r"(?:(?P<kapitel>\d+)\s*" + _KAPITEL_MARKOR + r"\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
     r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
-    r"§{1,2}"
+    + _PARAGRAF_MARKOR
 )
 
 # Rättsfallshänvisningar (NJA, RH, AD, MÖD) kan inte valideras lokalt i v1.

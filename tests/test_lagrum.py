@@ -129,6 +129,65 @@ def test_extrahera_blandad_ordning_i_samma_text():
     assert [r.paragraf for r in refs] == ["1", "36"]
 
 
+# --- Utskrivna paragraf-/kapitelord (§ är svårt att skriva på tangentbord) ---
+
+
+def test_extrahera_utskrivet_paragraford_omvand():
+    """'skuldebrevslagen 3 paragrafen' ska tolkas som 3 § SkbrL."""
+    (ref,) = extrahera_lagrum("Det framgår av skuldebrevslagen 3 paragrafen.")
+    assert ref.forkortning == "SkbrL"
+    assert ref.paragraf == "3"
+
+
+def test_extrahera_utskrivet_paragraford_kanonisk():
+    """'3 paragrafen SkbrL' (paragrafordet före förkortningen) ska också gå."""
+    (ref,) = extrahera_lagrum("Se 3 paragrafen SkbrL.")
+    assert ref.forkortning == "SkbrL"
+    assert ref.paragraf == "3"
+
+
+def test_extrahera_utskrivet_kapitel_och_paragraford():
+    """'3 kapitlet 1 paragrafen skadeståndslagen' ska ge SkL 3 kap. 1 §."""
+    (ref,) = extrahera_lagrum(
+        "Principalansvaret i 3 kapitlet 1 paragrafen skadeståndslagen."
+    )
+    assert ref.forkortning == "SkL"
+    assert ref.kapitel == "3"
+    assert ref.paragraf == "1"
+
+
+def test_extrahera_forkortat_paragraford_par():
+    """Den säkra förkortningen 'par.' (med punkt) ska accepteras."""
+    (ref,) = extrahera_lagrum("avtalslagen 36 par.")
+    assert ref.forkortning == "AvtL"
+    assert ref.paragraf == "36"
+
+
+def test_extrahera_paragraford_ar_skiftlagesokant():
+    """Markörordet ska tolkas oavsett skiftläge, precis som lagnamnet."""
+    for text in ("preskriptionslagen 2 PARAGRAFEN", "Preskriptionslagen 2 Paragrafen"):
+        (ref,) = extrahera_lagrum(text)
+        assert ref.forkortning == "PreskL", text
+        assert ref.paragraf == "2", text
+
+
+def test_extrahera_avvisar_bart_p_som_paragrafmarkor():
+    """Bart 'p' är för lätt att förväxla med vanlig text och accepteras inte."""
+    assert extrahera_lagrum("skuldebrevslagen 3 p") == ()
+
+
+def test_utskrivet_paragraford_verifieras_mot_registret():
+    """Hela vägen: en utskriven referens ska bli VERIFIERAD som en §-referens."""
+    (ref,) = extrahera_lagrum("skuldebrevslagen 3 paragrafen")
+    assert validera_lagrum(ref) == STATUS_VERIFIERAD
+
+
+def test_utskrivet_paragraford_bevarar_hallucinationsspärren():
+    """En påhittad lag med utskrivet paragraford ska flaggas, inte verifieras."""
+    (ref,) = extrahera_lagrum("3 paragrafen Pizzalagen")
+    assert validera_lagrum(ref) == STATUS_OKAND_LAG
+
+
 # --- Skiftlägesokänslig förkortning ------------------------------------------
 
 def test_extrahera_gemener_normaliseras_till_kanoniskt_skiftlage():

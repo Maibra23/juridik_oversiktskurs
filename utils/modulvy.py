@@ -466,7 +466,9 @@ def _rendera_lagrumsjakt(modul: Modulscenarier) -> None:
 
     st.caption(
         "Skriv vilket lagrum situationen handlar om. Rättningen är deterministisk "
-        "och kräver ingen tutor."
+        "och kräver ingen tutor. Du behöver inte §-tecknet — "
+        "\"3 paragrafen skuldebrevslagen\" fungerar lika bra som \"3 § SkbrL\". "
+        "(§ ligger oftast på tangenten till vänster om 1.)"
     )
     for i, jakt in enumerate(modul.lagrumsjakt, 1):
         _rendera_jaktfraga(modul.modul, i, jakt)
@@ -504,7 +506,7 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     svar = st.text_input(
         "Ditt lagrum",
         key=f"jakt_svar_{modul}_{jakt.id}",
-        placeholder="T.ex. 4 § AvtL eller 2 kap. 1 § SkL",
+        placeholder="T.ex. 4 § AvtL, 4 paragrafen avtalslagen eller 2 kap. 1 § SkL",
     )
     rattad_nyckel = _jakt_ratta_nyckel(modul, jakt.id)
     if st.button("Rätta", key=f"jakt_ratta_{modul}_{jakt.id}"):

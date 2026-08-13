@@ -31,6 +31,9 @@ from utils.rattskarta import Gren, ladda_rattssystem
 GRUPP_ROT = "rot"
 GRUPP_GREN = "gren"
 GRUPP_LAG = "lag"
+# Referenslag: klickbar kartnod för överblick, men utanför kursregistret. Egen
+# grupp så att renderingen kan skilja den från kursens guldlagar.
+GRUPP_REFERENS = "referenslag"
 
 ROT_ID = "rot"
 ROT_LABEL = "Svensk rätt"
@@ -145,8 +148,27 @@ def bygg_taxonomigraf() -> Taxonomigraf:
             _lagg_till(barn, gid, niva + 1)
 
         for lag in gren.lagar:
-            info = register[lag.forkortning]
             lid = lag_id(gren.id, lag.forkortning)
+            if lag.ar_referens:
+                noder.append(
+                    {
+                        "id": lid,
+                        "label": lag.forkortning,
+                        "forkortning": lag.forkortning,
+                        "grupp": GRUPP_REFERENS,
+                        "niva": niva + 1,
+                        "foralder": gid,
+                        "toppgren": gren.toppgren,
+                        "titel": (
+                            f"{lag.namn} (SFS {lag.sfs}). {lag.beskrivning} "
+                            "Överblick – utanför kursen."
+                        ),
+                        "url": f"https://lagen.nu/{lag.sfs}",
+                    }
+                )
+                kanter.append({"fran": gid, "till": lid})
+                continue
+            info = register[lag.forkortning]
             noder.append(
                 {
                     "id": lid,

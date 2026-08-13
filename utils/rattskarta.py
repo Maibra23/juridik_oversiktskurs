@@ -43,12 +43,21 @@ _DISCLAIMER = (
 
 @dataclass(frozen=True)
 class LagPost:
-    """En lag i kartan: kursens förkortning plus kartans pedagogiska texter."""
+    """En lag i kartan: kursens förkortning plus kartans pedagogiska texter.
+
+    ``ar_referens`` skiljer kurslagar (de 21 i lagrumsregistret, som rättningen
+    graderar) från referenslagar: kartnoder som ger överblick över svensk rätt
+    men står utanför kursen. En referenslag bär sitt ``namn`` och ``sfs`` inline
+    (den finns inte i registret att hämta dem ur) och rättningen ser den aldrig.
+    """
 
     forkortning: str
     beskrivning: str
     nar: str
     relaterade: tuple[str, ...]
+    ar_referens: bool = False
+    namn: str | None = None
+    sfs: str | None = None
 
 
 @dataclass(frozen=True)
@@ -78,7 +87,32 @@ class Gren:
 
 # --- Inläsning med grundningsvalidering ---------------------------------------
 
+def _bygg_referenslag(rad: dict) -> LagPost:
+    """Bygg en referenslag: kartnod utanför kursregistret, med inline namn/SFS.
+
+    Ingen registerspärr (referenslagen finns per definition inte i registret),
+    men namn och SFS är obligatoriska eftersom de driver etikett och lagen.nu-
+    länk som annars hade hämtats ur registret.
+    """
+    for falt in ("forkortning", "namn", "sfs", "beskrivning"):
+        if not str(rad.get(falt, "")).strip():
+            raise ValueError(
+                f"Referenslagen saknar obligatoriskt fält {falt!r}: {rad!r}"
+            )
+    return LagPost(
+        forkortning=str(rad["forkortning"]),
+        beskrivning=str(rad["beskrivning"]),
+        nar=str(rad.get("nar", "")),
+        relaterade=(),
+        ar_referens=True,
+        namn=str(rad["namn"]),
+        sfs=str(rad["sfs"]),
+    )
+
+
 def _bygg_lagpost(rad: dict) -> LagPost:
+    if rad.get("referens"):
+        return _bygg_referenslag(rad)
     lag = LagPost(
         forkortning=str(rad["forkortning"]),
         beskrivning=str(rad["beskrivning"]),
@@ -211,10 +245,17 @@ def hitta_gren(gren_id: str) -> Gren | None:
 
 
 def _lagindex() -> dict[str, tuple[LagPost, Gren]]:
-    """Index förkortning -> (lagpost, löv-gren) för notbyggarna."""
+    """Index förkortning -> (lagpost, löv-gren) för notbyggarna.
+
+    Referenslagar utelämnas: de står utanför kursregistret och saknar
+    kursavsnitt, så de får ingen egen Obsidian-not — de finns bara som
+    överblick på kartan.
+    """
     index: dict[str, tuple[LagPost, Gren]] = {}
     for lov in delomraden():
         for lag in lov.lagar:
+            if lag.ar_referens:
+                continue
             index.setdefault(lag.forkortning, (lag, lov))
     return index
 
@@ -228,6 +269,24 @@ def _frontmatter(rader: dict[str, str], taggar: tuple[str, ...]) -> str:
     ut.extend(f"  - {t}" for t in taggar)
     ut.append("---")
     return "\n".join(ut)
+
+
+def _lagrad(lag: LagPost, inryck: str = "", med_nar: bool = False) -> str:
+    """En listrad för en lag i en not.
+
+    Kurslagar wikilänkas till sin egen not ([[AvtL]]). Referenslagar saknar not
+    (de står utanför kursen) och länkas i stället direkt till lagen.nu, så att
+    valvet aldrig får en bruten wikilänk.
+    """
+    if lag.ar_referens:
+        return (
+            f"{inryck}- {lag.forkortning} "
+            f"([{lag.namn}](https://lagen.nu/{lag.sfs})): {lag.beskrivning}"
+        )
+    rad = f"{inryck}- [[{lag.forkortning}]]: {lag.beskrivning}"
+    if med_nar and lag.nar:
+        rad += f" *När:* {lag.nar}"
+    return rad
 
 
 def lagnot(forkortning: str) -> str:
@@ -302,7 +361,7 @@ def _gren_rubriker(gren: Gren, niva: int, rader: list[str]) -> None:
     if gren.ar_lov:
         if gren.lagar:
             for lag in gren.lagar:
-                rader.append(f"- [[{lag.forkortning}]]: {lag.beskrivning}")
+                rader.append(_lagrad(lag))
         else:
             rader.append("*Inga lagar ur kursens lagrumslista i denna gren.*")
         rader.append("")
@@ -447,10 +506,7 @@ def _tradgren(gren: Gren, toppnamn: str | None = None, niva: int = 0) -> list[st
         if gren.lagar:
             rader.append(inryck.rstrip())
             for lag in gren.lagar:
-                rader.append(
-                    f"{inryck}- [[{lag.forkortning}]]: {lag.beskrivning} "
-                    f"*När:* {lag.nar}"
-                )
+                rader.append(_lagrad(lag, inryck, med_nar=True))
     else:
         for barn in gren.grenar:
             rader.extend(_tradgren(barn, toppnamn, niva + 1))

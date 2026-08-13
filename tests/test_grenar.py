@@ -36,15 +36,26 @@ BEGREPP_DELOMRADEN = {
 }
 
 
-def test_tva_toppgrenar_i_ordning():
+def test_toppgrenar_i_ordning():
+    """Tre toppområden: de två klassiska plus internationell rätt/EU-rätt.
+
+    Internationell rätt & EU-rätt är ett rent överblicksområde (referens- och
+    pekarnoder, ingen kurslag) som sätts sist eftersom svensk rätt verkar
+    *inom* det snarare än att det är en gren av den inhemska systematiken.
+    """
     grenar = toppgrenar()
-    assert [g.id for g in grenar] == ["offentlig_ratt", "civilratt"]
+    assert [g.id for g in grenar] == [
+        "offentlig_ratt",
+        "civilratt",
+        "internationell_ratt",
+    ]
 
 
 def test_toppgrenarna_bar_ratt_farg():
     farger = {g.id: g.farg for g in ladda_rattssystem()}
     assert farger["offentlig_ratt"] == "quote"
     assert farger["civilratt"] == "info"
+    assert farger["internationell_ratt"] == "success"
 
 
 def test_toppgren_arvs_nedat_pa_varje_gren():

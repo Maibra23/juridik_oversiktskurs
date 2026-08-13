@@ -28,6 +28,7 @@ from utils.rattskarta import ladda_rattssystem
 from utils.rattssystem_graf import (
     GRUPP_GREN,
     GRUPP_LAG,
+    GRUPP_REFERENS,
     GRUPP_ROT,
     TaxNod,
     Taxonomigraf,
@@ -44,6 +45,10 @@ _VIS_NETWORK_CDN = (
 GRENFARGER: dict[str, dict[str, str]] = {
     "offentlig_ratt": {"bg": "#6B6459", "kant": "#4A453D", "text": "#FFFFFF"},
     "civilratt": {"bg": "#2C5F8A", "kant": "#1F4460", "text": "#FFFFFF"},
+    # Dämpad grön systerkulör för det rena överblicksområdet internationell
+    # rätt/EU-rätt. Klarar kontrastkravet mot vit text och är varken guld
+    # (reserverat för lag) eller någon av de två inhemska toppgrenarnas färg.
+    "internationell_ratt": {"bg": "#3E7C5A", "kant": "#2C5A40", "text": "#FFFFFF"},
 }
 
 # Etiketter för legenden. Läses inte ur datat för att hålla legenden ren även
@@ -51,10 +56,15 @@ GRENFARGER: dict[str, dict[str, str]] = {
 _GRENETIKETT: dict[str, str] = {
     "offentlig_ratt": "Offentlig rätt",
     "civilratt": "Civilrätt",
+    "internationell_ratt": "Internationell rätt & EU-rätt",
 }
 
 _ROTFARG = {"bg": "#1A2332", "kant": "#0D131D", "text": "#FAF7F2"}
 _LAGFARG = {"bg": "#B8860B", "kant": "#8A6608", "text": "#FFFFFF"}
+# Referenslag: blek guld med guldkant — samma guldsläkt (det ÄR en lag) men
+# ihålig i stället för fylld, så att kursens lagar syns som de tyngre noderna
+# och referenslagarna läses som ren överblick utanför kursen.
+_REFERENSFARG = {"bg": "#FBF4E0", "kant": "#B8860B", "text": "#6E5206"}
 
 # Nodstorlek per djup: roten störst, lagarna minst. Djupare nivåer klampas
 # till minsta storleken.
@@ -112,9 +122,11 @@ def _json_for_html(data: object) -> str:
 
 
 def _nodfarg(nod: TaxNod) -> dict[str, str]:
-    """Färgen för en nod: lag = guld, rot = bläck, annars per toppgren."""
+    """Färgen för en nod: lag = guld, referens = blek guld, rot = bläck, annars per toppgren."""
     if nod["grupp"] == GRUPP_LAG:
         return _LAGFARG
+    if nod["grupp"] == GRUPP_REFERENS:
+        return _REFERENSFARG
     if nod["grupp"] == GRUPP_ROT:
         return _ROTFARG
     return GRENFARGER.get(nod.get("toppgren", ""), _ROTFARG)
@@ -150,11 +162,13 @@ def _vis_noder(graf: Taxonomigraf) -> list[dict]:
                 "title": nod.get("titel", ""),
                 "url": nod.get("url", ""),
                 "foralder": nod.get("foralder", ""),
-                "shape": "dot" if nod["grupp"] == GRUPP_LAG else "box",
+                "shape": "dot" if nod["grupp"] in (GRUPP_LAG, GRUPP_REFERENS) else "box",
                 "size": _STORLEK.get(niva, 13),
                 "color": {"background": farg["bg"], "border": farg["kant"]},
                 "font": {
-                    "color": farg["text"] if nod["grupp"] != GRUPP_LAG else "#1A2332",
+                    "color": farg["text"]
+                    if nod["grupp"] not in (GRUPP_LAG, GRUPP_REFERENS)
+                    else "#1A2332",
                     "size": 16 if niva <= 1 else 13,
                 },
                 "level": niva,
@@ -217,7 +231,8 @@ def farglegend_html() -> str:
         for g in ladda_rattssystem()
         if g.id in GRENFARGER
     ]
-    poster.append((_LAGFARG["bg"], "Lag (klicka för lagen.nu)"))
+    poster.append((_LAGFARG["bg"], "Kurslag (klicka för lagen.nu)"))
+    poster.append((_REFERENSFARG["bg"], "Referenslag – överblick, utanför kursen"))
 
     rutor = "".join(
         '<span class="jok-legend-post">'
@@ -240,6 +255,7 @@ __all__ = [
     "GRENFARGER",
     "GRUPP_GREN",
     "GRUPP_LAG",
+    "GRUPP_REFERENS",
     "GRUPP_ROT",
     "bygg_html",
     "farglegend_html",

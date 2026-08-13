@@ -28,19 +28,44 @@ from utils.rattskarta import (
 
 def test_rattssystemet_laddar_med_toppgrenar():
     grenar = ladda_rattssystem()
-    assert len(grenar) == 2
+    assert len(grenar) == 3
     namn = [g.namn for g in grenar]
     assert "Civilrätt" in namn
     assert "Offentlig rätt" in namn
+    assert "Internationell rätt & EU-rätt" in namn
 
 
-def test_alla_lagar_i_kartan_finns_i_registret():
+def test_alla_kurslagar_i_kartan_finns_i_registret():
+    """Kurslagar (ej referenslagar) måste finnas i registret — grundningen.
+
+    Referenslagar är per definition utanför registret; grundningsprincipen
+    gäller bara kursens egna lagar.
+    """
     register = lagrum_register()
     for lov in delomraden():
         for lag in lov.lagar:
+            if lag.ar_referens:
+                continue
             assert lag.forkortning in register, (
                 f"{lag.forkortning} i kartan saknas i lagrumsregistret"
             )
+
+
+def test_referenslagar_star_utanfor_registret():
+    """Motsatsen: en referenslag får aldrig råka finnas i kursregistret."""
+    register = lagrum_register()
+    referens = [
+        lag
+        for lov in delomraden()
+        for lag in lov.lagar
+        if lag.ar_referens
+    ]
+    assert referens, "Inga referenslagar hittades i kartan"
+    for lag in referens:
+        assert lag.forkortning not in register, (
+            f"{lag.forkortning} är referenslag men finns i kursregistret"
+        )
+        assert lag.namn and lag.sfs, f"{lag.forkortning} saknar namn/SFS"
 
 
 def test_kartan_tacker_hela_lagrumsregistret():
@@ -68,7 +93,11 @@ def test_alla_grenar_har_beskrivning():
 def _kontrollera_beskrivning(gren):
     assert gren.beskrivning, f"{gren.id} saknar beskrivning"
     for lag in gren.lagar:
-        assert lag.beskrivning and lag.nar, lag.forkortning
+        # Referenslagar är överblick och behöver ingen "När?"-text.
+        if lag.ar_referens:
+            assert lag.beskrivning, lag.forkortning
+        else:
+            assert lag.beskrivning and lag.nar, lag.forkortning
     for barn in gren.grenar:
         _kontrollera_beskrivning(barn)
 

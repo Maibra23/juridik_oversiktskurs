@@ -13,14 +13,169 @@
           "namn": "Statsrätt",
           "beskrivning": "Statsskickets grunder: grundlagarna, normhierarkin och fri- och rättigheterna.",
           "nar": "Frågan rör lagars giltighet, normhierarkin eller grundläggande rättigheter. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-          "lagar": []
+          "lagar": [
+            {
+              "forkortning": "RF",
+              "namn": "Regeringsformen",
+              "sfs": "1974:152",
+              "beskrivning": "Statsskicket, normgivningsmakten och de grundläggande fri- och rättigheterna.",
+              "referens": true
+            },
+            {
+              "forkortning": "TF",
+              "namn": "Tryckfrihetsförordningen",
+              "sfs": "1949:105",
+              "beskrivning": "Tryckfriheten och offentlighetsprincipen (handlingsoffentlighet).",
+              "referens": true
+            },
+            {
+              "forkortning": "YGL",
+              "namn": "Yttrandefrihetsgrundlagen",
+              "sfs": "1991:1469",
+              "beskrivning": "Yttrandefriheten i radio, tv, film och andra medier utöver tryck.",
+              "referens": true
+            },
+            {
+              "forkortning": "RO",
+              "namn": "Riksdagsordningen",
+              "sfs": "2014:801",
+              "beskrivning": "Riksdagens arbetsformer; en mellanform mellan grundlag och vanlig lag.",
+              "referens": true
+            }
+          ]
         },
         {
           "id": "forvaltningsratt",
           "namn": "Förvaltningsrätt",
           "beskrivning": "Myndigheternas ärendehandläggning och den enskildes möjligheter att överklaga beslut.",
           "nar": "En myndighet har fattat ett beslut som berör en enskild. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-          "lagar": []
+          "grenar": [
+            {
+              "id": "allman_forvaltningsratt",
+              "namn": "Allmän förvaltningsrätt",
+              "beskrivning": "Hur myndigheter handlägger ärenden och hur besluten överklagas.",
+              "nar": "Frågan gäller en myndighets handläggning, beslut eller överklagande i allmänhet.",
+              "lagar": [
+                {
+                  "forkortning": "FL",
+                  "namn": "Förvaltningslagen",
+                  "sfs": "2017:900",
+                  "beskrivning": "Grundläggande krav på myndigheters ärendehandläggning: partsinsyn, kommunikation, motivering, rättelse och överklagande.",
+                  "referens": true
+                },
+                {
+                  "forkortning": "FPL",
+                  "namn": "Förvaltningsprocesslagen",
+                  "sfs": "1971:291",
+                  "beskrivning": "Rättegången i förvaltningsdomstol (förvaltningsrätt, kammarrätt, Högsta förvaltningsdomstolen).",
+                  "referens": true
+                }
+              ]
+            },
+            {
+              "id": "kommunalratt",
+              "namn": "Kommunalrätt",
+              "beskrivning": "Kommunernas och regionernas befogenheter och beslutsformer.",
+              "nar": "Frågan gäller en kommuns eller regions kompetens eller ett kommunalt beslut.",
+              "lagar": [
+                {
+                  "forkortning": "KL",
+                  "namn": "Kommunallagen",
+                  "sfs": "2017:725",
+                  "beskrivning": "Kommuners och regioners organisation, kompetens, ekonomi och laglighetsprövning.",
+                  "referens": true
+                }
+              ]
+            },
+            {
+              "id": "offentlighet_och_sekretess",
+              "namn": "Offentlighet och sekretess",
+              "beskrivning": "Rätten att ta del av allmänna handlingar och undantagen från den.",
+              "nar": "Frågan gäller om en handling är allmän och offentlig eller omfattas av sekretess.",
+              "lagar": [
+                {
+                  "forkortning": "OSL",
+                  "namn": "Offentlighets- och sekretesslagen",
+                  "sfs": "2009:400",
+                  "beskrivning": "Undantagen från offentlighetsprincipen: när uppgifter i allmänna handlingar är sekretessbelagda. Bygger på TF 2 kap.",
+                  "referens": true
+                }
+              ]
+            },
+            {
+              "id": "skatteratt",
+              "namn": "Skatterätt",
+              "beskrivning": "Förhållandet mellan den skattskyldige och det allmänna. Doktrinärt speciell förvaltningsrätt.",
+              "nar": "Frågan gäller skatt: vad som beskattas, med vilket belopp och i vilket förfarande.",
+              "lagar": [
+                {
+                  "forkortning": "IL",
+                  "namn": "Inkomstskattelagen",
+                  "sfs": "1999:1229",
+                  "beskrivning": "Den samlade regleringen av inkomstbeskattning för fysiska personer och juridiska personer.",
+                  "referens": true
+                },
+                {
+                  "forkortning": "SFL",
+                  "namn": "Skatteförfarandelagen",
+                  "sfs": "2011:1244",
+                  "beskrivning": "Förfarandet: deklaration, skatteberäkning, kontroll, omprövning och överklagande.",
+                  "referens": true
+                }
+              ]
+            },
+            {
+              "id": "socialratt",
+              "namn": "Socialrätt",
+              "beskrivning": "Välfärdsstatens stöd till enskilda: socialförsäkring och socialtjänst. Speciell förvaltningsrätt.",
+              "nar": "Frågan gäller rätten till en social förmån eller ett bistånd från det allmänna.",
+              "lagar": [
+                {
+                  "forkortning": "SFB",
+                  "namn": "Socialförsäkringsbalken",
+                  "sfs": "2010:110",
+                  "beskrivning": "Den samlade socialförsäkringen: sjuk-, föräldra-, ålderspension och andra förmåner.",
+                  "referens": true
+                },
+                {
+                  "forkortning": "SoL",
+                  "namn": "Socialtjänstlagen",
+                  "sfs": "2001:453",
+                  "beskrivning": "Kommunernas yttersta ansvar för enskildas försörjning och omsorg (bistånd).",
+                  "referens": true
+                },
+                {
+                  "forkortning": "LSS",
+                  "namn": "Lag om stöd och service till vissa funktionshindrade",
+                  "sfs": "1993:387",
+                  "beskrivning": "Rättighetslagstiftning om insatser för personer med omfattande funktionsnedsättning.",
+                  "referens": true
+                }
+              ]
+            },
+            {
+              "id": "miljo_och_planratt",
+              "namn": "Miljö- och planrätt",
+              "beskrivning": "Skyddet för miljön och regleringen av markanvändning och byggande. Speciell förvaltningsrätt med civilrättsliga inslag.",
+              "nar": "Frågan gäller miljöfarlig verksamhet, tillstånd, eller plan- och byggärenden.",
+              "lagar": [
+                {
+                  "forkortning": "MB",
+                  "namn": "Miljöbalken",
+                  "sfs": "1998:808",
+                  "beskrivning": "Den samlade miljörätten: hänsynsregler, tillståndsprövning, miljöfarlig verksamhet och sanktioner.",
+                  "referens": true
+                },
+                {
+                  "forkortning": "PBL",
+                  "namn": "Plan- och bygglagen",
+                  "sfs": "2010:900",
+                  "beskrivning": "Planläggning av mark och vatten samt bygglov och byggprocess.",
+                  "referens": true
+                }
+              ]
+            }
+          ]
         },
         {
           "id": "brott_och_ansvar",
@@ -232,7 +387,29 @@
                           "namn": "Licensavtal",
                           "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
                           "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-                          "lagar": []
+                          "lagar": [
+                            {
+                              "forkortning": "URL",
+                              "namn": "Lag om upphovsrätt till litterära och konstnärliga verk",
+                              "sfs": "1960:729",
+                              "beskrivning": "Upphovsrätten: skyddet för verk och de ekonomiska och ideella rättigheterna som licensieras.",
+                              "referens": true
+                            },
+                            {
+                              "forkortning": "PL",
+                              "namn": "Patentlagen",
+                              "sfs": "1967:837",
+                              "beskrivning": "Ensamrätten till uppfinningar; licens ger rätt att utnyttja patentet.",
+                              "referens": true
+                            },
+                            {
+                              "forkortning": "VML",
+                              "namn": "Varumärkeslagen",
+                              "sfs": "2010:1877",
+                              "beskrivning": "Ensamrätten till varukännetecken; licens ger rätt att använda varumärket.",
+                              "referens": true
+                            }
+                          ]
                         }
                       ]
                     },
@@ -247,7 +424,15 @@
                           "namn": "Transportavtal",
                           "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
                           "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
-                          "lagar": []
+                          "lagar": [
+                            {
+                              "forkortning": "SjöL",
+                              "namn": "Sjölagen",
+                              "sfs": "1994:1009",
+                              "beskrivning": "Sjörätt inklusive godsbefordran till sjöss. Representant för transporträtten, som i övrigt delas per transportslag (väg, järnväg, luft).",
+                              "referens": true
+                            }
+                          ]
                         },
                         {
                           "id": "arbetsratt",
@@ -263,6 +448,13 @@
                                 "SkL",
                                 "AvtL"
                               ]
+                            },
+                            {
+                              "forkortning": "MBL",
+                              "namn": "Lag om medbestämmande i arbetslivet",
+                              "sfs": "1976:580",
+                              "beskrivning": "Den kollektiva arbetsrätten: föreningsrätt, kollektivavtal, förhandling och stridsåtgärder. Kompletterar LAS individuella anställningsskydd.",
+                              "referens": true
                             }
                           ]
                         },
@@ -271,7 +463,15 @@
                           "namn": "Försäkringsavtal",
                           "beskrivning": "Förhållandet mellan försäkringsbolaget och den försäkrade regleras i försäkringsavtalslagen (2005:104, FAL): avtalets ingående, upplysningsplikt, bolagets ansvar och rätten till ersättning.",
                           "nar": "Frågan gäller skyldigheterna i själva försäkringsförhållandet — då är det speciell avtalsrätt. Gäller den i stället att driva in en fordran eller kräva säkerhet (skuldebrev, borgen, pant), är det fordrings- och krediträtt. FAL ingår inte i kursens lagrumsregister; kartan pekar bara ut området.",
-                          "lagar": []
+                          "lagar": [
+                            {
+                              "forkortning": "FAL",
+                              "namn": "Försäkringsavtalslagen",
+                              "sfs": "2005:104",
+                              "beskrivning": "Förhållandet mellan försäkringsbolag och försäkringstagare: avtalets ingående, upplysningsplikt, bolagets ansvar och rätten till ersättning.",
+                              "referens": true
+                            }
+                          ]
                         }
                       ]
                     }
@@ -320,6 +520,20 @@
                         "KonkL",
                         "UB"
                       ]
+                    },
+                    {
+                      "forkortning": "KkredL",
+                      "namn": "Konsumentkreditlagen",
+                      "sfs": "2010:1846",
+                      "beskrivning": "Tvingande skydd vid krediter till konsumenter: information, ångerrätt och kreditprövning.",
+                      "referens": true
+                    },
+                    {
+                      "forkortning": "RteL",
+                      "namn": "Räntelagen",
+                      "sfs": "1975:635",
+                      "beskrivning": "Dröjsmålsränta och avkastningsränta när annat inte avtalats.",
+                      "referens": true
                     }
                   ]
                 }
@@ -472,8 +686,45 @@
               "relaterade": [
                 "ÄktB"
               ]
+            },
+            {
+              "forkortning": "BRL",
+              "namn": "Bostadsrättslagen",
+              "sfs": "1991:614",
+              "beskrivning": "Bostadsrätt: nyttjanderätt till en lägenhet genom medlemskap i en bostadsrättsförening.",
+              "referens": true
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "internationell_ratt",
+      "namn": "Internationell rätt & EU-rätt",
+      "farg": "success",
+      "beskrivning": "Rättsordningar över och mellan stater som svensk rätt verkar inom. Ingen enskild SFS — här för överblick.",
+      "nar": "Frågan har en gränsöverskridande dimension eller styrs av EU-rätt.",
+      "grenar": [
+        {
+          "id": "eu_ratt",
+          "namn": "EU-rätt",
+          "beskrivning": "EU:s rättsordning: fördragen, förordningar och direktiv, med företräde och i vissa fall direkt effekt framför nationell rätt.",
+          "nar": "Frågan rör en unionsrättslig regel eller EU-rättens genomslag i svensk rätt.",
+          "lagar": []
+        },
+        {
+          "id": "folkratt",
+          "namn": "Folkrätt",
+          "beskrivning": "Rätten mellan stater: traktater, sedvanerätt och internationella organisationer.",
+          "nar": "Frågan gäller förhållandet mellan stater eller Sveriges folkrättsliga åtaganden.",
+          "lagar": []
+        },
+        {
+          "id": "internationell_privatratt",
+          "namn": "Internationell privaträtt",
+          "beskrivning": "Lagvalsregler och behörig domstol när ett privaträttsligt förhållande har anknytning till flera länder.",
+          "nar": "Frågan gäller vilket lands lag som styr eller var tvisten ska prövas.",
+          "lagar": []
         }
       ]
     }

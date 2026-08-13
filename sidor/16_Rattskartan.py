@@ -117,6 +117,19 @@ with flik_system:
                     "Inga lagar ur kursens lagrumslista i detta delområde."
                 )
             for lag in lov.lagar:
+                if lag.ar_referens:
+                    st.html(
+                        render_lagkort(
+                            forkortning=lag.forkortning,
+                            namn=lag.namn,
+                            sfs=lag.sfs,
+                            beskrivning=lag.beskrivning,
+                            nar=lag.nar,
+                            url=f"https://lagen.nu/{lag.sfs}",
+                            tackning="Referenslag för överblick – utanför kursens lagrumslista.",
+                        )
+                    )
+                    continue
                 info = register[lag.forkortning]
                 st.html(
                     render_lagkort(

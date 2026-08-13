@@ -28,12 +28,16 @@ def graf():
 # --- Struktur ---------------------------------------------------------------
 
 
-def test_tva_toppgrenar_finns_som_noder(graf):
-    """Offentlig rätt och civilrätt ska vara de två grennoderna på nivå 1."""
+def test_toppgrenar_finns_som_noder(graf):
+    """De tre toppområdena ska vara grennoderna på nivå 1."""
     toppnoder = [
         n for n in graf["noder"] if n["grupp"] == GRUPP_GREN and n["niva"] == 1
     ]
-    assert {n["label"] for n in toppnoder} == {"Offentlig rätt", "Civilrätt"}
+    assert {n["label"] for n in toppnoder} == {
+        "Offentlig rätt",
+        "Civilrätt",
+        "Internationell rätt & EU-rätt",
+    }
 
 
 def test_juridisk_metod_finns_inte_i_grafen(graf):
@@ -83,9 +87,11 @@ def test_toppgren_arvs_nedat(graf):
     for nod in graf["noder"]:
         if nod["id"] == ROT_ID:
             continue
-        assert nod["toppgren"] in {"offentlig_ratt", "civilratt"}, (
-            f"{nod['id']} har oväntad toppgren {nod['toppgren']!r}"
-        )
+        assert nod["toppgren"] in {
+            "offentlig_ratt",
+            "civilratt",
+            "internationell_ratt",
+        }, f"{nod['id']} har oväntad toppgren {nod['toppgren']!r}"
 
 
 def test_djupt_trad_civilratten_ar_djupare_an_offentliga(graf):
@@ -113,8 +119,12 @@ def test_varje_lagnod_har_giltig_lagen_nu_url(graf):
 
 
 def test_endast_lagnoder_ar_klickbara(graf):
+    """Bara lagnoder är klickbara — kurslagar och referenslagar, inte struktur."""
+    from utils.rattssystem_graf import GRUPP_REFERENS
+
+    klickbara = {GRUPP_LAG, GRUPP_REFERENS}
     for nod in graf["noder"]:
-        if nod["grupp"] != GRUPP_LAG:
+        if nod["grupp"] not in klickbara:
             assert "url" not in nod, f"{nod['id']} borde inte vara klickbar"
 
 
@@ -183,21 +193,28 @@ def test_jb_forekommer_som_tre_distinkta_lagnoder(graf):
     }
 
 
-def test_transportavtal_leasing_licensavtal_ar_lagfria_placeholders():
+def test_leasing_ar_lagfri_placeholder():
+    """Leasing saknar egen lag helt — varken kurs- eller referenslag."""
     from utils.rattskarta import hitta_gren
 
-    forvantad_text = {
-        "transportavtal": "vägtransport",
-        "leasing": "leasinglag",
-        "licensavtal": "upphovsrättslagen",
-    }
-    for gren_id, text in forvantad_text.items():
-        gren = hitta_gren(gren_id)
-        assert gren is not None, f"{gren_id} saknas i trädet"
-        assert gren.ar_lov
-        assert gren.lagar == ()
-        assert text in gren.beskrivning.lower()
-        assert "inga lagrum ur kursens register" in gren.nar.lower()
+    gren = hitta_gren("leasing")
+    assert gren is not None and gren.ar_lov
+    assert gren.lagar == ()
+    assert "leasinglag" in gren.beskrivning.lower()
+    assert "inga lagrum ur kursens register" in gren.nar.lower()
+
+
+def test_transport_och_licens_bar_referenslagar():
+    """Transport och licens är inte längre tomma pekare utan referenslagar."""
+    from utils.rattskarta import hitta_gren
+
+    trans = hitta_gren("transportavtal")
+    assert [lag.forkortning for lag in trans.lagar] == ["SjöL"]
+    assert all(lag.ar_referens for lag in trans.lagar)
+
+    lic = hitta_gren("licensavtal")
+    assert {lag.forkortning for lag in lic.lagar} == {"URL", "PL", "VML"}
+    assert all(lag.ar_referens for lag in lic.lagar)
 
 
 def test_speciell_avtalsratt_grupperad_i_transaktionsfamiljer():
@@ -237,7 +254,11 @@ def test_speciell_avtalsratt_grupperad_i_transaktionsfamiljer():
 
 def test_taxonomin_ger_toppgrenarna():
     grenar = taxonomi()
-    assert [g.id for g in grenar] == ["offentlig_ratt", "civilratt"]
+    assert [g.id for g in grenar] == [
+        "offentlig_ratt",
+        "civilratt",
+        "internationell_ratt",
+    ]
 
 
 def test_nyckelgrenar_finns_som_noder(graf):

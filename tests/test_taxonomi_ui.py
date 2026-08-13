@@ -59,9 +59,12 @@ def test_lagnoder_bar_sin_lagen_nu_url(graf, html):
 
 
 def test_strukturnoder_har_tom_url(graf):
-    """Endast lagnoder är klickbara; övriga får tom url och blir inerta."""
+    """Bara lagnoder (kurs och referens) är klickbara; struktur är inert."""
+    from utils.rattssystem_graf import GRUPP_REFERENS
+
+    klickbara = {GRUPP_LAG, GRUPP_REFERENS}
     for vis_nod, kall_nod in zip(_vis_noder(graf), graf["noder"]):
-        if kall_nod["grupp"] == GRUPP_LAG:
+        if kall_nod["grupp"] in klickbara:
             assert vis_nod["url"], f"{kall_nod['label']} borde vara klickbar"
         else:
             assert vis_nod["url"] == "", f"{kall_nod['label']} borde vara inert"
@@ -83,18 +86,25 @@ def test_lagnoder_ar_paragrafguld(graf):
 
 
 def test_strukturnoder_anvander_aldrig_guld(graf):
-    """Navigeringsnivåerna får inte konkurrera med lagrumsguldet."""
+    """Navigeringsnivåerna får inte konkurrera med lagrumsguldet.
+
+    Referenslagar är undantagna: de ÄR lagar och delar guldsläkten (blek guld
+    med guldkant), bara i en lättare valör än kursens fyllda guldnoder.
+    """
+    from utils.rattssystem_graf import GRUPP_REFERENS
+
     guld = {"#B8860B", "#8A6608"}
+    lagnoder = {GRUPP_LAG, GRUPP_REFERENS}
     for vis_nod, kall_nod in zip(_vis_noder(graf), graf["noder"]):
-        if kall_nod["grupp"] != GRUPP_LAG:
+        if kall_nod["grupp"] not in lagnoder:
             assert vis_nod["color"]["background"] not in guld
             assert vis_nod["color"]["border"] not in guld
 
 
 def test_varje_toppgren_har_egen_farg():
     farger = [f["bg"] for f in GRENFARGER.values()]
-    assert len(farger) == 2
-    assert len(set(farger)) == 2, "Toppgrenarna måste gå att skilja åt"
+    assert len(farger) == 3
+    assert len(set(farger)) == 3, "Toppgrenarna måste gå att skilja åt"
 
 
 def test_offentlig_och_civil_far_olika_farg(graf):
@@ -122,11 +132,15 @@ def test_noderna_ar_giltig_json(graf, html):
 
 
 def test_legenden_ritar_fargrutor_inte_prosa():
+    from utils.taxonomi_ui import _REFERENSFARG
+
     legend = farglegend_html()
-    assert legend.count("jok-swatch") == 4  # rot + två toppgrenar + lag
+    # rot + tre toppgrenar + kurslag + referenslag
+    assert legend.count("jok-swatch") == 6
     for farg in GRENFARGER.values():
         assert farg["bg"] in legend
     assert _LAGFARG["bg"] in legend
+    assert _REFERENSFARG["bg"] in legend
 
 
 def test_legenden_forklarar_att_lagar_ar_klickbara():

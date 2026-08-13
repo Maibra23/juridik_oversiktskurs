@@ -138,16 +138,18 @@ def test_inga_dubblerade_id(begrepp):
 
 
 def test_alla_byggda_rattsomraden_har_begrepp():
-    """Varje delområde med egna lagar ska ha minst tre begrepp.
+    """Varje delområde med egna KURSlagar ska ha minst tre begrepp.
 
-    Undantag: delområden helt utan lagar i kursens register (statsrätt och
-    förvaltningsrätt) kan inte bära lagrumsgrundade begrepp.
+    Undantag: delområden utan kurslagar. Det gäller dels de helt lagfria
+    (statsrätt hade inga), dels de som bara bär referenslagar för överblick
+    (skatterätt, socialrätt m.fl.) — ingendera kan bära lagrumsgrundade begrepp.
     """
     from utils.rattskarta import delomraden
 
     per_omrade = begrepp_per_omrade()
     for lov in delomraden():
-        if not lov.lagar:
+        kurslagar = [lag for lag in lov.lagar if not lag.ar_referens]
+        if not kurslagar:
             continue
         traffar = per_omrade.get(lov.id, ())
         assert len(traffar) >= 3, (

@@ -104,13 +104,24 @@ def lag_id(gren: str, forkortning: str) -> str:
     return f"lag::{gren}::{forkortning}"
 
 
-def bygg_taxonomigraf() -> Taxonomigraf:
+def _har_kurslag(gren: Gren) -> bool:
+    """True om grenen eller någon ättling bär en kurslag (icke-referens)."""
+    if any(not lag.ar_referens for lag in gren.lagar):
+        return True
+    return any(_har_kurslag(barn) for barn in gren.grenar)
+
+
+def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
     """Bygg nod/kant-data för hela taxonomin.
 
     Ett strikt träd: varje nod utom roten har exakt en förälder, så antalet
     kanter är alltid antalet noder minus ett. ``toppgren`` ärvs nedåt på varje
     nod och driver färgsättningen; ``niva`` (djupet) driver nodstorleken;
     ``url`` sätts ENDAST på lagnoder och är det som gör dem klickbara.
+
+    Med ``inkludera_referens=False`` byggs en ren kurskarta: referenslagarna
+    utelämnas, och grenar vars hela underträd saknar kurslag städas bort så att
+    inga tomma översiktsboxar (statsrätt, skatterätt, EU-rätt ...) blir kvar.
     """
     register = lagrum_register()
     noder: list[TaxNod] = [
@@ -127,6 +138,10 @@ def bygg_taxonomigraf() -> Taxonomigraf:
     kanter: list[TaxKant] = []
 
     def _lagg_till(gren: Gren, foralder_id: str, niva: int) -> None:
+        # I ren kursvy: hoppa över grenar utan kurslag i underträdet.
+        if not inkludera_referens and not _har_kurslag(gren):
+            return
+
         gid = gren_id(gren.id)
         titel = f"{gren.beskrivning}"
         if gren.nar:
@@ -150,6 +165,9 @@ def bygg_taxonomigraf() -> Taxonomigraf:
         for lag in gren.lagar:
             lid = lag_id(gren.id, lag.forkortning)
             if lag.ar_referens:
+                if not inkludera_referens:
+                    continue
+                sfs_del = f" (SFS {lag.sfs})" if lag.sfs else ""
                 noder.append(
                     {
                         "id": lid,
@@ -160,10 +178,10 @@ def bygg_taxonomigraf() -> Taxonomigraf:
                         "foralder": gid,
                         "toppgren": gren.toppgren,
                         "titel": (
-                            f"{lag.namn} (SFS {lag.sfs}). {lag.beskrivning} "
+                            f"{lag.namn}{sfs_del}. {lag.beskrivning} "
                             "Överblick – utanför kursen."
                         ),
-                        "url": f"https://lagen.nu/{lag.sfs}",
+                        "url": lag.url,
                     }
                 )
                 kanter.append({"fran": gid, "till": lid})

@@ -58,6 +58,9 @@ class LagPost:
     ar_referens: bool = False
     namn: str | None = None
     sfs: str | None = None
+    # Färdig klicklänk för referenslagar. Lagen.nu för svenska SFS, men EU-rätt
+    # ligger på EUR-Lex, så länken kan sättas explicit i stället för via SFS.
+    url: str | None = None
 
 
 @dataclass(frozen=True)
@@ -94,11 +97,18 @@ def _bygg_referenslag(rad: dict) -> LagPost:
     men namn och SFS är obligatoriska eftersom de driver etikett och lagen.nu-
     länk som annars hade hämtats ur registret.
     """
-    for falt in ("forkortning", "namn", "sfs", "beskrivning"):
+    for falt in ("forkortning", "namn", "beskrivning"):
         if not str(rad.get(falt, "")).strip():
             raise ValueError(
                 f"Referenslagen saknar obligatoriskt fält {falt!r}: {rad!r}"
             )
+    sfs = str(rad.get("sfs", "")).strip()
+    url = str(rad.get("url", "")).strip()
+    if not sfs and not url:
+        raise ValueError(
+            f"Referenslagen {rad['forkortning']!r} behöver antingen 'sfs' "
+            "(lagen.nu) eller en explicit 'url'."
+        )
     return LagPost(
         forkortning=str(rad["forkortning"]),
         beskrivning=str(rad["beskrivning"]),
@@ -106,7 +116,8 @@ def _bygg_referenslag(rad: dict) -> LagPost:
         relaterade=(),
         ar_referens=True,
         namn=str(rad["namn"]),
-        sfs=str(rad["sfs"]),
+        sfs=sfs or None,
+        url=url or f"https://lagen.nu/{sfs}",
     )
 
 
@@ -281,7 +292,7 @@ def _lagrad(lag: LagPost, inryck: str = "", med_nar: bool = False) -> str:
     if lag.ar_referens:
         return (
             f"{inryck}- {lag.forkortning} "
-            f"([{lag.namn}](https://lagen.nu/{lag.sfs})): {lag.beskrivning}"
+            f"([{lag.namn}]({lag.url})): {lag.beskrivning}"
         )
     rad = f"{inryck}- [[{lag.forkortning}]]: {lag.beskrivning}"
     if med_nar and lag.nar:

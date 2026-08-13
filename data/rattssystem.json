@@ -710,12 +710,27 @@
           "namn": "EU-rätt",
           "beskrivning": "EU:s rättsordning: fördragen, förordningar och direktiv, med företräde och i vissa fall direkt effekt framför nationell rätt.",
           "nar": "Frågan rör en unionsrättslig regel eller EU-rättens genomslag i svensk rätt.",
-          "lagar": []
+          "lagar": [
+            {
+              "forkortning": "FEU",
+              "namn": "Fördraget om Europeiska unionen",
+              "url": "https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:12016M/TXT",
+              "beskrivning": "Unionens grundfördrag: värden, institutioner och principerna om tilldelad kompetens.",
+              "referens": true
+            },
+            {
+              "forkortning": "FEUF",
+              "namn": "Fördraget om Europeiska unionens funktionssätt",
+              "url": "https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:12016E/TXT",
+              "beskrivning": "Det funktionella fördraget: inre marknaden, de fyra friheterna och unionens politikområden.",
+              "referens": true
+            }
+          ]
         },
         {
           "id": "folkratt",
           "namn": "Folkrätt",
-          "beskrivning": "Rätten mellan stater: traktater, sedvanerätt och internationella organisationer.",
+          "beskrivning": "Rätten mellan stater, med traktater (t.ex. FN-stadgan och Wienkonventionen om traktaträtten), internationell sedvanerätt och allmänna rättsprinciper som källor. Saknar en enskild svensk lagtext — här som orientering.",
           "nar": "Frågan gäller förhållandet mellan stater eller Sveriges folkrättsliga åtaganden.",
           "lagar": []
         },
@@ -724,7 +739,22 @@
           "namn": "Internationell privaträtt",
           "beskrivning": "Lagvalsregler och behörig domstol när ett privaträttsligt förhållande har anknytning till flera länder.",
           "nar": "Frågan gäller vilket lands lag som styr eller var tvisten ska prövas.",
-          "lagar": []
+          "lagar": [
+            {
+              "forkortning": "Rom I",
+              "namn": "Rom I-förordningen (593/2008)",
+              "url": "https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32008R0593",
+              "beskrivning": "Lagval för avtalsförpliktelser: vilket lands lag som styr ett gränsöverskridande avtal.",
+              "referens": true
+            },
+            {
+              "forkortning": "Bryssel Ia",
+              "namn": "Bryssel Ia-förordningen (1215/2012)",
+              "url": "https://eur-lex.europa.eu/legal-content/SV/TXT/?uri=celex:32012R1215",
+              "beskrivning": "Domsrätt och erkännande av domar på privaträttens område inom EU.",
+              "referens": true
+            }
+          ]
         }
       ]
     }

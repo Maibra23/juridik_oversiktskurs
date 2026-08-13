@@ -65,7 +65,8 @@ def test_referenslagar_star_utanfor_registret():
         assert lag.forkortning not in register, (
             f"{lag.forkortning} är referenslag men finns i kursregistret"
         )
-        assert lag.namn and lag.sfs, f"{lag.forkortning} saknar namn/SFS"
+        assert lag.namn, f"{lag.forkortning} saknar namn"
+        assert lag.url, f"{lag.forkortning} saknar klicklänk"
 
 
 def test_kartan_tacker_hela_lagrumsregistret():

@@ -32,7 +32,7 @@ from utils.lagrum import (
 from utils.nyckelbegrepp import begrepp_per_omrade, ladda_begrepp, sok_begrepp
 from utils.prompts import LAS_FORDJUPNING, LAS_OVNING, build_begrepp_prompt
 from utils.rattskarta import delomraden, delomraden_med_vag, falltypsguide
-from utils.rattssystem_graf import bygg_taxonomigraf
+from utils.rattssystem_graf import bygg_taxonomigraf, gren_id
 from utils.taxonomi_ui import render_farglegend, render_taxonomigraf
 from utils.tutor import tutorknapp
 from utils.ui import (
@@ -95,7 +95,18 @@ with flik_system:
         "fastighetsrätt. Grafen följer den doktrinära systematiken."
     )
 
-    render_taxonomigraf(bygg_taxonomigraf())
+    visa_referens = st.checkbox(
+        "Visa även referenslagar (hela svensk rätt i överblick)",
+        value=True,
+        help=(
+            "Referenslagar är klickbara översiktsnoder utanför kursen — t.ex. "
+            "grundlagarna, förvaltnings- och skatterätten samt EU-rätten. "
+            "Avmarkera för en ren kurskarta med bara de lagar kursen rättar mot."
+        ),
+    )
+
+    kurs_graf = bygg_taxonomigraf(inkludera_referens=visa_referens)
+    render_taxonomigraf(kurs_graf)
     render_farglegend()
 
     st.html(section_heading("OMRÅDEN", "Rättsområden och deras lagar"))
@@ -104,28 +115,37 @@ with flik_system:
         "vilka lagar som bär det och när de ska övervägas."
     )
 
+    # Listan speglar grafen exakt: i ren kursvy visas bara de delområden som
+    # överlever grafens städning (grenar med kurslag i underträdet).
+    synliga_grenar = {n["id"] for n in kurs_graf["noder"]}
+
     register = lagrum_register()
     for vag, lov in delomraden_med_vag():
+        if gren_id(lov.id) not in synliga_grenar:
+            continue
+        lagar = lov.lagar
+        if not visa_referens:
+            lagar = tuple(lag for lag in lagar if not lag.ar_referens)
         etikett = " · ".join((*vag, lov.namn))
         with st.expander(etikett, expanded=False):
             st.markdown(lov.beskrivning)
             if lov.nar:
                 st.markdown(f"**När hamnar ett fall här?** {lov.nar}")
 
-            if not lov.lagar:
+            if not lagar:
                 st.caption(
                     "Inga lagar ur kursens lagrumslista i detta delområde."
                 )
-            for lag in lov.lagar:
+            for lag in lagar:
                 if lag.ar_referens:
                     st.html(
                         render_lagkort(
                             forkortning=lag.forkortning,
                             namn=lag.namn,
-                            sfs=lag.sfs,
+                            sfs=lag.sfs or "",
                             beskrivning=lag.beskrivning,
                             nar=lag.nar,
-                            url=f"https://lagen.nu/{lag.sfs}",
+                            url=lag.url,
                             tackning="Referenslag för överblick – utanför kursens lagrumslista.",
                         )
                     )

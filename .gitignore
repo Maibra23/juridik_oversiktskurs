@@ -16,5 +16,3 @@ __pycache__/
 # permission-listor). Delas inte: .claude/settings.json är den gemensamma.
 .claude/settings.local.json
 
-# Graphify knowledge-graph build output
-graphify-out/

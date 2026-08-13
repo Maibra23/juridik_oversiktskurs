@@ -181,7 +181,7 @@ def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
                             f"{lag.namn}{sfs_del}. {lag.beskrivning} "
                             "Överblick – utanför kursen."
                         ),
-                        "url": lag.url,
+                        "url": lag.url or "",
                     }
                 )
                 kanter.append({"fran": gid, "till": lid})

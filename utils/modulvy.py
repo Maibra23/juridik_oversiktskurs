@@ -16,7 +16,7 @@ på uttryckligt knapptryck och dess svar renderas med verifierade lagrumschips.
 from __future__ import annotations
 
 import dataclasses
-from typing import Mapping
+from typing import Any, Mapping
 
 import streamlit as st
 
@@ -480,7 +480,7 @@ def _jakt_ratta_nyckel(modul: str, jakt_id: str) -> str:
     return f"jakt_rattad_{modul}_{jakt_id}"
 
 
-def facit_upplast(nyckel: str, session_state: Mapping[str, object]) -> bool:
+def facit_upplast(nyckel: str, session_state: Mapping[str, object] | Any) -> bool:
     """Har studenten uttryckligen valt att se facit för den här uppgiften?
 
     En grind, inte ett lås: ett klick räcker. Poängen är att facit inte ska vara

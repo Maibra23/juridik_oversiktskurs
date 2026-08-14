@@ -1,4 +1,4 @@
-# tasks.md: Arbetsplan för tre dagar (Cursor + Claude)
+# tasks.md: Arbetsplan för tre dagar
 
 Roller (allt utförs av dig, men uppgifterna är märkta per roll):
 * **DEV** = developer (kod, arkitektur, tester)
@@ -6,7 +6,7 @@ Roller (allt utförs av dig, men uppgifterna är märkta per roll):
 * **DES** = designer (designsystem, UI komponenter, presentationslogik)
 * **INN** = innehållsansvarig (scenarier, quizfrågor, lagrumsdata från kursboken)
 
-Varje uppgift har en konkret prompt att köra mot Claude i Cursor. Kör promptarna i ordning inom respektive dag. Committa efter varje grönt teststeg.
+Varje uppgift har en konkret prompt att köra mot en kodassistent. Kör promptarna i ordning inom respektive dag. Committa efter varje grönt teststeg.
 
 ---
 
@@ -15,7 +15,7 @@ Varje uppgift har en konkret prompt att köra mot Claude i Cursor. Kör promptar
 Mål vid dagens slut: körbart Streamlit skelett med navigering, lagrumsdatabas, LLM wrapper med budgetskydd och första modulen synlig.
 
 ### 1.1 (DEV) Analysera referensrepot
-Prompt till Claude:
+Prompt:
 > "Läs igenom repot Maibra23/ekonomistyrning (jag klistrar in utils/llm.py, utils/llm_budget.py, utils/tutor.py, utils/prompts.py och streamlit_app.py). Sammanfatta arkitekturmönstren i punktform: hur LLM anropas, hur session och dagsbudget fungerar, hur tutor genereras on demand med hash av inputs, hur grounding verifieras. Lista sedan exakt vilka moduler jag behöver skriva om för en juridikapp där verifieringen gäller lagrum i stället för siffror."
 
 ### 1.2 (DEV) Skapa projektstruktur

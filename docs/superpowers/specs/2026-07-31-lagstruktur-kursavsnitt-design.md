@@ -253,11 +253,11 @@ Slutgiltigt grindtest i `tests/test_lagrum.py`: inget kursavsnitt bär `verifier
 Grindtestet kan bli grönt först efter den mänskliga genomgången, vilket ger tre faser:
 
 1. **Bygga och mäta** — hämtare, datamodell, läsande lager, verifieringsskript,
-   överskjutandetestet i RED. Utförs av Claude.
+   överskjutandetestet i RED. Utförs av kodassistenten.
 2. **Besluta om gränserna** — de 78 flaggade avsnitten gås igenom mot rapporten,
    `lagrum.json` rättas, `verifiera` sätts till `false`. Utförs av användaren, med
-   förslag per avsnitt från Claude. Juridiskt innehåll får inte hittas på.
-3. **Visa** — lagkortet, sidan, gränssnittstesterna. Utförs av Claude.
+   förslag per avsnitt från kodassistenten. Juridiskt innehåll får inte hittas på.
+3. **Visa** — lagkortet, sidan, gränssnittstesterna. Utförs av kodassistenten.
 
 ## Utanför omfånget
 

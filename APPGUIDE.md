@@ -135,7 +135,7 @@ Elva av de sjutton sidorna är skal på 15–22 rader som bara anropar
 | `16_Rattskartan` | `utils/rattssystem_graf`, `utils/taxonomi_ui` | `data/rattssystem.json`, `data/nyckelbegrepp.json` |
 
 **Innehållsvolym:** 12 scenariofiler, 19 rättsfall, 86 quizfrågor,
-43 lagrumsjakter, 52 nyckelbegrepp, 21 lagar i registret.
+43 lagrumsjakter, 58 nyckelbegrepp, 21 lagar i registret.
 
 ---
 
@@ -333,11 +333,20 @@ förvaltningsrätt, straffrätt, process- och exekutionsrätt) och **civilrätt*
 civilrätten följer spinen förmögenhetsrätt → obligationsrätt / sakrätt. Trädet är
 ojämnt djupt — sex nivåer på civilrättssidan (t.ex. Civilrätt → Förmögenhetsrätt →
 Obligationsrätt → Speciell avtalsrätt → Köp- och konsumenträtt → KöpL), färre på den
-offentliga. Speciell avtalsrätt rymmer sju avtalstyper (köp- och konsumenträtt, köp
-respektive hyra av fast egendom, arbetsrätt, transportavtal, leasing och
-licensavtal); de tre sistnämnda saknar egna lagrum i kursens register och pekar
-bara ut området. 53 noder, 52 kanter, ett strikt träd. Juridisk metod ingår inte i
-kartan; den nås via sidopanelen.
+offentliga. Speciell avtalsrätt är ordnad efter **vad avtalet gör**, i tre
+transaktionsfamiljer: **Överlåtelse** (äganderätten övergår: köp- och
+konsumenträtt, köp av fast egendom), **Upplåtelse** (nyttjande upplåts: hyra av
+fast egendom, leasing, licensavtal) och **Prestation och tjänst**
+(transportavtal, arbetsrätt, försäkringsavtal). Leasing saknar helt lagrum och
+pekar bara ut området; transport-, licens- och försäkringsnoderna bärs av
+referenslagar utanför kursens graderade register.
+
+Kartan har två lager. Utan referenslagar visas **51 noder och 50 kanter** – ren
+kurskarta med bara de 21 lagar kursen rättar mot, och grenar vars underträd
+saknar kurslag städas bort så inga tomma översiktsboxar blir kvar. Med
+kryssrutan **Visa även referenslagar** ikryssad växer trädet till **95 noder och
+94 kanter** och ger hela svensk rätt i överblick. Båda lägena är strikta träd.
+Juridisk metod ingår inte i kartan; den nås via sidopanelen.
 
 **Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
 **Strukturnoder fokuserar sin gren** vid klick: grenen och alla dess
@@ -427,7 +436,7 @@ innehåll fungerar ändå.
 
 | Graf | Sida | Innehåll | Interaktion |
 |---|---|---|---|
-| **Rättssystemets taxonomi** | `16_Rattskartan` | 46 noder, 45 kanter, strikt träd med ojämnt djup: rot → offentlig rätt / civilrätt → … → lag | Zooma, dra, klicka. **Guldfärgade lagnoder öppnar lagen.nu i ny flik.** Strukturnoder är avsiktligt inerta |
+| **Rättssystemets taxonomi** | `16_Rattskartan` | 51 noder, 50 kanter som kurskarta; 95 noder, 94 kanter med referenslagren påslagna. Strikt träd med ojämnt djup: rot → offentlig rätt / civilrätt → … → lag | Zooma, dra, klicka. **Guldfärgade lagnoder öppnar lagen.nu i ny flik.** **Strukturnoder fokuserar sin gren** och markerar kedjan upp till roten; rotnoden återställer vyn |
 | **Din kunskapskarta** | `10_Kunskapskarta` | Dina genomförda fall och deras lagrum | Zooma, dra. Lagrum som återkommer i flera fall blir gemensamma noder |
 
 Nodstorleken i taxonomigrafen följer djupet (26 px i roten ned till 13 px för
@@ -489,7 +498,7 @@ påhittat kapitel gick alltså rakt igenom garden.
 
 ### Lagtextkorpusen — vad modellen läser i stället för att minnas
 
-`data/lagtext/` innehåller **1 010 paragrafer ur 21 lagar**, hämtade med
+`data/lagtext/` innehåller **1 008 paragrafer ur 21 lagar**, hämtade med
 `scripts/hamta_lagtext.py`. Endast författningstext, som är undantagen
 upphovsrätt enligt 9 § upphovsrättslagen. lagen.nu:s egna kommentarer hämtas
 aldrig — de är författade verk, och kursen ska lära studenten läsa lagtext.

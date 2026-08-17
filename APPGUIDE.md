@@ -242,7 +242,11 @@ moduler, genomförda rättsfall, ev. quizresultat), en rad om att framstegen
 (primär), rapport i Markdown, rapport i Excel.
 
 Obsidianvalvet är värt att ladda ner **även med noll genomförda fall**, för
-Rättskartan följer alltid med: 28 filer, cirka 47 kB.
+Rättskartan följer alltid med. Grundvalvet är **26 filer, cirka 72 kB**:
+`Start.md`, `Rättskartan.md`, en not per toppgren under `Rättssystemet/`
+(offentlig rätt, civilrätt, internationell rätt & EU-rätt) och en not per lag i
+registret under `Lagar/` (21 st). Modul- och rättsfallsnoter tillkommer först
+när RNTS-analyser är genomförda, så valvet växer med studentens arbete.
 
 ### Begränsningar
 
@@ -589,7 +593,7 @@ inget i gränssnittet uppmanar till det.
 |---|---|
 | Markdown | Quizresultat och genomförda fall per modul |
 | Excel | Samma, som kalkylark |
-| Obsidian (zip) | 28 filer: Rättskartan, modulnoter, lagrumsnoter, en not per genomförd RNTS-analys |
+| Obsidian (zip) | 26 filer i grundvalvet: Start, Rättskartan, tre toppgrensnoter, 21 lagnoter. Modulnoter och en not per genomförd RNTS-analys tillkommer med studentens arbete |
 
 ---
 

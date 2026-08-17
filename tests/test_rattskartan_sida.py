@@ -122,3 +122,16 @@ def test_varje_filterflik_har_sin_egen_rensningsknapp(sida):
     etiketter = [k.label for k in sida.button]
     assert "Rensa sökningen" in etiketter
     assert "Rensa filtren" in etiketter
+
+
+def test_kartan_har_en_vyvaljare(sida):
+    """Kraftvyn och trädvyn väljs på sidan, inte i koden."""
+    assert len(sida.radio) >= 1, "ingen radioknapp för kartans vy"
+    val = sida.radio[0]
+    assert "Kraftvy" in val.options
+    assert "Trädvy" in val.options
+
+
+def test_kraftvyn_ar_forvald(sida):
+    """Kraftvyn ersätter trädvyn som standardvy; trädvyn finns kvar valbar."""
+    assert sida.radio[0].value == "Kraftvy"

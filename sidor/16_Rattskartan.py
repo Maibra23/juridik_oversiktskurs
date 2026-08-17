@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import streamlit as st
 
+from utils.kraftgraf_ui import render_kraftgraf
 from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
 from utils.lagrum import (
     STATUS_VERIFIERAD,
@@ -46,6 +47,12 @@ from utils.ui import (
     section_heading,
 )
 
+# Kartans två vyer. Kraftvyn är standard: den visar hela systemet på en gång
+# och bär sökruta, grenfilter och infopanel. Trädvyn finns kvar för den som
+# vill läsa systematiken strikt ovanifrån, med kedjan upp mot roten.
+VY_KRAFT = "Kraftvy"
+VY_TRAD = "Trädvy"
+
 st.html(
     hero(
         eyebrow="RÄTTSKARTAN",
@@ -61,8 +68,11 @@ st.html(
 
 render_sidhjalp(
     (
-        "**Systemet** visar hela indelningen som en graf. Klicka på en "
-        "guldfärgad lagnod för att öppna lagen på lagen.nu i en ny flik.",
+        "**Systemet** visar hela indelningen som en graf, i två vyer. I "
+        "**kraftvyn** ringas varje toppgren in: klicka på en nod för att se "
+        "vad den är och vad den hänger samman med, och dubbelklicka på en "
+        "guldfärgad lagnod för att öppna lagen på lagen.nu. I **trädvyn** "
+        "räcker ett klick på lagnoden för att öppna lagen.",
         "Under grafen kan du fälla ut varje rättsområde och läsa vad varje "
         "lag täcker och när den blir aktuell.",
         "**Falltypsguide** svarar på frågan \"vilken lag gäller för mitt "
@@ -105,8 +115,23 @@ with flik_system:
         ),
     )
 
+    vy = st.radio(
+        "Kartans vy",
+        options=(VY_KRAFT, VY_TRAD),
+        horizontal=True,
+        help=(
+            f"**{VY_KRAFT}** låter en fysiksimulering placera noderna och "
+            "ringar in varje toppgren, med sökruta, grenfilter och infopanel "
+            f"vid sidan. **{VY_TRAD}** visar samma karta som ett strikt träd "
+            "ovanifrån, där en klickad gren tänder kedjan upp mot roten."
+        ),
+    )
+
     kurs_graf = bygg_taxonomigraf(inkludera_referens=visa_referens)
-    render_taxonomigraf(kurs_graf)
+    if vy == VY_KRAFT:
+        render_kraftgraf(kurs_graf)
+    else:
+        render_taxonomigraf(kurs_graf)
     render_farglegend()
 
     st.html(section_heading("OMRÅDEN", "Rättsområden och deras lagar"))

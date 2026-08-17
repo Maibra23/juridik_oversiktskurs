@@ -348,7 +348,26 @@ kryssrutan **Visa även referenslagar** ikryssad växer trädet till **95 noder 
 94 kanter** och ger hela svensk rätt i överblick. Båda lägena är strikta träd.
 Juridisk metod ingår inte i kartan; den nås via sidopanelen.
 
-**Guldfärgade lagnoder är klickbara** och öppnar lagen.nu i ny flik.
+Kartan ritas i **två vyer**, valbara med radioknappen ovanför grafen.
+
+**Kraftvy** (standard) låter en fysiksimulering placera noderna:
+`forceAtlas2Based`, som fryser när stabiliseringen är klar så kartan inte
+kryper omkring under läsningen. Nodstorleken följer här **graden** i stället
+för djupet (12–34 px), och varje toppgren ringas in med ett **konvext hölje** i
+sin egen färg, med grenens namn skrivet i höljet. Startpositionerna är inte
+slumpade: `utils/kraftgraf.startpositioner` sår varje toppgren som en kompakt
+skiva runt en egen mittpunkt, eftersom kilar ut från origo ger höljen som skär
+tvärs över mitten och sväljer de mindre grenarna. Vid sidan ligger en panel med
+sökruta, grenfilter, kartans nyckeltal och en infopanel för den valda noden —
+inklusive dess kopplade noder, som i sin tur går att klicka sig vidare till. I
+den här vyn visar **enkelklick** infopanelen och **dubbelklick** öppnar lagen.nu;
+ett enkelklick som öppnade en ny flik gjorde kartan obrukbar att utforska.
+Grenfiltret ramar om vyn när det slår till, annars blir duken tom om filtret
+gömmer den nod kartan var inzoomad på.
+
+**Trädvy** är den strikt hierarkiska kartan ovanifrån (`layout.hierarchical`,
+fysiken av), med nodstorlek efter djup. Här är **guldfärgade lagnoder klickbara**
+med ett klick och öppnar lagen.nu i ny flik.
 **Strukturnoder fokuserar sin gren** vid klick: grenen och alla dess
 undernivåer centreras och behåller full skärpa, kedjan upp till roten markeras
 med fetare guldkant så att systematiken syns, och allt annat tonas ned till 15 %
@@ -385,7 +404,13 @@ den ritas dold och tas fram först när vis-network har laddat, så att den aldr
 lovar en interaktivitet som inte finns.
 
 Grafens JavaScript ligger i `utils/static/` och bäddas in i iframen av
-`utils/taxonomi_ui.py`. Skiktberäkningen (vad som hör till grenen, kedjan
+`utils/taxonomi_ui.py` (trädvyn, `taxonomigraf.js`) respektive
+`utils/kraftgraf_ui.py` (kraftvyn, `kraftgraf.js`). Kraftvyns datalager —
+grader, storleksskala, höljesgrupper, startpositioner och nyckeltal — ligger
+DOM-fritt i `utils/kraftgraf.py` och testas för sig. Båda vyerna hämtar
+färgerna ur `utils/taxonomi_ui`, så guld betyder lag och aldrig struktur i båda
+(design_system.md avsnitt 1); höljena målas i toppgrenens färg. Skiktberäkningen
+(vad som hör till grenen, kedjan
 respektive bakgrunden) är DOM-fri och ligger i `taxonomigraf_logik.js`, som
 testas med `node --test tests/js/`. DOM-lagret testas inte i CI: CI kör offline
 och grafen hämtar vis-network från CDN.

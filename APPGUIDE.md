@@ -354,7 +354,11 @@ Juridisk metod ingår inte i kartan; den nås via sidopanelen.
 
 Kartan ritas i **två vyer**, valbara med radioknappen ovanför grafen.
 
-**Kraftvy** (standard) låter en fysiksimulering placera noderna:
+**Trädvy** är standard och den karta studenten möter: sidans poäng är den
+doktrinära systematiken, och den läses ovanifrån. Kraftvyn väljs aktivt av den
+som vill överblicka hela systemet på en gång.
+
+**Kraftvy** (valbar) låter en fysiksimulering placera noderna:
 `forceAtlas2Based`, som fryser när stabiliseringen är klar så kartan inte
 kryper omkring under läsningen. Nodstorleken följer här **graden** i stället
 för djupet (12–34 px), och varje toppgren ringas in med ett **konvext hölje** i
@@ -369,8 +373,9 @@ ett enkelklick som öppnade en ny flik gjorde kartan obrukbar att utforska.
 Grenfiltret ramar om vyn när det slår till, annars blir duken tom om filtret
 gömmer den nod kartan var inzoomad på.
 
-**Trädvy** är den strikt hierarkiska kartan ovanifrån (`layout.hierarchical`,
-fysiken av), med nodstorlek efter djup. Här är **guldfärgade lagnoder klickbara**
+**Trädvyn** i detalj: den strikt hierarkiska kartan ovanifrån
+(`layout.hierarchical`, fysiken av), med nodstorlek efter djup. Här är
+**guldfärgade lagnoder klickbara**
 med ett klick och öppnar lagen.nu i ny flik.
 **Strukturnoder fokuserar sin gren** vid klick: grenen och alla dess
 undernivåer centreras och behåller full skärpa, kedjan upp till roten markeras

@@ -132,6 +132,15 @@ def test_kartan_har_en_vyvaljare(sida):
     assert "Trädvy" in val.options
 
 
-def test_kraftvyn_ar_forvald(sida):
-    """Kraftvyn ersätter trädvyn som standardvy; trädvyn finns kvar valbar."""
-    assert sida.radio[0].value == "Kraftvy"
+def test_tradvyn_ar_forvald(sida):
+    """Trädvyn är den karta studenten möter; kraftvyn väljs aktivt.
+
+    Den doktrinära systematiken är sidans poäng, och den läses ovanifrån.
+    Kraftvyn är ett alternativ att gå till, inte utgångsläget.
+    """
+    assert sida.radio[0].value == "Trädvy"
+
+
+def test_tradvyn_star_forst_bland_alternativen(sida):
+    """Förvalet ska följa av ordningen, inte av ett index någon kan flytta."""
+    assert sida.radio[0].options[0] == "Trädvy"

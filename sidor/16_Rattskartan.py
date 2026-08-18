@@ -47,11 +47,13 @@ from utils.ui import (
     section_heading,
 )
 
-# Kartans två vyer. Kraftvyn är standard: den visar hela systemet på en gång
-# och bär sökruta, grenfilter och infopanel. Trädvyn finns kvar för den som
-# vill läsa systematiken strikt ovanifrån, med kedjan upp mot roten.
-VY_KRAFT = "Kraftvy"
+# Kartans två vyer. Trädvyn är standard: sidans poäng är den doktrinära
+# systematiken, och den läses ovanifrån med kedjan upp mot roten. Kraftvyn är
+# ett alternativ studenten väljer aktivt när hela systemet ska överblickas på
+# en gång, med sökruta, grenfilter och infopanel. Förvalet följer ordningen i
+# options nedan — st.radio väljer första alternativet.
 VY_TRAD = "Trädvy"
+VY_KRAFT = "Kraftvy"
 
 st.html(
     hero(
@@ -68,11 +70,12 @@ st.html(
 
 render_sidhjalp(
     (
-        "**Systemet** visar hela indelningen som en graf, i två vyer. I "
-        "**kraftvyn** ringas varje toppgren in: klicka på en nod för att se "
-        "vad den är och vad den hänger samman med, och dubbelklicka på en "
-        "guldfärgad lagnod för att öppna lagen på lagen.nu. I **trädvyn** "
-        "räcker ett klick på lagnoden för att öppna lagen.",
+        "**Systemet** visar hela indelningen som en graf, i två vyer. "
+        "**Trädvyn** är den du möter: klicka på en guldfärgad lagnod för att "
+        "öppna lagen på lagen.nu, eller på en gren för att fokusera den och "
+        "tända kedjan upp mot roten. Byter du till **kraftvyn** ringas varje "
+        "toppgren in i stället, och där visar ett klick vad noden är och vad "
+        "den hänger samman med — lagen öppnas då med dubbelklick.",
         "Under grafen kan du fälla ut varje rättsområde och läsa vad varje "
         "lag täcker och när den blir aktuell.",
         "**Falltypsguide** svarar på frågan \"vilken lag gäller för mitt "
@@ -117,13 +120,14 @@ with flik_system:
 
     vy = st.radio(
         "Kartans vy",
-        options=(VY_KRAFT, VY_TRAD),
+        options=(VY_TRAD, VY_KRAFT),
         horizontal=True,
         help=(
-            f"**{VY_KRAFT}** låter en fysiksimulering placera noderna och "
-            "ringar in varje toppgren, med sökruta, grenfilter och infopanel "
-            f"vid sidan. **{VY_TRAD}** visar samma karta som ett strikt träd "
-            "ovanifrån, där en klickad gren tänder kedjan upp mot roten."
+            f"**{VY_TRAD}** visar systematiken som ett strikt träd ovanifrån, "
+            "där en klickad gren tänder kedjan upp mot roten. "
+            f"**{VY_KRAFT}** låter i stället en fysiksimulering placera "
+            "noderna och ringar in varje toppgren, med sökruta, grenfilter "
+            "och infopanel vid sidan."
         ),
     )
 

@@ -134,7 +134,7 @@ Vill du bidra med kod:
 3. Kör hela kvalitetsgrinden lokalt innan du öppnar en *pull request*:
 
 ```bash
-python -m pytest -q                              # 1612 tester
+python -m pytest -q                              # 1540 tester
 python -m ruff check .                           # lint
 python -m mypy --ignore-missing-imports utils    # typkontroll
 node --test tests/js/                            # grafens skiktlogik

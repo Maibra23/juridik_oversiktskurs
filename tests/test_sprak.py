@@ -26,7 +26,6 @@ _GRANSKADE_KATALOGER = (
     "sidor",
     "tests",
     "data",
-    "docs",
     ".streamlit",
     ".github",
 )
@@ -81,11 +80,8 @@ _EMOJI = re.compile("[\U0001f300-\U0001faff\u2600-\u27bf\U0001f1e6-\U0001f1ff]")
 # Två undantag, båda avsiktliga:
 #   streamlit_app.py bär page_icon, webbläsarflikens identitet. Det är inte
 #   appkrom, och det är det enda undantaget design_system.md 4.1 medger.
-#   docs/superpowers/ är historiska design- och planeringsdokument. De beskriver
-#   vad appen var vid en viss tidpunkt och ska inte skrivas om i efterhand;
-#   granskningsdokumentet måste dessutom kunna citera de glyfer det avskaffar.
 _GLYFUNDANTAG = ("streamlit_app.py",)
-_GLYFUNDANTAG_KATALOGER = ("docs/superpowers",)
+_GLYFUNDANTAG_KATALOGER: tuple[str, ...] = ()
 
 
 def _glyfundantagen(fil: Path) -> bool:
@@ -125,13 +121,14 @@ _FORBJUDNA_SKILJETECKEN = {
 
 # data/lagtext/ bär ordagrann författningstext från Riksdagens öppna data.
 # Den citeras, inte skrivs, och får därför aldrig normaliseras: ett ändrat
-# tecken i lagtext är ett sakfel, inte en stilfråga. docs/superpowers/ är
-# historiska dokument som beskriver appen vid en viss tidpunkt.
+# tecken i lagtext är ett sakfel, inte en stilfråga.
 _SKILJETECKENUNDANTAG_KATALOGER = (
     "data/lagtext",
     "data/lagstruktur",
 )
 _SKILJETECKENUNDANTAG_FILER = ("tests/test_sprak.py",)
+
+_DUBBELT_BINDESTRECK = re.compile(r'[a-zåäöA-ZÅÄÖ0-9"] -- [a-zåäöA-ZÅÄÖ0-9"]')
 
 
 def _undantagen_katalog(fil: Path, kataloger: tuple[str, ...]) -> bool:
@@ -150,6 +147,15 @@ def test_inga_tankstreck(fil: Path) -> None:
     if _undantagen_katalog(fil, _SKILJETECKENUNDANTAG_KATALOGER):
         pytest.skip("ordagrann lagtext eller historiskt dokument")
     text = fil.read_text(encoding="utf-8", errors="replace")
+    # Dubbelt bindestreck mellan två ord är ett tankstreck någon skrivit för
+    # hand. Mönstret kräver blanksteg och tecken runtom, så CLI-flaggor
+    # (--fix, --test) och markdownlinjer (---) inte träffas.
+    dubbla = [
+        nr
+        for nr, rad in enumerate(text.splitlines(), 1)
+        if _DUBBELT_BINDESTRECK.search(rad)
+    ]
+    assert not dubbla, f"{fil}: skrivet tankstreck (--) på rad {dubbla[:5]}"
     for tecken, namn in _FORBJUDNA_SKILJETECKEN.items():
         rader = [
             nr for nr, rad in enumerate(text.splitlines(), 1) if tecken in rad
@@ -169,10 +175,10 @@ _KURSORD = re.compile(
 
 # data/lagtext/ och data/lagstruktur/ bär ordagrann författningstext och
 # kapitelrubriker från Riksdagens öppna data. Där betyder "kursen" växelkurs,
-# och texten citeras, inte skrivs. docs/superpowers/ är historiska dokument.
+# och texten citeras, inte skrivs.
 # Den här filen undantar sig själv: en vakt måste kunna namnge det den
 # förbjuder, precis som glyfvakten ovan.
-_KURSORDUNDANTAG_KATALOGER = ("data/lagtext", "data/lagstruktur", "docs/superpowers")
+_KURSORDUNDANTAG_KATALOGER = ("data/lagtext", "data/lagstruktur")
 _KURSORDUNDANTAG_FILER = ("tests/test_sprak.py",)
 
 

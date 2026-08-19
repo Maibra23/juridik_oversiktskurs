@@ -1,7 +1,7 @@
 """Tester för försoningen mellan lagavsnitt och lagens struktur.
 
 Bakgrund: data/lagrum.json bär 105 lagavsnitt, varav 78 flaggade med
-"verifiera": true -- osäkra paragrafgränser som skulle kontrolleras mot
+"verifiera": true, osäkra paragrafgränser som skulle kontrolleras mot
 lagen.nu. Så länge avsnitten bara matade validering och prompter var en
 oskarp gräns billig. När de visas i lagkortet blir den ett påstående
 studenten läser som sant.
@@ -102,7 +102,7 @@ def test_ingen_avvikelse_nar_gransen_stammer():
 
 
 def test_for_snav_grans_upptacks():
-    """Momentet sträcker sig utanför avsnittet -- korpusen kunde aldrig se detta."""
+    """Momentet sträcker sig utanför avsnittet, korpusen kunde aldrig se detta."""
     lag = _lag(True, (_avsnitt("Påföljder", "5", 1, 2),))
     struktur = _struktur(
         kapitel=(Kapitel("5", "Påföljder", ("5:1", "5:2", "5:3")),),
@@ -130,7 +130,7 @@ def test_varje_lagavsnitt_pekar_pa_ett_kapitel_som_finns():
     """En kapitelindelad lags avsnitt måste peka på ett verkligt kapitel.
 
     Överskjutandetestet fångar paragrafer utanför lagen, men inte ett avsnitt
-    som pekar på ett kapitel som inte existerar alls -- då blir hela
+    som pekar på ett kapitel som inte existerar alls, då blir hela
     anspråket okänt och avsnittet skulle visas utan ryggrad i lagkortet.
     """
     from utils.lagrum import lagrum_register

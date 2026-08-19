@@ -3,7 +3,7 @@
 Strukturen är appens enda källa till lagens egen disposition. Den valideras
 strikt vid inläsning: hellre ett tydligt fel vid uppstart än ett halvt
 kapitel i lagkortet. Det skiljer modulen från utils.lagtext, som får
-degradera tyst när en paragraf saknas -- en tom lucka är ofarlig, men en
+degradera tyst när en paragraf saknas, en tom lucka är ofarlig, men en
 trasig struktur blir ett felaktigt påstående om hur lagen är uppbyggd.
 """
 

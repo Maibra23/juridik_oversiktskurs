@@ -1,8 +1,8 @@
 # APPGUIDE.md: vad varje sida gör, hur den fungerar och var den brister
 
-Det här dokumentet beskriver den **byggda** appen, sida för sida. `PRD.md`
-beskriver avsikten, `design_system.md` utseendet och `methodology.md`
-pedagogiken. Ingen av dem berättar vad som faktiskt händer när du klickar.
+Det här dokumentet beskriver den **byggda** appen, sida för sida.
+`design_system.md` beskriver utseendet och `methodology.md` pedagogiken.
+Ingen av dem berättar vad som faktiskt händer när du klickar.
 
 Allt som påstås här är kontrollerat mot koden eller mätt i skarp körning mot
 `Qwen/Qwen3-8B`. Där en siffra anges är den uppmätt, inte uppskattad.

@@ -1,7 +1,7 @@
 """Läs-API mot lagstrukturen i data/lagstruktur/.
 
-Strukturen är lagens egen disposition -- kapitelrubriker, momentrubriker och
-vilka paragrafer som hör till vad -- hämtad ur Riksdagens öppna data av
+Strukturen är lagens egen disposition, kapitelrubriker, momentrubriker och
+vilka paragrafer som hör till vad, hämtad ur Riksdagens öppna data av
 scripts/hamta_lagstruktur.py och committad så att appen fungerar offline.
 
 Den fyller två roller. Dels ger den lagkortet en ryggrad att gruppera
@@ -94,7 +94,7 @@ def _bygg_struktur(rad: dict) -> Lagstruktur:
     if not kapitel and not moment:
         raise ValueError(
             f"{forkortning}: strukturen saknar både kapitel och moment. "
-            "Varje lag har minst en rubriknivå -- hämta om lagen."
+            "Varje lag har minst en rubriknivå, hämta om lagen."
         )
 
     nummer = {k.nummer for k in kapitel}

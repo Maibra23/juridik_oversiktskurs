@@ -3,7 +3,7 @@
 # Regeluppsättningen står uttryckligen här i stället för att ärvas från ruffs
 # förval. Skälet är inlärt: projektet hade ingen konfiguration alls, CI
 # installerade ruff opinnat, och när 0.16.0 breddade förvalet 2026-07-23 blev
-# lintsteget rött på kod som inte hade ändrats -- även på main. Fem CI-körningar
+# lintsteget rött på kod som inte hade ändrats, även på main. Fem CI-körningar
 # föll utan att någon rörde en rad, och eftersom lint går före typkontroll och
 # tester slutade hela sviten att köras.
 #

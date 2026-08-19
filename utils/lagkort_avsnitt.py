@@ -109,7 +109,7 @@ def tackningstext(lag: Lag) -> str:
     """Hur stor del av lagen appen behandlar, eller tom sträng.
 
     Raden är lagkortets ärlighetskrav. Utan den läser studenten
-    avsnittslistan som om lagen tog slut där -- appen behandlar sex av
+    avsnittslistan som om lagen tog slut där, appen behandlar sex av
     konsumentköplagens nio kapitel och sex av brottsbalkens trettioåtta.
     Saknar lagen kapitel finns inget att räkna, och då ska raden utebli helt
     hellre än att gissa.

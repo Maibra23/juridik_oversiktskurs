@@ -43,8 +43,8 @@
   const network = new vis.Network(container, { nodes: nodes, edges: edges }, options);
 
   // Grafen ritas på en canvas och har därför ingen DOM att klicka på utifrån.
-  // Instansen exponeras för att vyn ska gå att verifiera i webbläsaren (se
-  // docs/superpowers/plans/2026-08-05-rattskartan-interaktion.md, Task 8).
+  // Instansen exponeras för att vyn ska gå att verifiera i webbläsaren, t.ex.
+  // med ett automatiserat klicktest som behöver komma åt noderna.
   // Appen läser aldrig själv den här variabeln.
   window.jokTaxonomigraf = network;
 
@@ -68,7 +68,7 @@
 
   function markeraKedjan(kedja, fokusId) {
     // Kanten in till varje nod i kedjan, plus kanten in till den fokuserade
-    // noden själv -- annars slutar spåret ett steg för tidigt.
+    // noden själv, annars slutar spåret ett steg för tidigt.
     const noderIKedjan = kedja.concat(fokusId ? [fokusId] : []);
     const uppdateringar = edges.get().map(function (kant) {
       const iKedjan =

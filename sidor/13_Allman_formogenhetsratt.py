@@ -18,5 +18,5 @@ from utils.modulvy import rendera_modulsida
 rendera_modulsida(
     "allman_formogenhetsratt",
     "Allmän förmögenhetsrätt",
-    "KAP. 6 · ALLMÄN FÖRMÖGENHETSRÄTT",
+    "ALLMÄN FÖRMÖGENHETSRÄTT",
 )

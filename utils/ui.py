@@ -8,7 +8,7 @@ Ansvarar för allt visuellt som delas mellan sidorna:
   (session + dagsbudget), som utökas med modellnamn först när något
   faktiskt är begränsat
 - hero, section_heading, pipeline_steps, footer_note:
-  HTML-byggstenar för landnings- och modulsidor
+  HTML-byggstenar för landningssidor och modulsidor
 - render_session_cap_card / render_daily_cap_card: vänliga svenska
   informationskort när anropsbudgeten är slut
 - render_case, render_lagrum_chip, render_varning, render_info:
@@ -230,12 +230,12 @@ def _tutortext_html(text: str) -> tuple[str, tuple]:
 
 
 # Vad ett grönt chip betyder, och inte betyder. Verifieringen slår upp
-# paragrafen i kursens lagrumslista: den intygar att lagrummet FINNS, aldrig
+# paragrafen i appens lagrumsregister: den intygar att lagrummet FINNS, aldrig
 # att det är det tillämpliga för studentens fall. Tutorn har observerats
 # hänvisa till existerande men irrelevanta paragrafer med självsäker och
 # felaktig beskrivning, och de renderas då som vanliga guldchips.
 VERIFIERINGSNOT = (
-    "Guldmarkerade lagrum finns i kursens lagrumslista och går att öppna på "
+    "Guldmarkerade lagrum finns i appens lagrumsregister och går att öppna på "
     "lagen.nu. Det betyder inte att lagrummet är rätt för just ditt fall: läs "
     "paragrafen och bedöm själv om den är tillämplig."
 )
@@ -274,8 +274,8 @@ def render_tutortext(text: str) -> None:
         st.html(
             '<div class="jok-varning">'
             "<strong>Kontrollera dessa referenser själv.</strong> Följande "
-            "hänvisningar kunde inte verifieras mot kursens lagrumslista och kan "
-            "vara felaktiga eller ligga utanför kursen:"
+            "hänvisningar kunde inte verifieras mot appens lagrumsregister och kan "
+            "vara felaktiga eller ligga utanför appens urval:"
             f"<ul>{poster}</ul>"
             "Slå upp dem på lagen.nu innan du litar på dem."
             "</div>"
@@ -307,12 +307,12 @@ def render_lagkort(
     nar: str,
     url: str,
     relaterade: tuple[str, ...] = (),
-    kursavsnitt: tuple = (),
+    lagavsnitt: tuple = (),
     tackning: str = "",
 ) -> str:
     """Kort för en lag i områdesträdet: vad den täcker och när den övervägs.
 
-    ``kursavsnitt`` är Kapitelgrupp-poster från utils.lagkort_avsnitt. Är den
+    ``lagavsnitt`` är Kapitelgrupp-poster från utils.lagkort_avsnitt. Är den
     tom renderas kortet precis som förr, utan tom avsnittsrubrik.
     """
     rel = ""
@@ -328,7 +328,7 @@ def render_lagkort(
         f"<p>{html.escape(beskrivning)}</p>"
         f'<div class="nar"><strong>När övervägs den?</strong> {html.escape(nar)}</div>'
         f"{rel}"
-        f"{_avsnittsblock(kursavsnitt, tackning)}"
+        f"{_avsnittsblock(lagavsnitt, tackning)}"
         f'<div class="nar"><a href="{html.escape(url)}" target="_blank">'
         f"Öppna {html.escape(forkortning)} på lagen.nu</a></div>"
         "</div>"
@@ -336,7 +336,7 @@ def render_lagkort(
 
 
 def _avsnittsblock(grupper: tuple, tackning: str) -> str:
-    """Kursavsnitten grupperade under lagens egna kapitelrubriker.
+    """Lagavsnitten grupperade under lagens egna kapitelrubriker.
 
     Guld är reserverat för lagrum, så paragrafspannet får paragrafguld medan
     kapitelrubriken bär bläck. Se design_system.md avsnitt 1 och 4.
@@ -346,7 +346,7 @@ def _avsnittsblock(grupper: tuple, tackning: str) -> str:
 
     tack = f'<span class="tackning">{html.escape(tackning)}</span>' if tackning else ""
     delar = [
-        f'<div class="avsnitt"><div class="avsnittsrubrik">KURSAVSNITT{tack}</div>'
+        f'<div class="avsnitt"><div class="avsnittsrubrik">AVSNITT{tack}</div>'
     ]
     for grupp in grupper:
         if grupp.kapitel:
@@ -374,7 +374,7 @@ def _avsnittsblock(grupper: tuple, tackning: str) -> str:
                 "</div>"
             )
     delar.append(
-        '<div class="avsnittsnot">Urvalet följer kursen, inte hela lagen.</div></div>'
+        '<div class="avsnittsnot">Urvalet följer appen, inte hela lagen.</div></div>'
     )
     return "".join(delar)
 
@@ -426,9 +426,9 @@ def footer_note(version: str = APP_VERSION, updated: str = APP_UPDATED) -> str:
     """Sidfot med disclaimer och version."""
     return (
         '<div class="jok-footer">'
-        "Detta är ett studieverktyg för Juridisk översiktskurs, inte juridisk "
-        "rådgivning. Kontrollera alltid lagrum mot lagen.nu. "
-        f"Version {html.escape(version)} · uppdaterad {html.escape(updated)}."
+        "Detta är ett studieverktyg, inte juridisk rådgivning. "
+        "Kontrollera alltid lagrum mot lagen.nu. "
+        f"Version {html.escape(version)}: uppdaterad {html.escape(updated)}."
         "</div>"
     )
 
@@ -530,7 +530,7 @@ def _rendera_barn(
     """Rita en grupps barn: byggda noder var för sig, planerade på en rad.
 
     Planerade moduler slås ihop eftersom de inte går att öppna: två obyggda
-    rättsområden behöver inte två rader för att visa att de finns. Kursens
+    rättsområden behöver inte två rader för att visa att de finns. Appens
     omfattning syns fortfarande, vilket är hela skälet att de står kvar
     (design_system.md 4.1).
     """
@@ -555,7 +555,7 @@ def _render_nod(nod: "Nod", niva: int, aktiv_kedja: frozenset[str] = frozenset()
     En grupp vars enda barn är en modul med SAMMA namn ritar ingen egen
     rubrik: raden skulle bara upprepa ordet direkt under sig självt, vilket
     "Personrätt" gjorde bokstavligen. Gruppen finns kvar i NAV_TRAD, så
-    systematiken och rubrikkedja() är oförändrade — det är bara raden som
+    systematiken och rubrikkedja() är oförändrade. Det är bara raden som
     utgår.
 
     Villkoret är avsiktligt namnidentitet och inte "har bara ett barn".
@@ -595,7 +595,7 @@ def render_sidopanel() -> None:
     Speglar svensk rätts systematik enligt utils.navigation.NAV_TRAD i
     stället för en platt sidlista. Allt visas samtidigt: inga hopfällbara
     sektioner per huvudkategori, eftersom en panel som måste öppnas döljer
-    kursens struktur i stället för att visa den. Nivåerna skiljs åt med
+    appens struktur i stället för att visa den. Nivåerna skiljs åt med
     indrag och färgstyrka enligt design_system.md 4.1.
 
     Rubrikerna ovanför den öppna sidan får full bläckvikt via klassen ``aktiv``.
@@ -626,11 +626,11 @@ def render_sidebar() -> None:
     egen platta sidlista inte ritas parallellt med trädet.
 
     Modellväljaren är borttagen: 8B/14B är ett val ingen student kan grunda,
-    och mätningen i projektets historik visade att 14B inte var bättre — bara
+    och mätningen i projektets historik visade att 14B inte var bättre, bara
     långsammare. Standardmodellen sätts i utils/llm.py.
     """
     with st.sidebar:
-        st.html('<div class="jok-section"><h2>Juridisk översiktskurs</h2></div>')
+        st.html('<div class="jok-section"><h2>Juridikverkstan</h2></div>')
         st.caption("Fallbaserad träning med RNTS-metoden.")
         st.divider()
         render_sidopanel()

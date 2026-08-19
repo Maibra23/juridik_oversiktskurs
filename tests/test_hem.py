@@ -7,7 +7,7 @@ Testet kör inte `AppTest.from_file` direkt på `sidor/0_Hem.py`. Den varianten
 saknar den sidkontext ett multipage-bygge ger, och `st.page_link` i
 sidopanelen kastar då `KeyError: 'url_pathname'` (dokumenterat i
 tests/test_rattskartan_sida.py, som drabbas av samma sak för Rättskartan).
-I stället körs `streamlit_app.py` — ingångspunkten som registrerar sidorna
+I stället körs `streamlit_app.py`, ingångspunkten som registrerar sidorna
 och ger den kontexten. Det visade sig fungera utan någon work-around: körd
 headless (`python3 -m pytest` och fristående via `python3 -c`) uppstod
 aldrig `KeyError`, sannolikt för att `st.navigation` i `streamlit_app.py`
@@ -60,7 +60,7 @@ def test_bygg_valv_anropas_inte_i_tomt_lage(monkeypatch: pytest.MonkeyPatch):
 
     def _forbjudet_anrop(*args, **kwargs):
         raise AssertionError(
-            "bygg_valv anropades trots tomt tillstånd — startsidan ska inte "
+            "bygg_valv anropades trots tomt tillstånd, startsidan ska inte "
             "bygga en rapport av innehåll som inte finns."
         )
 

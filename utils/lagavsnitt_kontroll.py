@@ -1,11 +1,11 @@
-"""Jämför kursavsnitten i data/lagrum.json mot lagens faktiska struktur.
+"""Jämför lagavsnitten i data/lagrum.json mot lagens faktiska struktur.
 
-Registret bär 105 kursavsnitt, varav 78 flaggade med "verifiera": true --
+Registret bär 105 lagavsnitt, varav 78 flaggade med "verifiera": true --
 osäkra paragrafgränser eller osäkert kursomfång. Den här modulen är facit:
 den säger vad som avviker, i fyra sorter.
 
 Vad modulen INTE gör: den rättar aldrig registret. Om ett avsnitt ska
-omfatta 13:1-13:7 eller 13:1-13:5 är en bedömning av kursens omfång, inte
+omfatta 13:1-13:7 eller 13:1-13:5 är en bedömning av appens omfång, inte
 en textjämförelse. Modulen rapporterar; människan beslutar.
 
 Ren modul utan Streamlit-beroende.
@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from utils.lagrum import Kursavsnitt, Lag, lagrum_register
+from utils.lagrum import Lag, Lagavsnitt, lagrum_register
 from utils.lagstruktur import (
     Lagstruktur,
     Moment,
@@ -38,7 +38,7 @@ FORKLARING = {
 
 @dataclass(frozen=True)
 class Avvikelse:
-    """En skillnad mellan ett kursavsnitt och lagens struktur."""
+    """En skillnad mellan ett lagavsnitt och lagens struktur."""
 
     forkortning: str
     avsnitt: str
@@ -46,10 +46,10 @@ class Avvikelse:
     detalj: str
 
 
-def avsnittsnycklar(lag: Lag, avsnitt: Kursavsnitt) -> tuple[str, ...]:
-    """Paragrafnycklarna ett kursavsnitt gör anspråk på.
+def avsnittsnycklar(lag: Lag, avsnitt: Lagavsnitt) -> tuple[str, ...]:
+    """Paragrafnycklarna ett lagavsnitt gör anspråk på.
 
-    Samma expansion som scripts/hamta_lagtext.kursens_nycklar, men på
+    Samma expansion som scripts/hamta_lagtext.avsnittsnycklar, men på
     registrets modell i stället för på råa dictar. Kapitelledet används bara
     för kapitelindelade lagar: AvtL och SkbrL bär kapitelrubriker i
     strukturen men refererar platt i registret.
@@ -75,11 +75,11 @@ def _moment_som_overlappar(
 
 
 def kontrollera_lag(lag: Lag, struktur: Lagstruktur) -> tuple[Avvikelse, ...]:
-    """Alla avvikelser mellan en lags kursavsnitt och dess struktur."""
+    """Alla avvikelser mellan en lags lagavsnitt och dess struktur."""
     finns = paragrafnycklar_i(struktur)
 
     avvikelser: list[Avvikelse] = []
-    for avsnitt in lag.kursavsnitt:
+    for avsnitt in lag.lagavsnitt:
         anspraak = frozenset(avsnittsnycklar(lag, avsnitt))
 
         saknade = sorted(anspraak - finns, key=_sortering)

@@ -5,7 +5,7 @@ rendera_modulsida(...). Själva innehållet (tre flikar med RNTS-
 formulär, deterministiskt rättad quiz och lagrumsjakt) bor här så att alla
 moduler delar exakt samma flöde.
 
-Rättsfallsfliken kan visa antingen kursens kuraterade fall eller ett
+Rättsfallsfliken kan visa antingen appens kuraterade fall eller ett
 nygenererat fall från utils.generator, på studentens knapptryck.
 
 Verifieringsprincip: Normfältet och lagrumsjakten rättas deterministiskt med
@@ -150,7 +150,7 @@ def _ingress(modul: Modulscenarier) -> str:
         return modul.ingress
     return (
         "Läs scenariot, skriv din egen RNTS-analys och be tutorn granska den. "
-        "Varje lagrum du och tutorn anger kontrolleras mot kursens lagrumslista."
+        "Varje lagrum du och tutorn anger kontrolleras mot appens lagrumsregister."
     )
 
 
@@ -158,7 +158,7 @@ def _ingress(modul: Modulscenarier) -> str:
 
 
 def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
-    """Rättsfallsfliken: ett nygenererat fall, eller kursens kuraterade.
+    """Rättsfallsfliken: ett nygenererat fall, eller appens kuraterade.
 
     Studenten kan begära ett helt nytt, fiktivt rättsfall inom modulens
     rättsområde. Varje lagrum i facit verifieras mot lagrumsregistret innan
@@ -187,15 +187,15 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
             "Generera nytt rättsfall",
             key=f"gen_knapp_{filnamn}",
             type="primary",
-            use_container_width=True,
+            width="stretch",
             help="Skapar ett nytt, fiktivt fall inom modulens rättsområde. "
-            "Varje lagrum i facit kontrolleras mot kursens lagrumslista.",
+            "Varje lagrum i facit kontrolleras mot appens lagrumsregister.",
         )
     with kol_kuraterat:
         tillbaka = st.button(
-            "Visa kursens rättsfall",
+            "Visa appens rättsfall",
             key=f"kur_knapp_{filnamn}",
-            use_container_width=True,
+            width="stretch",
             disabled=n_case not in st.session_state,
         )
 
@@ -222,7 +222,7 @@ def _rendera_rattsfall(filnamn: str, modul: Modulscenarier) -> None:
             render_varning(notis)
         elif st.session_state.get(n_kalla) == "genererad":
             st.success(
-                "Nytt rättsfall genererat och grundat mot kursens lagrum. "
+                "Nytt rättsfall genererat och grundat mot appens lagrum. "
                 "Skriv din RNTS-analys och be tutorn granska den."
             )
         rendera_case_ovning(modul.modul, genererat)
@@ -246,7 +246,7 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         render_case(
             rubrik=case.rubrik,
             metadata=(
-                f"Svårighetsgrad: {case.svarighetsgrad} · "
+                f"Svårighetsgrad: {case.svarighetsgrad}: "
                 f"ca {case.uppskattad_tid_min} min"
             ),
             scenariotext=case.scenariotext,
@@ -277,7 +277,7 @@ def rendera_case_ovning(modul: str, case: Case) -> None:
         user_prompt=user_prompt,
         etikett="Be tutorn granska min analys",
         underlag=tuple(case.facit.lagrum),
-        reservhanvisning="Tryck på **Jag har försökt — visa facit** nedan så länge.",
+        reservhanvisning="Tryck på **Jag har försökt, visa facit** nedan så länge.",
     )
 
     # Facit efter försök, inte före: en jämförelse är bara lärorik om studenten
@@ -354,7 +354,7 @@ def _norm_feedback(norm_text: str) -> None:
     st.html('<div class="jok-pipeline">' + "".join(chips) + "</div>")
     if ovarifierade:
         render_varning(
-            "Minst ett lagrum i Normfältet kunde inte verifieras mot kursens "
+            "Minst ett lagrum i Normfältet kunde inte verifieras mot appens "
             "lagrumslista. Kontrollera det mot lagen.nu innan du bygger vidare."
         )
 
@@ -438,7 +438,7 @@ def _rendera_quizfraga(modul: str, nr: int, fraga: Flervalsfraga) -> None:
             _lagrum_chip_rad(alt.lagrum)
 
         system_prompt, user_prompt = build_quiz_prompt(fraga, alt)
-        # Underlaget är alternativens egna lagrum: de är kursens facit för
+        # Underlaget är alternativens egna lagrum: de är appens facit för
         # frågan och det enda tutorn ska röra sig inom.
         underlag = tuple(
             str(a.lagrum) for a in fraga.alternativ if getattr(a, "lagrum", None)
@@ -466,7 +466,7 @@ def _rendera_lagrumsjakt(modul: Modulscenarier) -> None:
 
     st.caption(
         "Skriv vilket lagrum situationen handlar om. Rättningen är deterministisk "
-        "och kräver ingen tutor. Du behöver inte §-tecknet — "
+        "och kräver ingen tutor. Du behöver inte §-tecknet. "
         "\"3 paragrafen skuldebrevslagen\" fungerar lika bra som \"3 § SkbrL\". "
         "(§ ligger oftast på tangenten till vänster om 1.)"
     )
@@ -491,7 +491,7 @@ def facit_upplast(nyckel: str, session_state: Mapping[str, object] | Any) -> boo
     return bool(session_state.get(f"facit_upplast_{nyckel}"))
 
 
-def _rendera_facitgrind(nyckel: str, rubrik: str = "Jag har försökt — visa facit") -> bool:
+def _rendera_facitgrind(nyckel: str, rubrik: str = "Jag har försökt, visa facit") -> bool:
     """Rita upplåsningsknappen och returnera True när facit får visas."""
     if facit_upplast(nyckel, st.session_state):
         return True
@@ -518,7 +518,7 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
     # Avsiktlig bieffekt: så länge rattad_nyckel är satt körs ratta_lagrumsjakt
     # om vid *varje* efterföljande rerun, inklusive de studenten utlöser genom
     # att fortsätta skriva i textfältet. Omdömet uppdateras alltså live utan
-    # ett nytt klick på Rätta — det var hela poängen med att lägga rättningen
+    # ett nytt klick på Rätta. Det var hela poängen med att lägga rättningen
     # här i stället för i knappens egen rerun.
     if st.session_state.get(rattad_nyckel):
         res = ratta_lagrumsjakt(jakt, svar)
@@ -528,7 +528,7 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
                 _lagrum_chip_rad(ref)
         else:
             if res.status == STATUS_OKAND_LAG:
-                st.error("Den lagen finns inte i kursens lagrumslista. Försök igen.")
+                st.error("Den lagen finns inte i appens lagrumsregister. Försök igen.")
             elif not svar.strip():
                 st.warning("Skriv ett lagrum först.")
             else:
@@ -536,7 +536,7 @@ def _rendera_jaktfraga(modul: str, nr: int, jakt: Lagrumsjakt) -> None:
             if jakt.ledtrad:
                 st.caption(f"Ledtråd: {jakt.ledtrad}")
         if _rendera_facitgrind(
-            f"jakt_{modul}_{jakt.id}", "Jag har försökt — visa facit"
+            f"jakt_{modul}_{jakt.id}", "Jag har försökt, visa facit"
         ):
             with st.expander("Facit", expanded=True):
                 for ref in jakt.facit_lagrum:

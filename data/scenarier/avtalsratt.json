@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen Avtalsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (AvtL). Nivå: Juridisk översiktskurs.",
+  "_beskrivning": "Deterministiska basscenarier för modulen Avtalsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (AvtL). Nivå: Juridikverkstan.",
   "modul": "Avtalsrätt",
   "case": [
     {

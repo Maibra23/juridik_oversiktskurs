@@ -4,7 +4,7 @@ Roller (allt utförs av dig, men uppgifterna är märkta per roll):
 * **DEV** = developer (kod, arkitektur, tester)
 * **PE** = prompt engineer (systempromptar, tutorbeteende, hallucinationsskydd)
 * **DES** = designer (designsystem, UI komponenter, presentationslogik)
-* **INN** = innehållsansvarig (scenarier, quizfrågor, lagrumsdata från kursboken)
+* **INN** = innehållsansvarig (scenarier, quizfrågor, lagrumsdata från appens disposition)
 
 Varje uppgift har en konkret prompt att köra mot en kodassistent. Kör promptarna i ordning inom respektive dag. Committa efter varje grönt teststeg.
 
@@ -20,11 +20,11 @@ Prompt:
 
 ### 1.2 (DEV) Skapa projektstruktur
 Prompt:
-> "Skapa filstrukturen för projektet juridik_oversiktskurs enligt: streamlit_app.py, pages/ (en fil per juridikmodul), utils/ (llm.py, llm_budget.py, prompts.py, tutor.py, lagrum.py, scenarier.py, ui.py), data/ (lagrum.json, scenarier/*.json), tests/, .streamlit/config.toml, .streamlit/secrets.toml.example, requirements.txt, .github/workflows/ci.yml. Generera tomma filer med docstrings på svenska som beskriver varje fils ansvar."
+> "Skapa filstrukturen för projektet juridikverkstan enligt: streamlit_app.py, pages/ (en fil per juridikmodul), utils/ (llm.py, llm_budget.py, prompts.py, tutor.py, lagrum.py, scenarier.py, ui.py), data/ (lagrum.json, scenarier/*.json), tests/, .streamlit/config.toml, .streamlit/secrets.toml.example, requirements.txt, .github/workflows/ci.yml. Generera tomma filer med docstrings på svenska som beskriver varje fils ansvar."
 
 ### 1.3 (INN) Bygg lagrumsdatabasen (kärnan i hallucinationsskyddet)
 Prompt:
-> "Skapa data/lagrum.json med kursens viktigaste lagar för Juridisk översiktskurs. För varje lag: förkortning (AvtL, KöpL, KKöpL, SkL, LAS, ABL, ÄktB, SamboL, ÄB, BrB, FB, RB, JB, HBL, MFL, KonkL, UB, SkbrL), fullt namn, SFS nummer, lagen.nu bas URL och en lista över kapitel eller paragrafintervall som ingår i kursen. Använd lagen.nu URL formatet https://lagen.nu/SFSNUMMER#PN eller #KMPN för kapitelindelade lagar. Markera osäkra intervall med fältet 'verifiera': true så jag kan kontrollera dem manuellt mot lagen.nu."
+> "Skapa data/lagrum.json med appens viktigaste lagar för Juridikverkstan. För varje lag: förkortning (AvtL, KöpL, KKöpL, SkL, LAS, ABL, ÄktB, SamboL, ÄB, BrB, FB, RB, JB, HBL, MFL, KonkL, UB, SkbrL), fullt namn, SFS nummer, lagen.nu bas URL och en lista över kapitel eller paragrafintervall som ingår i appen. Använd lagen.nu URL formatet https://lagen.nu/SFSNUMMER#PN eller #KMPN för kapitelindelade lagar. Markera osäkra intervall med fältet 'verifiera': true så jag kan kontrollera dem manuellt mot lagen.nu."
 
 Manuellt efterarbete (INN): öppna lagen.nu och stickprova 10 URLer, särskilt ÄktB, ÄB och BrB som är kapitelindelade.
 
@@ -42,7 +42,7 @@ Prompt:
 
 ### 1.7 (INN + PE) Första modulens innehåll: Avtalsrätt
 Prompt:
-> "Skapa data/scenarier/avtalsratt.json enligt schemat i utils/scenarier.py med: 2 rättsfall (case) med RNTS facit (rättsfråga, tillämpliga lagrum ur lagrum.json, tillämpningspunkter, förväntad slutsats), 8 flervalsfrågor med förklaringar och lagrumsreferens per alternativ, 4 lagrumsjaktfrågor. Ämnen: anbud och accept (1 och 6 §§ AvtL), sen accept (4 § AvtL), fullmakt med behörighet mot befogenhet (10 och 11 §§ AvtL), ogiltighet (28 till 33 §§ AvtL) och oskälighet (36 § AvtL). Nivå: Juridisk översiktskurs. Allt på svenska."
+> "Skapa data/scenarier/avtalsratt.json enligt schemat i utils/scenarier.py med: 2 rättsfall (case) med RNTS facit (rättsfråga, tillämpliga lagrum ur lagrum.json, tillämpningspunkter, förväntad slutsats), 8 flervalsfrågor med förklaringar och lagrumsreferens per alternativ, 4 lagrumsjaktfrågor. Ämnen: anbud och accept (1 och 6 §§ AvtL), sen accept (4 § AvtL), fullmakt med behörighet mot befogenhet (10 och 11 §§ AvtL), ogiltighet (28 till 33 §§ AvtL) och oskälighet (36 § AvtL). Nivå: Juridikverkstan. Allt på svenska."
 
 Definition of done dag 1: appen startar, lagrumstester gröna, avtalsrättsdata inläst och validerad mot lagrum.json.
 
@@ -54,7 +54,7 @@ Mål vid dagens slut: komplett scenarioflöde med LLM tutor, verifiering och qui
 
 ### 2.1 (PE) Systemprompt för tutorn
 Prompt:
-> "Skriv utils/prompts.py för en svensk juridiktutor på JÖK nivå. Systemprompten ska: (1) kräva RNTS strukturen med rubrikerna Rättsfrågan, Norm, Tillämpning, Slutsats, (2) förbjuda påhittade lagar, paragrafer och rättsfall med instruktionen att hellre skriva 'jag är osäker på exakt lagrum' än att gissa, (3) kräva lagrumsformatet 'N § FÖRK' eller 'N kap. M § FÖRK' med endast förkortningarna i den bifogade vitlistan, (4) instruera tutorn att bedöma studentens egna svar steg för steg och peka på vad som saknas i stället för att skriva om hela lösningen, (5) hålla svaret under 400 ord. Skapa även build_case_prompt(scenario, studentens_svar) och build_quiz_prompt(fraga, valt_alternativ) som injicerar scenariodata och den relevanta delen av lagrumsvitlistan i användarprompten."
+> "Skriv utils/prompts.py för en svensk juridiktutor på Juridikverkstan nivå. Systemprompten ska: (1) kräva RNTS strukturen med rubrikerna Rättsfrågan, Norm, Tillämpning, Slutsats, (2) förbjuda påhittade lagar, paragrafer och rättsfall med instruktionen att hellre skriva 'jag är osäker på exakt lagrum' än att gissa, (3) kräva lagrumsformatet 'N § FÖRK' eller 'N kap. M § FÖRK' med endast förkortningarna i den bifogade vitlistan, (4) instruera tutorn att bedöma studentens egna svar steg för steg och peka på vad som saknas i stället för att skriva om hela lösningen, (5) hålla svaret under 400 ord. Skapa även build_case_prompt(scenario, studentens_svar) och build_quiz_prompt(fraga, valt_alternativ) som injicerar scenariodata och den relevanta delen av lagrumsvitlistan i användarprompten."
 
 ### 2.2 (DEV) Tutor on demand med verifiering
 Prompt:
@@ -92,7 +92,7 @@ Prompt (en per modul, samma schema): Juridisk metod (kap 1), Köprätt (kap 8), 
 
 ### 3.3 (INN) Förkunskapsmodulerna Personrätt och Allmän förmögenhetsrätt
 
-Tillkom efter helhetsgranskningen: Paretourvalet startade på Avtalsrätt (kap 7) och hoppade därmed över de begrepp som avtals- och köprätten vilar på. Åtgärdat med två moduler enligt samma schema (minst 1 case, 6 MC, 3 lagrumsjakt):
+Tillkom efter helhetsgranskningen: Paretourvalet startade på Avtalsrätt (kap 7) och hoppade därmed över de begrepp som avtalsrätten och köprätten vilar på. Åtgärdat med två moduler enligt samma schema (minst 1 case, 6 MC, 3 lagrumsjakt):
 
 * **Personrätt** (kap 5): underårigs omyndighet och avtalsbundenhet (9 kap. FB), framtidsfullmakt (LFF), god man och förvaltare (11 kap. FB).
 * **Allmän förmögenhetsrätt** (kap 6): godtrosförvärv av lösöre (GFL), undantaget för olovligen tagen egendom, lösningsrätt och hävd.
@@ -105,7 +105,7 @@ Sidopanelen visade kap 9 och kap 15 till 17 som planerade. Båda är nu byggda e
 
 ### 3.5 (LLM) Genererade rättsfall i varje modul
 
-Rättsfallsfliken i varje modul kan nu generera ett nytt, fiktivt fall inom modulens rättsområde via utils.generator, med samma verifiering och fallback som Kunskapsutmaningen. Syftet är att studenten inte ska kunna memorera de kuraterade fallen. Generering sker endast på knapptryck enligt PRD 5.3: Streamlit kör om skriptet vid varje tangenttryck i RNTS-fälten, så automatisk generering vid rerun skulle byta ut fallet mitt i skrivandet. Knappen "Visa kursens rättsfall" tar tillbaka de kuraterade fallen.
+Rättsfallsfliken i varje modul kan nu generera ett nytt, fiktivt fall inom modulens rättsområde via utils.generator, med samma verifiering och fallback som Kunskapsutmaningen. Syftet är att studenten inte ska kunna memorera de kuraterade fallen. Generering sker endast på knapptryck enligt PRD 5.3: Streamlit kör om skriptet vid varje tangenttryck i RNTS-fälten, så automatisk generering vid rerun skulle byta ut fallet mitt i skrivandet. Knappen "Visa appens rättsfall" tar tillbaka de kuraterade fallen.
 
 ### 3.6 (UI) Hierarkisk sidopanel
 

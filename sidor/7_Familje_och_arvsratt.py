@@ -14,6 +14,6 @@ from utils.modulvy import rendera_modulsida
 
 rendera_modulsida(
     "familje_och_arvsratt",
-    "Familje- och successionsrätt",
-    "KAP. 18–21 · FAMILJ OCH ARV",
+    "Familjerätt och successionsrätt",
+    "FAMILJ OCH ARV",
 )

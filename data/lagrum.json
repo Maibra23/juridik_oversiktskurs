@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Lagrumsregister för Juridisk översiktskurs. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Fältet \"verifiera\" markerar avsnitt vars paragrafgränser ännu inte kontrollerats mot författningen. Kontrollen är sedan 2026-08-03 automatiserad: data/lagstruktur/ bär lagarnas egen kapitel- och momentindelning hämtad från Riksdagens öppna data, och utils/kursavsnitt_kontroll.py jämför varje avsnitt mot den vid varje testkörning. Samtliga avsnitt är därför genomgångna och flaggan är nollställd. Sätt den till true igen för ett avsnitt vars gränser du är osäker på. Observera att kontrollen bevisar att gränserna finns i lagen och att rubriken beskriver dem, inte att kursens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av kursansvarig. Fältet \"aliaser\" listar andra sätt studenter kan skriva lagen på (fullt vardagligt namn, etablerade alternativa förkortningar) och är handförfattat, inte grammatiskt härlett -- se docs/superpowers/specs/2026-08-06-lagrumsjakt-alias-matching-design.md.",
+  "_beskrivning": "Lagrumsregister för Juridikverkstan. Appens enda sanningskälla för tillåtna lagrumshänvisningar; utils/lagrum.py läser och validerar filen och verify_lagrum jämför tutorns citat mot den. Fältet \"verifiera\" markerar avsnitt vars paragrafgränser ännu inte kontrollerats mot författningen. Kontrollen är sedan 2026-08-03 automatiserad: data/lagstruktur/ bär lagarnas egen kapitelindelning och momentindelning hämtad från Riksdagens öppna data, och utils/lagavsnitt_kontroll.py jämför varje avsnitt mot den vid varje testkörning. Samtliga avsnitt är därför genomgångna och flaggan är nollställd. Sätt den till true igen för ett avsnitt vars gränser du är osäker på. Observera att kontrollen bevisar att gränserna finns i lagen och att rubriken beskriver dem, inte att appens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av den som använder appen. Fältet \"aliaser\" listar andra sätt studenter kan skriva lagen på (fullt vardagligt namn, etablerade alternativa förkortningar) och är handförfattat, inte grammatiskt härlett -- se docs/superpowers/specs/2026-08-06-lagrumsjakt-alias-matching-design.md.",
   "url_format": {
     "paragraflag": "https://lagen.nu/SFS#P<paragraf>",
     "kapitelindelad": "https://lagen.nu/SFS#K<kapitel>P<paragraf>",
@@ -16,7 +16,7 @@
       "aliaser": [
         "avtalslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Slutande av avtal (anbud och accept)",
           "kapitel": null,
@@ -69,7 +69,7 @@
       "aliaser": [
         "skuldebrevslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Allmänna bestämmelser om skuldebrev",
           "kapitel": null,
@@ -106,7 +106,7 @@
       "aliaser": [
         "ärvdabalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Den legala arvsordningen (arvsklasser)",
           "kapitel": "2",
@@ -158,7 +158,7 @@
       "aliaser": [
         "brottsbalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Brottsbegreppet och brottspåföljder",
           "kapitel": "1",
@@ -218,7 +218,7 @@
       "aliaser": [
         "jordabalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Fast egendom och dess gränser",
           "kapitel": "1",
@@ -286,7 +286,7 @@
       "aliaser": [
         "skadeståndslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser",
           "kapitel": "1",
@@ -354,7 +354,7 @@
       "aliaser": [
         "handelsbolagslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser (definitioner)",
           "kapitel": "1",
@@ -390,7 +390,7 @@
       "aliaser": [
         "utsökningsbalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och exekutionstitlar",
           "kapitel": "1",
@@ -426,7 +426,7 @@
       "aliaser": [
         "anställningsskyddslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Lagens tillämpningsområde och undantag",
           "kapitel": null,
@@ -502,7 +502,7 @@
       "aliaser": [
         "konkurslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och obeståndsbegreppet",
           "kapitel": "1",
@@ -546,7 +546,7 @@
       "aliaser": [
         "äktenskapsbalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Äktenskapshinder",
           "kapitel": "2",
@@ -606,7 +606,7 @@
       "aliaser": [
         "köplagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Tillämpningsområde och avtalsfrihet (dispositivitet)",
           "kapitel": null,
@@ -674,7 +674,7 @@
       "aliaser": [
         "föräldrabalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Faderskap och föräldraskap",
           "kapitel": "1",
@@ -726,7 +726,7 @@
       "aliaser": [
         "rättegångsbalken"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Domstolarnas instansordning och sammansättning",
           "kapitel": "1",
@@ -794,7 +794,7 @@
       "aliaser": [
         "sambolagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Vad som avses med sambor",
           "kapitel": null,
@@ -838,7 +838,7 @@
       "aliaser": [
         "aktiebolagslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser (aktiebolag som juridisk person, ansvarsfrihet)",
           "kapitel": "1",
@@ -898,7 +898,7 @@
       "aliaser": [
         "marknadsföringslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Lagens syfte och definitioner",
           "kapitel": null,
@@ -951,7 +951,7 @@
         "konsumentköplagen",
         "KKL"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Inledande bestämmelser och tillämpningsområde",
           "kapitel": "1",
@@ -1012,7 +1012,7 @@
       "aliaser": [
         "godtrosförvärvslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Godtrosförvärv av lösöre: överlåtelse från icke-ägare, besittning och god tro",
           "kapitel": null,
@@ -1048,7 +1048,7 @@
       "aliaser": [
         "framtidsfullmaktslagen"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Vad en framtidsfullmakt är, vem som får upprätta en och formkraven",
           "kapitel": null,
@@ -1077,7 +1077,7 @@
         "preskriptionslagen",
         "PreskrL"
       ],
-      "kursavsnitt": [
+      "lagavsnitt": [
         {
           "beskrivning": "Preskriptionstid: tio år, men tre år för konsumentfordringar",
           "kapitel": null,

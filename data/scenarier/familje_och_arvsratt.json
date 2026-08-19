@@ -1,6 +1,6 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen Familje- och successionsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (ÄktB och ÄB). Nivå: Juridisk översiktskurs.",
-  "modul": "Familje- och successionsrätt",
+  "_beskrivning": "Deterministiska basscenarier för modulen Familjerätt och successionsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (ÄktB och ÄB). Nivå: Juridikverkstan.",
+  "modul": "Familjerätt och successionsrätt",
   "case": [
     {
       "id": "fam-case-1",
@@ -47,7 +47,7 @@
         {"text": "Arvlåtarens bröstarvingar (barn), med lika lott.", "korrekt": true, "forklaring": "Första arvsklassen är bröstarvingarna, som delar lika.", "lagrum": "2 kap. 1 § ÄB"},
         {"text": "Arvlåtarens föräldrar och syskon.", "korrekt": false, "forklaring": "Föräldrar och syskon tillhör andra arvsklassen.", "lagrum": "2 kap. 1 § ÄB"},
         {"text": "Enbart den efterlevande maken.", "korrekt": false, "forklaring": "Makens arvsrätt regleras särskilt och utesluter inte bröstarvingarnas ställning i första arvsklassen.", "lagrum": "3 kap. 1 § ÄB"},
-        {"text": "Arvlåtarens mor- och farföräldrar.", "korrekt": false, "forklaring": "De tillhör tredje arvsklassen.", "lagrum": "2 kap. 1 § ÄB"}
+        {"text": "Arvlåtarens morföräldrar och farföräldrar.", "korrekt": false, "forklaring": "De tillhör tredje arvsklassen.", "lagrum": "2 kap. 1 § ÄB"}
       ]
     },
     {

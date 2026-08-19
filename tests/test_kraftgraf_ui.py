@@ -59,7 +59,7 @@ def html(graf):
 # --- Färgkontraktet ärvs oförändrat -----------------------------------------
 
 
-def test_kurslagar_ar_paragrafguld(graf, noder):
+def test_registerlagar_ar_paragrafguld(graf, noder):
     guld = {
         n["color"]["background"]
         for n, kalla in zip(noder, graf["noder"])
@@ -258,7 +258,7 @@ def test_sidopanelen_visar_statistiken(graf):
 
     panel = sidopanel_html(graf)
     stat = grafstatistik(graf)
-    assert str(stat.kurslagar) in panel
+    assert str(stat.registerlagar) in panel
     assert str(stat.referenslagar) in panel
 
 

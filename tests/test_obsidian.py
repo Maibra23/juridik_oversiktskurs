@@ -58,7 +58,7 @@ ANALYS = CaseAnalys(modul="Avtalsrätt", case=CASE, svar=SVAR)
 def _wikilankar(text: str) -> set[str]:
     """Länkmål ur [[...]], normaliserade som Obsidian slår upp dem.
 
-    "[[Not#Rubrik|alias]]" pekar på noten "Not"; rubrik- och aliasdelarna
+    "[[Not#Rubrik|alias]]" pekar på noten "Not"; rubrikdelen och aliasdelen
     påverkar inte vilken fil länken leder till.
     """
     mal = set()

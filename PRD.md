@@ -1,16 +1,16 @@
-# PRD: Juridisk översiktskurs, LLM driven lärplattform
+# PRD: Juridikverkstan, LLM driven lärplattform
 
 Version 1.0. Språk: svenska. Referensarkitektur: Ekonomistyrning Sandbox (Maibra23/ekonomistyrning).
 
 ## 1. Problem och syfte
 
-Studenter på Juridisk översiktskurs (JÖK) möter en mycket bred kursbok (Persson m.fl., Svensk juridik, ca 600 sidor och 22 kapitel) men examineras främst på förmågan att tillämpa juridisk metod på konkreta scenarier. Problemet är inte brist på material utan brist på träning i att *tänka* juridiskt: identifiera rättsfrågan, hitta rätt lagrum, tillämpa normen på fakta och dra en slutsats. Utan sådan träning läser studenter passivt och underpresterar på tentans fallfrågor.
+Studenter på Juridikverkstan möter en mycket bred appens disposition (svensk juridisk systematik, ca 600 sidor och 22 kapitel) men examineras främst på förmågan att tillämpa juridisk metod på konkreta scenarier. Problemet är inte brist på material utan brist på träning i att *tänka* juridiskt: identifiera rättsfrågan, hitta rätt lagrum, tillämpa normen på fakta och dra en slutsats. Utan sådan träning läser studenter passivt och underpresterar på provets fallfrågor.
 
-Syftet med appen är att ge fallbaserad träning med en LLM tutor som förklarar och kvalitetssäkrar användarens egna resonemang, med fokus på de 20 procent av innehållet som ger 80 procent av tentanyttan.
+Syftet med appen är att ge fallbaserad träning med en LLM tutor som förklarar och kvalitetssäkrar användarens egna resonemang, med fokus på de 20 procent av innehållet som ger 80 procent av provetyttan.
 
 ## 2. Målgrupp
 
-* Primär: studenter på Juridisk översiktskurs vid svenska universitet och högskolor.
+* Primär: studenter på Juridikverkstan vid svenska universitet och högskolor.
 * Sekundär: yrkesverksamma som behöver en juridisk orientering (ekonomer, HR, entreprenörer).
 
 ## 3. Mål
@@ -34,14 +34,14 @@ Syftet med appen är att ge fallbaserad träning med en LLM tutor som förklarar
 
 Paretourvalet omfattar tolv moduler. Personrätt och allmän förmögenhetsrätt (kap 5 och 6) tillkom efter att en granskning visade att RNTS analysen i senare moduler förutsätter begrepp därifrån: fullmaktsläran i avtalsrätten bygger på rättshandlingsförmåga, och köprättens felregler förutsätter att äganderättsfrågan är avgjord.
 
-Urvalet bygger på bokens innehållsförteckning och vad som typiskt examineras med fallfrågor på JÖK:
+Urvalet bygger på bokens innehållsförteckning och vad som typiskt examineras med fallfrågor på Juridikverkstan:
 
 1. **Juridisk metod och rättskällor** (kap 1): rättskälleläran, lagtolkning, RNTS strukturen. Grunden för allt annat.
 2. **Personrätt** (kap 5): rättskapacitet och rättshandlingsförmåga, underårigas omyndighet och avtalsbundenhet (9 kap. FB), framtidsfullmakt, god man och förvaltare. Förutsättningen för avtalsrätten: vem kan över huvud taget binda sig?
 3. **Allmän förmögenhetsrätt** (kap 6): äganderättens övergång till lös egendom, godtrosförvärv och undantaget för olovligen tagen egendom, lösningsrätt och hävd. Förutsättningen för köprätten: vem äger saken?
 4. **Avtalsrätt** (kap 7): anbud och accept, fullmakt (behörighet mot befogenhet), ogiltighet, 36 § AvtL.
 5. **Köprätt** (kap 8): KöpL mot KKöpL, dröjsmål, fel, påföljder, reklamation.
-6. **Fastighetsrätt** (kap 9): fastighets- och byggnadstillbehör (2 kap. JB), formkravet vid köp av fast egendom, felbegreppet och den stränga undersökningsplikten (4 kap. 19 § JB), panträtt genom inteckning.
+6. **Fastighetsrätt** (kap 9): fastighetstillbehör och byggnadstillbehör (2 kap. JB), formkravet vid köp av fast egendom, felbegreppet och den stränga undersökningsplikten (4 kap. 19 § JB), panträtt genom inteckning.
 7. **Skadeståndsrätt** (kap 10): culparegeln, adekvat kausalitet, principalansvar, ren förmögenhetsskada.
 8. **Arbetsrätt** (kap 11): anställningsformer, uppsägning mot avsked (LAS), diskriminering.
 9. **Associationsrätt** (kap 12): bolagsformer, personligt ansvar, aktiebolagets organisation.
@@ -71,8 +71,8 @@ P1 moduler: konstitutionell rätt (kap 2 till 3) och förvaltningsrätt (kap 4).
 Detta är den juridiska motsvarigheten till referensrepots sifferverifiering (verify_grounding):
 
 * Systemprompten förbjuder påhittade lagar, paragrafer och rättsfall och kräver formatet "N § Lagförkortning" alternativt "N kap. M § Lagförkortning".
-* Appen extraherar alla lagrumsreferenser ur LLM svaret med regex och kontrollerar varje referens mot data/lagrum.json, en intern vitlista med kursens relevanta lagar, kapitel och paragrafintervall.
-* Referenser som inte kan verifieras markeras visuellt med en varning ("Kunde inte verifieras mot kursens lagrumslista, kontrollera själv på lagen.nu") i stället för att tyst visas som fakta.
+* Appen extraherar alla lagrumsreferenser ur LLM svaret med regex och kontrollerar varje referens mot data/lagrum.json, en intern vitlista med appens relevanta lagar, kapitel och paragrafintervall.
+* Referenser som inte kan verifieras markeras visuellt med en varning ("Kunde inte verifieras mot appens lagrumsregister, kontrollera själv på lagen.nu") i stället för att tyst visas som fakta.
 * Rättsfall (NJA referenser) visas alltid med varningstext i v1 eftersom de inte kan valideras lokalt.
 
 ### 5.5 Budgetskydd (P0)

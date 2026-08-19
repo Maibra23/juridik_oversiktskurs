@@ -1,4 +1,4 @@
-# CI-workflow för juridik_oversiktskurs.
+# CI-workflow för juridikverkstan.
 # Ansvar: vid push och pull request köra lint (ruff), typkontroll (mypy på
 # utils/) och testsviten (pytest) på Python 3.11 utan HF-token, dvs. i
 # offlineläge, samt JS-testerna för grafens skiktlogik. Inga deploy-steg här.

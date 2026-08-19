@@ -97,7 +97,7 @@ def test_kapitelrubrik_ger_none_for_okand_lag():
 
 
 def test_antal_kapitel_raknar_hela_lagen():
-    """Hela lagen, inte kursens del: KKöpL har nio kapitel."""
+    """Hela lagen, inte appens del: KKöpL har nio kapitel."""
     assert antal_kapitel("KKöpL") == 9
 
 

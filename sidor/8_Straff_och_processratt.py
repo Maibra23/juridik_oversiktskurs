@@ -13,5 +13,5 @@ from __future__ import annotations
 from utils.modulvy import rendera_modulsida
 
 rendera_modulsida(
-    "straff_och_processratt", "Straff- och processrätt", "KAP. 22 · STRAFFRÄTT"
+    "straff_och_processratt", "Straffrätt och processrätt", "STRAFFRÄTT"
 )

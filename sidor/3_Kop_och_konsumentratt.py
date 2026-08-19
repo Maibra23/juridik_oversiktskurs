@@ -13,5 +13,5 @@ from __future__ import annotations
 from utils.modulvy import rendera_modulsida
 
 rendera_modulsida(
-    "kop_och_konsumentratt", "Köp- och konsumenträtt", "KAP. 8 · KÖPRÄTT"
+    "kop_och_konsumentratt", "Köprätt och konsumenträtt", "KÖPRÄTT"
 )

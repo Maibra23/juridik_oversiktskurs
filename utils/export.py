@@ -18,7 +18,7 @@ from datetime import date
 from io import BytesIO
 from typing import Mapping
 
-RAPPORT_TITEL = "Studierapport · Juridisk översiktskurs"
+RAPPORT_TITEL = "Studierapport: Juridikverkstan"
 DISCLAIMER = (
     "Rapporten är ett studieunderlag från ett övningsverktyg och utgör inte "
     "juridisk rådgivning."

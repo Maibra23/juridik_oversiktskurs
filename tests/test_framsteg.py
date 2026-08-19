@@ -1,4 +1,4 @@
-"""Test för utils.framsteg: vilka kursmoduler studenten har börjat på.
+"""Test för utils.framsteg: vilka övningsmoduler studenten har börjat på.
 
 Funktionen är ren och tar böckerna som argument, så den kan testas utan
 Streamlit-runtime. Wrappern som läser session_state testas inte här.

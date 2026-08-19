@@ -1,13 +1,13 @@
-"""Tester för försoningen mellan kursavsnitt och lagens struktur.
+"""Tester för försoningen mellan lagavsnitt och lagens struktur.
 
-Bakgrund: data/lagrum.json bär 105 kursavsnitt, varav 78 flaggade med
+Bakgrund: data/lagrum.json bär 105 lagavsnitt, varav 78 flaggade med
 "verifiera": true -- osäkra paragrafgränser som skulle kontrolleras mot
 lagen.nu. Så länge avsnitten bara matade validering och prompter var en
 oskarp gräns billig. När de visas i lagkortet blir den ett påstående
 studenten läser som sant.
 
 Korpusen i data/lagtext/ kan inte användas som facit: den härleddes ur
-kursavsnitten (scripts/hamta_lagtext.py sparar bara paragrafer inom dem),
+lagavsnitten (scripts/hamta_lagtext.py sparar bara paragrafer inom dem),
 så den fångar bara för vida gränser, aldrig för snäva. Lagens egen struktur
 fångar båda.
 """
@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import pytest
 
-from utils.kursavsnitt_kontroll import (
+from utils.lagavsnitt_kontroll import (
     TYP_FOR_SNAV,
     TYP_OVERSKJUTANDE,
     Avvikelse,
@@ -24,23 +24,23 @@ from utils.kursavsnitt_kontroll import (
     kontrollera_alla,
     kontrollera_lag,
 )
-from utils.lagrum import Kursavsnitt, Lag
+from utils.lagrum import Lag, Lagavsnitt
 from utils.lagstruktur import Kapitel, Lagstruktur, Moment
 
 
-def _lag(kapitelindelad: bool, avsnitt: tuple[Kursavsnitt, ...]) -> Lag:
+def _lag(kapitelindelad: bool, avsnitt: tuple[Lagavsnitt, ...]) -> Lag:
     return Lag(
         forkortning="TestL",
         namn="Testlagen",
         sfs="2026:1",
         kapitelindelad=kapitelindelad,
         lagen_nu_bas_url="https://lagen.nu/2026:1",
-        kursavsnitt=avsnitt,
+        lagavsnitt=avsnitt,
     )
 
 
-def _avsnitt(beskrivning, kapitel, fran, till, verifiera=True) -> Kursavsnitt:
-    return Kursavsnitt(
+def _avsnitt(beskrivning, kapitel, fran, till, verifiera=True) -> Lagavsnitt:
+    return Lagavsnitt(
         beskrivning=beskrivning,
         kapitel=kapitel,
         paragraf_fran=fran,
@@ -126,7 +126,7 @@ def test_kontrollera_alla_tacker_hela_registret():
     assert all(isinstance(a, Avvikelse) for a in avvikelser)
 
 
-def test_varje_kursavsnitt_pekar_pa_ett_kapitel_som_finns():
+def test_varje_lagavsnitt_pekar_pa_ett_kapitel_som_finns():
     """En kapitelindelad lags avsnitt måste peka på ett verkligt kapitel.
 
     Överskjutandetestet fångar paragrafer utanför lagen, men inte ett avsnitt
@@ -142,7 +142,7 @@ def test_varje_kursavsnitt_pekar_pa_ett_kapitel_som_finns():
         if not lag.kapitelindelad:
             continue
         nummer = {k.nummer for k in strukturer[forkortning].kapitel}
-        for avsnitt in lag.kursavsnitt:
+        for avsnitt in lag.lagavsnitt:
             if avsnitt.kapitel is not None and avsnitt.kapitel not in nummer:
                 fel.append(
                     f"{forkortning}: {avsnitt.beskrivning!r} pekar på "
@@ -151,8 +151,8 @@ def test_varje_kursavsnitt_pekar_pa_ett_kapitel_som_finns():
     assert fel == [], "\n".join(fel)
 
 
-def test_inga_kursavsnitt_pekar_utanfor_lagen():
-    """Bärande invariant: inget kursavsnitt får påstå paragrafer som inte finns.
+def test_inga_lagavsnitt_pekar_utanfor_lagen():
+    """Bärande invariant: inget lagavsnitt får påstå paragrafer som inte finns.
 
     RÖD tills de flaggade avsnitten gåtts igenom. Därefter en permanent
     spärr mot att nästa lagändring smyger in samma fel.

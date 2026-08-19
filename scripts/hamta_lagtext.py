@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hämta författningstext för kursens lagar från lagen.nu till data/lagtext/.
+"""Hämta författningstext för appens lagar från lagen.nu till data/lagtext/.
 
 Körs manuellt, aldrig av appen. Korpusen ligger i git så att appen fungerar
 offline, deterministiskt och utan att belasta lagen.nu vid varje tutorsvar.
@@ -22,13 +22,13 @@ syskon-``<div class="panel-group col-sm-5">``. Extraheraren läser bara
 section-elementet.
 
 Utöka aldrig den här hämtaren till att ta med kommentarerna. Det vore både
-ett upphovsrättsintrång och en pedagogisk försämring: kursen ska lära
+ett upphovsrättsintrång och en pedagogisk försämring: appen ska lära
 studenten läsa lagtext, inte andras sammanfattningar av den.
 
-BARA KURSENS PARAGRAFER
+BARA APPENS PARAGRAFER
 =======================
 
-Endast paragrafer inom ``kursavsnitt`` i data/lagrum.json sparas (cirka 1089
+Endast paragrafer inom ``lagavsnitt`` i data/lagrum.json sparas (cirka 1089
 stycken). Det håller korpusen liten och speglar exakt det garden redan
 släpper igenom.
 """
@@ -127,7 +127,7 @@ def _rensa(html: str) -> str:
 
 # Riksdagens HTML märker paragrafer med <a class="paragraf" name="K4P1">.
 # Texten löper fram till nästa sådan ankare. Formen "1 a §" får ankaret
-# "K4P1a" och faller bort i _ID nedan, vilket är rätt: kursavsnitten
+# "K4P1a" och faller bort i _ID nedan, vilket är rätt: lagavsnitten
 # refererar bara till hela paragrafnummer.
 _RIKSDAGEN_ANKARE = re.compile(
     r'<a[^>]*class="paragraf"[^>]*name="(?P<id>K?\d*P\d+[a-z]?)"[^>]*>.*?</a>',
@@ -179,13 +179,13 @@ def extrahera_paragrafer(html: str) -> dict[str, str]:
     return ut
 
 
-# --- Urval mot kursavsnitten ------------------------------------------------
+# --- Urval mot lagavsnitten ------------------------------------------------
 
 
-def kursens_nycklar(lag: dict) -> set[str]:
-    """Alla paragrafnycklar som ligger inom lagens kursavsnitt."""
+def avsnittsnycklar(lag: dict) -> set[str]:
+    """Alla paragrafnycklar som ligger inom lagens lagavsnitt."""
     nycklar: set[str] = set()
-    for avsnitt in lag.get("kursavsnitt", ()):
+    for avsnitt in lag.get("lagavsnitt", ()):
         fran = int(avsnitt["paragraf_fran"])
         till = int(avsnitt["paragraf_till"])
         kapitel = avsnitt.get("kapitel")
@@ -233,10 +233,10 @@ def hamta_lag(lag: dict, *, tyst: bool = False) -> tuple[int, int]:
     """Hämta och spara en lag. Returnerar (sparade, förväntade).
 
     Hämtar i första hand från lagen.nu. Ger den för dålig täckning mot
-    kursavsnitten hämtas lagen om från Riksdagens öppna data, och den bästa
+    lagavsnitten hämtas lagen om från Riksdagens öppna data, och den bästa
     av de två sparas. Se MINSTA_TACKNING för bakgrunden.
     """
-    onskade = kursens_nycklar(lag)
+    onskade = avsnittsnycklar(lag)
 
     alla = extrahera_paragrafer(hamta_sida(lag["lagen_nu_bas_url"]))
     valda = {n: t for n, t in alla.items() if n in onskade}
@@ -273,7 +273,7 @@ def hamta_lag(lag: dict, *, tyst: bool = False) -> tuple[int, int]:
             f"  [{kalla}]"
         )
         if saknade:
-            # Vanligt och oproblematiskt: kursavsnitt anges som intervall och
+            # Vanligt och oproblematiskt: lagavsnitt anges som intervall och
             # alla nummer i intervallet finns inte alltid som egna paragrafer.
             visa = ", ".join(saknade[:6]) + ("…" if len(saknade) > 6 else "")
             status += f"  (ej funna: {visa})"

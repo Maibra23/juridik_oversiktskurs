@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Skriv ut avvikelser mellan kursavsnitten och lagarnas faktiska struktur.
+"""Skriv ut avvikelser mellan lagavsnitten och lagarnas faktiska struktur.
 
-    python3.11 scripts/verifiera_kursavsnitt.py            # alla avvikelser
-    python3.11 scripts/verifiera_kursavsnitt.py --typ OVERSKJUTANDE
-    python3.11 scripts/verifiera_kursavsnitt.py --lag RB
+    python3.11 scripts/verifiera_lagavsnitt.py            # alla avvikelser
+    python3.11 scripts/verifiera_lagavsnitt.py --typ OVERSKJUTANDE
+    python3.11 scripts/verifiera_lagavsnitt.py --lag RB
 
 Skriptet RÄTTAR ALDRIG data/lagrum.json. Om ett avsnitt ska sluta vid 13:5
-eller 13:7 är en bedömning av kursens omfång, inte en textjämförelse.
+eller 13:7 är en bedömning av appens omfång, inte en textjämförelse.
 Rapporten är underlag; beslutet är människans.
 """
 
@@ -19,7 +19,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from utils.kursavsnitt_kontroll import FORKLARING, kontrollera_alla  # noqa: E402
+from utils.lagavsnitt_kontroll import FORKLARING, kontrollera_alla  # noqa: E402
 
 
 def main(argv: list[str] | None = None) -> int:

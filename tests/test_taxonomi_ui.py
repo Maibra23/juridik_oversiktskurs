@@ -59,7 +59,7 @@ def test_lagnoder_bar_sin_lagen_nu_url(graf, html):
 
 
 def test_strukturnoder_har_tom_url(graf):
-    """Bara lagnoder (kurs och referens) är klickbara; struktur är inert."""
+    """Bara lagnoder (register och referens) är klickbara; struktur är inert."""
     from utils.rattssystem_graf import GRUPP_REFERENS
 
     klickbara = {GRUPP_LAG, GRUPP_REFERENS}
@@ -89,7 +89,7 @@ def test_strukturnoder_anvander_aldrig_guld(graf):
     """Navigeringsnivåerna får inte konkurrera med lagrumsguldet.
 
     Referenslagar är undantagna: de ÄR lagar och delar guldsläkten (blek guld
-    med guldkant), bara i en lättare valör än kursens fyllda guldnoder.
+    med guldkant), bara i en lättare valör än appens fyllda guldnoder.
     """
     from utils.rattssystem_graf import GRUPP_REFERENS
 
@@ -135,7 +135,7 @@ def test_legenden_ritar_fargrutor_inte_prosa():
     from utils.taxonomi_ui import _REFERENSFARG
 
     legend = farglegend_html()
-    # rot + tre toppgrenar + kurslag + referenslag
+    # rot + tre toppgrenar + registerlag + referenslag
     assert legend.count("jok-swatch") == 6
     for farg in GRENFARGER.values():
         assert farg["bg"] in legend
@@ -217,7 +217,7 @@ def test_js_filen_finns():
 
 
 def test_js_baddas_in_i_html(html):
-    """Innehållet ska ligga i svaret, inte länkas — iframen är sandboxad."""
+    """Innehållet ska ligga i svaret, inte länkas, iframen är sandboxad."""
     from utils.taxonomi_ui import _las_js
 
     assert _las_js("taxonomigraf.js").strip() in html

@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen Skadeståndsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (SkL). Nivå: Juridisk översiktskurs.",
+  "_beskrivning": "Deterministiska basscenarier för modulen Skadeståndsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (SkL). Nivå: Juridikverkstan.",
   "modul": "Skadeståndsrätt",
   "case": [
     {
@@ -42,11 +42,11 @@
   "flervalsfragor": [
     {
       "id": "ska-mc-1",
-      "fraga": "Vad krävs enligt culparegeln för skadeståndsansvar vid person- och sakskada?",
+      "fraga": "Vad krävs enligt culparegeln för skadeståndsansvar vid personskada och sakskada?",
       "alternativ": [
         {"text": "Att skadan vållats uppsåtligen eller av vårdslöshet.", "korrekt": true, "forklaring": "Culparegeln bygger på uppsåt eller oaktsamhet (vårdslöshet).", "lagrum": "2 kap. 1 § SkL"},
         {"text": "Att skadevållaren är näringsidkare.", "korrekt": false, "forklaring": "Ansvaret förutsätter inte att skadevållaren är näringsidkare.", "lagrum": "2 kap. 1 § SkL"},
-        {"text": "Att skadan alltid vållats genom brott.", "korrekt": false, "forklaring": "Krav på brott gäller ren förmögenhetsskada, inte person- och sakskada.", "lagrum": "2 kap. 2 § SkL"},
+        {"text": "Att skadan alltid vållats genom brott.", "korrekt": false, "forklaring": "Krav på brott gäller ren förmögenhetsskada, inte personskada och sakskada.", "lagrum": "2 kap. 2 § SkL"},
         {"text": "Att den skadelidande har lidit en ekonomisk förlust utan fysisk skada.", "korrekt": false, "forklaring": "Det beskriver ren förmögenhetsskada, inte grunden för culparegeln.", "lagrum": "2 kap. 2 § SkL"}
       ]
     },
@@ -104,7 +104,7 @@
       "id": "ska-mc-7",
       "fraga": "En privatperson råkar av oaktsamhet backa in i en parkerad bil. Vilket lagrum reglerar grundansvaret för sakskadan?",
       "alternativ": [
-        {"text": "Culparegeln om ansvar för sak- och personskada.", "korrekt": true, "forklaring": "Sakskada vållad av oaktsamhet ersätts enligt culparegeln.", "lagrum": "2 kap. 1 § SkL"},
+        {"text": "Culparegeln om ansvar för sakskada och personskada.", "korrekt": true, "forklaring": "Sakskada vållad av oaktsamhet ersätts enligt culparegeln.", "lagrum": "2 kap. 1 § SkL"},
         {"text": "Regeln om ren förmögenhetsskada genom brott.", "korrekt": false, "forklaring": "Här är det en sakskada, inte en ren förmögenhetsskada.", "lagrum": "2 kap. 2 § SkL"},
         {"text": "Regeln om principalansvar.", "korrekt": false, "forklaring": "Principalansvar aktualiseras när en arbetstagare vållar skada i tjänsten.", "lagrum": "3 kap. 1 § SkL"},
         {"text": "Regeln om jämkning vid medvållande.", "korrekt": false, "forklaring": "Jämkning gäller när den skadelidande medverkat, inte grundansvaret.", "lagrum": "6 kap. 1 § SkL"}
@@ -124,7 +124,7 @@
   "lagrumsjakt": [
     {
       "id": "ska-lj-1",
-      "situation": "En person vållar av oaktsamhet en sakskada. Vilket lagrum uttrycker culparegeln för sak- och personskada?",
+      "situation": "En person vållar av oaktsamhet en sakskada. Vilket lagrum uttrycker culparegeln för sakskada och personskada?",
       "facit_lagrum": ["2 kap. 1 § SkL"],
       "ledtrad": "Grundregeln om uppsåt eller vårdslöshet."
     },

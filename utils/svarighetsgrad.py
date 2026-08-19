@@ -47,22 +47,22 @@ _INSTRUKTION: dict[str, str] = {
     "grund": (
         "SVÅRIGHETSGRAD: GRUND\n"
         "- Fallet ska ha EN tydlig rättsfråga.\n"
-        "- Håll omständigheterna korta och entydiga (4–5 meningar).\n"
-        "- Facit ska vila på 1–2 lagrum ur vitlistan.\n"
+        "- Håll omständigheterna korta och entydiga (4 till 5 meningar).\n"
+        "- Facit ska vila på 1 till 2 lagrum ur vitlistan.\n"
         "- Undvik komplikationer, undantag och konkurrerande normer."
     ),
     "medel": (
         "SVÅRIGHETSGRAD: MEDEL\n"
         "- Fallet ska ha en tydlig huvudfråga MEN med en komplikation eller en "
         "konkurrerande norm som studenten måste väga in.\n"
-        "- Omständigheterna får vara något rikare (5–7 meningar).\n"
-        "- Facit ska vila på 2–3 lagrum ur vitlistan."
+        "- Omständigheterna får vara något rikare (5 till 7 meningar).\n"
+        "- Facit ska vila på 2 till 3 lagrum ur vitlistan."
     ),
     "avancerad": (
         "SVÅRIGHETSGRAD: AVANCERAD\n"
         "- Fallet ska ha FLERA sammanflätade rättsfrågor som hänger ihop.\n"
         "- Bygg in tvetydighet eller ett gränsfall som kräver avvägning.\n"
-        "- Omständigheterna ska vara fylligare (6–8 meningar) med fler parter "
+        "- Omständigheterna ska vara fylligare (6 till 8 meningar) med fler parter "
         "eller händelser.\n"
         "- Facit ska vila på 3 eller fler lagrum ur vitlistan."
     ),

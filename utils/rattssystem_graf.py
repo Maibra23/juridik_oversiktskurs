@@ -32,7 +32,7 @@ GRUPP_ROT = "rot"
 GRUPP_GREN = "gren"
 GRUPP_LAG = "lag"
 # Referenslag: klickbar kartnod för överblick, men utanför kursregistret. Egen
-# grupp så att renderingen kan skilja den från kursens guldlagar.
+# grupp så att renderingen kan skilja den från appens guldlagar.
 GRUPP_REFERENS = "referenslag"
 
 ROT_ID = "rot"
@@ -104,11 +104,11 @@ def lag_id(gren: str, forkortning: str) -> str:
     return f"lag::{gren}::{forkortning}"
 
 
-def _har_kurslag(gren: Gren) -> bool:
-    """True om grenen eller någon ättling bär en kurslag (icke-referens)."""
+def _har_registerlag(gren: Gren) -> bool:
+    """True om grenen eller någon ättling bär en registerlag (icke-referens)."""
     if any(not lag.ar_referens for lag in gren.lagar):
         return True
-    return any(_har_kurslag(barn) for barn in gren.grenar)
+    return any(_har_registerlag(barn) for barn in gren.grenar)
 
 
 def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
@@ -120,7 +120,7 @@ def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
     ``url`` sätts ENDAST på lagnoder och är det som gör dem klickbara.
 
     Med ``inkludera_referens=False`` byggs en ren kurskarta: referenslagarna
-    utelämnas, och grenar vars hela underträd saknar kurslag städas bort så att
+    utelämnas, och grenar vars hela underträd saknar registerlag städas bort så att
     inga tomma översiktsboxar (statsrätt, skatterätt, EU-rätt ...) blir kvar.
     """
     register = lagrum_register()
@@ -138,8 +138,8 @@ def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
     kanter: list[TaxKant] = []
 
     def _lagg_till(gren: Gren, foralder_id: str, niva: int) -> None:
-        # I ren kursvy: hoppa över grenar utan kurslag i underträdet.
-        if not inkludera_referens and not _har_kurslag(gren):
+        # I ren kursvy: hoppa över grenar utan registerlag i underträdet.
+        if not inkludera_referens and not _har_registerlag(gren):
             return
 
         gid = gren_id(gren.id)
@@ -179,7 +179,7 @@ def bygg_taxonomigraf(inkludera_referens: bool = True) -> Taxonomigraf:
                         "toppgren": gren.toppgren,
                         "titel": (
                             f"{lag.namn}{sfs_del}. {lag.beskrivning} "
-                            "Överblick – utanför kursen."
+                            "Överblick, utanför appens urval."
                         ),
                         "url": lag.url or "",
                     }

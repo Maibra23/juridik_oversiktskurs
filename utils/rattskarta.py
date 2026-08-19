@@ -43,11 +43,11 @@ _DISCLAIMER = (
 
 @dataclass(frozen=True)
 class LagPost:
-    """En lag i kartan: kursens förkortning plus kartans pedagogiska texter.
+    """En lag i kartan: appens förkortning plus kartans pedagogiska texter.
 
-    ``ar_referens`` skiljer kurslagar (de 21 i lagrumsregistret, som rättningen
+    ``ar_referens`` skiljer registerlagar (de 21 i lagrumsregistret, som rättningen
     graderar) från referenslagar: kartnoder som ger överblick över svensk rätt
-    men står utanför kursen. En referenslag bär sitt ``namn`` och ``sfs`` inline
+    men står utanför appens urval. En referenslag bär sitt ``namn`` och ``sfs`` inline
     (den finns inte i registret att hämta dem ur) och rättningen ser den aldrig.
     """
 
@@ -259,7 +259,7 @@ def _lagindex() -> dict[str, tuple[LagPost, Gren]]:
     """Index förkortning -> (lagpost, löv-gren) för notbyggarna.
 
     Referenslagar utelämnas: de står utanför kursregistret och saknar
-    kursavsnitt, så de får ingen egen Obsidian-not — de finns bara som
+    lagavsnitt, så de får ingen egen Obsidian-not. De finns bara som
     överblick på kartan.
     """
     index: dict[str, tuple[LagPost, Gren]] = {}
@@ -286,7 +286,7 @@ def _lagrad(lag: LagPost, inryck: str = "", med_nar: bool = False) -> str:
     """En listrad för en lag i en not.
 
     Kurslagar wikilänkas till sin egen not ([[AvtL]]). Referenslagar saknar not
-    (de står utanför kursen) och länkas i stället direkt till lagen.nu, så att
+    (de står utanför appens urval) och länkas i stället direkt till lagen.nu, så att
     valvet aldrig får en bruten wikilänk.
     """
     if lag.ar_referens:
@@ -344,7 +344,7 @@ def lagnot(forkortning: str) -> str:
         "",
         f"[Öppna {forkortning} på lagen.nu](https://lagen.nu/{info.sfs})",
         "",
-        f"Del av [[{toppnamn}#{lov.namn}|{lov.namn}]] · tillbaka till "
+        f"Del av [[{toppnamn}#{lov.namn}|{lov.namn}]]: tillbaka till "
         "[[Rättskartan]].",
         "",
         "---",
@@ -374,7 +374,7 @@ def _gren_rubriker(gren: Gren, niva: int, rader: list[str]) -> None:
             for lag in gren.lagar:
                 rader.append(_lagrad(lag))
         else:
-            rader.append("*Inga lagar ur kursens lagrumslista i denna gren.*")
+            rader.append("*Inga lagar ur appens lagrumsregister i denna gren.*")
         rader.append("")
     else:
         for barn in gren.grenar:

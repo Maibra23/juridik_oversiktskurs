@@ -29,7 +29,7 @@ st.html(
         lead=(
             "Här samlas resultaten från de quizfrågor du besvarat i modulerna. "
             "Öppna en modul för att öva vidare. Varje quiz rättas deterministiskt "
-            "och varje lagrum verifieras mot kursens lagrumslista."
+            "och varje lagrum verifieras mot appens lagrumsregister."
         ),
     )
 )
@@ -56,7 +56,7 @@ for namn in lista_moduler():
     antal = len(modul.flervalsfragor)
     if antal:
         st.markdown(
-            f"- **{modul.modul}** · "
+            f"- **{modul.modul}**: "
             + antal_med_enhet(antal, "quizfråga", "quizfrågor")
         )
 

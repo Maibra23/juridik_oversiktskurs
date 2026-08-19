@@ -20,7 +20,7 @@
           "Eftersom lagen är dispositiv har avtalets friskrivning i utgångspunkten företräde framför lagens dröjsmålsregler (bl.a. 27 § KöpL).",
           "Metodpoängen: normhierarkin avgör inte allt. För dispositiv rätt går parternas avtal före lagens utfyllande regler, medan tvingande lagstiftning inte kan avtalas bort."
         ],
-        "slutsats": "Friskrivningen gäller i utgångspunkten, eftersom köplagen är dispositiv och parterna har avtalat om annat (3 § KöpL). Alternativt: en långtgående friskrivning kan angripas med avtalsrättsliga ogiltighets- och jämkningsregler, men det är en annan rättsfråga än den rena metodfrågan om normernas inbördes ordning."
+        "slutsats": "Friskrivningen gäller i utgångspunkten, eftersom köplagen är dispositiv och parterna har avtalat om annat (3 § KöpL). Alternativt: en långtgående friskrivning kan angripas med avtalsrättsliga ogiltighetsregler och jämkningsregler, men det är en annan rättsfråga än den rena metodfrågan om normernas inbördes ordning."
       }
     }
   ],
@@ -58,7 +58,7 @@
         {
           "text": "Att lagen gäller endast om parterna inte har avtalat om något annat.",
           "korrekt": true,
-          "forklaring": "Dispositiv rätt kan avtalas bort; köplagen är kursens tydligaste exempel.",
+          "forklaring": "Dispositiv rätt kan avtalas bort; köplagen är appens tydligaste exempel.",
           "lagrum": "3 § KöpL"
         },
         {
@@ -113,7 +113,7 @@
         {
           "text": "En allmänt hållen lagregel som ger domstolen utrymme för skälighetsbedömning i det enskilda fallet.",
           "korrekt": true,
-          "forklaring": "Generalklausulen i avtalslagen om jämkning av oskäliga avtalsvillkor är kursens standardexempel.",
+          "forklaring": "Generalklausulen i avtalslagen om jämkning av oskäliga avtalsvillkor är appens standardexempel.",
           "lagrum": "36 § AvtL"
         },
         {

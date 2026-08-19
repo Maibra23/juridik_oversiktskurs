@@ -1,4 +1,4 @@
-"""Förbered kursavsnitten för visning i lagkortet.
+"""Förbered lagavsnitten för visning i lagkortet.
 
 Registret bär avsnitten platt, medan lagen är indelad i kapitel. Den här
 modulen slår ihop de två: avsnitten grupperas under lagens egna
@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from utils.lagrum import Kursavsnitt, Lag
+from utils.lagrum import Lag, Lagavsnitt
 from utils.lagstruktur import antal_kapitel, kapitelrubrik
 
 
@@ -28,7 +28,7 @@ class Avsnittsrad:
 
 @dataclass(frozen=True)
 class Kapitelgrupp:
-    """Ett kapitel med sina kursavsnitt. ``kapitel`` är None för platta lagar."""
+    """Ett kapitel med sina lagavsnitt. ``kapitel`` är None för platta lagar."""
 
     kapitel: str | None
     rubrik: str
@@ -36,18 +36,18 @@ class Kapitelgrupp:
 
 
 def formatera_spann(fran: int, till: int) -> str:
-    """Paragrafspannet på svensk form: "36 §" för en, "1–9 §§" för flera.
+    """Paragrafspannet på svensk form: "36 §" för en, "1 till 9 §§" för flera.
 
     Paragraftecknet dubbleras bara vid flertal, och skiljetecknet är
     tankstreck. Ett "36 §§" läser studenten som slarv i just den detalj
-    kursen ska lära ut.
+    appen ska lära ut.
     """
     if fran == till:
         return f"{fran} §"
-    return f"{fran}–{till} §§"
+    return f"{fran} till {till} §§"
 
 
-def _rad(lag: Lag, avsnitt: Kursavsnitt) -> Avsnittsrad:
+def _rad(lag: Lag, avsnitt: Lagavsnitt) -> Avsnittsrad:
     return Avsnittsrad(
         spann=formatera_spann(avsnitt.paragraf_fran, avsnitt.paragraf_till),
         rubrik=avsnitt.beskrivning,
@@ -55,14 +55,14 @@ def _rad(lag: Lag, avsnitt: Kursavsnitt) -> Avsnittsrad:
     )
 
 
-def _sorteringsnyckel(avsnitt: Kursavsnitt) -> tuple[int, int]:
+def _sorteringsnyckel(avsnitt: Lagavsnitt) -> tuple[int, int]:
     """Lagens egen ordning: kapitel först, sedan paragraf."""
     kapitel = avsnitt.kapitel
     return (int(kapitel) if kapitel and kapitel.isdigit() else 0, avsnitt.paragraf_fran)
 
 
-def gruppera_kursavsnitt(lag: Lag) -> tuple[Kapitelgrupp, ...]:
-    """Gruppera lagens kursavsnitt under lagens egna kapitelrubriker.
+def gruppera_lagavsnitt(lag: Lag) -> tuple[Kapitelgrupp, ...]:
+    """Gruppera lagens lagavsnitt under lagens egna kapitelrubriker.
 
     Lagar utan kapitelindelning ger exakt en grupp utan kapitel och utan
     rubrik, så att vyn kan rendera båda formerna med samma slinga.
@@ -72,10 +72,10 @@ def gruppera_kursavsnitt(lag: Lag) -> tuple[Kapitelgrupp, ...]:
     slarvfel: en student som letar efter 3 kap. förväntar sig den mellan 2
     och 4, precis som i författningen.
     """
-    if not lag.kursavsnitt:
+    if not lag.lagavsnitt:
         return ()
 
-    ordnade = sorted(lag.kursavsnitt, key=_sorteringsnyckel)
+    ordnade = sorted(lag.lagavsnitt, key=_sorteringsnyckel)
 
     if not lag.kapitelindelad:
         return (
@@ -106,10 +106,10 @@ def gruppera_kursavsnitt(lag: Lag) -> tuple[Kapitelgrupp, ...]:
 
 
 def tackningstext(lag: Lag) -> str:
-    """Hur stor del av lagen kursen berör, eller tom sträng.
+    """Hur stor del av lagen appen behandlar, eller tom sträng.
 
     Raden är lagkortets ärlighetskrav. Utan den läser studenten
-    avsnittslistan som om lagen tog slut där -- kursen berör sex av
+    avsnittslistan som om lagen tog slut där -- appen behandlar sex av
     konsumentköplagens nio kapitel och sex av brottsbalkens trettioåtta.
     Saknar lagen kapitel finns inget att räkna, och då ska raden utebli helt
     hellre än att gissa.
@@ -117,7 +117,7 @@ def tackningstext(lag: Lag) -> str:
     totalt = antal_kapitel(lag.forkortning)
     if not totalt:
         return ""
-    berorda = len({a.kapitel for a in lag.kursavsnitt if a.kapitel})
+    berorda = len({a.kapitel for a in lag.lagavsnitt if a.kapitel})
     if not berorda:
         return ""
-    return f"kursen täcker {berorda} av lagens {totalt} kapitel"
+    return f"appen behandlar {berorda} av lagens {totalt} kapitel"

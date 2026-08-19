@@ -1,4 +1,4 @@
-# Lintregler för juridik_oversiktskurs.
+# Lintregler för juridikverkstan.
 #
 # Regeluppsättningen står uttryckligen här i stället för att ärvas från ruffs
 # förval. Skälet är inlärt: projektet hade ingen konfiguration alls, CI

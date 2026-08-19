@@ -1,4 +1,4 @@
-"""Ingångspunkt och router för Juridisk översiktskurs.
+"""Ingångspunkt och router för Juridikverkstan.
 
 Ansvarar för:
 - st.set_page_config (måste köras först av alla Streamlit-anrop)
@@ -15,7 +15,7 @@ lägga sidorna i sidor/ finns ingen automatisk navigering: alla vägar går
 genom detta skript, och st.navigation ger korrekta svenska titlar.
 
 Ingen affärslogik här: sidinnehållet ligger i sidor/ och all LLM-,
-lagrums- och scenariologik i utils/.
+lagrumslogik och scenariologik i utils/.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from __future__ import annotations
 import streamlit as st
 
 st.set_page_config(
-    page_title="Juridisk översiktskurs",
+    page_title="Juridikverkstan",
     page_icon="⚖️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -43,12 +43,12 @@ SIDOR = [
     st.Page("sidor/12_Personratt.py", title="Personrätt"),
     st.Page("sidor/13_Allman_formogenhetsratt.py", title="Allmän förmögenhetsrätt"),
     st.Page("sidor/2_Avtalsratt.py", title="Avtalsrätt"),
-    st.Page("sidor/3_Kop_och_konsumentratt.py", title="Köp- och konsumenträtt"),
+    st.Page("sidor/3_Kop_och_konsumentratt.py", title="Köprätt och konsumenträtt"),
     st.Page("sidor/4_Skadestandsratt.py", title="Skadeståndsrätt"),
     st.Page("sidor/5_Arbetsratt.py", title="Arbetsrätt"),
     st.Page("sidor/6_Associationsratt.py", title="Associationsrätt"),
-    st.Page("sidor/7_Familje_och_arvsratt.py", title="Familje- och successionsrätt"),
-    st.Page("sidor/8_Straff_och_processratt.py", title="Straff- och processrätt"),
+    st.Page("sidor/7_Familje_och_arvsratt.py", title="Familjerätt och successionsrätt"),
+    st.Page("sidor/8_Straff_och_processratt.py", title="Straffrätt och processrätt"),
     st.Page("sidor/14_Fastighetsratt.py", title="Fastighetsrätt"),
     st.Page("sidor/15_Fordringsratt.py", title="Fordringsrätt"),
     st.Page("sidor/9_Kunskapstest.py", title="Kunskapstest"),

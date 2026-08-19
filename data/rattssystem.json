@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Rättskartan: doktrinär, rekursiv karta över det svenska rättssystemet. Trädet av 'grenar' följer rättens systematik: offentlig rätt (stat–enskild) och civilrätt (enskilda emellan), där civilrätten delas i förmögenhetsrätt (obligationsrätt/sakrätt), familjerätt, associationsrätt och fastighetsrätt. Varje gren har antingen 'grenar' (undergrenar) eller 'lagar' (löv). Lagar anges med förkortning ur data/lagrum.json (grundningsprincipen: inga lagar utanför registret); namn och SFS hämtas ur registret och dupliceras inte här. 'farg' sätts på toppgrenarna och är en Obsidian-callouttyp som färgkodar hela grenen. Löv-id:na (avtalsratt, kop_och_konsumentratt, ...) är stabila: data/nyckelbegrepp.json knyter begrepp till dem.",
+  "_beskrivning": "Rättskartan: doktrinär, rekursiv karta över det svenska rättssystemet. Trädet av 'grenar' följer rättens systematik: offentlig rätt (stat mot enskild) och civilrätt (enskilda emellan), där civilrätten delas i förmögenhetsrätt (obligationsrätt/sakrätt), familjerätt, associationsrätt och fastighetsrätt. Varje gren har antingen 'grenar' (undergrenar) eller 'lagar' (löv). Lagar anges med förkortning ur data/lagrum.json (grundningsprincipen: inga lagar utanför registret); namn och SFS hämtas ur registret och dupliceras inte här. 'farg' sätts på toppgrenarna och är en Obsidian-callouttyp som färgkodar hela grenen. Löv-id:na (avtalsratt, kop_och_konsumentratt, ...) är stabila: data/nyckelbegrepp.json knyter begrepp till dem.",
   "grenar": [
     {
       "id": "offentlig_ratt",
@@ -12,7 +12,7 @@
           "id": "statsratt",
           "namn": "Statsrätt",
           "beskrivning": "Statsskickets grunder: grundlagarna, normhierarkin och fri- och rättigheterna.",
-          "nar": "Frågan rör lagars giltighet, normhierarkin eller grundläggande rättigheter. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+          "nar": "Frågan rör lagars giltighet, normhierarkin eller grundläggande rättigheter. Inga lagrum ur appens register. Kartan pekar bara ut området.",
           "lagar": [
             {
               "forkortning": "RF",
@@ -48,7 +48,7 @@
           "id": "forvaltningsratt",
           "namn": "Förvaltningsrätt",
           "beskrivning": "Myndigheternas ärendehandläggning och den enskildes möjligheter att överklaga beslut.",
-          "nar": "En myndighet har fattat ett beslut som berör en enskild. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+          "nar": "En myndighet har fattat ett beslut som berör en enskild. Inga lagrum ur appens register. Kartan pekar bara ut området.",
           "grenar": [
             {
               "id": "allman_forvaltningsratt",
@@ -155,9 +155,9 @@
             },
             {
               "id": "miljo_och_planratt",
-              "namn": "Miljö- och planrätt",
+              "namn": "Miljörätt och planrätt",
               "beskrivning": "Skyddet för miljön och regleringen av markanvändning och byggande. Speciell förvaltningsrätt med civilrättsliga inslag.",
-              "nar": "Frågan gäller miljöfarlig verksamhet, tillstånd, eller plan- och byggärenden.",
+              "nar": "Frågan gäller miljöfarlig verksamhet, tillstånd, eller planärenden och byggärenden.",
               "lagar": [
                 {
                   "forkortning": "MB",
@@ -196,7 +196,7 @@
         },
         {
           "id": "process_och_exekutionsratt",
-          "namn": "Process- och exekutionsrätt",
+          "namn": "Processrätt och exekutionsrätt",
           "beskrivning": "Hur tvister prövas i domstol och hur domar tvingas igenom: rättegång, verkställighet och konkurs.",
           "nar": "Den materiella frågan är bedömd eller löper parallellt. Nu gäller förfarandet: stämma, bevisa, verkställa eller hantera obestånd.",
           "grenar": [
@@ -292,17 +292,17 @@
                   "id": "speciell_avtalsratt",
                   "namn": "Speciell avtalsrätt",
                   "beskrivning": "Reglerna för särskilda avtalstyper, ordnade efter vad avtalet gör: överlåtelse (äganderätten övergår), upplåtelse (nyttjande upplåts) eller prestation (någon presterar något). Varje typ bygger på den allmänna avtalsrätten men har egna lagar.",
-                  "nar": "Avtalet tillhör en typ med egen reglering: köp, hyra, anställning och liknande. Fråga alltid först vilka parterna är — samma avtalstyp routas till olika lag beroende på om det är näringsidkare emellan (B2B), konsument mot näringsidkare (B2C) eller privatpersoner. Köp av samma sak är t.ex. KöpL mellan jämnstarka men konsumentköplagen när en konsument köper av ett företag.",
+                  "nar": "Avtalet tillhör en typ med egen reglering: köp, hyra, anställning och liknande. Fråga alltid först vilka parterna är, samma avtalstyp routas till olika lag beroende på om det är näringsidkare emellan (B2B), konsument mot näringsidkare (B2C) eller privatpersoner. Köp av samma sak är t.ex. KöpL mellan jämnstarka men konsumentköplagen när en konsument köper av ett företag.",
                   "grenar": [
                     {
                       "id": "overlatelseavtal",
                       "namn": "Överlåtelse",
                       "beskrivning": "Avtal där äganderätten övergår permanent: köp, byte och gåva av lös eller fast egendom.",
-                      "nar": "Frågan gäller att en sak byter ägare för gott. Avgör om det är lös eller fast egendom — och om köparen är konsument, för det styr vilken lag som gäller.",
+                      "nar": "Frågan gäller att en sak byter ägare för gott. Avgör om det är lös eller fast egendom, och om köparen är konsument, för det styr vilken lag som gäller.",
                       "grenar": [
                         {
                           "id": "kop_och_konsumentratt",
-                          "namn": "Köp- och konsumenträtt",
+                          "namn": "Köprätt och konsumenträtt",
                           "beskrivning": "Reglerna när varor byter ägare: dröjsmål, fel, påföljder, reklamation och marknadsföring.",
                           "nar": "Ett köp har gått snett. Avgör först om köparen är konsument, för det styr vilken lag som gäller.",
                           "lagar": [
@@ -363,11 +363,11 @@
                           "id": "hyra_av_fast_egendom",
                           "namn": "Hyra av fast egendom",
                           "beskrivning": "Hyra av bostad och lokal: avtalets ingående, hyrestid och uppsägningstid. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
-                          "nar": "Frågan gäller ett hyresförhållande för fast egendom — vad som räknas som hyra, hyrestidens längd eller uppsägning. Är hyresgästen konsument bär jordabalkens 12 kap. tvingande skydd (besittningsskydd och skälig hyra).",
+                          "nar": "Frågan gäller ett hyresförhållande för fast egendom, vad som räknas som hyra, hyrestidens längd eller uppsägning. Är hyresgästen konsument bär jordabalkens 12 kap. tvingande skydd (besittningsskydd och skälig hyra).",
                           "lagar": [
                             {
                               "forkortning": "JB",
-                              "beskrivning": "Jordabalkens 12 kap. §§ 1–9 reglerar hyresavtalets ingående, hyrestid och uppsägningstid.",
+                              "beskrivning": "Jordabalkens 12 kap. §§ 1 till 9 reglerar hyresavtalets ingående, hyrestid och uppsägningstid.",
                               "nar": "Frågan rör ett hyresförhållande: vad som räknas som hyra, hyrestidens bestämmande eller uppsägningstidens längd.",
                               "relaterade": [
                                 "AvtL"
@@ -379,14 +379,14 @@
                           "id": "leasing",
                           "namn": "Leasing",
                           "beskrivning": "Ingen särskild leasinglag finns i Sverige. Avtalet bedöms utifrån allmänna avtalsrättsliga principer, med försiktig analogi till köplagen eller konsumentköplagen. Konsumentkreditlagen (2010:1846) kan bli tillämplig om leasingen i realiteten är ett avbetalningsköp.",
-                          "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer — det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer, det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur appens register. Kartan pekar bara ut området.",
                           "lagar": []
                         },
                         {
                           "id": "licensavtal",
                           "namn": "Licensavtal",
                           "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
-                          "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras, det styr vilken speciallag som är relevant. Inga lagrum ur appens register. Kartan pekar bara ut området.",
                           "lagar": [
                             {
                               "forkortning": "URL",
@@ -423,7 +423,7 @@
                           "id": "transportavtal",
                           "namn": "Transportavtal",
                           "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
-                          "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+                          "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först, det styr vilken lag som är tillämplig. Inga lagrum ur appens register. Kartan pekar bara ut området.",
                           "lagar": [
                             {
                               "forkortning": "SjöL",
@@ -462,7 +462,7 @@
                           "id": "forsakringsavtal",
                           "namn": "Försäkringsavtal",
                           "beskrivning": "Förhållandet mellan försäkringsbolaget och den försäkrade regleras i försäkringsavtalslagen (2005:104, FAL): avtalets ingående, upplysningsplikt, bolagets ansvar och rätten till ersättning.",
-                          "nar": "Frågan gäller skyldigheterna i själva försäkringsförhållandet — då är det speciell avtalsrätt. Gäller den i stället att driva in en fordran eller kräva säkerhet (skuldebrev, borgen, pant), är det fordrings- och krediträtt. FAL ingår inte i kursens lagrumsregister; kartan pekar bara ut området.",
+                          "nar": "Frågan gäller skyldigheterna i själva försäkringsförhållandet, då är det speciell avtalsrätt. Gäller den i stället att driva in en fordran eller kräva säkerhet (skuldebrev, borgen, pant), är det fordringsrätt och krediträtt. FAL ingår inte i appens lagrumsregister; kartan pekar bara ut området.",
                           "lagar": [
                             {
                               "forkortning": "FAL",
@@ -485,7 +485,7 @@
                   "lagar": [
                     {
                       "forkortning": "SkL",
-                      "beskrivning": "Utomobligatoriskt skadestånd: culparegeln, person- och sakskada, ren förmögenhetsskada och arbetsgivares principalansvar.",
+                      "beskrivning": "Utomobligatoriskt skadestånd: culparegeln, personskada och sakskada, ren förmögenhetsskada och arbetsgivares principalansvar.",
                       "nar": "Någon har vållat en skada utan avtalsband. Pröva culpa, adekvat kausalitet och vilken skadetyp det gäller.",
                       "relaterade": [
                         "BrB",
@@ -497,7 +497,7 @@
                 },
                 {
                   "id": "fordringsratt",
-                  "namn": "Fordrings- och krediträtt",
+                  "namn": "Fordringsrätt och krediträtt",
                   "beskrivning": "Penningfordringar och skuldebrev: överlåtelse, betalning och vilka invändningar som består.",
                   "nar": "Någon kräver betalt av någon annan, ofta med ett skuldebrev som grund.",
                   "lagar": [
@@ -578,7 +578,7 @@
         },
         {
           "id": "familje_och_successionsratt",
-          "namn": "Familje- och successionsrätt",
+          "namn": "Familjerätt och successionsrätt",
           "beskrivning": "Familjens ekonomiska rätt: äktenskap, samboende, barn och arv. En del av civilrätten men med egna balkar och egen systematik.",
           "nar": "Frågan rör makars eller sambors egendom, barn, eller vad som händer med egendomen när någon dör.",
           "grenar": [
@@ -677,7 +677,7 @@
           "id": "fastighetsratt",
           "namn": "Fastighetsrätt",
           "beskrivning": "Fast egendom som sakrättsligt objekt: fastighetstillbehör, servitut och panträtt.",
-          "nar": "Frågan gäller vad som räknas som fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt — inte själva köpet eller hyresförhållandet.",
+          "nar": "Frågan gäller vad som räknas som fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt, inte själva köpet eller hyresförhållandet.",
           "lagar": [
             {
               "forkortning": "JB",
@@ -702,7 +702,7 @@
       "id": "internationell_ratt",
       "namn": "Internationell rätt & EU-rätt",
       "farg": "success",
-      "beskrivning": "Rättsordningar över och mellan stater som svensk rätt verkar inom. Ingen enskild SFS — här för överblick.",
+      "beskrivning": "Rättsordningar över och mellan stater som svensk rätt verkar inom. Ingen enskild SFS, här för överblick.",
       "nar": "Frågan har en gränsöverskridande dimension eller styrs av EU-rätt.",
       "grenar": [
         {
@@ -730,7 +730,7 @@
         {
           "id": "folkratt",
           "namn": "Folkrätt",
-          "beskrivning": "Rätten mellan stater, med traktater (t.ex. FN-stadgan och Wienkonventionen om traktaträtten), internationell sedvanerätt och allmänna rättsprinciper som källor. Saknar en enskild svensk lagtext — här som orientering.",
+          "beskrivning": "Rätten mellan stater, med traktater (t.ex. FN-stadgan och Wienkonventionen om traktaträtten), internationell sedvanerätt och allmänna rättsprinciper som källor. Saknar en enskild svensk lagtext, här som orientering.",
           "nar": "Frågan gäller förhållandet mellan stater eller Sveriges folkrättsliga åtaganden.",
           "lagar": []
         },

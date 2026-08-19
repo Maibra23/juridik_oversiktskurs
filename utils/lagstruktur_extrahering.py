@@ -1,4 +1,4 @@
-"""Läs lagens kapitel- och momentrubriker ur källans HTML.
+"""Läs lagens kapitelrubriker och momentrubriker ur källans HTML.
 
 Riksdagens öppna data bär författningens egen disposition: <h3> är
 kapitelrubriker ("3 kap. Näringsidkarens dröjsmål") och <h4> är
@@ -32,7 +32,7 @@ _RUBRIK_ELLER_PARAGRAF = re.compile(
 # dröjsmål". Det som inte matchar är brus: "Innehåll:", "Övergångsbestämmelser".
 _KAPITELRUBRIK = re.compile(r"^(?P<nummer>\d+)\s*kap\.\s*(?P<rubrik>.*)$")
 
-# Formen "1 a §" får ankaret "K4P1a" och avvisas: kursavsnitten refererar
+# Formen "1 a §" får ankaret "K4P1a" och avvisas: lagavsnitten refererar
 # bara hela paragrafnummer, och en bokstavsparagraf hör till grundparagrafen.
 _ANKARE = re.compile(r"^(?:K(?P<kapitel>\d+))?P(?P<paragraf>\d+)$")
 
@@ -55,7 +55,7 @@ def paragrafnyckel(ankarnamn: str, *, kapitelindelad: bool = True) -> str | None
     obruten 1-41 genom hela lagen; registret säger ``kapitelindelad: false``
     och korpusen nycklar dem platt. Läser man kapitlet ur ankaret ändå får
     strukturen nycklar som inte går att foga ihop med vare sig korpusen eller
-    kursavsnitten.
+    lagavsnitten.
     """
     traff = _ANKARE.match(ankarnamn)
     if traff is None:

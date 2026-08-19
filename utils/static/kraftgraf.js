@@ -190,7 +190,7 @@
     rot: "Rot",
     gren: "Rättsområde",
     lag: "Kurslag",
-    referenslag: "Referenslag (utanför kursen)",
+    referenslag: "Referenslag (utanför appens urval)",
   };
 
   function visaInfo(nodId) {

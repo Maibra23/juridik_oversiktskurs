@@ -1,6 +1,6 @@
 """Tester för utils.generator (LLM-genererade rättsfall).
 
-Använder en injicerad fejkklient – inga live-LLM-anrop. Täcker:
+Använder en injicerad fejkklient, inga live-LLM-anrop. Täcker:
 - giltig JSON med grundade lagrum -> genererat case
 - kod-fence runt JSON strippas
 - ogrundat lagrum -> omförsök, sedan grundat -> genererat
@@ -42,7 +42,7 @@ def _case_json(lagrum: list[str]) -> str:
 
 
 GILTIGT = _case_json(["1 § AvtL", "36 § AvtL"])
-OGRUNDAT = _case_json(["99 § AvtL"])  # AvtL finns men 99 § är utanför kursen
+OGRUNDAT = _case_json(["99 § AvtL"])  # AvtL finns men 99 § är utanför appens urval
 TRASIGT = "Det här är inte JSON alls {kaputt"
 
 

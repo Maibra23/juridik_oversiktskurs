@@ -19,7 +19,7 @@ QUIZRESULTAT = {
 }
 CASE_GENOMFORDA = {
     "Avtalsrätt": ("avt-case-1",),
-    "Straff- och processrätt": ("str-case-1",),
+    "Straffrätt och processrätt": ("str-case-1",),
 }
 
 
@@ -36,7 +36,7 @@ def test_markdown_innehaller_moduler_och_poang():
 def test_markdown_innehaller_genomforda_case():
     rapport = bygg_markdown_rapport(QUIZRESULTAT, CASE_GENOMFORDA)
     assert "avt-case-1" in rapport
-    assert "Straff- och processrätt" in rapport
+    assert "Straffrätt och processrätt" in rapport
 
 
 def test_markdown_tom_data_ger_vanligt_meddelande():

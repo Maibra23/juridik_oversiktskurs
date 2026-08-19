@@ -47,7 +47,7 @@ def test_render_kapitelindelat_lagrum_blir_chip():
 
 
 def test_render_okand_paragraf_hamnar_i_ovarifierade():
-    # 999 § AvtL finns inte i något kursavsnitt.
+    # 999 § AvtL finns inte i något lagavsnitt.
     text = "Se 999 § AvtL för detta."
     html_ut, ovarifierade = _tutortext_html(text)
     assert len(ovarifierade) == 1
@@ -80,7 +80,7 @@ def test_render_tom_text():
 def test_verifieringsnot_visas_nar_svaret_har_verifierade_lagrum():
     """Ett grönt chip betyder att lagrummet finns, inte att det är rätt.
 
-    Verifieringen slår upp paragrafen i kursens lagrumslista. Den säger
+    Verifieringen slår upp paragrafen i appens lagrumsregister. Den säger
     ingenting om huruvida paragrafen är den tillämpliga för studentens fall.
     Observerat i skarpt läge: tutorn hänvisade en korrekt löst uppgift vidare
     till 36 § AvtL med påståendet att den "reglerar avtalens bildande", vilket

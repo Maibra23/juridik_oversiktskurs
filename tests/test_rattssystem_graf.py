@@ -98,8 +98,8 @@ def test_djupt_trad_civilratten_ar_djupare_an_offentliga(graf):
     """Doktrinen är ojämnt djup: köprätten ligger flera nivåer ner."""
     niva_for_label = {n["label"]: n["niva"] for n in graf["noder"]}
     # Civilrätt(1) -> Förmögenhetsrätt(2) -> Obligationsrätt(3)
-    # -> Speciell avtalsrätt(4) -> Köp- och konsumenträtt(5)
-    assert niva_for_label["Köp- och konsumenträtt"] >= 5
+    # -> Speciell avtalsrätt(4) -> Köprätt och konsumenträtt(5)
+    assert niva_for_label["Köprätt och konsumenträtt"] >= 5
 
 
 # --- Lagnoder ---------------------------------------------------------------
@@ -119,7 +119,7 @@ def test_varje_lagnod_har_giltig_lagen_nu_url(graf):
 
 
 def test_endast_lagnoder_ar_klickbara(graf):
-    """Bara lagnoder är klickbara — kurslagar och referenslagar, inte struktur."""
+    """Bara lagnoder är klickbara, registerlagar och referenslagar, inte struktur."""
     from utils.rattssystem_graf import GRUPP_REFERENS
 
     klickbara = {GRUPP_LAG, GRUPP_REFERENS}
@@ -194,14 +194,14 @@ def test_jb_forekommer_som_tre_distinkta_lagnoder(graf):
 
 
 def test_leasing_ar_lagfri_placeholder():
-    """Leasing saknar egen lag helt — varken kurs- eller referenslag."""
+    """Leasing saknar egen lag helt, varken registerlag eller referenslag."""
     from utils.rattskarta import hitta_gren
 
     gren = hitta_gren("leasing")
     assert gren is not None and gren.ar_lov
     assert gren.lagar == ()
     assert "leasinglag" in gren.beskrivning.lower()
-    assert "inga lagrum ur kursens register" in gren.nar.lower()
+    assert "inga lagrum ur appens register" in gren.nar.lower()
 
 
 def test_transport_och_licens_bar_referenslagar():

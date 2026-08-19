@@ -1,7 +1,7 @@
 """Global sida: Kunskapsutmaning.
 
 Studenten testar sin förmåga på ett färskt, fiktivt rättsfall som genereras av
-LLM vid knapptryck. Fallet grundas mot kursens lagrumsregister innan det visas
+LLM vid knapptryck. Fallet grundas mot appens lagrumsregister innan det visas
 (utils.generator). Påhittade paragrafer släpps aldrig igenom, och vid problem
 faller vi tillbaka på ett kuraterat fall. Själva övningen (RNTS-formulär, tutor
 och facit) återanvänder exakt samma flöde som modulsidorna.
@@ -30,7 +30,7 @@ st.html(
         title="Kunskapsutmaning",
         lead=(
             "Generera ett helt nytt, fiktivt rättsfall och pröva din juridiska "
-            "metod. Varje lagrum i facit kontrolleras mot kursens lagrumslista "
+            "metod. Varje lagrum i facit kontrolleras mot appens lagrumsregister "
             "innan fallet visas. Du testas aldrig på en påhittad paragraf."
         ),
     )
@@ -61,7 +61,7 @@ with kol_val:
         key="utmaning_val",
     )
 with kol_slump:
-    overraska = st.button("Överraska mig", use_container_width=True)
+    overraska = st.button("Överraska mig", width="stretch")
 
 # Svårigheten väljs alltid av studenten. Överraska mig slumpar bara modulen,
 # inte nivån: studenten behåller kontrollen över hur svårt fallet blir.
@@ -94,7 +94,7 @@ else:
         render_varning(notis)
     elif st.session_state.get("utmaning_kalla") == "genererad":
         st.success(
-            "Nytt rättsfall genererat och grundat mot kursens lagrum. "
+            "Nytt rättsfall genererat och grundat mot appens lagrum. "
             "Skriv din RNTS-analys och be tutorn granska den."
         )
     st.divider()

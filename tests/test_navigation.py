@@ -26,12 +26,12 @@ from utils.navigation import (
     byggda_namn,
     byggda_sidor,
     cta_mal,
-    kursmoduler,
-    nasta_kursmodul,
+    nasta_ovningsmodul,
     registrera_besok,
     rubrikkedja,
     sida_finns,
     sida_for_namn,
+    övningsmoduler,
 )
 
 ROT = Path(__file__).resolve().parent.parent
@@ -149,48 +149,48 @@ def test_registrera_besok_hem_skriver_inte_over_tidigare_besok():
     assert session_state["_jok_senast_besokt"] == "Avtalsrätt"
 
 
-# --- kursmoduler / nasta_kursmodul --------------------------------------------
+# --- övningsmoduler / nasta_ovningsmodul --------------------------------------------
 
-def test_kursmoduler_foljer_tradets_ordning():
-    namn = [m.namn for m in kursmoduler()]
+def test_övningsmoduler_foljer_tradets_ordning():
+    namn = [m.namn for m in övningsmoduler()]
     assert namn[0] == "Juridisk metod"
     assert namn.index("Personrätt") < namn.index("Avtalsrätt")
     assert namn.index("Avtalsrätt") < namn.index("Skadeståndsrätt")
 
 
-def test_kursmoduler_utesluter_verktygssidor():
-    namn = {m.namn for m in kursmoduler()}
+def test_övningsmoduler_utesluter_verktygssidor():
+    namn = {m.namn for m in övningsmoduler()}
     for verktyg in ("Hem", "Rättskartan", "Kunskapstest", "Kunskapskarta",
                     "Kunskapsutmaning"):
         assert verktyg not in namn
 
 
-def test_kursmoduler_matchar_scenariodatan():
-    """Vakt mot drift: varje kursmodul måste ha övningsinnehåll, och omvänt."""
+def test_övningsmoduler_matchar_scenariodatan():
+    """Vakt mot drift: varje ovningsmodul måste ha övningsinnehåll, och omvänt."""
     from utils.scenarier import ladda_modul, lista_moduler
 
     ur_data = {ladda_modul(stem).modul for stem in lista_moduler()}
-    ur_tradet = {m.namn for m in kursmoduler()}
+    ur_tradet = {m.namn for m in övningsmoduler()}
     assert ur_tradet == ur_data
 
 
-def test_nasta_kursmodul_utan_framsteg_ger_forsta():
-    assert nasta_kursmodul(frozenset()).namn == "Juridisk metod"
+def test_nasta_ovningsmodul_utan_framsteg_ger_forsta():
+    assert nasta_ovningsmodul(frozenset()).namn == "Juridisk metod"
 
 
-def test_nasta_kursmodul_hoppar_over_paborjade():
-    nasta = nasta_kursmodul(frozenset({"Juridisk metod", "Personrätt"}))
+def test_nasta_ovningsmodul_hoppar_over_paborjade():
+    nasta = nasta_ovningsmodul(frozenset({"Juridisk metod", "Personrätt"}))
     assert nasta.namn == "Allmän förmögenhetsrätt"
 
 
-def test_nasta_kursmodul_alla_paborjade_ger_none():
-    alla = frozenset(m.namn for m in kursmoduler())
-    assert nasta_kursmodul(alla) is None
+def test_nasta_ovningsmodul_alla_paborjade_ger_none():
+    alla = frozenset(m.namn for m in övningsmoduler())
+    assert nasta_ovningsmodul(alla) is None
 
 
 # --- cta_mal -------------------------------------------------------------------
 
-def test_cta_mal_ny_session_ger_kursens_forsta_modul():
+def test_cta_mal_ny_session_ger_appens_forsta_modul():
     mal = cta_mal(None)
     assert mal.titel == "Juridisk metod"
     assert mal.sida == "sidor/1_Juridisk_metod.py"
@@ -205,17 +205,17 @@ def test_cta_mal_foredrar_nasta_i_kursordning_framfor_senast_besokt():
     assert mal.ateruppta is False
 
 
-def test_cta_mal_alla_kursmoduler_paborjade_ger_ateruppta():
-    from utils.navigation import kursmoduler
+def test_cta_mal_alla_övningsmoduler_paborjade_ger_ateruppta():
+    from utils.navigation import övningsmoduler
 
-    alla = frozenset(m.namn for m in kursmoduler())
+    alla = frozenset(m.namn for m in övningsmoduler())
     mal = cta_mal("Avtalsrätt", pabborjade=alla)
     assert mal.titel == "Avtalsrätt"
     assert mal.ateruppta is True
 
 
 def test_cta_mal_okand_senast_besokt_faller_tillbaka_pa_kursordning():
-    alla = frozenset(m.namn for m in kursmoduler())
+    alla = frozenset(m.namn for m in övningsmoduler())
     mal = cta_mal("Modul som inte längre finns", pabborjade=alla)
     assert mal.titel == FALLBACK_CTA_TITEL
     assert mal.sida == FALLBACK_CTA_SIDA

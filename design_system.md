@@ -29,9 +29,9 @@ font = "serif"
 
 ## 2. Typografi
 
-* **Rubriker**: systemserif – Georgia, "Iowan Old Style", "Times New Roman". Serif för rubriker ger den juridiska, bokliga karaktären. Inga typsnittsfiler skeppas och ingen CDN används; stackarna är rena systemstackar så att appen ser likadan ut lokalt och på Streamlit Cloud.
+* **Rubriker**: systemserif, Georgia, "Iowan Old Style", "Times New Roman". Serif för rubriker ger den juridiska, bokliga karaktären. Inga typsnittsfiler skeppas och ingen CDN används; stackarna är rena systemstackar så att appen ser likadan ut lokalt och på Streamlit Cloud.
 * **Brödtext och UI**: system sans (Streamlits standard).
-* **Lagrum och kod**: systemmonospace – ui-monospace, "SF Mono", Menlo, Consolas. Monospace för lagrum gör dem lätta att skanna och kopiera.
+* **Lagrum och kod**: systemmonospace, ui-monospace, "SF Mono", Menlo, Consolas. Monospace för lagrum gör dem lätta att skanna och kopiera.
 * Storlekar: brödtext 17px med radavstånd 1.65 (långläsning), rubriknivåer 28/22/18px, chips och metadata 14px.
 * Maxbredd för löptext: 46rem. Scenariotext får aldrig löpa över hela skärmbredden.
 
@@ -85,13 +85,13 @@ Alla komponenter är Pythonfunktioner som renderar st.markdown med klasser ur de
 ## 4. Layout och navigering
 
 * **Innehållskolumnen**: appen kör `layout="wide"` och huvudkolumnen begränsas **inte** i CSS. En centrerad kolumn på 46 rem prövades 2026-08-07 och valdes bort: den gjorde varje sida smal, inte bara löptexten, och Rättskartan och Kunskapskartan behövde undantag för att deras grafer inte skulle klämmas ihop. 46 rem-regeln i avsnitt 2 gäller därför appens egna innehållsblock (`.jok-*`), som sätter sin egen maxbredd. Följden att Streamlits egna widgets (captions, knappar, flikar) saknar breddtak är accepterad.
-* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (pekar på nästa ej påbörjade kursmodul i kursordning, med en rad som säger varför; först när alla kursmoduler är påbörjade faller den tillbaka på senast besökta modul) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i kursen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
+* **Startsidan**: hjältesektion med kursnamn och en mening om metoden, disclaimer, en enda call-to-action-knapp (pekar på nästa ej påbörjade ovningsmodul i kursordning, med en rad som säger varför; först när alla övningsmoduler är påbörjade faller den tillbaka på senast besökta modul) och en framstegssektion (påbörjade moduler, genomförda rättsfall, quizresultat, en rad om att sessionen är flyktig, exportknappar). Ingen modullista: sidopanelen är appens enda navigering, så startsidan visar var du är i appen i stället för att upprepa vad som redan finns i den. Disclaimer i sidfoten.
 * **Modulsida**: tre flikar i fast ordning: Rättsfall, Quiz, Lagrumsjakt. Samma struktur i alla moduler så att navigationen blir automatisk.
-* **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Jag har försökt — visa facit" bakom en upplåsningsgrind — facit visas först efter klick, inte i en alltid synlig expander.
+* **Case vyn**: två kolumner på bred skärm: vänster scenariokortet (sticky känsla, alltid läsbart), höger RNTS formuläret med steppern. Knappordning alltid: primär "Be tutorn granska min analys", sekundär "Jag har försökt, visa facit" bakom en upplåsningsgrind, facit visas först efter klick, inte i en alltid synlig expander.
 * **Sidopanel**: modulnavigering överst, en rad LLM-status nederst. Statusraden
   utökas med detaljer först när något faktiskt är begränsat (under en fjärdedel
   av ett tak återstår, eller tutorn är otillgänglig): driftinformation ska inte
-  konkurrera med navigeringen i normalläget. Ingen modellväljare — den var
+  konkurrera med navigeringen i normalläget. Ingen modellväljare, den var
   utvecklaryta i en app som vem som helst kan öppna.
 
 ## 4.1 Navigeringshierarki
@@ -108,9 +108,9 @@ Sidopanelen speglar svensk rätts systematik i stället för filordningen i sido
 
 Regler:
 
-* Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att kursens omfattning syns utan att ge trasiga länkar. **Flera planerade moduler i samma grupp delar en rad** ("Statsrätt och förvaltningsrätt (kommer)"): de går ändå inte att öppna, så de behöver inte var sin rad för att visa att de finns. Omfattningen syns, raderna kostar mindre.
-* **En grupp vars enda barn är en modul med samma namn ritar ingen egen rubrik.** Raden skulle bara upprepa ordet direkt under sig självt, vilket Personrätt gjorde bokstavligen. Gruppen finns kvar i `NAV_TRAD`, så systematiken och `rubrikkedja()` är oförändrade — det är bara raden som utgår. Villkoret är namnidentitet, **inte** "har bara ett barn": modullänkar ritas av `st.page_link` och saknar indrag, så grupprubriken är det enda som knyter en modul till sin gren. Fäller man Ersättningsrätt hamnar Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår då något juridiskt falskt. Rubriker som bär doktrin står kvar även med ett enda barn.
-* Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer kursens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång. Panelen kortas därför genom att ta bort upprepning, aldrig genom att gömma innehåll bakom ett klick.
+* Endast moduler med en faktisk sida är länkar. Planerade moduler visas gråtonade med suffixet "(kommer)" så att appens omfattning syns utan att ge trasiga länkar. **Flera planerade moduler i samma grupp delar en rad** ("Statsrätt och förvaltningsrätt (kommer)"): de går ändå inte att öppna, så de behöver inte var sin rad för att visa att de finns. Omfattningen syns, raderna kostar mindre.
+* **En grupp vars enda barn är en modul med samma namn ritar ingen egen rubrik.** Raden skulle bara upprepa ordet direkt under sig självt, vilket Personrätt gjorde bokstavligen. Gruppen finns kvar i `NAV_TRAD`, så systematiken och `rubrikkedja()` är oförändrade, det är bara raden som utgår. Villkoret är namnidentitet, **inte** "har bara ett barn": modullänkar ritas av `st.page_link` och saknar indrag, så grupprubriken är det enda som knyter en modul till sin gren. Fäller man Ersättningsrätt hamnar Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår då något juridiskt falskt. Rubriker som bär doktrin står kvar även med ett enda barn.
+* Hela trädet visas samtidigt. Panelen har inga hopfällbara sektioner: en navigering som måste öppnas döljer appens struktur i stället för att visa den, och studenten ska kunna se hela rättssystemet på en gång. Panelen kortas därför genom att ta bort upprepning, aldrig genom att gömma innehåll bakom ett klick.
 * Den vertikala rytmen följer spacingskalan i 2.2: avståndet mellan huvudkategorier (`--s5`) är större än mellan undergrenar (`--s2`), som i sin tur är större än mellan raderna inom en gren (`--s1`). Närheten bär grupperingen, så panelen klarar sig utan ramar och linjer.
 * Paragrafguld (`--guld`) används aldrig i navigeringen. Guld är reserverat för lagrum enligt avsnitt 1.
 * Nivåerna får inte skiljas åt med emoji eller ikoner. Hierarkin bärs av indrag
@@ -123,7 +123,7 @@ Regler:
 
 ## 4.2 Rättskartan: appens orienteringssida
 
-Rättskartan (`sidor/16_Rattskartan.py`) är kursens karta över rättssystemet och är fullständig på dag noll: den kräver varken tutor eller genomförda övningar. Den ska inte förväxlas med **Kunskapskartan**, som är studentens personliga graf och växer med de egna rättsfallen.
+Rättskartan (`sidor/16_Rattskartan.py`) är appens karta över rättssystemet och är fullständig på dag noll: den kräver varken tutor eller genomförda övningar. Den ska inte förväxlas med **Kunskapskartan**, som är studentens personliga graf och växer med de egna rättsfallen.
 
 Sidan har tre flikar i fast ordning:
 
@@ -139,7 +139,7 @@ Sidan har tre flikar i fast ordning:
 * **Storlek = nivå.** Roten störst (26 px), lagarna minst (13 px). Trädet är ojämnt djupt (upp till sex nivåer på civilrättssidan), så storleken följer djupet, inte en fast nivålista.
 * **Form = grupp.** Lagar är cirklar, strukturnoder rutor.
 
-**Lagkortets kursavsnitt.** Paragrafspannet bär paragrafguld eftersom det är ett lagrum; kapitelrubriken bär bläck eftersom den är struktur. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum, och kopplingen får inte brytas av navigeringsfärger. Täckningsraden ("kursen täcker 6 av lagens 38 kapitel") sätts i kapitälhöjd till höger om KURSAVSNITT-etiketten och är avsiktligt lågmäld — den ska kunna läsas, inte dominera kortet.
+**Lagkortets lagavsnitt.** Paragrafspannet bär paragrafguld eftersom det är ett lagrum; kapitelrubriken bär bläck eftersom den är struktur. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum, och kopplingen får inte brytas av navigeringsfärger. Täckningsraden ("appen behandlar 6 av lagens 38 kapitel") sätts i kapitälhöjd till höger om AVSNITT-etiketten och är avsiktligt lågmäld, den ska kunna läsas, inte dominera kortet.
 
 Paragrafguld används **enbart** för lagnoder, aldrig för någon strukturnivå. Det är samma regel som i avsnitt 1: guld betyder alltid lagrum eller lag, och den kopplingen får inte brytas av navigeringsfärger. Färglegenden ritas som riktiga färgrutor (`.jok-swatch`), aldrig som prosa i en caption.
 
@@ -151,7 +151,7 @@ Paragrafguld används **enbart** för lagnoder, aldrig för någon strukturnivå
 
 ## 4.3 Sidhjälp
 
-Varje sida inleds med en hopfälld `render_sidhjalp(...)` — en `st.expander("Så använder du den här sidan")` med 3–5 korta, handlingsorienterade punkter. Stängd som standard så att den inte konkurrerar med innehållet för den som redan vet. Kompletteras av `help=` på de kontroller vars beteende inte framgår av etiketten.
+Varje sida inleds med en hopfälld `render_sidhjalp(...)`, en `st.expander("Så använder du den här sidan")` med 3 till 5 korta, handlingsorienterade punkter. Stängd som standard så att den inte konkurrerar med innehållet för den som redan vet. Kompletteras av `help=` på de kontroller vars beteende inte framgår av etiketten.
 
 ## 5. Presentationsriktlinjer för juridiskt innehåll
 
@@ -180,11 +180,11 @@ fliken stängs. Målgruppen är publik och anonym, så det finns ingen inloggnin
 därmed ingen ärlig serverlagring per student.
 
 Regeln: **säg det rent ut, och peka på lösningen i samma andetag.** "Framstegen
-gäller den här sessionen. Stänger du fliken är de borta — ladda ner dem nedan för
+gäller den här sessionen. Stänger du fliken är de borta, ladda ner dem nedan för
 att behålla dem." Aldrig bara antytt i en rubrik. En student som förlorat en
 timmes arbete utan varning kommer inte tillbaka, och tillit är en förutsättning
 för ansträngning.
 
-Obsidianvalvet är därför inte en teknisk detalj utan kursens repetitionsmekanism,
+Obsidianvalvet är därför inte en teknisk detalj utan appens repetitionsmekanism,
 och framställs som det ("Läs om det du gjort i morgon"). Tomma tillstånd visar
 aldrig nedladdningsknappar för innehåll som inte finns.

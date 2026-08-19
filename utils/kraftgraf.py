@@ -68,7 +68,7 @@ class Statistik:
 
     noder: int
     grenar: int
-    kurslagar: int
+    registerlagar: int
     referenslagar: int
     djup: int
 
@@ -132,7 +132,7 @@ def startpositioner(graf: Taxonomigraf) -> dict[str, tuple[float, float]]:
     Fysiken hittar själv en balans, men den bryr sig inte om vilken toppgren en
     nod tillhör: startar allt i samma punkt hamnar grenarna om vartannat och
     höljena växer in i varandra. Här får varje toppgren i stället en mittpunkt
-    på en cirkel runt roten, och fylls inifrån och ut — djupet styr avståndet
+    på en cirkel runt roten, och fylls inifrån och ut. Djupet styr avståndet
     till den egna mittpunkten, den gyllene vinkeln fördelar noderna jämnt runt
     den. Resultatet är skivor som går att ringa in var för sig.
 
@@ -169,7 +169,7 @@ def grafstatistik(graf: Taxonomigraf) -> Statistik:
     return Statistik(
         noder=len(graf["noder"]),
         grenar=sum(1 for grupp in grupper if grupp == GRUPP_GREN),
-        kurslagar=sum(1 for grupp in grupper if grupp == GRUPP_LAG),
+        registerlagar=sum(1 for grupp in grupper if grupp == GRUPP_LAG),
         referenslagar=sum(1 for grupp in grupper if grupp == GRUPP_REFERENS),
         djup=max((nod.get("niva", 0) for nod in graf["noder"]), default=0),
     )

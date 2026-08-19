@@ -3,7 +3,7 @@
 Testar de komponenter som returnerar HTML-strängar utan Streamlit-anrop:
 RNTS-steppern (render_rnts_steg), scenariokortet (render_case) och
 lagrumschipen. Rendering till skärm (st.html) testas inte här utan i
-röktesterna som importerar sidorna i bare mode — med två undantag:
+röktesterna som importerar sidorna i bare mode, med två undantag:
 render_sidopanel testas genom att st.html/st.page_link/st.session_state
 monkeypatchas, se avsnittet om aktiv rubrikkedja nedan för varför AppTest
 inte kan användas där, och samma mönster används för
@@ -85,7 +85,7 @@ def test_rnts_steg_escapar_html():
 def test_render_case_innehaller_rubrik_meta_och_text():
     html_ut = render_case(
         rubrik="Målaren och rutan",
-        metadata="Svårighetsgrad: grund · ca 12 min",
+        metadata="Svårighetsgrad: grund: ca 12 min",
         scenariotext="Erik ställer en färgburk på en stege.",
     )
     assert "Målaren och rutan" in html_ut
@@ -166,7 +166,7 @@ def test_tutortext_escapar_html_fran_modellen():
     assert "<script>" not in html_ut
 
 
-# --- Lagkortets kursavsnitt --------------------------------------------------
+# --- Lagkortets lagavsnitt --------------------------------------------------
 
 
 def _grupp(kapitel, rubrik, spann, avsnittsrubrik, url="https://lagen.nu/1:1"):
@@ -175,7 +175,7 @@ def _grupp(kapitel, rubrik, spann, avsnittsrubrik, url="https://lagen.nu/1:1"):
     return Kapitelgrupp(kapitel, rubrik, (Avsnittsrad(spann, avsnittsrubrik, url),))
 
 
-def test_lagkortet_renderar_kursavsnitt_med_kapitelrubrik():
+def test_lagkortet_renderar_lagavsnitt_med_kapitelrubrik():
     from utils.ui import render_lagkort
 
     html = render_lagkort(
@@ -185,24 +185,24 @@ def test_lagkortet_renderar_kursavsnitt_med_kapitelrubrik():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/2022:260",
-        kursavsnitt=(
+        lagavsnitt=(
             _grupp(
                 "3",
                 "Näringsidkarens dröjsmål",
-                "1–6 §§",
+                "1 till 6 §§",
                 "Påföljder vid säljarens dröjsmål",
                 "https://lagen.nu/2022:260#K3P1",
             ),
         ),
-        tackning="kursen täcker 6 av lagens 9 kapitel",
+        tackning="appen behandlar 6 av lagens 9 kapitel",
     )
     assert "3 kap. Näringsidkarens dröjsmål" in html
-    assert "1–6 §§" in html
+    assert "1 till 6 §§" in html
     assert "Påföljder vid säljarens dröjsmål" in html
-    assert "kursen täcker 6 av lagens 9 kapitel" in html
+    assert "appen behandlar 6 av lagens 9 kapitel" in html
 
 
-def test_lagkortet_utan_kursavsnitt_ser_ut_som_forr():
+def test_lagkortet_utan_lagavsnitt_ser_ut_som_forr():
     from utils.ui import render_lagkort
 
     html = render_lagkort(
@@ -213,7 +213,7 @@ def test_lagkortet_utan_kursavsnitt_ser_ut_som_forr():
         nar="N",
         url="https://lagen.nu/1:1",
     )
-    assert "KURSAVSNITT" not in html
+    assert "AVSNITT" not in html
 
 
 def test_lagkortet_escapar_avsnittsrubriker():
@@ -226,7 +226,7 @@ def test_lagkortet_escapar_avsnittsrubriker():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1:1",
-        kursavsnitt=(_grupp(None, "", "1 §", "<script>alert(1)</script>"),),
+        lagavsnitt=(_grupp(None, "", "1 §", "<script>alert(1)</script>"),),
     )
     assert "<script>alert" not in html
     assert "&lt;script&gt;" in html
@@ -242,18 +242,18 @@ def test_kapitellos_grupp_renderar_ingen_kapitelrubrik():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1990:931",
-        kursavsnitt=(
+        lagavsnitt=(
             _grupp(
                 None,
                 "",
-                "22–29 §§",
+                "22 till 29 §§",
                 "Påföljder vid säljarens dröjsmål",
                 "https://lagen.nu/1990:931#P22",
             ),
         ),
     )
     assert "kap." not in html
-    assert "22–29 §§" in html
+    assert "22 till 29 §§" in html
 
 
 def test_avsnittsspannet_lankar_till_lagen_nu():
@@ -266,15 +266,15 @@ def test_avsnittsspannet_lankar_till_lagen_nu():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1915:218",
-        kursavsnitt=(
-            _grupp(None, "", "10–27 §§", "Fullmakt", "https://lagen.nu/1915:218#P10"),
+        lagavsnitt=(
+            _grupp(None, "", "10 till 27 §§", "Fullmakt", "https://lagen.nu/1915:218#P10"),
         ),
     )
     assert 'href="https://lagen.nu/1915:218#P10"' in html
     assert 'target="_blank"' in html
 
 
-def test_lagkortet_sager_att_urvalet_foljer_kursen():
+def test_lagkortet_sager_att_urvalet_foljer_appen():
     """Utan noten läses listan som om lagen tog slut där."""
     from utils.ui import render_lagkort
 
@@ -285,9 +285,9 @@ def test_lagkortet_sager_att_urvalet_foljer_kursen():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1:1",
-        kursavsnitt=(_grupp(None, "", "1 §", "Något"),),
+        lagavsnitt=(_grupp(None, "", "1 §", "Något"),),
     )
-    assert "Urvalet följer kursen, inte hela lagen." in html
+    assert "Urvalet följer appen, inte hela lagen." in html
 
 
 def test_avsnittsrubrik_som_upprepar_kapitelrubriken_utelamnas():
@@ -304,17 +304,17 @@ def test_avsnittsrubrik_som_upprepar_kapitelrubriken_utelamnas():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1962:700",
-        kursavsnitt=(
+        lagavsnitt=(
             _grupp(
                 "3",
                 "Om brott mot liv och hälsa",
-                "1–12 §§",
+                "1 till 12 §§",
                 "Om brott mot liv och hälsa",
             ),
         ),
     )
     assert html.count("Om brott mot liv och hälsa") == 1
-    assert "1–12 §§" in html
+    assert "1 till 12 §§" in html
 
 
 def test_avsnittsrubrik_som_skiljer_sig_star_kvar():
@@ -327,11 +327,11 @@ def test_avsnittsrubrik_som_skiljer_sig_star_kvar():
         beskrivning="B",
         nar="N",
         url="https://lagen.nu/1962:700",
-        kursavsnitt=(
+        lagavsnitt=(
             _grupp(
                 "24",
                 "Om allmänna grunder för ansvarsfrihet",
-                "1–9 §§",
+                "1 till 9 §§",
                 "Ansvarsfrihetsgrunder (nöd, nödvärn, samtycke)",
             ),
         ),
@@ -666,12 +666,12 @@ def test_doktrinbarande_rubrik_behalls_aven_med_ett_barn(monkeypatch):
     Modullänkar ritas av st.page_link och saknar indrag, så rubriken är det
     enda som knyter en modul till sin gren. Fälls Ersättningsrätt hamnar
     Skadeståndsrätt visuellt under Kontraktsrätt, och panelen påstår då att
-    skadeståndsrätten är kontraktsrätt — juridiskt fel, och värre än den rad
+    skadeståndsrätten är kontraktsrätt, juridiskt fel, och värre än den rad
     som sparades. Samma sak för Fordringsrätt under Näringsrätt.
     """
     html_rader, _lanknamn = _sidopanel_rader(monkeypatch)
 
-    for grupp in ("Ersättningsrätt", "Kredit- och obeståndsrätt", "Familjerätt"):
+    for grupp in ("Ersättningsrätt", "Krediträtt och obeståndsrätt", "Familjerätt"):
         assert _har_rubrik(html_rader, grupp), (
             f"{grupp!r} bär doktrin och måste behålla sin rubrik även med ett barn"
         )
@@ -690,8 +690,8 @@ def test_flerbarnsgrupp_behaller_sin_rubrik(monkeypatch):
 def test_planerade_moduler_slas_ihop_till_en_rad(monkeypatch):
     """Statsrätt och förvaltningsrätt delar en enda dämpad rad.
 
-    Kursens omfattning ska synas (design_system.md 4.1), men två obyggda
-    moduler behöver inte två rader. OFFENTLIG RÄTT måste finnas kvar — utan
+    Appens omfattning ska synas (design_system.md 4.1), men två obyggda
+    moduler behöver inte två rader. OFFENTLIG RÄTT måste finnas kvar, utan
     sina barn skulle hela kategorin annars falla ur systematiken.
     """
     html_rader, lanknamn = _sidopanel_rader(monkeypatch)
@@ -711,7 +711,7 @@ def test_kondenseringen_ritar_farre_rader_an_tradet_har_noder(monkeypatch):
     """Sammanlagt: panelen ritar färre rader än trädet har noder.
 
     Jämförelsetalet härleds ur NAV_TRAD i stället för att skrivas som en
-    magisk konstant, så att testet följer med när kursen växer. De fem raderna
+    magisk konstant, så att testet följer med när appen växer. De fem raderna
     som sparas är de fyra fällda enbarnsgrupperna plus den hopslagna
     (kommer)-raden; skulle en av dem sluta fungera faller testet.
     """
@@ -730,7 +730,7 @@ def test_kondenseringen_ritar_farre_rader_an_tradet_har_noder(monkeypatch):
     ritade = len(html_rader) + len(lanknamn)
 
     assert ritade < okondenserat, (
-        f"Panelen ritar {ritade} rader av {okondenserat} noder — inget kortades"
+        f"Panelen ritar {ritade} rader av {okondenserat} noder, inget kortades"
     )
     assert okondenserat - ritade >= 2, (
         f"Bara {okondenserat - ritade} rader sparades; väntade minst 2 "

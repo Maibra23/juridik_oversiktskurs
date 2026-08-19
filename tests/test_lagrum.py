@@ -100,7 +100,7 @@ def test_extrahera_omvand_enkel_paragraf():
 
 
 def test_extrahera_omvand_intervall():
-    (ref,) = extrahera_lagrum("Ogiltighet enligt AvtL 28–30 §§.")
+    (ref,) = extrahera_lagrum("Ogiltighet enligt AvtL 28 till 30 §§.")
     assert ref.forkortning == "AvtL"
     assert ref.paragraf == "28"
     assert ref.paragraf_till == "30"
@@ -226,7 +226,7 @@ def test_validera_omvand_verifierad():
 
 
 def test_validera_omvand_okand_paragraf_pa_kand_lag():
-    # Känd lag i omvänd ordning men paragraf utanför kursavsnitt ska flaggas.
+    # Känd lag i omvänd ordning men paragraf utanför lagavsnitt ska flaggas.
     assert validera_lagrum("AvtL 999 §") == STATUS_OKAND_PARAGRAF
 
 
@@ -246,8 +246,8 @@ def test_validera_verifierad_kapitellag():
     assert validera_lagrum("3 kap. 1 § SkL") == STATUS_VERIFIERAD
 
 
-def test_validera_okand_paragraf_utanfor_kursavsnitt():
-    # AvtL finns, men 999 § ingår inte i något kursavsnitt.
+def test_validera_okand_paragraf_utanfor_lagavsnitt():
+    # AvtL finns, men 999 § ingår inte i något lagavsnitt.
     assert validera_lagrum("999 § AvtL") == STATUS_OKAND_PARAGRAF
 
 
@@ -338,20 +338,20 @@ def test_verify_lagrum_verifierad_traff_har_url_och_beskrivning():
     assert traff.beskrivning is not None
 
 
-def test_inget_kursavsnitt_ar_overifierat():
+def test_inget_lagavsnitt_ar_overifierat():
     """Slutgrind: allt som visas för studenten ska vara genomgånget.
 
     Flaggan betyder enligt registrets egen beskrivning paragrafgränser som
     ännu inte kontrollerats mot författningen. Sådant får inte renderas som
     ett påstående i lagkortet. Kontrollen är automatiserad sedan
-    data/lagstruktur/ finns; se utils.kursavsnitt_kontroll.
+    data/lagstruktur/ finns; se utils.lagavsnitt_kontroll.
     """
     from utils.lagrum import lagrum_register
 
     oflaggade = [
         f"{lag.forkortning}: {a.beskrivning}"
         for lag in lagrum_register().values()
-        for a in lag.kursavsnitt
+        for a in lag.lagavsnitt
         if a.verifiera
     ]
     assert oflaggade == [], "\n".join(oflaggade)
@@ -370,7 +370,7 @@ def test_validera_ra_lag_las_alias_falt():
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
         "aliaser": ["testlagen", "TL"],
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     lag = _validera_ra_lag(rad)
     assert lag.aliaser == ("testlagen", "TL")
@@ -385,7 +385,7 @@ def test_validera_ra_lag_alias_falt_default_tomt():
         "sfs": "2026:1",
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     lag = _validera_ra_lag(rad)
     assert lag.aliaser == ()
@@ -403,7 +403,7 @@ def test_validera_ra_lag_aliaser_som_strang_kastar():
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
         "aliaser": "avtalslagen",
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     with pytest.raises(ValueError, match="TestL"):
         _validera_ra_lag(rad)
@@ -419,7 +419,7 @@ def test_validera_ra_lag_aliaser_med_icke_strang_element_kastar():
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
         "aliaser": [123],
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     with pytest.raises(ValueError, match="TestL"):
         _validera_ra_lag(rad)
@@ -437,7 +437,7 @@ def test_validera_ra_lag_aliaser_med_flerordsfras_kastar():
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
         "aliaser": ["lagen om anställningsskydd"],
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     with pytest.raises(ValueError, match="TestL"):
         _validera_ra_lag(rad)
@@ -453,7 +453,7 @@ def test_validera_ra_lag_giltiga_aliaser_ok():
         "kapitelindelad": False,
         "lagen_nu_bas_url": "https://lagen.nu/2026:1",
         "aliaser": ["avtalslagen", "AL"],
-        "kursavsnitt": [],
+        "lagavsnitt": [],
     }
     lag = _validera_ra_lag(rad)
     assert lag.aliaser == ("avtalslagen", "AL")
@@ -471,7 +471,7 @@ def test_bygg_alias_karta_loser_alias_till_forkortning():
             sfs="1915:218",
             kapitelindelad=False,
             lagen_nu_bas_url="https://lagen.nu/1915:218",
-            kursavsnitt=(),
+            lagavsnitt=(),
             aliaser=("avtalslagen",),
         ),
     }
@@ -490,7 +490,7 @@ def test_bygg_alias_karta_kastar_vid_kolliderande_alias():
             sfs="1915:218",
             kapitelindelad=False,
             lagen_nu_bas_url="https://lagen.nu/1915:218",
-            kursavsnitt=(),
+            lagavsnitt=(),
             aliaser=("dubbel",),
         ),
         "SkL": Lag(
@@ -499,7 +499,7 @@ def test_bygg_alias_karta_kastar_vid_kolliderande_alias():
             sfs="1972:207",
             kapitelindelad=True,
             lagen_nu_bas_url="https://lagen.nu/1972:207",
-            kursavsnitt=(),
+            lagavsnitt=(),
             aliaser=("dubbel",),
         ),
     }

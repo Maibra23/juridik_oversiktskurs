@@ -5,7 +5,7 @@ fysiksimulering placera noderna och ringar in varje toppgren med ett hölje.
 Det här lagret räknar ut allt som inte är rendering: nodernas grad, deras
 storlek, vilka noder som hör till vilket hölje och kartans statistik.
 
-Rent Python utan Streamlit och utan färger — färgsättningen hör till
+Rent Python utan Streamlit och utan färger, färgsättningen hör till
 utils.kraftgraf_ui, som äger designsystemets palett.
 """
 
@@ -144,16 +144,16 @@ def test_statistiken_raknar_noderna(graf):
     assert stat.noder == len(graf["noder"])
 
 
-def test_statistiken_skiljer_kurslag_fran_referenslag(graf):
+def test_statistiken_skiljer_registerlag_fran_referenslag(graf):
     stat = grafstatistik(graf)
-    kurs = sum(1 for n in graf["noder"] if n["grupp"] == GRUPP_LAG)
+    register = sum(1 for n in graf["noder"] if n["grupp"] == GRUPP_LAG)
     referens = sum(1 for n in graf["noder"] if n["grupp"] == GRUPP_REFERENS)
-    assert (stat.kurslagar, stat.referenslagar) == (kurs, referens)
+    assert (stat.registerlagar, stat.referenslagar) == (register, referens)
 
 
 def test_statistikens_delar_summerar_till_helheten(graf):
     stat = grafstatistik(graf)
-    assert stat.grenar + stat.kurslagar + stat.referenslagar + 1 == stat.noder
+    assert stat.grenar + stat.registerlagar + stat.referenslagar + 1 == stat.noder
 
 
 def test_djupet_ar_den_djupaste_nivan(graf):

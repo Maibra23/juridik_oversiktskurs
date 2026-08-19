@@ -134,7 +134,7 @@ def lagtext_block(refs: Iterable[Lagrumsref | str]) -> str:
 
 
 def _kanonisk_etikett(ref: Lagrumsref) -> str:
-    """Skriv referensen på kursens form: "2 kap. 1 § SkL"."""
+    """Skriv referensen på standardform: "2 kap. 1 § SkL"."""
     if ref.kapitel:
         return f"{ref.kapitel} kap. {ref.paragraf} § {ref.forkortning}"
     return f"{ref.paragraf} § {ref.forkortning}"

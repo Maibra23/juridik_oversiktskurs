@@ -1,6 +1,6 @@
 """Nyckelbegrepp per delområde: inläsning, validering och uppslag.
 
-Läser data/nyckelbegrepp.json, kursens deterministiska begreppsbank. Varje
+Läser data/nyckelbegrepp.json, appens begreppsbank. Varje
 begrepp har fyra obligatoriska fält (definition, förklaring, exempel och
 igenkänning i scenario) och kan dessutom bära lagrum, en modullänk och en
 kort skillnadsrad för kontrastpar (behörighet vs befogenhet och liknande).

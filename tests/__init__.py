@@ -1,1 +1,1 @@
-"""Testpaket för juridik_oversiktskurs."""
+"""Testpaket för juridikverkstan."""

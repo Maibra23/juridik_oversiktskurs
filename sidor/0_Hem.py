@@ -5,10 +5,10 @@ sidopanel injiceras centralt av ingångspunkten, inte här.
 
 Modullistan visas inte här: sidopanelen (utils.navigation.NAV_TRAD) är
 appens enda navigering. Startsidan gör i stället det sidopanelen inte kan
-— visa var du är i kursen och ge dig ett enda tydligt nästa steg — så att
-de två aldrig konkurrerar om att vara "kartan över kursen".
+visa var du är i appen och ge dig ett enda tydligt nästa steg, så att
+de två aldrig konkurrerar om att vara "kartan över appen".
 
-Ingen affärslogik: all LLM-, lagrums- och scenariologik ligger i utils/.
+Ingen affärslogik: all LLM-, lagrumslogik och scenariologik ligger i utils/.
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ def render_landing() -> None:
     """Rendera hela landningssidan."""
     st.html(
         hero(
-            eyebrow="JURIDISK ÖVERSIKTSKURS",
+            eyebrow="JURIDIKVERKSTAN",
             title="Träna att tänka juridiskt, inte att läsa passivt",
             lead=(
                 "Öva fallbaserat: identifiera rättsfrågan, hitta rätt lagrum, "
@@ -115,10 +115,10 @@ def _render_framsteg() -> None:
     ]
     if besvarade:
         delar.append(f"{ratt}/{besvarade} rätt på quiz")
-    st.markdown(" · ".join(delar))
+    st.markdown(": ".join(delar))
 
     st.caption(
-        "Framstegen gäller den här sessionen. Stänger du fliken är de borta — "
+        "Framstegen gäller den här sessionen. Stänger du fliken är de borta. "
         "ladda ner dem nedan för att behålla dem."
     )
     _render_export(case_bok)

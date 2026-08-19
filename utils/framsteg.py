@@ -1,7 +1,7 @@
 """Studentens framsteg, sammanställt ur sessionens två böcker.
 
-Ansvarar för en enda fråga: vilka kursmoduler har studenten börjat på? Svaret
-driver startsidans "nästa steg" (utils.navigation.nasta_kursmodul).
+Ansvarar för en enda fråga: vilka övningsmoduler har studenten börjat på? Svaret
+driver startsidans "nästa steg" (utils.navigation.nasta_ovningsmodul).
 
 Den rena funktionen ``pabborjade_ur_bocker`` tar böckerna som argument och kan
 därför enhetstestas utan Streamlit. ``pabborjade_moduler`` är det tunna skalet

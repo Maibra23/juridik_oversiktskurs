@@ -1,6 +1,6 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen Straff- och processrätt (kap 22). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
-  "modul": "Straff- och processrätt",
+  "_beskrivning": "Deterministiska basscenarier för modulen Straffrätt och processrätt (kap 22). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Straffrätt och processrätt",
   "case": [
     {
       "id": "str-case-1",

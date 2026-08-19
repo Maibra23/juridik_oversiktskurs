@@ -12,4 +12,4 @@ from __future__ import annotations
 
 from utils.modulvy import rendera_modulsida
 
-rendera_modulsida("juridisk_metod", "Juridisk metod", "KAP. 1 · JURIDISK METOD")
+rendera_modulsida("juridisk_metod", "Juridisk metod", "JURIDISK METOD")

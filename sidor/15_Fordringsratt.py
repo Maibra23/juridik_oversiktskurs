@@ -13,4 +13,4 @@ from __future__ import annotations
 
 from utils.modulvy import rendera_modulsida
 
-rendera_modulsida("fordringsratt", "Fordringsrätt", "KAP. 15-17 · FORDRINGSRÄTT")
+rendera_modulsida("fordringsratt", "Fordringsrätt", "FORDRINGSRÄTT")

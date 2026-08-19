@@ -1,6 +1,6 @@
 {
-  "_beskrivning": "Deterministiska basscenarier för modulen Köp- och konsumenträtt (kap 8). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
-  "modul": "Köp- och konsumenträtt",
+  "_beskrivning": "Deterministiska basscenarier för modulen Köprätt och konsumenträtt (kap 8). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
+  "modul": "Köprätt och konsumenträtt",
   "case": [
     {
       "id": "kop-case-1",

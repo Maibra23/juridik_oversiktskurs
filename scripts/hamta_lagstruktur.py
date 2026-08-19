@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Hämta lagarnas kapitel- och momentrubriker till data/lagstruktur/.
+"""Hämta lagarnas kapitelrubriker och momentrubriker till data/lagstruktur/.
 
 Syskon till scripts/hamta_lagtext.py och lyder samma regler: körs manuellt,
 aldrig av appen, och resultatet committas så att appen fungerar offline.
@@ -16,12 +16,12 @@ paragrafnummer. Ingen paragraftext (den ligger i data/lagtext/) och aldrig
 lagen.nu:s egna kommentarer. Rubrikerna är författningstext och undantagna
 upphovsrätt enligt 9 § upphovsrättslagen.
 
-HELA LAGEN, INTE BARA KURSENS DEL
+HELA LAGEN, INTE BARA APPENS DEL
 =================================
 
 Till skillnad från hamta_lagtext.py sparas strukturen för hela lagen, inte
-bara för kursavsnitten. Det är förutsättningen för täckningsraden i
-lagkortet ("kursen täcker 6 av lagens 8 kapitel"). Utan den läser studenten
+bara för lagavsnitten. Det är förutsättningen för täckningsraden i
+lagkortet ("appen behandlar 6 av lagens 8 kapitel"). Utan den läser studenten
 avsnittslistan som om lagen tog slut där. Datat är litet: bara rubriker och
 paragrafnummer, inga texter.
 
@@ -32,7 +32,7 @@ PARAGRAFNYCKELNS FORM
 parsern. Den får inte gissas ur källans ankare: AvtL märker sina paragrafer
 "K2P10" trots att numreringen löper obruten 1-41, och registret säger
 kapitelindelad: false. Läser man kapitlet ur ankaret ändå blir nycklarna
-omöjliga att foga ihop med korpusen och kursavsnitten.
+omöjliga att foga ihop med korpusen och lagavsnitten.
 """
 
 from __future__ import annotations

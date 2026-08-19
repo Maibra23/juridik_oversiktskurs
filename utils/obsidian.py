@@ -124,12 +124,12 @@ def lagrumsnot(ref: str) -> str:
 
     kropp = [frontmatter, "", f"# {titel}", ""]
     if status == STATUS_VERIFIERAD and url:
-        kropp.append(f"Verifierat mot kursens lagrumsregister ({status}).")
+        kropp.append(f"Verifierat mot appens lagrumsregister ({status}).")
         kropp.append("")
         kropp.append(f"[Öppna på lagen.nu]({url})")
     else:
         kropp.append(
-            f"Ej verifierad: kunde inte verifieras mot kursens lagrumsregister "
+            f"Ej verifierad: kunde inte verifieras mot appens lagrumsregister "
             f"(status {status}). "
             "Kontrollera lagrummet själv innan du litar på det."
         )
@@ -146,7 +146,7 @@ def _rattsfall_kropp(analys: CaseAnalys) -> str:
     rader = [
         f"# {case.rubrik}",
         "",
-        f"*Modul: {analys.modul} · svårighetsgrad: {case.svarighetsgrad}*",
+        f"*Modul: {analys.modul}: svårighetsgrad: {case.svarighetsgrad}*",
         "",
         "## Scenario",
         "",
@@ -226,7 +226,7 @@ def _startnot(moduler: tuple[str, ...]) -> str:
         "",
         "# Juridik: mitt kunskapsvalv",
         "",
-        f"Exporterat {date.today().isoformat()} från Juridisk översiktskurs.",
+        f"Exporterat {date.today().isoformat()} från Juridikverkstan.",
         "",
         "## Rättskartan",
         "",

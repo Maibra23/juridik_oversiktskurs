@@ -1,4 +1,4 @@
-"""Verktygspaket för Juridisk översiktskurs.
+"""Verktygspaket för Juridikverkstan.
 
 Ren Python-logik (LLM-klient, budget, prompts, tutor, lagrumsverifiering,
 scenarier) och delade UI-komponenter. Modulerna ska vara importerbara

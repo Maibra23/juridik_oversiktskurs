@@ -68,7 +68,7 @@ LAS_OVNING = "ovning"             # färskt övningsscenario att träna RNTS på
 
 _ROLL = """Du är en svensk juridisk expert med över 30 års erfarenhet av att undervisa \
 juridik på alla nivåer, från introduktionskurser till avancerad juristutbildning.
-Du handleder just nu en student på Juridisk översiktskurs (JÖK).
+Du handleder just nu en student på grundnivå i juridik.
 Ditt uppdrag är att träna studenten i juridisk metod, inte att lösa uppgiften åt hen."""
 
 _SPRAK = """SPRÅK
@@ -103,7 +103,7 @@ _LAGRUMSFORMAT = """LAGRUMSFORMAT (följ exakt, annars går verifieringen inte a
   Skriv ALDRIG förkortningen först: "AvtL 36 §" är FEL.
 - För kapitelindelade lagar: "N kap. M § FÖRK", t.ex. "2 kap. 1 § SkL"
   (ALDRIG "SkL 2 kap. 1 §").
-- För intervall: "28–30 §§ AvtL" (paragrafnumren först, förkortningen sist).
+- För intervall: "28 till 30 §§ AvtL" (paragrafnumren först, förkortningen sist).
 - Använd endast de förkortningar som står i LAGRUMSVITLISTAN."""
 
 _TUTORROLL_FALL = """TUTORROLL (viktigast)
@@ -164,13 +164,13 @@ SYSTEM_PROMPT_BEGREPP = _bygg_systemprompt(
 def _lag_vitlisterad(lag: Lag) -> str:
     """Formatera en lag till en rad i LAGRUMSVITLISTAN."""
     intervall = []
-    for a in lag.kursavsnitt:
+    for a in lag.lagavsnitt:
         if lag.kapitelindelad and a.kapitel is not None:
-            intervall.append(f"{a.kapitel} kap. {a.paragraf_fran}–{a.paragraf_till} §§")
+            intervall.append(f"{a.kapitel} kap. {a.paragraf_fran} till {a.paragraf_till} §§")
         else:
-            intervall.append(f"{a.paragraf_fran}–{a.paragraf_till} §§")
+            intervall.append(f"{a.paragraf_fran} till {a.paragraf_till} §§")
     delar = "; ".join(intervall)
-    return f"- {lag.forkortning} = {lag.namn} (SFS {lag.sfs}). Kursavsnitt: {delar}."
+    return f"- {lag.forkortning} = {lag.namn} (SFS {lag.sfs}). Lagavsnitt: {delar}."
 
 
 def vitlista_block(forkortningar: Iterable[str] | None = None) -> str:
@@ -246,7 +246,7 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
 
     Hela facit injiceras som sanningsunderlag, inte bara rättsfrågan. Skälet
     är mätt: utan facit måste modellen härleda svensk rätt ur sina egna
-    vikter, och en 8B-modell gör det dåligt. Med kursens lösning i prompten
+    vikter, och en 8B-modell gör det dåligt. Med appens lösning i prompten
     blir uppgiften jämförelse i stället för återgivning, vilket är avsevärt
     lättare. Mätt mot Qwen3-8B över fyra fall gick träffbilden från 2 av 9
     korrekta lagrum till 9 av 9, och modellen slutade intyga påhittade
@@ -285,12 +285,12 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
         f"{lagtext}"
         "RÄTTSFALL:\n"
         f"{scenariotext}\n\n"
-        "KURSENS LÖSNING (ditt sanningsunderlag, endast för din bedömning):\n"
+        "LÖSNINGEN (ditt sanningsunderlag, endast för din bedömning):\n"
         f"Rättsfråga: {rattsfraga}\n"
         f"Tillämpliga lagrum: {lagrumsrad}\n"
         f"Tillämpning:\n{punktrader}\n"
         f"Slutsats: {slutsats}\n\n"
-        "SÅ ANVÄNDER DU KURSENS LÖSNING:\n"
+        "SÅ ANVÄNDER DU LÖSNINGEN:\n"
         "- Lösningen är korrekt. Avviker studentens svar från den är det "
         "studenten som har fel.\n"
         "- Anger studenten andra lagrum än lösningens: säg att de inte är "
@@ -403,7 +403,7 @@ def build_generate_prompt(
         f"{vitlista}"
         f"{svarighetsinstruktion}\n\n"
         f"Skapa ETT nytt, fiktivt och realistiskt rättsfall för modulen "
-        f"\"{modul_namn}\" på JÖK-nivå. Fallet ska gå att lösa med juridisk metod "
+        f"\"{modul_namn}\" på grundnivå. Fallet ska gå att lösa med juridisk metod "
         "och de lagrum som finns i vitlistan ovan. Kalibrera fallet efter "
         "svårighetsgraden ovan.\n\n"
         "Svara med ENBART giltig JSON (ingen kod-markdown, ingen text runt om) "
@@ -476,7 +476,7 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
         )
     else:
         uppdrag = (
-            f"Fördjupa förklaringen av {term} för en student på JÖK-nivå. "
+            f"Fördjupa förklaringen av {term} för en student på grundnivå. "
             "Bygg vidare på grunddatan ovan: förklara gränsfall, vanliga "
             "missförstånd och hur begreppet skiljs från närliggande begrepp. "
             "Upprepa inte definitionen ordagrant."
@@ -485,7 +485,7 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
     user_prompt = (
         f"{vitlista}\n\n"
         f"{lagtext}"
-        "BEGREPPETS GRUNDDATA (kursens verifierade underlag, får inte "
+        "BEGREPPETS GRUNDDATA (appens verifierade underlag, får inte "
         "motsägas):\n"
         f"Term: {term}\n"
         f"Definition: {definition}\n"
@@ -496,7 +496,7 @@ def build_begrepp_prompt(begrepp: object, las: str = LAS_FORDJUPNING) -> tuple[s
         "KÄLLREGLER (samma som alltid):\n"
         "- Du får ENDAST hänvisa till lagrum ur LAGRUMSVITLISTAN ovan.\n"
         "- Du får ALDRIG hitta på paragrafer, kapitel eller rättsfall.\n"
-        "- Motsäg aldrig grunddatan. Den är verifierad mot kursens "
+        "- Motsäg aldrig grunddatan. Den är verifierad mot appens "
         "lagrumsregister och visas för studenten bredvid ditt svar.\n"
         "- Skriv lagrum som \"36 § AvtL\" eller \"2 kap. 1 § SkL\", alltid med "
         "paragrafnumret först.\n\n"

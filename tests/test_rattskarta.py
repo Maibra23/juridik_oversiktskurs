@@ -2,8 +2,8 @@
 
 Kartan är ett rekursivt träd av grenar (Obsidian-callouts med wikilänkar) som
 visar hur rättsområdena hänger ihop och när varje lag ska övervägas.
-Grundningsprincipen gäller: varje lag i kartan måste finnas i kursens
-lagrumsregister — kartan får aldrig nämna påhittade lagar.
+Grundningsprincipen gäller: varje lag i kartan måste finnas i appens
+lagrumsregister, kartan får aldrig nämna påhittade lagar.
 """
 
 from __future__ import annotations
@@ -35,11 +35,11 @@ def test_rattssystemet_laddar_med_toppgrenar():
     assert "Internationell rätt & EU-rätt" in namn
 
 
-def test_alla_kurslagar_i_kartan_finns_i_registret():
-    """Kurslagar (ej referenslagar) måste finnas i registret — grundningen.
+def test_alla_registerlagar_i_kartan_finns_i_registret():
+    """Kurslagar (ej referenslagar) måste finnas i registret, grundningen.
 
     Referenslagar är per definition utanför registret; grundningsprincipen
-    gäller bara kursens egna lagar.
+    gäller bara appens egna lagar.
     """
     register = lagrum_register()
     for lov in delomraden():
@@ -70,7 +70,7 @@ def test_referenslagar_star_utanfor_registret():
 
 
 def test_kartan_tacker_hela_lagrumsregistret():
-    """Varje lag i kursens register ska ha en plats i kartan."""
+    """Varje lag i appens register ska ha en plats i kartan."""
     i_kartan = {
         lag.forkortning for lov in delomraden() for lag in lov.lagar
     }
@@ -136,7 +136,7 @@ def test_rattskarta_not_fargkodar_per_toppgren():
     assert {"quote", "info"} <= typer
 
 
-# --- Lag- och områdesnoter ---------------------------------------------------
+# --- Lagnoter och områdesnoter ---------------------------------------------------
 
 def test_lagnot_innehaller_beskrivning_nar_och_lagen_nu():
     md = lagnot("AvtL")

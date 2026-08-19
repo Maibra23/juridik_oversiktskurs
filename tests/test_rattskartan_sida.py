@@ -95,15 +95,15 @@ def test_sidan_anvander_inga_raa_statuskomponenter(sida):
     assert not sida.info
 
 
-def test_lagkorten_visar_kursavsnitt(sida):
+def test_lagkorten_visar_lagavsnitt(sida):
     """Avsnitten ska nå studenten, inte bara modellen.
 
     st.html-element saknar .value i AppTest (Streamlit 1.55); innehållet
     ligger i el.proto.body.
     """
     allt = " ".join(el.proto.body for el in sida.get("html"))
-    assert "KURSAVSNITT" in allt
-    assert "Urvalet följer kursen, inte hela lagen." in allt
+    assert "AVSNITT" in allt
+    assert "Urvalet följer appen, inte hela lagen." in allt
 
 
 def test_lagkorten_visar_tackningsraden(sida):

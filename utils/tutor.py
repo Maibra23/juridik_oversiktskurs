@@ -142,7 +142,7 @@ def tutorknapp(
     ``underlag`` är uppgiftens kända korrekta lagrum. Anges det granskas
     svaret före visning, och underkända svar visas inte alls.
     ``reservhanvisning`` pekar studenten mot det deterministiska underlag som
-    redan finns på sidan, t.ex. "Tryck på *Jag har försökt — visa facit*
+    redan finns på sidan, t.ex. "Tryck på *Jag har försökt, visa facit*
     nedan så länge".
     """
     import streamlit as st
@@ -195,7 +195,7 @@ def tutorknapp(
             f" {reservhanvisning}" if reservhanvisning else ""
         )
         render_varning(
-            "Tutorn kunde inte ge ett svar som går att verifiera mot kursens "
+            "Tutorn kunde inte ge ett svar som går att verifiera mot appens "
             "lagrumslista, inte heller efter ett omförsök. Förklaringen visas "
             f"därför inte.{hanvisning} Du kan också trycka på knappen igen."
         )

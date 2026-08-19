@@ -1,7 +1,7 @@
 """Modulsida: Skadeståndsrätt.
 
 Ansvarar för övningar om utomobligatoriskt skadestånd enligt
-skadeståndslagen (1972:207): culparegeln, person- och sakskada, ren
+skadeståndslagen (1972:207): culparegeln, personskada och sakskada, ren
 förmögenhetsskada samt principalansvar. Tutorförklaringar genereras on
 demand och citerade lagrum verifieras mot registret.
 
@@ -12,4 +12,4 @@ from __future__ import annotations
 
 from utils.modulvy import rendera_modulsida
 
-rendera_modulsida("skadestandsratt", "Skadeståndsrätt", "KAP. 10 · SKADESTÅNDSRÄTT")
+rendera_modulsida("skadestandsratt", "Skadeståndsrätt", "SKADESTÅNDSRÄTT")

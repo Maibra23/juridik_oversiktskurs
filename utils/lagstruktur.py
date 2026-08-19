@@ -5,8 +5,8 @@ vilka paragrafer som hör till vad -- hämtad ur Riksdagens öppna data av
 scripts/hamta_lagstruktur.py och committad så att appen fungerar offline.
 
 Den fyller två roller. Dels ger den lagkortet en ryggrad att gruppera
-kursavsnitten under, dels är den facit när kursavsnittens paragrafgränser
-ska verifieras (utils.kursavsnitt_kontroll).
+lagavsnitten under, dels är den facit när lagavsnittens paragrafgränser
+ska verifieras (utils.lagavsnitt_kontroll).
 
 Till skillnad från utils.lagtext, som får degradera tyst när en paragraf
 saknas, validerar den här modulen strikt vid inläsning. Skälet är att en

@@ -9,7 +9,7 @@ infopanel för den valda noden.
 Det designsystemet äger ändras däremot inte. Paletten importeras från
 utils.taxonomi_ui i stället för att skrivas om här, så guld betyder fortfarande
 lag och aldrig struktur, och varje toppgren behåller sin färg (design_system.md
-avsnitt 1). Höljena målas i toppgrenens färg — aldrig i guld.
+avsnitt 1). Höljena målas i toppgrenens färg, aldrig i guld.
 
 Datalagret ligger i utils.kraftgraf. Den här modulen lägger bara färg, chrome
 och HTML ovanpå det.
@@ -190,7 +190,7 @@ def _statistikrader(stat: Statistik) -> str:
     poster = (
         ("Noder", stat.noder),
         ("Grenar", stat.grenar),
-        ("Kurslagar", stat.kurslagar),
+        ("Kurslagar", stat.registerlagar),
         ("Referenslagar", stat.referenslagar),
         ("Djup", stat.djup),
     )

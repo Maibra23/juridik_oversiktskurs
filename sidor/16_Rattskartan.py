@@ -1,6 +1,6 @@
 """Global sida: Rättskartan.
 
-Kursens orienteringssida. Till skillnad från Kunskapskartan, som växer med
+Appens orienteringssida. Till skillnad från Kunskapskartan, som växer med
 studentens egna rättsfall, är den här sidan full redan på dag noll och
 fungerar helt utan LLM och utan genomförda övningar.
 
@@ -11,7 +11,7 @@ Tre flikar:
    hopfällbara expanders med ett kort per lag.
 2. **Falltypsguide**: sökbar tabell över vilken lag som gäller för vilken
    typ av fall.
-3. **Nyckelbegrepp**: kursens begreppsbank (data/nyckelbegrepp.json) med
+3. **Nyckelbegrepp**: appens begreppsbank (data/nyckelbegrepp.json) med
    fyra fasta fält per begrepp, plus en valfri LLM-fördjupning.
 
 Grunddatan i alla tre flikarna är deterministisk och verifierad mot
@@ -23,7 +23,7 @@ from __future__ import annotations
 import streamlit as st
 
 from utils.kraftgraf_ui import render_kraftgraf
-from utils.lagkort_avsnitt import gruppera_kursavsnitt, tackningstext
+from utils.lagkort_avsnitt import gruppera_lagavsnitt, tackningstext
 from utils.lagrum import (
     STATUS_VERIFIERAD,
     lagen_nu_url,
@@ -51,7 +51,7 @@ from utils.ui import (
 # systematiken, och den läses ovanifrån med kedjan upp mot roten. Kraftvyn är
 # ett alternativ studenten väljer aktivt när hela systemet ska överblickas på
 # en gång, med sökruta, grenfilter och infopanel. Förvalet följer ordningen i
-# options nedan — st.radio väljer första alternativet.
+# options nedan, eftersom st.radio väljer första alternativet.
 VY_TRAD = "Trädvy"
 VY_KRAFT = "Kraftvy"
 
@@ -75,14 +75,14 @@ render_sidhjalp(
         "öppna lagen på lagen.nu, eller på en gren för att fokusera den och "
         "tända kedjan upp mot roten. Byter du till **kraftvyn** ringas varje "
         "toppgren in i stället, och där visar ett klick vad noden är och vad "
-        "den hänger samman med — lagen öppnas då med dubbelklick.",
+        "den hänger samman med. Lagen öppnas då med dubbelklick.",
         "Under grafen kan du fälla ut varje rättsområde och läsa vad varje "
         "lag täcker och när den blir aktuell.",
         "**Falltypsguide** svarar på frågan \"vilken lag gäller för mitt "
         "fall?\". Sök på situationen du har framför dig.",
         "**Nyckelbegrepp** samlar de begrepp du måste kunna, med definition, "
         "exempel och de signalord som avslöjar begreppet i ett scenario.",
-        "Allt på sidan är verifierat mot kursens lagrumslista. Endast "
+        "Allt på sidan är verifierat mot appens lagrumsregister. Endast "
         "knappen \"Förklara djupare\" använder tutorn.",
     )
 )
@@ -112,9 +112,9 @@ with flik_system:
         "Visa även referenslagar (hela svensk rätt i överblick)",
         value=True,
         help=(
-            "Referenslagar är klickbara översiktsnoder utanför kursen — t.ex. "
-            "grundlagarna, förvaltnings- och skatterätten samt EU-rätten. "
-            "Avmarkera för en ren kurskarta med bara de lagar kursen rättar mot."
+            "Referenslagar är klickbara översiktsnoder utanför appens urval, t.ex. "
+            "grundlagarna, förvaltningsrätten och skatterätten samt EU-rätten. "
+            "Avmarkera för en ren kurskarta med bara de lagar appen rättar mot."
         ),
     )
 
@@ -145,7 +145,7 @@ with flik_system:
     )
 
     # Listan speglar grafen exakt: i ren kursvy visas bara de delområden som
-    # överlever grafens städning (grenar med kurslag i underträdet).
+    # överlever grafens städning (grenar med registerlag i underträdet).
     synliga_grenar = {n["id"] for n in kurs_graf["noder"]}
 
     register = lagrum_register()
@@ -155,7 +155,7 @@ with flik_system:
         lagar = lov.lagar
         if not visa_referens:
             lagar = tuple(lag for lag in lagar if not lag.ar_referens)
-        etikett = " · ".join((*vag, lov.namn))
+        etikett = ": ".join((*vag, lov.namn))
         with st.expander(etikett, expanded=False):
             st.markdown(lov.beskrivning)
             if lov.nar:
@@ -163,7 +163,7 @@ with flik_system:
 
             if not lagar:
                 st.caption(
-                    "Inga lagar ur kursens lagrumslista i detta delområde."
+                    "Inga lagar ur appens lagrumsregister i detta delområde."
                 )
             for lag in lagar:
                 if lag.ar_referens:
@@ -175,7 +175,7 @@ with flik_system:
                             beskrivning=lag.beskrivning,
                             nar=lag.nar,
                             url=lag.url,
-                            tackning="Referenslag för överblick – utanför kursens lagrumslista.",
+                            tackning="Referenslag för överblick, utanför appens lagrumsregister.",
                         )
                     )
                     continue
@@ -188,7 +188,7 @@ with flik_system:
                         beskrivning=lag.beskrivning,
                         nar=lag.nar,
                         url=info.lagen_nu_bas_url,
-                        kursavsnitt=gruppera_kursavsnitt(info),
+                        lagavsnitt=gruppera_lagavsnitt(info),
                         tackning=tackningstext(info),
                     )
                 )
@@ -231,7 +231,7 @@ with flik_falltyp:
     if rader:
         st.dataframe(
             rader,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Situationen": st.column_config.TextColumn(width="large"),
@@ -295,11 +295,11 @@ def _rendera_begrepp(b, namn_for: dict[str, str]) -> None:
             st.page_link(b.modul_sida, label="Öva i modulen →")
     with kol_djupare:
         # LLM-lagret ligger på topp och ersätter aldrig grunddatan ovan.
-        with st.popover("Förklara djupare med tutorn", use_container_width=True):
+        with st.popover("Förklara djupare med tutorn", width="stretch"):
             st.caption(
                 "Tutorn bygger vidare på texten ovan. Grunddatan står kvar "
                 "oförändrad och alla lagrum i svaret kontrolleras mot "
-                "kursens lagrumslista."
+                "appens lagrumsregister."
             )
             las = st.radio(
                 "Vad vill du ha?",
@@ -334,7 +334,7 @@ with flik_begrepp:
     st.caption(
         "Varje begrepp visas med definition, varför det spelar roll, ett "
         "konkret exempel och de signalord som avslöjar det i ett scenario. "
-        "Grunddatan är verifierad mot kursens lagrumslista."
+        "Grunddatan är verifierad mot appens lagrumsregister."
     )
 
     alla_begrepp = ladda_begrepp()
@@ -395,7 +395,7 @@ with flik_begrepp:
                 continue
 
             namn_for = {x.id: x.term for x in alla_begrepp}
-            etikett = f"{namn} · {len(i_omrade)} begrepp"
+            etikett = f"{namn}: {len(i_omrade)} begrepp"
             with st.expander(etikett, expanded=filtrerar):
                 for b in i_omrade:
                     _rendera_begrepp(b, namn_for)

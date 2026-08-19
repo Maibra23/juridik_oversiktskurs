@@ -1,9 +1,9 @@
-"""Tester för referenslag: kartnoder som ger överblick men står utanför kursen.
+"""Tester för referenslag: kartnoder som ger överblick men står utanför appens urval.
 
 En referenslag syns och är klickbar (lagen.nu-länk) på Rättskartan men ingår
 INTE i det graderade kursregistret: den får inte finnas i lagrum_register(),
 och rättningen (validera_lagrum/quiz/lagrumsjakt) ska aldrig se den. Det är den
-gränsen som håller kartans bredd skild från kursens djup.
+gränsen som håller kartans bredd skild från appens djup.
 """
 
 from __future__ import annotations
@@ -61,14 +61,14 @@ def test_referenslag_kraver_namn_och_lankkalla():
         )
 
 
-def test_kurslag_kraver_fortfarande_registermedlemskap():
+def test_registerlag_kraver_fortfarande_registermedlemskap():
     """Grundningsprincipen står kvar för icke-referenslagar: okänd lag = fel."""
     with pytest.raises(ValueError):
         _bygg_lagpost({"forkortning": "RF", "beskrivning": "x", "nar": "y"})
 
 
 def test_referenslag_lacker_inte_in_i_kursregistret():
-    """Registret ska förbli exakt kursens 21 lagar även med referensnoder i trädet."""
+    """Registret ska förbli exakt appens 21 lagar även med referensnoder i trädet."""
     from utils.lagrum import giltiga_forkortningar
 
     assert len(giltiga_forkortningar()) == 21
@@ -84,11 +84,11 @@ def test_referensnoder_ar_klickbara_lagen_nu_lankar():
     rf = next((n for n in referens if n.get("forkortning") == "RF"), None)
     assert rf is not None, "Regeringsformen saknas som referensnod"
     assert rf["url"] == "https://lagen.nu/1974:152"
-    assert "utanför kursen" in rf["titel"].lower()
+    assert "utanför appens urval" in rf["titel"].lower()
 
 
 def test_toggle_doljer_referenslagar_och_deras_tomma_grenar():
-    """Med referens av ska bara kurslagar synas, och grenar utan kurslag städas bort."""
+    """Med referens av ska bara registerlagar synas, och grenar utan registerlag städas bort."""
     from utils.rattssystem_graf import (
         GRUPP_LAG,
         GRUPP_REFERENS,
@@ -110,7 +110,7 @@ def test_toggle_doljer_referenslagar_och_deras_tomma_grenar():
     labels_utan = {n["label"] for n in utan["noder"]}
     for borta in ("Statsrätt", "Skatterätt", "Internationell rätt & EU-rätt"):
         assert borta not in labels_utan, f"{borta} borde vara dold utan referens"
-    # Grenar med kurslag finns kvar.
+    # Grenar med registerlag finns kvar.
     assert "Straffrätt" in labels_utan
     assert "Civilrätt" in labels_utan
 

@@ -37,8 +37,8 @@ DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "lagrum.json"
 # --- Datamodeller (immutabla) ----------------------------------------------
 
 @dataclass(frozen=True)
-class Kursavsnitt:
-    """Ett paragrafintervall som ingår i kursen för en viss lag."""
+class Lagavsnitt:
+    """Ett paragrafintervall som ingår i appen för en viss lag."""
 
     beskrivning: str
     kapitel: str | None
@@ -57,7 +57,7 @@ class Lag:
     sfs: str
     kapitelindelad: bool
     lagen_nu_bas_url: str
-    kursavsnitt: tuple[Kursavsnitt, ...]
+    lagavsnitt: tuple[Lagavsnitt, ...]
     aliaser: tuple[str, ...] = ()
 
 
@@ -85,10 +85,10 @@ class Lagrumstraff:
 
 # --- Regex ------------------------------------------------------------------
 
-# Paragraf- och kapitelmarkörer accepteras både som tecken och utskrivna, för
+# Paragrafmarkörer och kapitelmarkörer accepteras både som tecken och utskrivna, för
 # att § inte ska krävas (tecknet är svårt att skriva på många tangentbord).
 # Utskrivna former: "paragrafen", "paragraf" och den säkra förkortningen
-# "par." (med punkt). Bart "p" utelämnas medvetet — det förväxlas för lätt med
+# "par." (med punkt). Bart "p" utelämnas medvetet, eftersom det förväxlas för lätt med
 # vanlig text och skulle urholka hallucinationsspärren. Längsta alternativet
 # först så att t.ex. "paragrafen" matchar före "paragraf". Kapitel på samma
 # sätt: "kapitlet"/"kapitel" utöver "kap."/"kap".
@@ -111,13 +111,13 @@ _KAPITEL_MARKOR = r"(?i:kap\.|kapitlet|kapitel|kap(?![a-zåäö]))"
 LAGRUM_PATTERN = re.compile(
     r"(?:(?P<kapitel>\d+)\s*" + _KAPITEL_MARKOR + r"\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
-    r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
+    r"(?:(?:till|\u2013|-)\s*(?P<paragraf_till>\d+)\s*)?"
     + _PARAGRAF_MARKOR + r"\s*"
     r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)"
 )
 
 # Omvänd ordning där modellen skriver förkortningen först, t.ex.
-# "AvtL 36 §", "AvtL 28–30 §§", "SkL 3 kap. 1 §", "skuldebrevslagen 3 paragrafen".
+# "AvtL 36 §", "AvtL 28 till 30 §§", "SkL 3 kap. 1 §", "skuldebrevslagen 3 paragrafen".
 # Denna form är tvetydig (vilket ord som helst kan föregå ett paragrafnummer),
 # så träffar accepteras endast om förkortningen finns i registret
 # (skiftlägesokänsligt). Se extrahera_lagrum för den filtreringen.
@@ -125,7 +125,7 @@ LAGRUM_PATTERN_OMVAND = re.compile(
     r"(?P<forkortning>[A-Za-zÅÄÖåäö]+)\s+"
     r"(?:(?P<kapitel>\d+)\s*" + _KAPITEL_MARKOR + r"\s*)?"
     r"(?P<paragraf>\d+)\s*[a-z]?\s*"
-    r"(?:(?:till|–|-)\s*(?P<paragraf_till>\d+)\s*)?"
+    r"(?:(?:till|\u2013|-)\s*(?P<paragraf_till>\d+)\s*)?"
     + _PARAGRAF_MARKOR
 )
 
@@ -148,8 +148,8 @@ def _validera_ra_lag(rad: dict) -> Lag:
         if falt not in rad:
             raise ValueError(f"Lagpost saknar fältet '{falt}': {rad!r}")
 
-    avsnitt: list[Kursavsnitt] = []
-    for a in rad.get("kursavsnitt", []):
+    avsnitt: list[Lagavsnitt] = []
+    for a in rad.get("lagavsnitt", []):
         fran = str(a.get("paragraf_fran", "")).strip()
         till = str(a.get("paragraf_till", "")).strip()
         if not fran.isdigit() or not till.isdigit():
@@ -157,7 +157,7 @@ def _validera_ra_lag(rad: dict) -> Lag:
                 f"Icke-numeriskt paragrafintervall i {rad['forkortning']}: {a!r}"
             )
         avsnitt.append(
-            Kursavsnitt(
+            Lagavsnitt(
                 beskrivning=a.get("beskrivning", ""),
                 kapitel=(str(a["kapitel"]) if a.get("kapitel") is not None else None),
                 paragraf_fran=int(fran),
@@ -184,7 +184,7 @@ def _validera_ra_lag(rad: dict) -> Lag:
         sfs=rad["sfs"],
         kapitelindelad=bool(rad["kapitelindelad"]),
         lagen_nu_bas_url=rad["lagen_nu_bas_url"],
-        kursavsnitt=tuple(avsnitt),
+        lagavsnitt=tuple(avsnitt),
         aliaser=tuple(ra_aliaser),
     )
 
@@ -271,7 +271,7 @@ def extrahera_lagrum(text: str) -> tuple[Lagrumsref, ...]:
     Fångar både kanonisk ordning ("36 § AvtL", "36 § avtl") och omvänd
     ordning där förkortningen står först ("AvtL 36 §"). En kandidat
     accepteras om förkortningen antingen finns i registret (oavsett
-    skiftläge, t.ex. "avtl"/"AVTL"/"AvtL") eller är versalinledd — det
+    skiftläge, t.ex. "avtl"/"AVTL"/"AvtL") eller är versalinledd. Det
     senare bevarar hallucinationsskyddet för påhittade lagnamn ("Pizzalagen")
     utan att öppna för att ett vanligt gement ord efter "§" ("är", "reglerar")
     tolkas som en förkortning.
@@ -318,8 +318,8 @@ def _som_ref(ref: Lagrumsref | str) -> Lagrumsref | None:
     return traffar[0] if traffar else None
 
 
-def _matchande_avsnitt(lag: Lag, ref: Lagrumsref) -> Kursavsnitt | None:
-    """Hitta det kursavsnitt som täcker referensens paragraf (och kapitel)."""
+def _matchande_avsnitt(lag: Lag, ref: Lagrumsref) -> Lagavsnitt | None:
+    """Hitta det lagavsnitt som täcker referensens paragraf (och kapitel)."""
     if not ref.paragraf.isdigit():
         return None
     paragraf = int(ref.paragraf)
@@ -330,7 +330,7 @@ def _matchande_avsnitt(lag: Lag, ref: Lagrumsref) -> Kursavsnitt | None:
     if not lag.kapitelindelad and ref.kapitel is not None:
         return None
 
-    for avsnitt in lag.kursavsnitt:
+    for avsnitt in lag.lagavsnitt:
         if lag.kapitelindelad:
             if ref.kapitel is None or avsnitt.kapitel != ref.kapitel:
                 continue
@@ -372,7 +372,7 @@ def lagen_nu_url(ref: Lagrumsref | str) -> str | None:
 # --- Helhetsrapport ---------------------------------------------------------
 
 def verify_lagrum(text: str) -> tuple[Lagrumstraff, ...]:
-    """Klassificera samtliga lagrums- och rättsfallshänvisningar i en text.
+    """Klassificera samtliga lagrumshänvisningar och rättsfallshänvisningar i en text.
 
     Varje lagrum får status VERIFIERAD, OKAND_PARAGRAF eller OKAND_LAG.
     Rättsfall (NJA m.fl.) kan inte valideras lokalt och markeras

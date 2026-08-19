@@ -52,7 +52,7 @@ else:
     antal_lagrum = sum(1 for n in graf["noder"] if n["grupp"] == "lagrum")
     st.caption(
         antal_med_enhet(len(analyser), "genomfört rättsfall", "genomförda rättsfall")
-        + f" · {antal_lagrum} lagrum. Guld = lagrum, blå = rättsfall, mörkblå = modul."
+        + f": {antal_lagrum} lagrum. Guld = lagrum, blå = rättsfall, mörkblå = modul."
     )
     render_kunskapsgraf(graf)
 

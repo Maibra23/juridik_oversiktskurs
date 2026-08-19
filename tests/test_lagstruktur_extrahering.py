@@ -1,7 +1,7 @@
 """Tester för strukturparsern (utils.lagstruktur_extrahering).
 
 Fixturerna är sparad HTML från Riksdagens öppna data, en per källform:
-KKöpL har både kapitel- och momentrubriker, AvtL har bara kapitelrubriker
+KKöpL har både kapitelrubriker och momentrubriker, AvtL har bara kapitelrubriker
 (med löpande paragrafnumrering), PreskL har bara momentrubriker. Parsern
 får aldrig anta en form; den läser de nivåer som finns.
 
@@ -58,7 +58,7 @@ def test_paragrafnyckel_oindelad():
 
 
 def test_paragrafnyckel_avvisar_bokstavsparagraf():
-    """Kursavsnitten refererar bara hela paragrafnummer, aldrig "1 a §"."""
+    """Lagavsnitten refererar bara hela paragrafnummer, aldrig "1 a §"."""
     assert paragrafnyckel("K4P1a") is None
 
 

@@ -31,7 +31,7 @@ def korpus():
 # --- Korpusens integritet ---------------------------------------------------
 
 
-def test_korpusen_innehaller_kursens_lagar(korpus):
+def test_korpusen_innehaller_appens_lagar(korpus):
     """Varje lag i registret ska ha en fil i korpusen."""
     from utils.lagrum import lagrum_register
 
@@ -55,7 +55,7 @@ def test_korpusen_anger_kalla_och_hamtningsdatum(korpus):
 
 
 def test_hamtar_text_for_oindelad_lag():
-    """4 § AvtL är kursens skolexempel på sen accept."""
+    """4 § AvtL är appens skolexempel på sen accept."""
     text = hamta_paragraftext("4 § AvtL")
     assert text is not None
     assert "för sent" in text
@@ -93,7 +93,7 @@ def test_36_paragrafen_ar_jamkning_inte_avtals_ingaende():
 
 
 def test_okand_paragraf_ger_none():
-    """En paragraf utanför kursavsnitten finns inte i korpusen."""
+    """En paragraf utanför lagavsnitten finns inte i korpusen."""
     assert hamta_paragraftext("999 § AvtL") is None
 
 

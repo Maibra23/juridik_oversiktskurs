@@ -1,5 +1,5 @@
 {
-  "_beskrivning": "Nyckelbegrepp per delområde för Juridisk översiktskurs. Deterministisk grunddata som alltid visas utan LLM. Varje begrepp har fyra obligatoriska fält: definition, forklaring, exempel och igenkanning. Fältet igenkanning kopplar begreppet till RNTS-metoden: det beskriver de signalord och fakta i ett scenario som ska få studenten att identifiera rättsfrågan och hitta rätt norm. Varje lagrum i filen måste finnas i data/lagrum.json och valideras vid inläsning av utils/nyckelbegrepp.py.",
+  "_beskrivning": "Nyckelbegrepp per delområde för Juridikverkstan. Deterministisk grunddata som alltid visas utan LLM. Varje begrepp har fyra obligatoriska fält: definition, forklaring, exempel och igenkanning. Fältet igenkanning kopplar begreppet till RNTS-metoden: det beskriver de signalord och fakta i ett scenario som ska få studenten att identifiera rättsfrågan och hitta rätt norm. Varje lagrum i filen måste finnas i data/lagrum.json och valideras vid inläsning av utils/nyckelbegrepp.py.",
   "schema_version": 1,
   "begrepp": [
     {
@@ -333,7 +333,7 @@
       "forklaring": "Begränsningen är avsiktlig och skyddar mot ett gränslöst ansvar för rena förmögenhetsförluster, som kan drabba obestämt många. Huvudregeln är alltså att ren förmögenhetsskada inte ersätts, och undantaget kräver att skadan vållats genom en brottslig gärning. Finns ett avtal mellan parterna gäller däremot avtalsrättens regler, och där ersätts rena förmögenhetsskador regelmässigt.",
       "exempel": "Någon sprider medvetet falska uppgifter om ett företag, som därför förlorar kunder. Företaget har inte fått någon sak eller person skadad, bara intäkter. Ersättning förutsätter att spridandet utgör brott.",
       "igenkanning": "Kontrollera alltid vilken sorts skada fakta beskriver. Signalord: förlorad vinst, uteblivna intäkter, ökade kostnader utan att något gått sönder eller någon skadats. Fråga då direkt om brott begåtts eller om det finns ett avtal.",
-      "skillnaden": "Sak- och personskada = ersätts vid vållande. Ren förmögenhetsskada = ersätts utomobligatoriskt bara vid brott.",
+      "skillnaden": "Sakskada och personskada = ersätts vid vållande. Ren förmögenhetsskada = ersätts utomobligatoriskt bara vid brott.",
       "lagrum": ["2 kap. 2 § SkL"],
       "se_aven": ["culparegeln"]
     },
@@ -343,7 +343,7 @@
       "omrade_id": "skadestandsratt",
       "kapitel": "Kap. 10",
       "modul_sida": "sidor/4_Skadestandsratt.py",
-      "definition": "En arbetsgivare ansvarar för person- och sakskada som en arbetstagare vållar genom fel eller försummelse i tjänsten.",
+      "definition": "En arbetsgivare ansvarar för personskada och sakskada som en arbetstagare vållar genom fel eller försummelse i tjänsten.",
       "forklaring": "Ansvaret är strikt i förhållande till arbetsgivaren, som svarar oavsett egen skuld, och motiveras av att den som driver verksamheten och tar vinsten också bör bära dess risker. Avgörande är att skadan vållats i tjänsten, ett så kallat abnormhandlande utanför tjänsten faller utanför. Arbetstagaren själv blir personligt ansvarig bara när synnerliga skäl föreligger.",
       "exempel": "En anställd hos ett städbolag välter en dyr vas hemma hos en kund under arbetspasset. Städbolaget svarar för skadan, inte den anställde personligen.",
       "igenkanning": "Leta efter att skadevållaren är anställd och att skadan skedde under arbetstid eller med arbetsgivarens utrustning. Signalord: under arbetspasset, i tjänsten, med företagets bil. Fråga sedan alltid om handlingen låg inom eller utanför tjänsten.",
@@ -405,7 +405,7 @@
     },
     {
       "id": "anstallningsformer",
-      "term": "Tillsvidare- och visstidsanställning",
+      "term": "Tillsvidareanställning och visstidsanställning",
       "omrade_id": "arbetsratt",
       "kapitel": "Kap. 11",
       "modul_sida": "sidor/5_Arbetsratt.py",
@@ -647,7 +647,7 @@
       "omrade_id": "arv_och_testamente",
       "kapitel": "Kap. 21",
       "modul_sida": "sidor/7_Familje_och_arvsratt.py",
-      "definition": "Arvet fördelas i tre arvsklasser: först bröstarvingar, därefter föräldrar och syskon, och sist mor- och farföräldrar med deras barn. En senare klass ärver bara om ingen i en tidigare finns.",
+      "definition": "Arvet fördelas i tre arvsklasser: först bröstarvingar, därefter föräldrar och syskon, och sist morföräldrar och farföräldrar med deras barn. En senare klass ärver bara om ingen i en tidigare finns.",
       "forklaring": "Arvsklasserna tillämpas strikt i ordning, och inom varje klass gäller istadarätten: avlidna arvingars avkomlingar träder i deras ställe. Detta gör att systemet kan följas mekaniskt när personkretsen väl kartlagts. Observera att kusiner aldrig ärver, arvsrätten upphör efter tredje klassen och egendomen tillfaller då Allmänna arvsfonden.",
       "exempel": "Den avlidne efterlämnar två barn, varav det ena avlidit tidigare och lämnat tre barn. Det levande barnet får hälften, och de tre barnbarnen delar den andra hälften genom istadarätt, alltså en sjättedel var.",
       "igenkanning": "Rita alltid ett släktträd utifrån fakta. Signalord: efterlämnade, avled före, samt uppräkningar av barn, syskon och föräldrar. Kontrollera i vilken arvsklass varje person hör hemma innan du räknar.",

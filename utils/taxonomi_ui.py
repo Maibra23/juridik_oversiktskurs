@@ -1,6 +1,6 @@
 """Rendering av taxonomigrafen över svensk rätt.
 
-Följer samma mönster som utils.graf_ui: nod- och kantdata serialiseras till
+Följer samma mönster som utils.graf_ui: noddata och kantdata serialiseras till
 JSON och bäddas in i en HTML-sträng som laddar vis-network från CDN inuti
 komponentens sandboxade iframe.
 
@@ -61,9 +61,9 @@ _GRENETIKETT: dict[str, str] = {
 
 _ROTFARG = {"bg": "#1A2332", "kant": "#0D131D", "text": "#FAF7F2"}
 _LAGFARG = {"bg": "#B8860B", "kant": "#8A6608", "text": "#FFFFFF"}
-# Referenslag: blek guld med guldkant — samma guldsläkt (det ÄR en lag) men
-# ihålig i stället för fylld, så att kursens lagar syns som de tyngre noderna
-# och referenslagarna läses som ren överblick utanför kursen.
+# Referenslag: blek guld med guldkant, samma guldsläkt (det ÄR en lag) men
+# ihålig i stället för fylld, så att appens lagar syns som de tyngre noderna
+# och referenslagarna läses som ren överblick utanför appens urval.
 _REFERENSFARG = {"bg": "#FBF4E0", "kant": "#B8860B", "text": "#6E5206"}
 
 # Nodstorlek per djup: roten störst, lagarna minst. Djupare nivåer klampas
@@ -232,7 +232,7 @@ def farglegend_html() -> str:
         if g.id in GRENFARGER
     ]
     poster.append((_LAGFARG["bg"], "Kurslag (klicka för lagen.nu)"))
-    poster.append((_REFERENSFARG["bg"], "Referenslag – överblick, utanför kursen"))
+    poster.append((_REFERENSFARG["bg"], "Referenslag, överblick utanför appens urval"))
 
     rutor = "".join(
         '<span class="jok-legend-post">'

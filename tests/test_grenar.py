@@ -40,7 +40,7 @@ def test_toppgrenar_i_ordning():
     """Tre toppområden: de två klassiska plus internationell rätt/EU-rätt.
 
     Internationell rätt & EU-rätt är ett rent överblicksområde (referens- och
-    pekarnoder, ingen kurslag) som sätts sist eftersom svensk rätt verkar
+    pekarnoder, ingen registerlag) som sätts sist eftersom svensk rätt verkar
     *inom* det snarare än att det är en gren av den inhemska systematiken.
     """
     grenar = toppgrenar()
@@ -87,8 +87,8 @@ def test_speciell_avtalsratt_ordnad_i_tre_transaktionsfamiljer():
     """Axis 1: speciell avtalsrätt grupperas efter vad avtalet gör med saken.
 
     Överlåtelse (äganderätten övergår), upplåtelse (nyttjande upplåts) och
-    prestation (någon presterar). Leaf-id:na är oförändrade — bara föräldern
-    byts — så begreppslänkarna i nyckelbegrepp.json består.
+    prestation (någon presterar). Leaf-id:na är oförändrade, bara föräldern
+    byts, så begreppslänkarna i nyckelbegrepp.json består.
     """
     speciell = hitta_gren("speciell_avtalsratt")
     assert speciell is not None
@@ -118,7 +118,7 @@ def test_speciell_avtalsratt_paminner_om_parterna():
     """Axis 2 som kompakt hint: kartan nudgar användaren att fråga vilka
 
     parterna är, eftersom samma avtalstyp routas till olika lag beroende på om
-    det är B2B, B2C eller privat. Ingen egen nod — bara text på grenen.
+    det är B2B, B2C eller privat. Ingen egen nod, bara text på grenen.
     """
     speciell = hitta_gren("speciell_avtalsratt")
     assert speciell is not None

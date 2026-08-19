@@ -4,7 +4,7 @@
 
 ### 1.1 Paretoprincipen 80/20
 
-Appens innehåll omfattar 22 kapitel men skriftliga prov på Juridikverkstan prövar nästan alltid samma kärnförmågor: juridisk metod tillämpad på avtal, köp, skadestånd, arbetsliv, bolag, familj/arv och brott. Appen väljer därför medvetet bort bredd till förmån för djup i tolv moduler, samtliga inom civilrätten och straffrätt och processrätten. Urvalskriterier:
+Ett brett juridiskt grundmaterial spänner över tjugotalet ämnesområden, men de förmågor som faktiskt prövas är nästan alltid desamma: juridisk metod tillämpad på avtal, köp, skadestånd, arbetsliv, bolag, familj/arv och brott. Appen väljer därför medvetet bort bredd till förmån för djup i tolv moduler, samtliga inom civilrätten och straffrätt och processrätten. Urvalskriterier:
 
 * Områden som examineras med fallfrågor (högst poängvikt).
 * Områden med tydliga, tränbara regelstrukturer (rekvisit som kan bockas av).

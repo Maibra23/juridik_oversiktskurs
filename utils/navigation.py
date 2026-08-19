@@ -1,7 +1,7 @@
 """Navigeringsträdet: appens sidor ordnade efter svensk rätts systematik.
 
-Sidopanelen speglar bokens disposition (svensk juridisk systematik) i
-stället för en platt lista av filer: offentlig rätt, civilrätt med
+Sidopanelen följer svensk juridisk systematik i stället för en platt
+lista av filer: offentlig rätt, civilrätt med
 förmögenhetsrättens undergrenar, och straffrätt och processrätt.
 
 Trädet är ren data utan Streamlit-beroende, så att det kan enhetstestas.
@@ -58,8 +58,8 @@ class Grupp:
 Nod = Union[Modul, Grupp]
 
 
-# Trädet följer bokens avdelningar. Kapitelhänvisningarna i kommentarerna
-# avser svensk juridisk systematik.
+# Trädet följer rättssystemets egen indelning. Kapitelhänvisningarna i
+# kommentarerna avser den ordningen.
 NAV_TRAD: tuple[Grupp, ...] = (
     Grupp(
         "START OCH METOD",

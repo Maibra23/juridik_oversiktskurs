@@ -1,9 +1,9 @@
-# UX-omdesign, etapp 1 (hög effekt / låg insats) — Implementation Plan
+# UX-omdesign, etapp 1 (hög effekt / låg insats), Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Genomför de tolv åtgärderna i avsnitt 9, "Hög effekt / låg insats", i
-`docs/superpowers/specs/2026-08-06-ux-omdesign-design.md` — så att appen ger
+`docs/superpowers/specs/2026-08-06-ux-omdesign-design.md`, så att appen ger
 studenten ett sant nästa steg, gör RNTS synligt, och slutar läcka ikoner,
 död kod och tysta datafel.
 
@@ -29,7 +29,7 @@ bedömningar. Fel formuleras handlingsorienterat, aldrig skuldbeläggande.
 - **Maxbredd 46rem** för löptext. Brödtext 17px/1.65.
 - **Deterministiskt först:** ingen ändring får göra en LLM nödvändig för något som
 i dag fungerar utan den.
-- **Filstorlek:** håll filer under 800 rader. `utils/ui.py` är i dag 768 rader —
+- **Filstorlek:** håll filer under 800 rader. `utils/ui.py` är i dag 768 rader ,
 växer den över 800 i en task, bryt ut den CSS-strängen enligt Task 5.
 - **Testkommando:** `python3 -m pytest -q`. Hela sviten (798 test vid start) ska
 vara grön före varje commit.
@@ -79,11 +79,11 @@ används aldrig.
 
 **Files:**
 
-- Modify: `utils/navigation.py` (dataklassen `Modul` rad 26–40, `cta_mal` rad 227–240)
+- Modify: `utils/navigation.py` (dataklassen `Modul` rad 26 till 40, `cta_mal` rad 227 till 240)
 - Create: `utils/framsteg.py`
 - Create: `tests/test_framsteg.py`
-- Modify: `tests/test_navigation.py` (befintliga `cta_mal`-test rad 149–172)
-- Modify: `sidor/0_Hem.py` (`_render_cta` rad 72–92)
+- Modify: `tests/test_navigation.py` (befintliga `cta_mal`-test rad 149 till 172)
+- Modify: `sidor/0_Hem.py` (`_render_cta` rad 72 till 92)
 
 **Interfaces:**
 
@@ -172,8 +172,8 @@ class Modul:
 
 Sätt `kursmodul=True` på exakt dessa tolv i `NAV_TRAD` (låt övriga vara orörda):
 Juridisk metod, Personrätt, Allmän förmögenhetsrätt, Avtalsrätt,
-Köp- och konsumenträtt, Fastighetsrätt, Skadeståndsrätt, Arbetsrätt,
-Associationsrätt, Familje- och successionsrätt, Straff- och processrätt,
+Köprätt och konsumenträtt, Fastighetsrätt, Skadeståndsrätt, Arbetsrätt,
+Associationsrätt, Familjerätt och successionsrätt, Straffrätt och processrätt,
 Fordringsrätt. Exempel på formen:
 
 ```python
@@ -196,7 +196,7 @@ def kursmoduler(noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[Modul, ...]:
 def nasta_kursmodul(pabborjade: frozenset[str]) -> Modul | None:
     """Första kursmodulen studenten ännu inte börjat på, i kursordning.
 
-    None betyder att alla kursmoduler är påbörjade — då har startsidan inget
+    None betyder att alla kursmoduler är påbörjade, då har startsidan inget
     nytt att föreslå och faller tillbaka på att återuppta.
     """
     for modul in kursmoduler():
@@ -314,7 +314,7 @@ Expected: PASS (5 test)
 
 - [ ] **Step 9: Skriv om cta_mal-testen till det nya beteendet**
 
-Ersätt de befintliga `cta_mal`-testen i `tests/test_navigation.py` (rad 149–172).
+Ersätt de befintliga `cta_mal`-testen i `tests/test_navigation.py` (rad 149 till 172).
 Beteendet ändras avsiktligt: nästa modul i kursordning väger tyngre än senast
 besökta, och `CtaMal` bär ett skäl som startsidan visar.
 
@@ -359,7 +359,7 @@ importerade högst upp i filen.
 - [ ] **Step 10: Kör testet och se att det failar**
 
 Run: `python3 -m pytest tests/test_navigation.py -q -k cta_mal`
-Expected: FAIL — `cta_mal() got an unexpected keyword argument 'pabborjade'`
+Expected: FAIL, `cta_mal() got an unexpected keyword argument 'pabborjade'`
 
 - [ ] **Step 11: Skriv om cta_mal**
 
@@ -499,18 +499,18 @@ Spec: avsnitt 5 "Lagrumsjakten", avsnitt 9 punkt 3.
 
 `with st.expander("Visa facit")` ligger inuti `if st.button("Rätta")`-blocket
 (`utils/modulvy.py:472`). Facit renderas därför bara i den rerun där knappen
-trycktes och försvinner vid nästa interaktion — studenten tappar facit genom att
+trycktes och försvinner vid nästa interaktion, studenten tappar facit genom att
 klicka någon annanstans på sidan.
 
 **Files:**
 
-- Modify: `utils/modulvy.py` (`_rendera_jaktfraga` rad 450–474)
+- Modify: `utils/modulvy.py` (`_rendera_jaktfraga` rad 450 till 474)
 - Create: `tests/test_modulvy.py`
 
 **Interfaces:**
 
 - Consumes: `utils.scenarier.Lagrumsjakt`, `utils.quiz.ratta_lagrumsjakt`.
-- Produces: `_jakt_ratta_nyckel(modul: str, jakt_id: str) -> str` — sessionsnyckeln
+- Produces: `_jakt_ratta_nyckel(modul: str, jakt_id: str) -> str`, sessionsnyckeln
 som minns att studenten har rättat. Task 3 använder samma mönster.
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -629,14 +629,14 @@ kringgås gratis. Grinden ska vara en avsiktsbekräftelse, inte ett lås.
 
 **Files:**
 
-- Modify: `utils/modulvy.py` (`rendera_case_ovning` rad 264–265, `_rendera_jaktfraga`)
+- Modify: `utils/modulvy.py` (`rendera_case_ovning` rad 264 till 265, `_rendera_jaktfraga`)
 - Modify: `tests/test_modulvy.py`
 
 **Interfaces:**
 
 - Consumes: `_jakt_ratta_nyckel` från Task 2, `RNTS_FALT`.
 - Produces: `facit_upplast(nyckel: str, session_state: Mapping[str, object]) -> bool`
-— ren funktion som avgör om facit får visas; och
+ren funktion som avgör om facit får visas; och
 `_rendera_facitgrind(nyckel: str, rubrik: str = ...) -> bool` som ritar knappen.
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -685,7 +685,7 @@ def facit_upplast(nyckel: str, session_state: Mapping[str, object]) -> bool:
     return bool(session_state.get(f"facit_upplast_{nyckel}"))
 
 
-def _rendera_facitgrind(nyckel: str, rubrik: str = "Jag har försökt — visa facit") -> bool:
+def _rendera_facitgrind(nyckel: str, rubrik: str = "Jag har försökt, visa facit") -> bool:
     """Rita upplåsningsknappen och returnera True när facit får visas."""
     if facit_upplast(nyckel, st.session_state):
         return True
@@ -716,7 +716,7 @@ I `_rendera_jaktfraga`, ersätt facitexpandern från Task 2 med
 
 ```python
         if _rendera_facitgrind(
-            f"jakt_{modul}_{jakt.id}", "Jag har försökt — visa facit"
+            f"jakt_{modul}_{jakt.id}", "Jag har försökt, visa facit"
         ):
             with st.expander("Facit", expanded=True):
                 for ref in jakt.facit_lagrum:
@@ -734,7 +734,7 @@ I `rendera_case_ovning` pekar `reservhanvisning` mot en expander som nu ligger
 bakom en grind. Ändra strängen till:
 
 ```python
-        reservhanvisning="Tryck på **Jag har försökt — visa facit** nedan så länge.",
+        reservhanvisning="Tryck på **Jag har försökt, visa facit** nedan så länge.",
 ```
 
 - [ ] **Step 6: Kör hela sviten och linta**
@@ -761,17 +761,17 @@ Spec: avsnitt 6 "Ikoner", avsnitt 9 punkt 4, ändring av `design_system.md` §4.
 Ikonförbudet i §4.1 gäller bara navigeringen. Fyra glyfer har läckt in:
 `🟢`/`⚪` (`utils/ui.py:679`), `🎲` (`sidor/11_Kunskapsutmaning.py:65`), `↺`
 (`sidor/16_Rattskartan.py:154` och `:303`), och stepperns `●`/`✓`/`!`
-(`utils/ui.py:326–331`). Dessutom scannar språkvakten katalogen `pages` som inte
-finns — appens sidor ligger i `sidor/` och är därför **helt ogranskade** av
+(`utils/ui.py:326 till 331`). Dessutom scannar språkvakten katalogen `pages` som inte
+finns, appens sidor ligger i `sidor/` och är därför **helt ogranskade** av
 språk-QA:n i dag.
 
 **Files:**
 
 - Modify: `tests/test_sprak.py` (`_GRANSKADE_KATALOGER`, ny glyfvakt)
-- Modify: `utils/ui.py` (`_RNTS_IKONER` rad 326–331, CSS för `.jok-rnts .ikon`,
+- Modify: `utils/ui.py` (`_RNTS_IKONER` rad 326 till 331, CSS för `.jok-rnts .ikon`,
 `render_statuspanel` rad 679)
 - Modify: `utils/obsidian.py` (rad 132)
-- Modify: `sidor/11_Kunskapsutmaning.py` (rad 62–65)
+- Modify: `sidor/11_Kunskapsutmaning.py` (rad 62 till 65)
 - Modify: `sidor/16_Rattskartan.py` (rad 154, rad 303)
 - Modify: `APPGUIDE.md` (knappetiketten "🎲 Överraska mig")
 - Modify: `design_system.md` (§4.1)
@@ -790,7 +790,7 @@ _GRANSKADE_KATALOGER = ("utils", "sidor", "tests", "data", "docs", ".streamlit")
 ```
 
 Lägg till i samma fil. `_granskade_filer()` är redan en modulnivåfunktion som
-returnerar en lista, så den kan anropas direkt i dekoratorn — följ filens
+returnerar en lista, så den kan anropas direkt i dekoratorn, följ filens
 befintliga parametriseringsmönster.
 
 ```python
@@ -811,7 +811,7 @@ _EMOJI = re.compile("[\U0001f300-\U0001faff☀-➿\U0001f1e6-\U0001f1ff]")
 # Två undantag, båda avsiktliga:
 #   streamlit_app.py bär page_icon, webbläsarflikens identitet. Det är inte
 #   appkrom, och det är det enda undantaget design_system.md 4.1 medger.
-#   docs/superpowers/ är historiska design- och planeringsdokument. De beskriver
+#   docs/superpowers/ är historiska designdokument och planeringsdokument. De beskriver
 #   vad appen var vid en viss tidpunkt och ska inte skrivas om i efterhand;
 #   granskningsdokumentet måste dessutom kunna citera de glyfer det avskaffar.
 _GLYFUNDANTAG = ("streamlit_app.py",)
@@ -850,7 +850,7 @@ Run: `python3 -m pytest tests/test_sprak.py -q -k ikoner`
 Expected: FAIL på exakt fem filer, uppmätta före planen skrevs:
 `utils/ui.py` (`🟢`, `⚪`, `✓`), `utils/obsidian.py` (`⚠️`),
 `sidor/11_Kunskapsutmaning.py` (`🎲`), `sidor/16_Rattskartan.py` (`↺` × 2) och
-`APPGUIDE.md` (`🎲`). Flaggas något annat har appen ändrats sedan dess — fäll
+`APPGUIDE.md` (`🎲`). Flaggas något annat har appen ändrats sedan dess, fäll
 glyfen i stället för att utöka undantagslistan.
 
 - [ ] **Step 3: Ersätt stepperns glyfer med CSS-form**
@@ -923,7 +923,7 @@ I `inject_css()`, ersätt de fyra `.jok-rnts`-reglerna för tillstånd med:
     prick = "Tillgänglig" if tillganglig else "Ej konfigurerad"
 ```
 
-`sidor/11_Kunskapsutmaning.py` rad 62–65 — ta bort både glyfen och
+`sidor/11_Kunskapsutmaning.py` rad 62 till 65, ta bort både glyfen och
 justeringshacket (spec avsnitt 5, "Justeringshack"):
 
 ```python
@@ -952,7 +952,7 @@ with kol_slump:
 - [ ] **Step 5: Fäll varningsglyfen i Obsidianexporten**
 
 `utils/obsidian.py:132` skriver `⚠️` i den genererade noten. Exporten är
-användarsynlig, och appen har redan ett ord för samma sak — chipsprefixet
+användarsynlig, och appen har redan ett ord för samma sak, chipsprefixet
 "Ej verifierad:". Ersätt:
 
 ```python
@@ -1007,7 +1007,7 @@ tärning, två rundpilar och stepperns teckenikoner, som nu ritas med CSS."
 
 
 
-## Task 5: Typ- och spacingtokens
+## Task 5: Typtokens och spacingtokens
 
 Spec: avsnitt 6 "Typografi" och "Spacing", avsnitt 9 punkt 5, nya §2.1 och §2.2.
 
@@ -1017,7 +1017,7 @@ avstånden signalerar ingen gruppering.
 
 **Files:**
 
-- Modify: `utils/ui.py` (`inject_css`, `:root`-blocket rad 50–55)
+- Modify: `utils/ui.py` (`inject_css`, `:root`-blocket rad 50 till 55)
 - Modify: `tests/test_ui.py`
 - Modify: `design_system.md` (nya §2.1 och §2.2)
 
@@ -1063,7 +1063,7 @@ def test_inga_hardkodade_typstorlekar():
 - [ ] **Step 2: Kör testet och se att det failar**
 
 Run: `python3 -m pytest tests/test_ui.py -q -k "token or typstorlekar"`
-Expected: FAIL — "token --t-hero saknas i :root"
+Expected: FAIL, "token --t-hero saknas i :root"
 
 - [ ] **Step 3: Deklarera tokens**
 
@@ -1115,7 +1115,7 @@ Avbildningen är:
 
 
 Notera att `.jok-begrepp h3` går från 19 till 18px och `.jok-lagkort h4` från 16
-till 18px — det är avsiktligt: skalan har sex steg, inte nio.
+till 18px, det är avsiktligt: skalan har sex steg, inte nio.
 
 - [ ] **Step 5: Kör testet och se att det passerar**
 
@@ -1159,7 +1159,7 @@ Expected: PASS
 
 ```bash
 git add utils/ui.py tests/test_ui.py design_system.md
-git commit -m "refactor: typ- och spacingskala som CSS-tokens"
+git commit -m "refactor: typskala och spacingskala som CSS-tokens"
 ```
 
 ---
@@ -1176,14 +1176,14 @@ besökare. Modellväljaren 8B/14B är utvecklaryta i en publik app.
 
 **Files:**
 
-- Modify: `utils/ui.py` (`render_statuspanel` rad 668–691, `_render_model_selector`
-rad 694–712, `render_sidebar` rad 754–768)
+- Modify: `utils/ui.py` (`render_statuspanel` rad 668 till 691, `_render_model_selector`
+rad 694 till 712, `render_sidebar` rad 754 till 768)
 - Modify: `tests/test_ui.py`
 - Modify: `design_system.md` (§4, punkten om sidopanelen)
 
 **Interfaces:**
 
-- Produces: `statusrad(tillganglig: bool, sess: int, sess_tak: int, dag: int, dag_tak: int) -> tuple[str, bool]` — ren funktion som ger (text, ska_expanderas).
+- Produces: `statusrad(tillganglig: bool, sess: int, sess_tak: int, dag: int, dag_tak: int) -> tuple[str, bool]`, ren funktion som ger (text, ska_expanderas).
 - `render_statuspanel()` behåller sin signatur (inga argument, returnerar None).
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -1304,7 +1304,7 @@ def render_sidebar() -> None:
     egen platta sidlista inte ritas parallellt med trädet.
 
     Modellväljaren är borttagen: 8B/14B är ett val ingen student kan grunda,
-    och mätningen i projektets historik visade att 14B inte var bättre — bara
+    och mätningen i projektets historik visade att 14B inte var bättre, bara
     långsammare. Standardmodellen sätts i utils/llm.py.
     """
     with st.sidebar:
@@ -1329,7 +1329,7 @@ Ersätt punkten om sidopanelen:
 * **Sidopanel**: modulnavigering överst, en rad LLM-status nederst. Statusraden
   utökas med detaljer först när något faktiskt är begränsat (under en fjärdedel
   av ett tak återstår, eller tutorn är otillgänglig): driftinformation ska inte
-  konkurrera med navigeringen i normalläget. Ingen modellväljare — den var
+  konkurrera med navigeringen i normalläget. Ingen modellväljare, den var
   utvecklaryta i en app som vem som helst kan öppna.
 ```
 
@@ -1356,7 +1356,7 @@ Spec: avsnitt 4 "Aktiv sida i sammanhang", avsnitt 9 punkt 8.
 
 `st.page_link` markerar den aktiva sidan, men rubrikerna vet inget: inget säger
 att *Förmögenhetsrätt → Kontraktsrätt* innehåller den öppna sidan. Datat finns
-redan — `streamlit_app.py:63` lägger `_jok_aktiv_sida` i session_state och ingen
+redan, `streamlit_app.py:63` lägger `_jok_aktiv_sida` i session_state och ingen
 läser det.
 
 **Files:**
@@ -1368,7 +1368,7 @@ läser det.
 **Interfaces:**
 
 - Produces: `rubrikkedja(namn: str, noder: tuple[Nod, ...] = NAV_TRAD) -> tuple[str, ...]`
-— namnen på alla grupper som innehåller modulen, från yttersta till innersta.
+namnen på alla grupper som innehåller modulen, från yttersta till innersta.
 - Consumes: `st.session_state["_jok_aktiv_sida"]` (satt av `streamlit_app.py`).
 
 - [ ] **Step 1: Skriv det failande testet**
@@ -1524,7 +1524,7 @@ sägs bara indirekt, i en rubrik.
 
 **Files:**
 
-- Modify: `sidor/0_Hem.py` (`_render_framsteg` rad 95–147, `render_landing` rad 36–69)
+- Modify: `sidor/0_Hem.py` (`_render_framsteg` rad 95 till 147, `render_landing` rad 36 till 69)
 - Modify: `design_system.md` (ny §7)
 
 **Interfaces:**
@@ -1535,7 +1535,7 @@ sägs bara indirekt, i en rubrik.
 - [ ] **Step 1: Dämpa friskrivningen i render_landing**
 
 I `sidor/0_Hem.py`, ersätt `render_info(...)`-anropet med en caption. Den
-fullständiga texten står redan i `footer_note()`, så kravet i PRD 4 är uppfyllt —
+fullständiga texten står redan i `footer_note()`, så kravet i PRD 4 är uppfyllt ,
 kravet var synlighet, inte dominans.
 
 ```python
@@ -1580,10 +1580,10 @@ def _render_framsteg() -> None:
     ]
     if besvarade:
         delar.append(f"{ratt}/{besvarade} rätt på quiz")
-    st.markdown(" · ".join(delar))
+    st.markdown(": ".join(delar))
 
     st.caption(
-        "Framstegen gäller den här sessionen. Stänger du fliken är de borta — "
+        "Framstegen gäller den här sessionen. Stänger du fliken är de borta, "
         "ladda ner dem nedan för att behålla dem."
     )
     _render_export(resultat, case_bok)
@@ -1633,7 +1633,7 @@ def _render_export(
 
 Notera att `_render_framsteg` nu returnerar tidigt i det tomma fallet, så
 Obsidianvalvet inte längre erbjuds på första skärmen. Det är fortfarande nåbart
-så snart studenten gjort något — och i etapp 2 flyttar det till sidan *Framsteg
+så snart studenten gjort något, och i etapp 2 flyttar det till sidan *Framsteg
 och samband*.
 
 - [ ] **Step 3: Ta bort ARBETSGÅNG-sektionen**
@@ -1698,7 +1698,7 @@ assert len(knappar) == 1, f'tomt tillstånd ska ha exakt en knapp, har {knappar}
 Expected: exakt en knapp (CTA:n), noll nedladdningsknappar.
 
 Ser du `KeyError: 'url_pathname'` beror det på att session_state sattes före
-första `at.run()` — kör en gång först, injicera tillstånd sedan.
+första `at.run()`, kör en gång först, injicera tillstånd sedan.
 
 - [ ] **Step 6: Dokumentera regeln**
 
@@ -1712,7 +1712,7 @@ fliken stängs. Målgruppen är publik och anonym, så det finns ingen inloggnin
 därmed ingen ärlig serverlagring per student.
 
 Regeln: **säg det rent ut, och peka på lösningen i samma andetag.** "Framstegen
-gäller den här sessionen. Stänger du fliken är de borta — ladda ner dem nedan för
+gäller den här sessionen. Stänger du fliken är de borta, ladda ner dem nedan för
 att behålla dem." Aldrig bara antytt i en rubrik. En student som förlorat en
 timmes arbete utan varning kommer inte tillbaka, och tillit är en förutsättning
 för ansträngning.
@@ -1750,7 +1750,7 @@ bygger samma förmåga.
 
 - Create: `utils/rnts.py`
 - Create: `tests/test_rnts.py`
-- Modify: `utils/modulvy.py` (`RNTS_FALT` rad 61–66, de tre flikfunktionerna)
+- Modify: `utils/modulvy.py` (`RNTS_FALT` rad 61 till 66, de tre flikfunktionerna)
 - Modify: `utils/ui.py` (ny komponent + CSS)
 - Modify: `design_system.md` (§5)
 
@@ -1979,12 +1979,12 @@ Spec: avsnitt 5 "Kort och behållare", avsnitt 9 punkterna 11 och 12.
 `render_kort` och `summary_box` refereras bara av `tests/test_ui.py`, och
 `render_kort` tar dessutom en `ikon`-parameter som strider mot ikonregeln.
 `_ingress()` i `utils/modulvy.py` tar ett `filnamn`-argument som den ignorerar och
-ger samma mening på alla tolv modulsidor — en mening som är sann för alla moduler
+ger samma mening på alla tolv modulsidor, en mening som är sann för alla moduler
 bär ingen information om någon.
 
 **Files:**
 
-- Modify: `utils/ui.py` (`summary_box` rad 296–298, `render_kort` rad 301–307, docstring)
+- Modify: `utils/ui.py` (`summary_box` rad 296 till 298, `render_kort` rad 301 till 307, docstring)
 - Modify: `tests/test_ui.py` (ta bort testen för borttagen kod)
 - Modify: `utils/scenarier.py` (`Modulscenarier`, `ladda_modul`)
 - Modify: `utils/modulvy.py` (`_ingress`, `rendera_modulsida`)
@@ -2068,7 +2068,7 @@ class Modulscenarier:
     ingress: str = ""
 ```
 
-Konstruktionen sker i `ladda_fil` (rad 153–165), **inte** i `ladda_modul` — den
+Konstruktionen sker i `ladda_fil` (rad 153 till 165), **inte** i `ladda_modul`, den
 senare delegerar bara. Ersätt returraden i `ladda_fil`:
 
 ```python
@@ -2173,7 +2173,7 @@ dokumenteras i den kommande etappen. Ersätt punkten:
   ikonparameter som stred mot ikonförbudet i 4.1.
 ```
 
-Ta även bort `render_quizfraga`-punkten eller markera den som ej byggd — den
+Ta även bort `render_quizfraga`-punkten eller markera den som ej byggd, den
 implementeras i etapp 2, task-listan för hög effekt / medelinsats:
 
 ```markdown
@@ -2241,7 +2241,7 @@ Kontrollera i ordning:
 3. Öppna Avtalsrätt. Varje flik har en TRÄNAR-rad. Sidopanelen: CIVILRÄTT,
   Förmögenhetsrätt och Kontraktsrätt i bläckvikt.
 4. Lagrumsjakt: skriv fel lagrum, tryck Rätta, klicka sedan i en annan flik och
-  tillbaka — rättningen ska fortfarande vara kvar.
+  tillbaka, rättningen ska fortfarande vara kvar.
 5. Facit kräver ett klick på "Jag har försökt".
 6. Fyll i alla fyra RNTS-fält → gå till Hem: framstegsraden visar tal, och raden
   om att sessionen är flyktig står där, med Obsidianvalvet under.
@@ -2250,7 +2250,7 @@ Kontrollera i ordning:
 
 - [ ] **Step 3: Uppdatera roadmapen i specen**
 
-Markera punkterna 1–12 i avsnitt 9 som genomförda i
+Markera punkterna 1 till 12 i avsnitt 9 som genomförda i
 `docs/superpowers/specs/2026-08-06-ux-omdesign-design.md`, med en rad om att
 etapp 1 är klar och var planen ligger.
 
@@ -2269,17 +2269,17 @@ git commit -m "docs: etapp 1 av UX-omdesignen genomförd"
 
 Ur specens avsnitt 9, **inte** i den här planen:
 
-- **Etapp 2 (hög effekt / medelinsats), punkt 13–22:** RNTS-panelen på startsidan,
+- **Etapp 2 (hög effekt / medelinsats), punkt 13 till 22:** RNTS-panelen på startsidan,
 sidopanelen i tre plan, sammanslagningen Kunskapstest + Kunskapskarta →
 *Framsteg och samband*, flikrampen, `render_quizfraga`, en enda
 aviseringsuppsättning, vågrät stepper med sanna statusar, kortsystemet,
 framstegsmarkering per modul, ett-steg-i-taget-läge.
-- **Etapp 3 (hög effekt / stor insats), punkt 23–26:** författade worked examples
+- **Etapp 3 (hög effekt / stor insats), punkt 23 till 26:** författade worked examples
 per modul, onboarding för anonym förstagångsbesökare, falltypsguiden som ingång.
 Punkt 24 (framstegsmodell per RNTS-steg) bör **inte** byggas som en
-kvalitetsmodell — se invändning 11.1 i specen.
+kvalitetsmodell, se invändning 11.1 i specen.
 - **Framtida idéer:** bokmärkbar framstegslänk via `st.query_params`
-(invändning 11.7 — potentiellt den mest värdefulla åtgärden i hela specen),
+(invändning 11.7, potentiellt den mest värdefulla åtgärden i hela specen),
 tillgänglighetsgenomgång med riktiga hjälpmedel, tidsuppskattning per modul.
 
 Varje etapp får sin egen plan enligt samma mönster.

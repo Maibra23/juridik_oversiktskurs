@@ -1,4 +1,4 @@
-# Lagrumsjakt: Alternativa sätt att ange lagrum — Implementation Plan
+# Lagrumsjakt: Alternativa sätt att ange lagrum, Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -10,10 +10,10 @@
 
 ## Global Constraints
 
-- Aliases are **explicit, hand-authored data**, never derived by grammar rules (e.g. auto-appending `-en`/`-balken`) — 6 of the 21 laws are registered under a `"Lag om …"` title with no mechanical path to their real colloquial name. (Spec §"Design"/§"Icke-mål".)
+- Aliases are **explicit, hand-authored data**, never derived by grammar rules (e.g. auto-appending `-en`/`-balken`), 6 of the 21 laws are registered under a `"Lag om …"` title with no mechanical path to their real colloquial name. (Spec §"Design"/§"Icke-mål".)
 - SFS-nummer (e.g. `"1915:218"`) is explicitly **out of scope** as a lagrum-citation form. (Spec §"Icke-mål".)
-- Changing how `paragraf_till` ranges are compared in `ratta_lagrumsjakt` is explicitly **out of scope** — unrelated to alias matching. (Spec §"Icke-mål".)
-- Alias collisions (two laws sharing an alias, or an alias equal to another law's abbreviation) must raise `ValueError` at the point the lookup map is built — fail fast, matching the existing pattern in `_validera_ra_lag`. (Spec §"Mål".)
+- Changing how `paragraf_till` ranges are compared in `ratta_lagrumsjakt` is explicitly **out of scope**, unrelated to alias matching. (Spec §"Icke-mål".)
+- Alias collisions (two laws sharing an alias, or an alias equal to another law's abbreviation) must raise `ValueError` at the point the lookup map is built, fail fast, matching the existing pattern in `_validera_ra_lag`. (Spec §"Mål".)
 
 ---
 
@@ -168,7 +168,7 @@ git commit -m "feat: lägg till aliaser-fält på Lag för alternativa lagrumsna
 
 **Interfaces:**
 - Consumes: `Lag.forkortning`, `Lag.aliaser` (from Task 1); `lagrum_register() -> dict[str, Lag]` (existing, unchanged).
-- Produces: `_bygg_alias_karta(register: dict[str, Lag]) -> dict[str, str]` — pure function, new. Raises `ValueError` if an alias collides with another law's forkortning/alias. `_forkortning_gemener_karta() -> dict[str, str]` — same signature and `@lru_cache` as before, now built on top of `_bygg_alias_karta(lagrum_register())`. `_normalisera_forkortning` and `extrahera_lagrum`'s `_godtagen` (both already call `_forkortning_gemener_karta()`) get alias support automatically, no changes needed in either.
+- Produces: `_bygg_alias_karta(register: dict[str, Lag]) -> dict[str, str]`, pure function, new. Raises `ValueError` if an alias collides with another law's forkortning/alias. `_forkortning_gemener_karta() -> dict[str, str]`, same signature and `@lru_cache` as before, now built on top of `_bygg_alias_karta(lagrum_register())`. `_normalisera_forkortning` and `extrahera_lagrum`'s `_godtagen` (both already call `_forkortning_gemener_karta()`) get alias support automatically, no changes needed in either.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -277,7 +277,7 @@ Expected: PASS (2 tests)
 - [ ] **Step 5: Run full test suite to check for regressions**
 
 Run: `pytest tests/test_lagrum.py tests/test_quiz.py -v`
-Expected: all PASS. `data/lagrum.json` has no `aliaser` fields yet (Task 3 adds them), so `_bygg_alias_karta(lagrum_register())` runs with every `Lag.aliaser == ()` — behaviorally identical to the old one-liner.
+Expected: all PASS. `data/lagrum.json` has no `aliaser` fields yet (Task 3 adds them), so `_bygg_alias_karta(lagrum_register())` runs with every `Lag.aliaser == ()`, behaviorally identical to the old one-liner.
 
 - [ ] **Step 6: Commit**
 
@@ -383,12 +383,12 @@ with:
 "...inte att kursens omfång är pedagogiskt rätt avvägt -- den bedömningen görs av kursansvarig. Fältet \"aliaser\" listar andra sätt studenter kan skriva lagen på (fullt vardagligt namn, etablerade alternativa förkortningar) och är handförfattat, inte grammatiskt härlett -- se docs/superpowers/specs/2026-08-06-lagrumsjakt-alias-matching-design.md."
 ```
 
-(Use the Edit tool for this — it's a single string replacement inside the `_beskrivning` value.)
+(Use the Edit tool for this, it's a single string replacement inside the `_beskrivning` value.)
 
 - [ ] **Step 5: Run full test suite**
 
 Run: `pytest tests/test_lagrum.py tests/test_quiz.py -v`
-Expected: all PASS, including `test_register_laddas_med_21_lagar` (count unaffected) and the Task 2 collision test (real data has no colliding aliases — if this fails, it means two laws in `ALIASER` accidentally share a value; fix the table before proceeding).
+Expected: all PASS, including `test_register_laddas_med_21_lagar` (count unaffected) and the Task 2 collision test (real data has no colliding aliases, if this fails, it means two laws in `ALIASER` accidentally share a value; fix the table before proceeding).
 
 - [ ] **Step 6: Commit**
 
@@ -455,7 +455,7 @@ def test_lagen_nu_url_med_fullt_lagnamn_ar_samma_som_forkortning():
 - [ ] **Step 2: Run tests to verify they pass**
 
 Run: `pytest tests/test_lagrum.py -k "alias" -v`
-Expected: all PASS. If any FAIL with a mismatch, check the alias spelling in the Task 3 `ALIASER` table against the parametrized text (a stray capital or missing word is the usual cause — `_forkortning_gemener_karta` lookups are case-insensitive but must match on the full word).
+Expected: all PASS. If any FAIL with a mismatch, check the alias spelling in the Task 3 `ALIASER` table against the parametrized text (a stray capital or missing word is the usual cause, `_forkortning_gemener_karta` lookups are case-insensitive but must match on the full word).
 
 - [ ] **Step 3: Run the full test suite**
 
@@ -502,7 +502,7 @@ def test_lagrumsjakt_accepterar_alternativ_forkortning():
 - [ ] **Step 2: Run tests to verify they pass**
 
 Run: `pytest tests/test_quiz.py -k alias -v`
-Expected: both PASS. `ratta_lagrumsjakt` compares canonical keys (`forkortning, kapitel, paragraf`) via `utils.quiz._nyckel`, which already calls `extrahera_lagrum` — so it inherits alias support from Tasks 1–3 with no changes to `utils/quiz.py`.
+Expected: both PASS. `ratta_lagrumsjakt` compares canonical keys (`forkortning, kapitel, paragraf`) via `utils.quiz._nyckel`, which already calls `extrahera_lagrum`, so it inherits alias support from Tasks 1 till 3 with no changes to `utils/quiz.py`.
 
 - [ ] **Step 3: Run the full test suite**
 
@@ -520,5 +520,5 @@ git commit -m "test: lagrumsjakt godkänner svar via alias mot förkortningsfaci
 
 ## Final Verification
 
-- [ ] Run `pytest tests/ -v` — full suite green.
-- [ ] Manually open the Streamlit app (`streamlit run streamlit_app.py`), go to Juridisk metod → Lagrumsjakt tab, and answer question `jm-lj-1` ("Du vill visa att köplagen är dispositiv...") with `"3 § köplagen"` instead of `"3 § KöpL"` — confirm it's marked correct with a green, clickable lagen.nu chip.
+- [ ] Run `pytest tests/ -v`, full suite green.
+- [ ] Manually open the Streamlit app (`streamlit run streamlit_app.py`), go to Juridisk metod → Lagrumsjakt tab, and answer question `jm-lj-1` ("Du vill visa att köplagen är dispositiv...") with `"3 § köplagen"` instead of `"3 § KöpL"`, confirm it's marked correct with a green, clickable lagen.nu chip.

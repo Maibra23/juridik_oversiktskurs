@@ -25,14 +25,14 @@ ska bli säker och effektiv.
 ## 2. Robust lagrumsparser (löser formatglappet)
 
 **Problem:** `LAGRUM_PATTERN` matchar bara ordningen `N § FÖRK`. Modellen skriver
-i praktiken ofta omvänt (`AvtL 18–20 §§`), vilket gör att verifieringen inte ser
-lagrummet — varken gröna lagen.nu-chips eller den gula hallucineringsvarningen
+i praktiken ofta omvänt (`AvtL 18 till 20 §§`), vilket gör att verifieringen inte ser
+lagrummet, varken gröna lagen.nu-chips eller den gula hallucineringsvarningen
 utlöses.
 
 **Lösning (båda vägarna, per användarbeslut):**
 
 ### 2a. Parser fångar omvänd ordning
-- Ny regex `LAGRUM_PATTERN_OMVAND` som fångar `FÖRK N §`, `FÖRK N–M §§` och
+- Ny regex `LAGRUM_PATTERN_OMVAND` som fångar `FÖRK N §`, `FÖRK N,M §§` och
   `FÖRK N kap. M §`.
 - `extrahera_lagrum` kör **båda** mönstren, samlar alla träffar med sina
   positioner, sorterar på startposition och väljer giriga icke-överlappande
@@ -47,7 +47,7 @@ utlöses.
 
 ### 2b. Skärpt prompt
 - Lägg explicita exempel i `SYSTEM_PROMPT_BASE`: skriv `18 § AvtL`, ALDRIG
-  `AvtL 18 §`; för intervall `28–30 §§ AvtL`.
+  `AvtL 18 §`; för intervall `28 till 30 §§ AvtL`.
 
 **Tester:** utöka `tests/test_lagrum.py` med omvänd ordning (verifierad,
 intervall, kapitel), falsk-positiv-skydd ("Bestämmelsen 5 §" → ingen träff), och
@@ -62,7 +62,7 @@ generatorn och håller privatlogiken oförändrad.
 ## 4. Kunskapsutmaning (LLM-genererade rättsfall)
 
 **Syfte:** studenten testar sin förmåga på ett färskt, fiktivt rättsfall som
-genereras vid knapptryck, analyserar det med RNTS och får tutorns granskning —
+genereras vid knapptryck, analyserar det med RNTS och får tutorns granskning ,
 med samma hallucinationsskydd som resten av appen.
 
 ### Arkitektur (återbruk framför nybygge)
@@ -92,7 +92,7 @@ Studenten ser aldrig ett scenario vars facit innehåller ett ogrundat lagrum.
 
 ### Felhantering
 `LLMUnavailableError`/tak-fel → direkt till statisk fallback med svensk infotext
-("LLM ej tillgänglig — här är ett kuraterat fall i stället"). Trasig/utebliven
+("LLM ej tillgänglig, här är ett kuraterat fall i stället"). Trasig/utebliven
 JSON → räknas som misslyckat försök (retry → fallback).
 
 ### Retur

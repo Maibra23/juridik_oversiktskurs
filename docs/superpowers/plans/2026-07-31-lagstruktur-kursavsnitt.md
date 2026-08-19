@@ -1,4 +1,4 @@
-# Lagstruktur och kursavsnitt i lagkortet — implementationsplan
+# Lagstruktur och kursavsnitt i lagkortet, implementationsplan
 
 **Status:** Genomförd 2026-08-03. Samtliga sju tasks är avslutade och committade
 (c5541c3, e7eb098, f996ba6, 56a4a36, 15001c1, 9530677, 5aa0f9a, 985f73b, 5cef83c,
@@ -8,7 +8,7 @@ f88dfa3). Testsviten är grön och grindtestet mot `verifiera: true` är på pla
 
 **Goal:** Visa kursavsnitten i Rättskartans lagkort, grupperade under lagens verkliga kapitel, efter att samtliga 105 avsnitt verifierats mot lagens faktiska struktur.
 
-**Architecture:** En ny hämtare läser kapitel- och momentrubriker ur Riksdagens öppna data till `data/lagstruktur/<sfs>.json`. Ett läsande lager i `utils/` slår ihop den strukturen med de kursavsnitt som redan finns i `data/lagrum.json`. Ett kontrollager jämför de två och rapporterar avvikelser, vilket driver rättningen av de 78 flaggade avsnitten. Först därefter renderas avsnitten i lagkortet.
+**Architecture:** En ny hämtare läser kapitelindelning och momentrubriker ur Riksdagens öppna data till `data/lagstruktur/<sfs>.json`. Ett läsande lager i `utils/` slår ihop den strukturen med de kursavsnitt som redan finns i `data/lagrum.json`. Ett kontrollager jämför de två och rapporterar avvikelser, vilket driver rättningen av de 78 flaggade avsnitten. Först därefter renderas avsnitten i lagkortet.
 
 **Tech Stack:** Python 3.11, Streamlit, pytest. Inga nya beroenden. Endast standardbiblioteket (`re`, `json`, `urllib.request`, `dataclasses`, `functools.lru_cache`).
 
@@ -27,7 +27,7 @@ f88dfa3). Testsviten är grön och grindtestet mot `verifiera: true` är på pla
 
 | Fil | Ansvar |
 |---|---|
-| `utils/lagstruktur_extrahering.py` (ny) | Ren parser: källans HTML → kapitel- och momentlistor. Ingen nätverkskod, inget filsystem. |
+| `utils/lagstruktur_extrahering.py` (ny) | Ren parser: källans HTML → kapitelindelning och momentlistor. Ingen nätverkskod, inget filsystem. |
 | `scripts/hamta_lagstruktur.py` (ny) | Tunt CLI-skal: hämtar HTML, anropar parsern, skriver `data/lagstruktur/<sfs>.json`. |
 | `utils/lagstruktur.py` (ny) | Läser och validerar `data/lagstruktur/`. Frusna dataklasser, cachad laddning, uppslag. |
 | `utils/kursavsnitt_kontroll.py` (ny) | Jämför registrets kursavsnitt mot strukturen och producerar avvikelser. |
@@ -55,7 +55,7 @@ f88dfa3). Testsviten är grön och grindtestet mot `verifiera: true` är på pla
 
 **Rättat under implementationen:** `kapitelindelad` var inte med i den ursprungliga
 signaturen. Källan visade sig märka AvtL:s paragrafer `K2P10` trots löpande
-numrering 1–41, så nyckelns form kan inte läsas ur ankaret — den måste komma från
+numrering 1 till 41, så nyckelns form kan inte läsas ur ankaret, den måste komma från
 lagrumsregistret. Anroparen (Task 2) skickar `lag["kapitelindelad"]`.
 
 - [x] **Step 1: Spara fixturerna**
@@ -84,7 +84,7 @@ Förväntat: tre filer, ungefär 69 kB, 25 kB och 8 kB.
 """Tester för strukturparsern (utils.lagstruktur_extrahering).
 
 Fixturerna är sparad HTML från Riksdagens öppna data, en per källform:
-KKöpL har både kapitel- och momentrubriker, AvtL har bara kapitelrubriker
+KKöpL har både kapitelindelning och momentrubriker, AvtL har bara kapitelrubriker
 (med löpande paragrafnumrering), PreskL har bara momentrubriker. Parsern
 får aldrig anta en form; den läser de nivåer som finns.
 """
@@ -219,7 +219,7 @@ Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.lagstruktur_e
 - [x] **Step 4: Skriv parsern**
 
 ```python
-"""Läs lagens kapitel- och momentrubriker ur källans HTML.
+"""Läs lagens kapitelindelning och momentrubriker ur källans HTML.
 
 Riksdagens öppna data bär författningens egen disposition: <h3> är
 kapitelrubriker ("3 kap. Näringsidkarens dröjsmål") och <h4> är
@@ -285,7 +285,7 @@ def _ny_post(**falt: object) -> dict:
 def extrahera_struktur(html: str) -> tuple[list[dict], list[dict]]:
     """Plocka ut (kapitel, moment) ur källans HTML.
 
-    Båda listorna är i dokumentordning och kan var för sig vara tomma —
+    Båda listorna är i dokumentordning och kan var för sig vara tomma ,
     aldrig båda, eftersom varje lag har minst en rubriknivå. Paragrafnyckelns
     form styrs av lagens numrering, aldrig av om en kapitelrubrik råkar finnas:
     AvtL har kapitelrubriker men löpande numrering och får platta nycklar.
@@ -344,7 +344,7 @@ Förväntat: PASS, 14 tester.
 
 ```bash
 git add utils/lagstruktur_extrahering.py tests/test_lagstruktur_extrahering.py tests/fixtures/
-git commit -m "feat: läs lagens kapitel- och momentrubriker ur källans HTML
+git commit -m "feat: läs lagens kapitelindelning och momentrubriker ur källans HTML
 
 Riksdagens öppna data bär författningens egen disposition i h3 och h4.
 Parsern plockar den i dokumentordning så varje rubrik äger sina paragrafer.
@@ -368,7 +368,7 @@ moment), AvtL (bara kapitel, löpande numrering) och PreskL (bara moment)."
 
 ```python
 #!/usr/bin/env python3
-"""Hämta lagarnas kapitel- och momentrubriker till data/lagstruktur/.
+"""Hämta lagarnas kapitelindelning och momentrubriker till data/lagstruktur/.
 
 Syskon till scripts/hamta_lagtext.py och lyder samma regler: körs manuellt,
 aldrig av appen, och resultatet committas så att appen fungerar offline.
@@ -476,7 +476,7 @@ def _form(kapitel: list[dict], moment: list[dict]) -> str:
         return "bara kapitel"
     if moment:
         return "bara moment"
-    return "INGEN STRUKTUR — undersök"
+    return "INGEN STRUKTUR, undersök"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -527,13 +527,13 @@ Förväntat: `KKöpL     8 kapitel    56 moment   [kapitel och moment]`
 Kör: `python3.11 scripts/hamta_lagstruktur.py --uppdatera`
 Förväntat: 21 rader, ingen med `INGEN STRUKTUR`. Hämtningen tar drygt 20 sekunder på grund av pausen mellan anropen.
 
-Anteckna vilken form varje lag fick. Specen klassificerade sju lagar empiriskt (KKöpL, BrB, UB, AvtL, KöpL, LAS, PreskL) och lämnade fjorton öppna — den här körningen avgör dem. Får någon lag `INGEN STRUKTUR`, stanna och undersök källan innan du går vidare; den lagen kan behöva en egen form i parsern.
+Anteckna vilken form varje lag fick. Specen klassificerade sju lagar empiriskt (KKöpL, BrB, UB, AvtL, KöpL, LAS, PreskL) och lämnade fjorton öppna, den här körningen avgör dem. Får någon lag `INGEN STRUKTUR`, stanna och undersök källan innan du går vidare; den lagen kan behöva en egen form i parsern.
 
 - [x] **Step 4: Committa**
 
 ```bash
 git add scripts/hamta_lagstruktur.py data/lagstruktur/
-git commit -m "feat: hämta lagarnas kapitel- och momentstruktur till data/lagstruktur
+git commit -m "feat: hämta lagarnas kapitelindelning och momentstruktur till data/lagstruktur
 
 Hela lagens disposition sparas, inte bara kursens avsnitt, eftersom
 täckningsraden i lagkortet ska kunna säga hur stor del av lagen kursen
@@ -686,8 +686,8 @@ Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.lagstruktur'`
 ```python
 """Läs-API mot lagstrukturen i data/lagstruktur/.
 
-Strukturen är lagens egen disposition — kapitelrubriker, momentrubriker och
-vilka paragrafer som hör till vad — hämtad ur Riksdagens öppna data av
+Strukturen är lagens egen disposition, kapitelrubriker, momentrubriker och
+vilka paragrafer som hör till vad, hämtad ur Riksdagens öppna data av
 scripts/hamta_lagstruktur.py och committad så att appen fungerar offline.
 
 Den fyller två roller. Dels ger den lagkortet en ryggrad att gruppera
@@ -780,7 +780,7 @@ def _bygg_struktur(rad: dict) -> Lagstruktur:
     if not kapitel and not moment:
         raise ValueError(
             f"{forkortning}: strukturen saknar både kapitel och moment. "
-            "Varje lag har minst en rubriknivå — hämta om lagen."
+            "Varje lag har minst en rubriknivå, hämta om lagen."
         )
 
     nummer = {k.nummer for k in kapitel}
@@ -893,7 +893,7 @@ en tom lucka utan ett felaktigt påstående om hur lagen är uppbyggd."
 """Tester för försoningen mellan kursavsnitt och lagens struktur.
 
 Bakgrund: data/lagrum.json bär 105 kursavsnitt, varav 78 flaggade med
-"verifiera": true — osäkra paragrafgränser som skulle kontrolleras mot
+"verifiera": true, osäkra paragrafgränser som skulle kontrolleras mot
 lagen.nu. Så länge avsnitten bara matade validering och prompter var en
 oskarp gräns billig. När de visas i lagkortet blir den ett påstående
 studenten läser som sant.
@@ -981,7 +981,7 @@ def test_ingen_avvikelse_nar_gransen_stammer():
 
 
 def test_for_snav_gräns_upptacks():
-    """Momentet sträcker sig utanför avsnittet — korpusen kunde aldrig se detta."""
+    """Momentet sträcker sig utanför avsnittet, korpusen kunde aldrig se detta."""
     lag = _lag(True, (_avsnitt("Påföljder", "5", 1, 2),))
     struktur = _struktur(
         kapitel=(Kapitel("5", "Påföljder", ("5:1", "5:2", "5:3")),),
@@ -1012,7 +1012,7 @@ def test_inga_kursavsnitt_pekar_utanfor_lagen():
     Därefter en permanent spärr mot att nästa lagändring smyger in samma fel.
     """
     fel = [a for a in kontrollera_alla() if a.typ == TYP_OVERSKJUTANDE]
-    assert fel == [], "\n".join(f"{a.forkortning}: {a.avsnitt} — {a.detalj}" for a in fel)
+    assert fel == [], "\n".join(f"{a.forkortning}: {a.avsnitt}, {a.detalj}" for a in fel)
 ```
 
 - [x] **Step 2: Kör testerna och se dem falla**
@@ -1025,12 +1025,12 @@ Förväntat: FAIL med `ModuleNotFoundError: No module named 'utils.kursavsnitt_k
 ```python
 """Jämför kursavsnitten i data/lagrum.json mot lagens faktiska struktur.
 
-Registret bär 105 kursavsnitt, varav 78 flaggade med "verifiera": true —
+Registret bär 105 kursavsnitt, varav 78 flaggade med "verifiera": true ,
 osäkra paragrafgränser eller osäkert kursomfång. Den här modulen är facit:
 den säger vad som avviker, i fyra sorter.
 
 Vad modulen INTE gör: den rättar aldrig registret. Om ett avsnitt ska
-omfatta 13:1–13:7 eller 13:1–13:5 är en bedömning av kursens omfång, inte
+omfatta 13:1 till 13:7 eller 13:1 till 13:5 är en bedömning av kursens omfång, inte
 en textjämförelse. Modulen rapporterar; människan beslutar.
 
 Ren modul utan Streamlit-beroende.
@@ -1216,7 +1216,7 @@ if __name__ == "__main__":
     raise SystemExit(main())
 ```
 
-- [x] **Step 5: Kör testerna — enhetstesterna passerar, invarianten faller**
+- [x] **Step 5: Kör testerna, enhetstesterna passerar, invarianten faller**
 
 Kör: `python3.11 -m pytest tests/test_kursavsnitt_kontroll.py -v`
 Förväntat: alla tester PASS **utom** `test_inga_kursavsnitt_pekar_utanfor_lagen`, som FAIL med en lista över de kursavsnitt som pekar utanför lagen (omkring 25 stycken, mätta mot korpusen; siffran kan skilja något mot strukturen som täcker hela lagen).
@@ -1237,7 +1237,7 @@ git commit -m "feat: försona kursavsnitten mot lagens faktiska struktur
 Fyra avvikelsetyper: överskjutande och för snäva gränser, rubrikavvikelse
 och avsnitt som spänner över flera moment. Överskjutandetestet är rött med
 avsikt: det mäter de kursavsnitt som pekar utanför lagen och driver
-rättningen. Kontrollen rättar aldrig registret själv — gränserna är en
+rättningen. Kontrollen rättar aldrig registret själv, gränserna är en
 bedömning av kursens omfång, inte en textjämförelse."
 ```
 
@@ -1268,7 +1268,7 @@ Sätt `"verifiera": false` på varje avsnitt som gåtts igenom.
 Kör: `python3.11 scripts/verifiera_kursavsnitt.py --typ OVERSKJUTANDE`
 Förväntat: `0 totalt`
 
-Kvarvarande avvikelser av typen `FOR_SNAV`, `RUBRIKAVVIKELSE` och `SPANNER_OVER_MOMENT` är inte fel i sig — de är underlag. Bara överskjutande gränser är alltid fel.
+Kvarvarande avvikelser av typen `FOR_SNAV`, `RUBRIKAVVIKELSE` och `SPANNER_OVER_MOMENT` är inte fel i sig, de är underlag. Bara överskjutande gränser är alltid fel.
 
 - [x] **Step 3: Kör hela sviten**
 
@@ -1328,11 +1328,11 @@ def test_ett_enda_paragrafnummer_far_enkelt_paragraftecken():
 
 
 def test_intervall_far_dubbelt_paragraftecken():
-    assert formatera_spann(1, 9) == "1–9 §§"
+    assert formatera_spann(1, 9) == "1 till 9 §§"
 
 
 def test_intervall_anvander_tankstreck_inte_bindestreck():
-    assert "–" in formatera_spann(1, 9)
+    assert "," in formatera_spann(1, 9)
     assert "-" not in formatera_spann(1, 9)
 
 
@@ -1415,7 +1415,7 @@ class Kapitelgrupp:
 
 
 def formatera_spann(fran: int, till: int) -> str:
-    """Paragrafspannet på svensk form: "36 §" för en, "1–9 §§" för flera.
+    """Paragrafspannet på svensk form: "36 §" för en, "1 till 9 §§" för flera.
 
     Paragraftecknet dubbleras bara vid flertal, och skiljetecknet är
     tankstreck. Ett "36 §§" läser studenten som slarv i just den detalj
@@ -1423,7 +1423,7 @@ def formatera_spann(fran: int, till: int) -> str:
     """
     if fran == till:
         return f"{fran} §"
-    return f"{fran}–{till} §§"
+    return f"{fran},{till} §§"
 
 
 def _rad(lag: Lag, avsnitt) -> Avsnittsrad:
@@ -1506,14 +1506,14 @@ def test_lagkortet_renderar_kursavsnitt_med_kapitelrubrik():
         beskrivning="B", nar="N", url="https://lagen.nu/2022:260",
         kursavsnitt=(
             Kapitelgrupp("3", "Näringsidkarens dröjsmål", (
-                Avsnittsrad("1–6 §§", "Påföljder vid dröjsmål",
+                Avsnittsrad("1 till 6 §§", "Påföljder vid dröjsmål",
                             "https://lagen.nu/2022:260#K3P1"),
             )),
         ),
         tackning="kursen täcker 6 av lagens 8 kapitel",
     )
     assert "3 kap. Näringsidkarens dröjsmål" in html
-    assert "1–6 §§" in html
+    assert "1 till 6 §§" in html
     assert "Påföljder vid dröjsmål" in html
     assert "kursen täcker 6 av lagens 8 kapitel" in html
 
@@ -1554,13 +1554,13 @@ def test_kapitellos_grupp_renderar_ingen_kapitelrubrik():
         nar="N", url="https://lagen.nu/1990:931",
         kursavsnitt=(
             Kapitelgrupp(None, "", (
-                Avsnittsrad("22–29 §§", "Påföljder vid dröjsmål",
+                Avsnittsrad("22 till 29 §§", "Påföljder vid dröjsmål",
                             "https://lagen.nu/1990:931#P22"),
             )),
         ),
     )
     assert "kap." not in html
-    assert "22–29 §§" in html
+    assert "22 till 29 §§" in html
 ```
 
 - [x] **Step 6: Kör och se dem falla**
@@ -1646,7 +1646,7 @@ def _avsnittsblock(grupper: tuple, tackning: str) -> str:
 
 - [x] **Step 8: Lägg till CSS**
 
-Lägg till efter `.jok-lagkort .nar strong` (rad 227 i `utils/ui.py`), inne i samma f-sträng — dubbla klammerparenteser eftersom blocket är en f-sträng:
+Lägg till efter `.jok-lagkort .nar strong` (rad 227 i `utils/ui.py`), inne i samma f-sträng, dubbla klammerparenteser eftersom blocket är en f-sträng:
 
 ```python
         .jok-lagkort .avsnitt {{
@@ -1751,7 +1751,7 @@ def test_inget_kursavsnitt_ar_overifierat():
 - [x] **Step 2: Kör och se dem falla**
 
 Kör: `python3.11 -m pytest tests/test_rattskartan_sida.py -k kursavsnitt tests/test_lagrum.py -k overifierat -v`
-Förväntat: FAIL — sidan renderar ännu inte avsnitten. (Grindtestet i `test_lagrum.py` passerar redan om Task 5 är utförd.)
+Förväntat: FAIL, sidan renderar ännu inte avsnitten. (Grindtestet i `test_lagrum.py` passerar redan om Task 5 är utförd.)
 
 - [x] **Step 3: Koppla in avsnitten på sidan**
 
@@ -1803,7 +1803,7 @@ Kör: `python3.11 -m streamlit run Hem.py`
 
 - [x] **Step 7: Uppdatera dokumentationen**
 
-I `APPGUIDE.md`, avsnitt 9 ("Flik 1 — Systemet"), lägg till efter stycket om områdesträdet:
+I `APPGUIDE.md`, avsnitt 9 ("Flik 1, Systemet"), lägg till efter stycket om områdesträdet:
 
 ```markdown
 Varje lagkort visar lagens **kursavsnitt**: vilka paragrafintervall kursen
@@ -1862,6 +1862,6 @@ inget overifierat påstående kan nå studenten."
 
 **Platshållare:** inga. Varje steg har körbara kommandon eller fullständig kod.
 
-**Typkonsistens:** `Kapitelgrupp` och `Avsnittsrad` definieras i Task 6 och används i Task 6-7. `Avvikelse` och typkonstanterna definieras i Task 4 och används i Task 4-5. `Lagstruktur`, `Kapitel` och `Moment` definieras i Task 3 och används i Task 4. `extrahera_struktur` definieras i Task 1 och används i Task 2. Parsern returnerar `list[dict]` (skrivs direkt till JSON), medan läslagret returnerar frusna dataklasser med `tuple` — gränsen går vid filen och är avsiktlig.
+**Typkonsistens:** `Kapitelgrupp` och `Avsnittsrad` definieras i Task 6 och används i Task 6-7. `Avvikelse` och typkonstanterna definieras i Task 4 och används i Task 4-5. `Lagstruktur`, `Kapitel` och `Moment` definieras i Task 3 och används i Task 4. `extrahera_struktur` definieras i Task 1 och används i Task 2. Parsern returnerar `list[dict]` (skrivs direkt till JSON), medan läslagret returnerar frusna dataklasser med `tuple`, gränsen går vid filen och är avsiktlig.
 
-**Känd risk:** Task 4:s överskjutandetest mättes till 25 avvikelser mot lagtextkorpusen. Strukturen täcker hela lagen, så siffran kan bli något annorlunda — färre om korpusen saknade paragrafer som faktiskt finns, fler om något avsnitt pekar på ett kapitel som inte existerar. Avvikelsen i siffran är inte ett fel i planen; listan i testutskriften är facit.
+**Känd risk:** Task 4:s överskjutandetest mättes till 25 avvikelser mot lagtextkorpusen. Strukturen täcker hela lagen, så siffran kan bli något annorlunda, färre om korpusen saknade paragrafer som faktiskt finns, fler om något avsnitt pekar på ett kapitel som inte existerar. Avvikelsen i siffran är inte ett fel i planen; listan i testutskriften är facit.

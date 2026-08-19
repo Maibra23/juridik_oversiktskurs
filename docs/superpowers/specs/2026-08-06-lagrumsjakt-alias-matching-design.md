@@ -11,8 +11,8 @@ modulsidor via `utils/modulvy.py` och `utils.quiz.ratta_lagrumsjakt`.
 Matchningen känner i dag bara igen registrets kanoniska förkortningar
 (skiftlägesokänsligt, båda ordningarna `"36 § AvtL"`/`"AvtL 36 §"`). En
 student som korrekt skriver `"36 § avtalslagen"` eller
-`"1 kap. 1 § brottsbalken"` — det normala sättet svenska juriststudenter
-faktiskt talar och skriver om lagarna — får svaret bedömt som fel, trots att
+`"1 kap. 1 § brottsbalken"`, det normala sättet svenska juriststudenter
+faktiskt talar och skriver om lagarna, får svaret bedömt som fel, trots att
 det är rätt lagrum.
 
 Undersökt samtidigt (informativt, ingen kodändring): modulernas
@@ -22,13 +22,13 @@ processrätt m.fl.) är avsiktligt smalt avgränsade till sin egen lagfamilj
 rättsfall, quiz och lagrumsjakt spänner medvetet över flera rättsområden
 (`KöpL`, `BrB`, `AvtL`, `RB`) eftersom modulen undervisar rättskälleläran
 som metod, inte ett enskilt rättsområdes sakinnehåll. Ingen ändring behövs
-här — det är redan rätt avvägt för respektive moduls syfte.
+här, det är redan rätt avvägt för respektive moduls syfte.
 
 ## Mål
 
 - Lagrumsjakten (och Normfältets feedback) ska bedöma ett svar som rätt
   oavsett om studenten skriver den kanoniska förkortningen, lagens fulla
-  vardagliga namn, eller en etablerad alternativ förkortning — i valfritt
+  vardagliga namn, eller en etablerad alternativ förkortning, i valfritt
   skiftläge och i båda ordningarna (`N § X` / `X N §`).
 - Databasen för godkända alias ska vara explicit och granskningsbar, inte
   grammatiskt härledd, så att framtida lagar med oregelbundna namn inte kan
@@ -39,10 +39,10 @@ här — det är redan rätt avvägt för respektive moduls syfte.
 
 ## Icke-mål
 
-- SFS-nummer som lagrumsreferens (t.ex. `"36 § 1915:218"`) — inte hur
+- SFS-nummer som lagrumsreferens (t.ex. `"36 § 1915:218"`), inte hur
   studenter faktiskt skriver svar i en lagrumsjakt.
 - Att ändra hur paragrafintervall (`paragraf_till`) jämförs i
-  `ratta_lagrumsjakt` — ett separat, redan existerande beteende som inte
+  `ratta_lagrumsjakt`, ett separat, redan existerande beteende som inte
   rör aliasmatchning.
 - Automatisk grammatisk härledning av bestämd form (`balk`→`balken`,
   `lag`→`lagen`). Se motivering nedan.
@@ -62,7 +62,7 @@ registrerade under en `"Lag om …"`-titel utan mekanisk väg till det
 vardagliga namnet (`AvtL` → "avtalslagen" går inte att härleda ur "Lag om
 avtal och andra rättshandlingar på förmögenhetsrättens område"). En enda
 explicit lista undviker en skör svensk grammatiktransformator och håller
-varje godkänt alias synligt och granskningsbart i datafilen — samma princip
+varje godkänt alias synligt och granskningsbart i datafilen, samma princip
 som `kursavsnitt`-gränserna redan följer (explicita, Riksdagen-verifierade,
 inte gissade).
 
@@ -120,7 +120,7 @@ Inga ändringar. `Lagrumsref.forkortning` normaliseras redan till den
 kanoniska förkortningen oavsett vilket alias som matchade, så
 `lagen_nu_url`, `validera_lagrum` och chip-rendering fortsätter fungera
 omodifierat. Studentens råtext (`Lagrumsref.ra`) bevaras redan och visas
-oförändrad i Normfältets direktfeedback — ett svar skrivet som
+oförändrad i Normfältets direktfeedback, ett svar skrivet som
 `"36 § avtalslagen"` visas alltså som studenten skrev det, med grön chip.
 
 ## Testning
@@ -143,7 +143,7 @@ oförändrad i Normfältets direktfeedback — ett svar skrivet som
 ## Risker / avgränsningar
 
 - Listan är inte uttömmande för alla tänkbara talspråkliga varianter
-  (t.ex. skämtsamma eller regionala smeknamn) — omfånget är etablerade
+  (t.ex. skämtsamma eller regionala smeknamn), omfånget är etablerade
   namn/förkortningar, i linje med målet ovan.
 - Om en framtida lag läggs till i registret måste dess aliaser författas
   manuellt; detta är en avsedd avvägning (se "Icke-mål").

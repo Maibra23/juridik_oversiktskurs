@@ -130,7 +130,6 @@ _FORBJUDNA_SKILJETECKEN = {
 _SKILJETECKENUNDANTAG_KATALOGER = (
     "data/lagtext",
     "data/lagstruktur",
-    "docs/superpowers",
 )
 _SKILJETECKENUNDANTAG_FILER = ("tests/test_sprak.py",)
 
@@ -217,7 +216,6 @@ _AVSTAVNING_TILLATEN = (
 _AVSTAVNINGSUNDANTAG_KATALOGER = (
     "data/lagtext",
     "data/lagstruktur",
-    "docs/superpowers",
 )
 _AVSTAVNINGSUNDANTAG_FILER = ("tests/test_sprak.py",)
 

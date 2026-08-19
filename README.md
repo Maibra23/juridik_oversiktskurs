@@ -50,8 +50,8 @@ låser dig till en äldre Streamlit, eftersom versioner från 1.51 kräver 3.10.
 CI kör på 3.11.
 
 ```bash
-git clone https://github.com/Maibra23/juridik_oversiktskurs.git
-cd juridik_oversiktskurs
+git clone https://github.com/Maibra23/Juridikverkstan.git
+cd Juridikverkstan
 
 python3 -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
@@ -134,7 +134,7 @@ Vill du bidra med kod:
 3. Kör hela kvalitetsgrinden lokalt innan du öppnar en *pull request*:
 
 ```bash
-python -m pytest -q                              # 1582 tester
+python -m pytest -q                              # 1612 tester
 python -m ruff check .                           # lint
 python -m mypy --ignore-missing-imports utils    # typkontroll
 node --test tests/js/                            # grafens skiktlogik

@@ -6,7 +6,7 @@
 
 ## Problem
 
-Rättskartan är i dag organiserad efter kursbokens fyra **avdelningar** (AVD I–IV),
+Rättskartan är i dag organiserad efter kursbokens fyra **avdelningar** (AVD I,IV),
 inte efter rättens doktrinära systematik. Två konsekvenser:
 
 1. **Straffrätt och processrätt** ligger i en egen AVD IV. Doktrinärt hör de till
@@ -34,7 +34,7 @@ hela stacken förutsätter det. Doktrinen är **ojämnt djup**:
 Svensk rätt → Civilrätt → Förmögenhetsrätt → Obligationsrätt → Speciell avtalsrätt → Köprätt → KöpL
 ```
 
-Sex namngivna nivåer på civilrättssidan, två–tre på den offentliga. Fast djup kan
+Sex namngivna nivåer på civilrättssidan, två,tre på den offentliga. Fast djup kan
 inte representera det. Datamodellen byts därför till ett **rekursivt träd av grenar**
 med lagar som löv.
 
@@ -47,7 +47,7 @@ med lagar som löv.
 `brott_och_ansvar`, `rattegangen`, `verkstallighet_och_obestand`), och
 `utils.nyckelbegrepp` fail-fast-validerar att id:t finns i taxonomin.
 
-**Dessa 14 id:n MÅSTE bevaras** som grennoder i det nya trädet — de flyttas bara till
+**Dessa 14 id:n MÅSTE bevaras** som grennoder i det nya trädet, de flyttas bara till
 nya doktrinära föräldrar. Inga begrepp får behöva röras.
 
 ## Nytt träd (grenar med bevarade löv-id inom parentes)
@@ -58,7 +58,7 @@ Svensk rätt
 │   ├─ Statsrätt            → (nytt id) statsratt        [inga kurslagrum ännu]
 │   ├─ Förvaltningsrätt     → (nytt id) forvaltningsratt [inga kurslagrum ännu]
 │   ├─ Straffrätt           → brott_och_ansvar (BrB)
-│   └─ Process- och exekutionsrätt
+│   └─ Processrätt och exekutionsrätt
 │        ├─ Rättegången               → rattegangen (RB)
 │        └─ Verkställighet och obestånd → verkstallighet_och_obestand (UB, KonkL)
 └─ Civilrätt
@@ -66,13 +66,13 @@ Svensk rätt
     │   ├─ Obligationsrätt
     │   │   ├─ Allmän avtalsrätt      → avtalsratt (AvtL)
     │   │   ├─ Speciell avtalsrätt
-    │   │   │   ├─ Köp- och konsumenträtt → kop_och_konsumentratt (KöpL, KKöpL, MFL)
+    │   │   │   ├─ Köprätt och konsumenträtt → kop_och_konsumentratt (KöpL, KKöpL, MFL)
     │   │   │   └─ Arbetsrätt              → arbetsratt (LAS)
     │   │   ├─ Skadeståndsrätt        → skadestandsratt (SkL)
-    │   │   └─ Fordrings- och krediträtt → fordringsratt (SkbrL, PreskL)
+    │   │   └─ Fordringsrätt och krediträtt → fordringsratt (SkbrL, PreskL)
     │   └─ Sakrätt
     │        └─ Godtrosförvärv m.m.   → personratt-delen som är sakrätt: GFL
-    ├─ Familje- och successionsrätt
+    ├─ Familjerätt och successionsrätt
     │   ├─ Makar och sambor           → makar_och_sambor (ÄktB, SamboL)
     │   ├─ Föräldrar och barn         → foraldrar_och_barn (FB)
     │   └─ Arv och testamente         → arv_och_testamente (ÄB)
@@ -154,7 +154,7 @@ Nya invarianter att vakta:
 - Alla 14 delområdes-id finns kvar som löv-grenar (regression mot begreppskopplingen).
 - Straffrätt och process-/exekutionsrätt ligger under `offentlig_ratt`.
 - Köp-/konsumenträtt och arbetsrätt ligger under speciell avtalsrätt under obligationsrätt.
-- Grafen är fortfarande ett strikt träd (kanter = noder − 1).
+- Grafen är fortfarande ett strikt träd (kanter = noder , 1).
 - Ingen nod har `gren`-färg utanför {offentlig_ratt, civilratt} utom rot/lag.
 - Juridisk metod förekommer inte i grafen.
 

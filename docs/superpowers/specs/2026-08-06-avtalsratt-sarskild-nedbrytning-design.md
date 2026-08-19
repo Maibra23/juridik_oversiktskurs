@@ -4,14 +4,14 @@
 **Status:** Design, ej implementerad.
 **Omfång:** `data/rattssystem.json` under grenen `speciell_avtalsratt` samt den
 befintliga toppgrenen `fastighetsratt`. Rör inte taxonomigrafens rendering
-(`utils/taxonomigraf.js`, `utils/taxonomi_ui.py`, `utils/rattssystem_graf.py`) —
+(`utils/taxonomigraf.js`, `utils/taxonomi_ui.py`, `utils/rattssystem_graf.py`) ,
 dessa läser trädet generiskt och kräver inga ändringar. Rör inte quiz, kunskapstest,
 svårighetsgrad eller lagrumsverifiering.
 
 ## Problem
 
 En skärmdump (kursmaterial, "Avtalsrätt") visar hur ämnet doktrinärt delas i två
-skikt: **Allmän avtalsrätt** (ingående, fullmakt, ogiltighet, tolkning — dagens
+skikt: **Allmän avtalsrätt** (ingående, fullmakt, ogiltighet, tolkning, dagens
 `avtalsratt`-nod) och **Särskild avtalsrätt**, som i sin tur rymmer sju
 avtalstyper: köp av lös egendom, köp av fast egendom, hyra av fast egendom,
 transportavtal, leasing, anställningsavtal och licensavtal.
@@ -20,8 +20,8 @@ Dagens `speciell_avtalsratt`-gren (`data/rattssystem.json`, `civilratt →
 formogenhetsratt → obligationsratt → speciell_avtalsratt`) har bara två av de
 sju: `kop_och_konsumentratt` och `arbetsratt`. Två luckor väger tyngst:
 
-- **Köp och hyra av fast egendom saknas som egna noder.** Innehållet finns —
-  `Fastighetsrätt` (JB) är redan en nod i kartan — men den ligger som en fristående
+- **Köp och hyra av fast egendom saknas som egna noder.** Innehållet finns ,
+  `Fastighetsrätt` (JB) är redan en nod i kartan, men den ligger som en fristående
   toppgren under Civilrätt, inte under Avtalsrätt. Kartan visar alltså inte att
   fastighetsköp och fastighetshyra *är* särskild avtalsrätt.
 - **Transportavtal, leasing och licensavtal saknas helt.** Ingen nod, ingen text.
@@ -32,22 +32,22 @@ Kartans `speciell_avtalsratt`-gren ska ha alla sju avtalstyper som barn, i samma
 ordning som förlagan. De två som redan har lagstöd i kursens register (köp och
 hyra av fast egendom) får fullständiga noder med lagrum. De tre som saknar
 lagstöd i registret (transportavtal, leasing, licensavtal) får ändå kartnoder med
-rätt lagnamn i beskrivningen — men utan att röra registret, quiz eller
+rätt lagnamn i beskrivningen, men utan att röra registret, quiz eller
 svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns.
 
 ## Tekniska förutsättningar
 
 - **En gren har antingen `grenar` eller `lagar`, aldrig båda/ingetdera**
-  (`utils/rattskarta.py:106–110`, `_bygg_gren`). En tom lista `"lagar": []`
-  uppfyller kravet — det är exakt mönstret `statsratt`/`forvaltningsratt` redan
-  använder för "(kommer)"-ämnen (`data/rattssystem.json:12–17`).
+  (`utils/rattskarta.py:106 till 110`, `_bygg_gren`). En tom lista `"lagar": []`
+  uppfyller kravet, det är exakt mönstret `statsratt`/`forvaltningsratt` redan
+  använder för "(kommer)"-ämnen (`data/rattssystem.json:12 till 17`).
 - **`lagar[].forkortning` valideras mot `data/lagrum.json`** via
-  `lagrum_register()` (`utils/rattskarta.py:81–99`). En förkortning som inte
+  `lagrum_register()` (`utils/rattskarta.py:81 till 99`). En förkortning som inte
   finns där stoppar hela inläsningen.
 - **Att lägga till en förkortning i `data/lagrum.json` är inte en isolerad
   ändring.** `tests/test_lagstruktur.py` och `tests/test_lagtext.py` kräver då
   matchande filer i `data/lagstruktur/<sfs>.json` respektive
-  `data/lagtext/<sfs>.json` — Riksdagens kapitel/paragrafstruktur och full
+  `data/lagtext/<sfs>.json`, Riksdagens kapitel/paragrafstruktur och full
   lagtext, normalt hämtade med `scripts/hamta_lagstruktur.py`. Det är fullt
   förarbete som inte är beställt här.
 - **Samma lag i flera grenar ger distinkta grafnoder.** `lag_id(gren_id,
@@ -62,10 +62,10 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
 - **Registrets `kursavsnitt` för JB bekräftar gränsdragningen oberoende av den
   här designen.** `data/lagrum.json`, JB-postens `kursavsnitt`, delar redan
   kapitlen i precis samma två grupper: kap. 4 "Köp av fast egendom
-  (formkrav)"/"Fel i fastighet" och kap. 12 "Hyra (bostadshyra)" mot kap. 1–2,
-  6–7 (fastighetsgräns, tillbehör, panträtt, nyttjanderätt/servitut). Den
+  (formkrav)"/"Fel i fastighet" och kap. 12 "Hyra (bostadshyra)" mot kap. 1 till 2,
+  6 till 7 (fastighetsgräns, tillbehör, panträtt, nyttjanderätt/servitut). Den
   obligationsrättsliga/sakrättsliga delningen i "Valda beslut" är alltså inte
-  en ny tolkning — den följer en gränsdragning kursens eget lagrumsregister
+  en ny tolkning, den följer en gränsdragning kursens eget lagrumsregister
   redan gör.
 
 ## Valda beslut
@@ -75,7 +75,7 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   (identifierade nedan, källor bifogade) skrivs in i `beskrivning`/`nar` som
   fri text i stället för strukturerade `lagar[]`-poster. Det ger studenten rätt
   lagnamn utan att trigga registerkravet, lagstruktur-scraping eller att
-  ämnena plötsligt dyker upp i quiz/svårighetsgrad — ingen av de delarna läser
+  ämnena plötsligt dyker upp i quiz/svårighetsgrad, ingen av de delarna läser
   fri text, bara `lagar[].forkortning`.
 - **Fastighetsrätt delas efter sin egen redan skrivna gränsdragning.**
   Nodens nuvarande beskrivning säger redan att JB "Spänner över både
@@ -84,11 +84,11 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   nya noder under `speciell_avtalsratt`; den sakrättsliga halvan
   (fastighetstillbehör, servitut, panträtt) blir kvar på `fastighetsratt`,
   som förblir en egen toppgren under Civilrätt (den är inte ett avtal, den är
-  ett förmögenhetsobjekt — sakrätt hör inte hemma under Avtalsrätt).
+  ett förmögenhetsobjekt, sakrätt hör inte hemma under Avtalsrätt).
 - **JB citeras tre gånger, med olika kapitel i varje nod.** Köp av fast
   egendom pekar på 4 kap. JB, hyra av fast egendom på 12 kap. JB
   ("hyreslagen"), och kvarvarande `fastighetsratt` på de sakrättsliga kapitlen
-  (tillbehör, servitut, panträtt). Ingen ny förkortning krävs — bara tre noder
+  (tillbehör, servitut, panträtt). Ingen ny förkortning krävs, bara tre noder
   som delar `forkortning: "JB"` men har olika `beskrivning`/`nar`.
 - **Ordningen i `speciell_avtalsratt.grenar` följer förlagan:** köp av lös
   egendom, köp av fast egendom, hyra av fast egendom, transportavtal, leasing,
@@ -122,7 +122,7 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   "id": "hyra_av_fast_egendom",
   "namn": "Hyra av fast egendom",
   "beskrivning": "Hyra av bostad och lokal: besittningsskydd, uppsägning och hyresvillkor. Regleras i jordabalkens 12 kap., den s.k. hyreslagen.",
-  "nar": "Frågan gäller ett hyresförhållande för fast egendom — besittningsskydd, uppsägning eller villkoren i hyresavtalet.",
+  "nar": "Frågan gäller ett hyresförhållande för fast egendom, besittningsskydd, uppsägning eller villkoren i hyresavtalet.",
   "lagar": [
     {
       "forkortning": "JB",
@@ -141,7 +141,7 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   "id": "transportavtal",
   "namn": "Transportavtal",
   "beskrivning": "Avtal om godsbefordran. Vilken lag som gäller beror på transportslag: väg (lagen (1974:610) om inrikes vägtransport, internationellt CMR-lagen (1969:12)), sjö (sjölagen, 1994:1009), järnväg (järnvägstrafiklagen, 1985:192) och luft (luftfartslagen, 2010:500).",
-  "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först — det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+  "nar": "Frågan gäller ansvar för gods under transport. Avgör transportslaget först, det styr vilken lag som är tillämplig. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
   "lagar": []
 }
 ```
@@ -153,7 +153,7 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   "id": "leasing",
   "namn": "Leasing",
   "beskrivning": "Ingen särskild leasinglag finns i Sverige. Avtalet bedöms utifrån allmänna avtalsrättsliga principer, med försiktig analogi till köplagen eller konsumentköplagen. Konsumentkreditlagen (2010:1846) kan bli tillämplig om leasingen i realiteten är ett avbetalningsköp.",
-  "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer — det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+  "nar": "Frågan gäller ett leasingavtal. Utgångspunkten är avtalet självt och allmänna avtalsrättsliga principer, det finns ingen dedikerad lagstiftning att falla tillbaka på. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
   "lagar": []
 }
 ```
@@ -165,7 +165,7 @@ svårighetsgrad. Se "Tekniska förutsättningar" för varför den gränsen finns
   "id": "licensavtal",
   "namn": "Licensavtal",
   "beskrivning": "Avtal om rätt att använda någon annans immateriella rättighet. Vilken lag som styr beror på vad som licensieras: upphovsrättslagen (1960:729), patentlagen (1967:837) eller varumärkeslagen (2010:1877). Själva avtalet regleras i övrigt av allmän avtalsrätt.",
-  "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras — det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
+  "nar": "Frågan gäller rätten att nyttja någon annans immateriella rättighet. Avgör vilken rättighetstyp som licensieras, det styr vilken speciallag som är relevant. Inga lagrum ur kursens register. Kartan pekar bara ut området.",
   "lagar": []
 }
 ```
@@ -182,7 +182,7 @@ förfogande över fastighet är fortsatt en sakrättslig fråga).
   "id": "fastighetsratt",
   "namn": "Fastighetsrätt",
   "beskrivning": "Fast egendom som sakrättsligt objekt: fastighetstillbehör, servitut och panträtt.",
-  "nar": "Frågan gäller vad som räknas som fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt — inte själva köpet eller hyresförhållandet.",
+  "nar": "Frågan gäller vad som räknas som fastighetstillbehör, eller en rättighet som belastar fastigheten genom servitut eller panträtt, inte själva köpet eller hyresförhållandet.",
   "lagar": [
     {
       "forkortning": "JB",
@@ -212,7 +212,7 @@ Oförändrade. De motsvarar redan "Köp av lös egendom" respektive
   ett explicit fall om inget redan finns.
 - Ingen ändring väntas i `tests/test_taxonomi_ui.py` (inga hårdkodade
   nodantal), `tests/test_quiz.py`, `tests/test_lagrum.py` eller
-  `tests/test_lagstruktur.py`/`tests/test_lagtext.py` — de nya noderna
+  `tests/test_lagstruktur.py`/`tests/test_lagtext.py`, de nya noderna
   tillför inga nya förkortningar till `data/lagrum.json`.
 - Full `pytest`-körning efter ändringen ska fortsatt vara grön (798 tester
   innan denna ändring).
@@ -220,7 +220,7 @@ Oförändrade. De motsvarar redan "Köp av lös egendom" respektive
 ## Dokumentation
 
 `APPGUIDE.md` rad ~337 nämner exempelvägen "Obligationsrätt → Speciell
-avtalsrätt → Köp- och konsumenträtt → KöpL" som illustration av grafens djup.
+avtalsrätt → Köprätt och konsumenträtt → KöpL" som illustration av grafens djup.
 Lägg till en rad som nämner att Särskild avtalsrätt nu har sju avtalstyper,
 inklusive de tre lagfria "(kommer)"-ämnena.
 
@@ -229,7 +229,7 @@ inklusive de tre lagfria "(kommer)"-ämnena.
 - Att registrera CMR-lagen, Vägtransportlagen, Sjölagen,
   Järnvägstrafiklagen, Luftfartslagen, Konsumentkreditlagen,
   Upphovsrättslagen, Patentlagen eller Varumärkeslagen i
-  `data/lagrum.json` — det kräver lagstruktur- och lagtext-filer och gör
+  `data/lagrum.json`, det kräver filer för lagstruktur och lagtext och gör
   transportavtal/leasing/licensavtal quizbara, vilket inte är beställt.
 - Ändringar i taxonomigrafens rendering, layout eller interaktion.
 - Nytt quizinnehåll för någon av de sju avtalstyperna.
@@ -238,13 +238,13 @@ inklusive de tre lagfria "(kommer)"-ämnena.
 
 - Lag (1974:610) om inrikes vägtransport; lag (1969:12) med anledning av
   Sveriges tillträde till konventionen om fraktavtalet vid internationell
-  godsbefordran på väg (CMR-lagen) — [riksdagen.se](https://www.riksdagen.se)
-- Sjölag (1994:1009) — [lagen.nu/1994:1009](https://lagen.nu/1994:1009)
+  godsbefordran på väg (CMR-lagen), [riksdagen.se](https://www.riksdagen.se)
+- Sjölag (1994:1009), [lagen.nu/1994:1009](https://lagen.nu/1994:1009)
 - Järnvägstrafiklagen (1985:192); lag (1985:193) om internationell
-  järnvägstrafik — [riksdagen.se](https://www.riksdagen.se)
-- Luftfartslag (2010:500) — [lagen.nu/2010:500](https://lagen.nu/2010:500)
-- Konsumentkreditlag (2010:1846) —
+  järnvägstrafik, [riksdagen.se](https://www.riksdagen.se)
+- Luftfartslag (2010:500), [lagen.nu/2010:500](https://lagen.nu/2010:500)
+- Konsumentkreditlag (2010:1846) ,
   [lagen.nu/2010:1846](https://lagen.nu/2010:1846)
 - Lag (1960:729) om upphovsrätt till litterära och konstnärliga verk;
-  patentlagen (1967:837); varumärkeslagen (2010:1877) — riksdagen.se,
+  patentlagen (1967:837); varumärkeslagen (2010:1877), riksdagen.se,
   branschöversikter (Digitala Juristerna, Lavendla)

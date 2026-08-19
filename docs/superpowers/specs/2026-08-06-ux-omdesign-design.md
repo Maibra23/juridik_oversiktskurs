@@ -36,7 +36,7 @@ Appen är ovanligt välbyggd i sitt fundament och ovanligt svag i sin väglednin
 Den pedagogiska grunden är genuint bra: studenten skriver före återkopplingen
 (generationseffekten), rättningen är deterministisk innan någon LLM anropas,
 lagrum verifieras mot ett register, och `VERIFIERINGSNOT` i `utils/ui.py`
-lär ut den svåraste insikten av alla — att ett lagrum kan existera utan att vara
+lär ut den svåraste insikten av alla, att ett lagrum kan existera utan att vara
 tillämpligt. Det är omdömesgillt gjort och ovanligt hos utbildningsappar.
 
 Problemet ligger inte i innehållet utan i *vägledningen*. Appen svarar aldrig på
@@ -54,7 +54,7 @@ förlora det som redan fungerar.
 
 * **Deterministiskt först.** Quiz, lagrumsjakt och Normfältet rättas utan LLM.
   Tutorn är alltid ett tillägg, aldrig en förutsättning. Det gör appen ärlig när
-  modellen är otillgänglig — vilket i en publik driftsättning är ett normaltillstånd.
+  modellen är otillgänglig, vilket i en publik driftsättning är ett normaltillstånd.
 * **Verifieringskedjan.** `utils/granskning.py` stoppar underkända tutorsvar helt
   hellre än att visa osäker juridik, och den underkända texten sparas medvetet
   inte (`utils/tutor.py`, `Tutorsvar.godkand`). Det är rätt avvägning.
@@ -73,7 +73,7 @@ förlora det som redan fungerar.
    för alltid. Startsidans enda knapp kan alltså aktivt leda fel.
 2. **RNTS är osynligt utom i formuläret.** Ryggraden syns som fyra `text_area`
    och en stepper på 1/4 spaltbredd i flik ett. Lagrumsjakten tränar *Norm*,
-   Nyckelbegrepp tränar *Rättsfrågan*, quizet tränar *Tillämpning* — ingen av dem
+   Nyckelbegrepp tränar *Rättsfrågan*, quizet tränar *Tillämpning*, ingen av dem
    säger det.
 3. **Allt väger lika mycket.** Tre flikar i fast ordning med svåraste uppgiften
    först. Ingen ramp från igenkänning till fri produktion.
@@ -110,58 +110,58 @@ förlora det som redan fungerar.
 Sidopanelen ritas av `render_sidopanel()` ur `NAV_TRAD` i `utils/navigation.py`:
 
 ```
-START OCH METOD          Hem · Juridisk metod · Rättskartan
-OFFENTLIG RÄTT           Statsrätt (kommer) · Förvaltningsrätt (kommer)
+START OCH METOD          Hem: Juridisk metod: Rättskartan
+OFFENTLIG RÄTT           Statsrätt (kommer): Förvaltningsrätt (kommer)
 CIVILRÄTT
   Personrätt             Personrätt
   Förmögenhetsrätt       Allmän förmögenhetsrätt
-    Kontraktsrätt        Avtalsrätt · Köp- och konsumenträtt · Fastighetsrätt
+    Kontraktsrätt        Avtalsrätt: Köprätt och konsumenträtt: Fastighetsrätt
     Ersättningsrätt      Skadeståndsrätt
-    Näringsrätt          Arbetsrätt · Associationsrätt
-    Kredit- och obeståndsrätt   Fordringsrätt
-  Familjerätt            Familje- och successionsrätt
-STRAFF- OCH PROCESSRÄTT  Straff- och processrätt
-TRÄNING                  Kunskapstest · Kunskapskarta · Kunskapsutmaning
+    Näringsrätt          Arbetsrätt: Associationsrätt
+    Krediträtt och obeståndsrätt   Fordringsrätt
+  Familjerätt            Familjerätt och successionsrätt
+STRAFF- OCH PROCESSRÄTT  Straffrätt och processrätt
+TRÄNING                  Kunskapstest: Kunskapskarta: Kunskapsutmaning
 ```
 
 ### Problem
 
-**P1 — Två oförenliga ordningsprinciper i samma träd.** "CIVILRÄTT" och
+**P1, Två oförenliga ordningsprinciper i samma träd.** "CIVILRÄTT" och
 "OFFENTLIG RÄTT" är rättssystematik. "START OCH METOD" och "TRÄNING" är
 appfunktioner. De ritas med exakt samma komponent (`.jok-nav-kategori`) och samma
 typografiska vikt. Studenten kan därför inte avgöra om sidopanelen är en karta
 över rätten eller en lista över verktyg. Den är båda, och signalerar ingetdera.
 "Hem" ligger sorterat under en doktrinärt klingande rubrik.
 
-**P2 — Djupet kostar mer än det ger.** För att nå Avtalsrätt passerar blicken
+**P2, Djupet kostar mer än det ger.** För att nå Avtalsrätt passerar blicken
 CIVILRÄTT → Förmögenhetsrätt → Kontraktsrätt: tre abstraktioner som en nybörjare
 inte kan tolka, före den första klickbara saken. Systematiken är värdefull, men
 den betalas i sin helhet innan studenten fått något tillbaka.
 
-**P3 — "TRÄNING" innehåller tre olika slags saker.** Läser man
+**P3, "TRÄNING" innehåller tre olika slags saker.** Läser man
 `sidor/9_Kunskapstest.py` visar det sig att Kunskapstest inte testar något: den
 listar resultat och länkar tillbaka till moduler. Det är en resultattavla.
 Kunskapskarta är en visualisering av studentens eget arbete. Bara
 Kunskapsutmaning är träning. Namnet *Kunskapstest* lovar ett prov som inte finns.
 
-**P4 — Framsteg finns på tre ställen och är helt på inget.** Hem visar quizandel
+**P4, Framsteg finns på tre ställen och är helt på inget.** Hem visar quizandel
 per modul plus genomförda fall plus export. Kunskapstest visar quizresultat igen.
 Kunskapskarta visar de genomförda fallen som graf. Tre ytor besvarar samma fråga,
 ingen fullständigt.
 
-**P5 — Två "kartor" med snarlika namn och motsatta syften.** Rättskartan är
+**P5, Två "kartor" med snarlika namn och motsatta syften.** Rättskartan är
 kursens referens, komplett dag noll. Kunskapskartan är studentens personliga
 artefakt, tom dag noll. `design_system.md` §4.2 måste uttryckligen varna för att
-de förväxlas — när dokumentationen behöver en varning är namngivningen problemet.
+de förväxlas, när dokumentationen behöver en varning är namngivningen problemet.
 
-**P6 — Två döda poster i full vikt.** Statsrätt och Förvaltningsrätt visas som
+**P6, Två döda poster i full vikt.** Statsrätt och Förvaltningsrätt visas som
 egna rader med "(kommer)". Avsikten är god (visa kursens omfång), men priset är
-att kategorin direkt efter START OCH METOD är helt oklickbar — det första
+att kategorin direkt efter START OCH METOD är helt oklickbar, det första
 studenten möter under rubriken OFFENTLIG RÄTT är två återvändsgränder.
 
 ### Rekommenderad arkitektur
 
-Tre plan, namngivna efter vad studenten vill göra — inte efter vad koden innehåller:
+Tre plan, namngivna efter vad studenten vill göra, inte efter vad koden innehåller:
 
 ```
 STUDERA
@@ -171,12 +171,12 @@ STUDERA
   Personrätt
   Förmögenhetsrätt
     Allmän förmögenhetsrätt
-    Kontraktsrätt            Avtalsrätt · Köp- och konsumenträtt · Fastighetsrätt
+    Kontraktsrätt            Avtalsrätt: Köprätt och konsumenträtt: Fastighetsrätt
     Ersättningsrätt          Skadeståndsrätt
-    Näringsrätt              Arbetsrätt · Associationsrätt
-    Kredit- och obeståndsrätt  Fordringsrätt
-  Familjerätt                Familje- och successionsrätt
-  Straff- och processrätt
+    Näringsrätt              Arbetsrätt: Associationsrätt
+    Krediträtt och obeståndsrätt  Fordringsrätt
+  Familjerätt                Familjerätt och successionsrätt
+  Straffrätt och processrätt
   Blandad träning            (f.d. Kunskapsutmaning)
   Offentlig rätt kommer senare.        ← en dämpad rad, inte två poster
 
@@ -202,7 +202,7 @@ Förändringar mot i dag:
 **Varför tre plan.** Studera / Slå upp / Mina framsteg motsvarar de tre
 tillstånd en student faktiskt befinner sig i: jag arbetar, jag behöver kolla
 något, jag vill veta hur det går. Det är samma indelning Stripes dashboard och
-Linears sidopanel använder — arbetsytor först, referens sedan, kontoläge sist —
+Linears sidopanel använder, arbetsytor först, referens sedan, kontoläge sist ,
 och den låter varje plan ha sin egen visuella täthet. Rättssystematiken behålls
 i sin helhet inuti planet där den hör hemma, så `design_system.md` §4.1:s premiss
 (studenten ska kunna se hela rättssystemet på en gång) överlever oförändrad.
@@ -232,13 +232,13 @@ Tre saker gör den ändå fel för en förstagångsbesökare:
   `st.info` som förklarar Obsidian. Tillsammans med friskrivningen ger det tre
   informationskort och två knappar på en sida vars uppgift är *börja här*.
 * **RNTS nämns men definieras inte.** Hero-texten säger "identifiera rättsfrågan,
-  hitta rätt lagrum, tillämpa normen och dra en slutsats" — och sist på sidan
+  hitta rätt lagrum, tillämpa normen och dra en slutsats", och sist på sidan
   upprepar ARBETSGÅNG samma fyrstegsidé med andra ord. Två komponenter lär ut
   samma sak i olika vokabulär, och ingen av dem namnger RNTS.
 
 ### Ny startsida, uppifrån och ner
 
-**1. Hero — progressiv, två tillstånd.**
+**1. Hero, progressiv, två tillstånd.**
 Första besöket: ögonbryn `JURIDISK ÖVERSIKTSKURS`, rubrik *Träna att tänka
 juridiskt, inte att läsa passivt*, en mening om metoden. Återkommande i samma
 session: hero krymper till en rad. Sidans överkant ska inte upprepa vad studenten
@@ -246,21 +246,21 @@ redan läst.
 *Problem:* konstant hög introduktionskostnad. *Lärande:* frigör första skärmen åt
 handling. *Praxis:* progressive disclosure. *Insats: Låg.*
 
-**2. Friskrivningen — kvar, men dämpad.**
+**2. Friskrivningen, kvar, men dämpad.**
 En `st.caption`-rad direkt under hero: "Studieverktyg, inte juridisk rådgivning.
 Mata inte in personuppgifter." Fullständig text står redan i `footer_note()`.
 Kravet i PRD 4 uppfylls; kravet var synlighet, inte dominans.
 *Problem:* det oviktiga är starkast. *Lärande:* uppmärksamheten går till uppgiften.
 *Praxis:* visuell hierarki efter uppgiftsvärde. *Insats: Låg.*
 
-**3. NÄSTA STEG — ett kort, inte bara en knapp.**
+**3. NÄSTA STEG, ett kort, inte bara en knapp.**
 Kortet svarar på fyra frågor innan studenten klickar: vilken modul, vilket
 RNTS-steg det tränar, ungefärlig tid, och varför just den. Exempel:
 
 ```
 NÄSTA STEG
-Avtalsrätt · kap. 7
-Tränar Norm och Tillämpning · ca 15 min
+Avtalsrätt: kap. 7
+Tränar Norm och Tillämpning: ca 15 min
 Du har gjort Juridisk metod. Avtalsrätt är kursens första
 egentliga rättsområde och bygger på den.
 [ Börja: Avtalsrätt → ]                    Fortsätt där du var (Arbetsrätt)
@@ -274,7 +274,7 @@ enskilda vägledningsfel.
 sekvensering är den mest grundläggande skaffoldningen som finns. *Praxis:* en
 primär handling per skärm, med kontext (Duolingo, Khan Academy). *Insats: Låg.*
 
-**4. RNTS-panelen — den bärande nyheten.**
+**4. RNTS-panelen, den bärande nyheten.**
 De fyra stegen på appens första skärm, med en rad klarspråk var:
 
 ```
@@ -290,14 +290,14 @@ lägger den till vad studenten hittills arbetat med per steg. Den ersätter
 ARBETSGÅNG helt: en fyrstegspipeline och en fyrstegsmetod på samma sida är
 samma sak sagd två gånger.
 *Problem:* appens ryggrad är osynlig; RNTS namnges aldrig där studenten börjar.
-*Lärande:* chunking — fyra namngivna steg är ett schema studenten kan hänga allt
+*Lärande:* chunking, fyra namngivna steg är ett schema studenten kan hänga allt
 efterföljande på. *Praxis:* progressive disclosure, en modell i stället för två
 vokabulär. *Insats: Medel.*
 
-**5. FRAMSTEG — kort, ärligt, länkat.**
+**5. FRAMSTEG, kort, ärligt, länkat.**
 Ersätt listan av `st.progress` per modul (den växer obegränsat och visar bara
-det studenten råkat röra) med tre tal på en rad — moduler påbörjade, fall
-genomförda, quizandel — och en länk till *Framsteg och samband*. Under dem, en
+det studenten råkat röra) med tre tal på en rad, moduler påbörjade, fall
+genomförda, quizandel, och en länk till *Framsteg och samband*. Under dem, en
 rad som säger sanningen: "Framstegen gäller den här sessionen. Ladda ner dem för
 att behålla dem." Nedladdningsknapparna flyttas dit de hör hemma och visas inte
 alls när det inte finns något att ladda ner.
@@ -335,7 +335,7 @@ Fem konkreta brister:
 
 1. **Ingen kontext för var du är.** `st.page_link` markerar den aktiva sidan,
    men de egna rubrikerna vet inget: inget säger att *Förmögenhetsrätt →
-   Kontraktsrätt* innehåller den öppna sidan. Datat finns redan —
+   Kontraktsrätt* innehåller den öppna sidan. Datat finns redan ,
    `streamlit_app.py:63` lägger `_jok_aktiv_sida` i session_state och ingen
    läser det.
 2. **Statuspanelen har samma vikt som navigeringen.** Fyra rader om LLM-modell
@@ -344,7 +344,7 @@ Fem konkreta brister:
 3. **Ikoner har läckt in.** `🟢`/`⚪` i `render_statuspanel()` bryter mot appens
    egen regel.
 4. **Modellväljaren är utvecklaryta i en publik app.** 8B/14B är ett val ingen
-   student kan grunda — och enligt tidigare mätning är 14B inte bättre.
+   student kan grunda, och enligt tidigare mätning är 14B inte bättre.
 5. **Trädet är långt för att det innehåller sådant som inte är rättsområden.**
    Problemet §4.1 skyddade mot är längden, inte öppenheten. Avsnitt 2 löser det
    genom att flytta fyra poster, inte genom att fälla ihop något.
@@ -365,12 +365,12 @@ STUDERA
     Allmän förmögenhetsrätt
     Kontraktsrätt
       Avtalsrätt              3/5
-      Köp- och konsumenträtt
+      Köprätt och konsumenträtt
       Fastighetsrätt
     Ersättningsrätt
       Skadeståndsrätt
     …
-  Straff- och processrätt
+  Straffrätt och processrätt
   Blandad träning
   Offentlig rätt kommer senare.
 ────────────────────────────────
@@ -391,23 +391,23 @@ oförändrad stil). Inuti `STUDERA` behålls den doktrinära nivåtrappan exakt 
 att gälla hela appen.
 
 **Framstegsmarkering.** En dämpad siffergrupp (`3/5`) höger om modulnamnet, i
-kapitälhöjd och grå — endast för moduler där arbete faktiskt registrerats.
+kapitälhöjd och grå, endast för moduler där arbete faktiskt registrerats.
 *Problem:* studenten måste öppna en modul för att minnas om den är gjord.
 *Lärande:* igenkänning slår hågkomst; det avlastar arbetsminnet för juridiken.
 *Praxis:* Notions och GitHubs dämpade metadata i sidopaneler. *Insats: Medel*
 (kräver framstegsdata per modul i navigeringslagret).
 Avvisat: procentstaplar per modul. De gör en karta till en instrumentpanel, och
-med sessionsdata står de på noll varje gång studenten kommer tillbaka — det är
+med sessionsdata står de på noll varje gång studenten kommer tillbaka, det är
 demoraliserande utan att vara informativt.
 
 **Aktiv sida i sammanhang.** Rubrikkedjan ovanför den öppna sidan får bläckvikt
 i stället för grått, så blicken hittar sin plats i trädet utan färg eller ikon.
 *Problem:* ingen orientering i ett fyra nivåer djupt träd. *Lärande:* minskad
-extraneous load — man ska inte behöva leta efter sig själv. *Praxis:* aktiv
+extraneous load, man ska inte behöva leta efter sig själv. *Praxis:* aktiv
 sökväg i VS Code, Obsidian, Linear. *Insats: Låg* (datat finns redan).
 
 **Statuspanel.** En rad: "Tutorn: tillgänglig". Den expanderar till dagens
-detaljer bara när något faktiskt är begränsat — under en fjärdedel återstående,
+detaljer bara när något faktiskt är begränsat, under en fjärdedel återstående,
 eller otillgänglig. Modellväljaren flyttas ur sidopanelen.
 *Problem:* driftinformation konkurrerar med navigering. *Lärande:* mindre
 extraneous load. *Praxis:* systemstatus syns när den betyder något (Stripe).
@@ -429,51 +429,51 @@ Genomgång av varje komponent som bär vikt. Format: iakttagelse → åtgärd �
 
 ### Navigering och ram
 
-**`hero()`** — bra typografiskt. Används identiskt på alla sidor, även där
+**`hero()`**, bra typografiskt. Används identiskt på alla sidor, även där
 ingressen upprepar vad rubriken redan sagt (`_ingress()` i `utils/modulvy.py`
 ignorerar sitt `filnamn`-argument och ger samma text på alla tolv modulsidor).
 Åtgärd: låt modulsidans ingress säga något
 modulspecifikt, eller ta bort den. En mening som är sann för alla moduler bär
 ingen information. *Insats: Låg.*
 
-**`section_heading()`** — konsekvent och bra. Behålls.
+**`section_heading()`**, konsekvent och bra. Behålls.
 
-**`footer_note()`** — behålls oförändrad.
+**`footer_note()`**, behålls oförändrad.
 
-**`render_sidhjalp()`** — mönstret (hopfälld expander, 3–5 punkter) är rätt, men
+**`render_sidhjalp()`**, mönstret (hopfälld expander, 3 till 5 punkter) är rätt, men
 används bara på Rättskartan. §4.3 säger "varje sida". Åtgärd: antingen inför den
 överallt eller ändra regeln. Specifikation som inte följs är sämre än ingen.
 *Insats: Låg.*
 
 ### Kort och behållare
 
-**`render_kort()` och `summary_box()`** — död kod, refererade bara av
+**`render_kort()` och `summary_box()`**, död kod, refererade bara av
 `tests/test_ui.py`. `render_kort` har dessutom en `ikon`-parameter som strider mot
 ikonregeln. Åtgärd: ta bort båda, eller gör `render_kort` till den enda
 kortprimitiven som avsnitt 6 föreslår. *Insats: Låg.*
 
-**`render_case()`** — bra: guldlinje överst, metadatarad, begränsad radlängd.
+**`render_case()`**, bra: guldlinje överst, metadatarad, begränsad radlängd.
 Latent brist: hela scenariotexten läggs i ett enda `<p>` utan radbrytshantering,
 till skillnad från `_tutortext_html()` som översätter `\n\n`. Inget nuvarande
-scenario innehåller radbrytningar, så felet syns inte — men det utlöses av det
+scenario innehåller radbrytningar, så felet syns inte, men det utlöses av det
 första flerstyckesscenariot någon skriver. Åtgärd: samma stycketolkning som
 tutortexten. *Insats: Låg.*
 
-**`render_lagkort()` / `render_begreppskort()`** — de starkaste komponenterna i
+**`render_lagkort()` / `render_begreppskort()`**, de starkaste komponenterna i
 appen. Begreppskortets fyra fasta fält, och guldstreckade igenkänningsfältet som
 kopplar begreppet till RNTS-steget Rättsfrågan, är utmärkt pedagogisk design.
 Behålls oförändrade. En anmärkning: `jok-begrepp h3` är 19px och bryter
 typskalan (18 eller 20, se avsnitt 6).
 
-### RNTS-formuläret — appens viktigaste yta
+### RNTS-formuläret, appens viktigaste yta
 
-**`render_rnts_steg()`** — tre problem.
+**`render_rnts_steg()`**, tre problem.
 
 1. *Statusarna är nästan meningslösa.* `_rnts_statusar()` ger "pågår" för varje
    icke-tomt fält. Ett enda tecken i Tillämpning ser ut som framsteg. Bara Norm
    bedöms på riktigt (mot lagrumsregistret).
-2. *Glyferna `●`, `✓`, `!` är ikoner.* Åtgärd: rita tillstånden med CSS —
-   ofylld ring, fylld ring, fylld ring med bock i ren form — utan teckenglyfer.
+2. *Glyferna `●`, `✓`, `!` är ikoner.* Åtgärd: rita tillstånden med CSS ,
+   ofylld ring, fylld ring, fylld ring med bock i ren form, utan teckenglyfer.
 3. *Placeringen isolerar den.* `st.columns([1, 3])` lägger steppern i en smal
    ränna vid sidan av formuläret. Åtgärd: lägg den ovanför formuläret i full
    bredd, som en vågrät fyrstegsindikator.
@@ -482,7 +482,7 @@ typskalan (18 eller 20, se avsnitt 6).
 som mäter något verkligt ger formativ återkoppling; en som mäter tecken ger
 falsk trygghet. *Praxis:* framstegsindikatorer måste vara sanna. *Insats: Medel.*
 
-**RNTS-fälten** — fyra `text_area` på 90px, samma placeholder varje gång, ingen
+**RNTS-fälten**, fyra `text_area` på 90px, samma placeholder varje gång, ingen
 förlaga. `_norm_feedback()` är däremot utmärkt: chips direkt, varning vid
 overifierat, allt utan LLM. Åtgärd: lägg ett hopfällt "Så kan ett svar se ut"
 intill Rättsfrågan i modulens första fall (fadande skaffoldning, se avsnitt 7),
@@ -495,15 +495,15 @@ knappar, en selectbox, scenariokort, stepper, fyra fält, en caption, tutorknapp
 ("Generera nytt rättsfall" och tutorknappen) och sex kontroller innan studenten
 skrivit ett ord. Åtgärd: se avsnitt 10, modulsidan.
 
-**Facitexpandern** — ligger direkt under tutorknappen, öppen för ett klick innan
+**Facitexpandern**, ligger direkt under tutorknappen, öppen för ett klick innan
 studenten försökt. Åtgärd: göm bakom en enkel avsiktsbekräftelse ("Jag har
-försökt — visa facit"), inte en låsning. *Lärande:* desirable difficulty; ett
+försökt, visa facit"), inte en låsning. *Lärande:* desirable difficulty; ett
 facit som är gratis före försöket tar bort hela generationseffekten appen bygger
 på. *Insats: Låg.*
 
 ### Quiz och lagrumsjakt
 
-**Quizfrågan** — `design_system.md` §3 specificerar `render_quizfraga(fraga)`.
+**Quizfrågan**, `design_system.md` §3 specificerar `render_quizfraga(fraga)`.
 Den finns inte. I stället ritar `_rendera_quizfraga()` fet markdown, en radio,
 en Svara-knapp och `st.divider()` mellan varje fråga. Följder: frågorna är inte
 kort, rubrikerna är inte rubriker, och resultatet försvinner om studenten
@@ -511,16 +511,16 @@ avmarkerar radion (villkoret är `st.session_state.get(...) and valt is not None
 Åtgärd: implementera komponenten som specifikationen redan beskriver, och låt
 resultatet överleva avmarkering. *Insats: Medel.*
 
-**Lagrumsjakten** — en verklig bugg: `with st.expander("Visa facit")` ligger
-inuti `if st.button("Rätta")`-blocket (`utils/modulvy.py:457–474`). Facit visas
+**Lagrumsjakten**, en verklig bugg: `with st.expander("Visa facit")` ligger
+inuti `if st.button("Rätta")`-blocket (`utils/modulvy.py:457 till 474`). Facit visas
 alltså bara i den rerun där knappen trycktes och försvinner vid nästa
 interaktion. Dessutom visas facit direkt vid första felsvaret, tillsammans med
-ledtråden — ingen anledning att försöka igen. Åtgärd: flytta expandern ut ur
+ledtråden, ingen anledning att försöka igen. Åtgärd: flytta expandern ut ur
 blocket; visa ledtråd först, facit efter ytterligare ett försök.
 *Lärande:* retrieval practice kräver att hågkomsten får kosta något.
 *Insats: Låg.*
 
-**Svårighetsväljaren** — `st.segmented_control` med Grund/Medel/Avancerad,
+**Svårighetsväljaren**, `st.segmented_control` med Grund/Medel/Avancerad,
 placerad överst innan studenten sett ett enda fall. En nybörjare kan inte välja
 nivå på en uppgiftstyp de aldrig mött. Åtgärd: förvälj Grund för sessionens
 första fall i en modul, och flytta väljaren intill genereringsknappen med en
@@ -530,22 +530,22 @@ förklarande rad. *Insats: Låg.*
 
 **Två aviseringssystem.** `utils/modulvy.py` använder `st.info`, `st.success`,
 `st.error`, `st.warning` *och* `render_varning`/`render_info`. Samma betydelse
-får två utseenden. Åtgärd: en enda uppsättning — `jok`-korten — med fyra
+får två utseenden. Åtgärd: en enda uppsättning, `jok`-korten, med fyra
 dokumenterade roller: instruktion (blå), varning (gul), rätt (grön), fel (rött).
 Streamlits egna används inte i studentflöden. *Insats: Medel* (många anropsställen).
 
-**`render_info()` bär fyra betydelser** — friskrivning, tomt tillstånd,
+**`render_info()` bär fyra betydelser**, friskrivning, tomt tillstånd,
 tutor otillgänglig, inaktuellt svar. Åtgärd: skilj *instruktion* från
 *systemtillstånd*; systemtillstånd ska vara tystare, inte likvärdigt.
 *Insats: Låg.*
 
-**`render_tutortext()`** — mycket bra. Verifierade lagrum blir chips,
+**`render_tutortext()`**, mycket bra. Verifierade lagrum blir chips,
 overifierade samlas i en varningsruta, RNTS-rubriker blir kapitäler i blått, och
 `VERIFIERINGSNOT` förklarar vad verifieringen *inte* betyder. Behålls. Enda
 åtgärd: noten ligger i `st.caption` under varje svar och blir därmed brus vid
 upprepad läsning. Se avsnitt 7.
 
-**`tutorknapp()`** — degraderingen är föredömlig (tre feltyper, tre svenska kort,
+**`tutorknapp()`**, degraderingen är föredömlig (tre feltyper, tre svenska kort,
 `reservhanvisning` pekar mot deterministiskt underlag). En brist: när
 granskningen underkänner svaret får studenten en gul varning som handlar om
 appens interna verifiering. Det är systemets problem formulerat som studentens.
@@ -554,18 +554,18 @@ kort därefter. *Insats: Låg.*
 
 ### Övrigt
 
-**Nedladdningsknappar** — tre på startsidan i samma vikt (Markdown, Excel,
+**Nedladdningsknappar**, tre på startsidan i samma vikt (Markdown, Excel,
 Obsidianvalv). Åtgärd: flytta till *Framsteg och samband*; en primär (valvet,
 som är det pedagogiskt intressanta) och två sekundära.
 *Insats: Låg.*
 
-**Falltypsguidens `st.dataframe`** — en tabell mitt i en app som annars består av
+**Falltypsguidens `st.dataframe`**, en tabell mitt i en app som annars består av
 kort. Den fungerar, men "Börja här"-kolumnen innehåller lagförkortningar som
-inte är chips och därmed inte klickbara — guldregeln bryts på appens mest
+inte är chips och därmed inte klickbara, guldregeln bryts på appens mest
 sökorienterade yta. Åtgärd: rendera träfflistan som kompakta rader med riktiga
 lagrumschips. *Insats: Medel.*
 
-**Justeringshack** — `st.caption("&nbsp;", unsafe_allow_html=True)` i
+**Justeringshack**, `st.caption("&nbsp;", unsafe_allow_html=True)` i
 `sidor/11_Kunskapsutmaning.py` finns bara för att trycka ner en knapp i linje med
 en selectbox. Åtgärd: `st.columns` med `vertical_alignment="bottom"`.
 *Insats: Låg.*
@@ -603,7 +603,7 @@ modulär skala med begränsat antal steg. *Insats: Låg.*
 
 Marginalerna i `inject_css()` är handsatta: `.1`, `.15`, `.2`, `.35`, `.4`,
 `.45`, `.5`, `.6`, `.7`, `.8`, `1.1`, `1.8`, `2` rem. Ingen skala, alltså ingen
-visuell rytm — avstånden signalerar inte gruppering.
+visuell rytm, avstånden signalerar inte gruppering.
 
 Föreslagen 4px-bas som variabler: `--s1` 4px, `--s2` 8px, `--s3` 12px, `--s4`
 16px, `--s5` 24px, `--s6` 32px, `--s7` 48px. Regeln: avstånd *inom* en grupp
@@ -631,7 +631,7 @@ Föreslagen ordning:
 
 Vänsterlinjen får en enda betydelse: *citat eller härlett innehåll* (tutortext,
 skillnadsrad). Lagkortets guldlinje flyttar till överkanten, som `render_case`
-redan gör — då betyder en guldlinje överst konsekvent "det här handlar om lagrum".
+redan gör, då betyder en guldlinje överst konsekvent "det här handlar om lagrum".
 *Problem:* fyra radier och två skuggregimer utan systematik. *Lärande:*
 konsekvent form gör att studenten känner igen *typ av innehåll* före den läst det.
 *Praxis:* ett kortsystem med dokumenterade varianter. *Insats: Medel.*
@@ -648,7 +648,7 @@ Python-konstanterna. Åtgärd: befordra till namngivna tokens (`--gra-text`,
 
 **En färg med två betydelser.** `#6B6459` är både undergrensfärg i navigeringen
 (`.jok-nav-gren`) och grenfärg för *offentlig rätt* i taxonomigrafen
-(`GRENFARGER`). Samma värde bär alltså en navigerings- och en doktrinär
+(`GRENFARGER`). Samma värde bär alltså en navigerande och en doktrinär
 betydelse. Åtgärd: ge grafens offentligrättsgren en egen, dokumenterad ton.
 *Problem:* färgsemantiken är appens starkaste inlärda regel och urholkas av
 kollisionen. *Insats: Låg.*
@@ -688,7 +688,7 @@ nästan rätt. Två som förtjänar sin plats:
 **Avvisas:** konfetti, poäng, streak-animationer, animerade framstegsstaplar.
 De är extraneous load och belönar fel sak. I en app om juridiskt resonemang ska
 belöningen vara att förstå ett rekvisit, inte att en stapel fylls. Det är också
-skälet att appen inte ska härma Duolingos belöningsslinga — den är byggd för
+skälet att appen inte ska härma Duolingos belöningsslinga, den är byggd för
 vanebildning i korta moment, inte för analytiskt arbete i femtonminuterspass.
 
 ---
@@ -702,11 +702,11 @@ Norm. Nyckelbegrepp tränar Rättsfrågan. Quiz tränar Tillämpning. Rättsfall
 tränar alla fyra. I dag säger ingen av dem det. En kapitälrad över varje
 aktivitet räcker: `TRÄNAR: NORM`.
 *Problem:* studenten samlar övningar utan att se att de bygger samma förmåga.
-*Lärande:* det är hela överföringsmekanismen — RNTS ska bli ett schema, inte ett
+*Lärande:* det är hela överföringsmekanismen, RNTS ska bli ett schema, inte ett
 formulär. *Praxis:* etiketter som gör struktur explicit. *Insats: Låg.*
 
 **7.2 Ramp inom modulen: igenkänning → hågkomst → produktion.** Flikordningen är
-i dag Rättsfall, Quiz, Lagrumsjakt — svårast först. Föreslagen ordning:
+i dag Rättsfall, Quiz, Lagrumsjakt, svårast först. Föreslagen ordning:
 Nyckelbegrepp för modulen (igenkänning) → Lagrumsjakt (styrd hågkomst) → Quiz
 (tillämpning i valsituation) → Rättsfall (fri produktion). Ingen låsning; bara
 ordning, med en rad som förklarar varför.
@@ -715,7 +715,7 @@ scaffolding och gradvis ökande svårighet. *Praxis:* Brilliant och Khan Academy
 bygger båda upp mot fri uppgift. *Insats: Medel.*
 
 **7.3 Fadande skaffoldning på Rättsfrågan.** Det svåraste steget för en
-nybörjare är att formulera rättsfrågan — de vet inte ens vilken *form* svaret
+nybörjare är att formulera rättsfrågan, de vet inte ens vilken *form* svaret
 ska ha. För modulens **första** fall: erbjud tre kandidatformuleringar att välja
 bland, varav en är rimlig, med kort motivering efter valet. Därefter tomt fält
 som i dag.
@@ -735,7 +735,7 @@ försöket, både i rättsfallsvyn och i lagrumsjakten. Ett medvetet klick
 Eftersom sessionen är flyktig och målgruppen anonym är Obsidianvalvet den enda
 ärliga vägen till spaced repetition. `utils/obsidian.py` bygger redan en not per
 RNTS-analys, sammanlänkad via lagrum, plus Rättskartan. Åtgärd: säg det i
-copyn — "Ta med dig det du gjort och läs om det i morgon" — i stället för att
+copyn, "Ta med dig det du gjort och läs om det i morgon", i stället för att
 presentera det som en filnedladdning.
 *Problem:* appens bästa långtidsmekanism är märkt som en teknisk detalj.
 *Lärande:* spacing-effekten är den mest robusta effekten i inlärningsforskningen.
@@ -751,7 +751,7 @@ kort, konsekvent formulering.
 *Lärande:* en princip lärs en gång och påminns kort, inte tvärtom.
 *Insats: Låg.*
 
-**7.7 Förklara varför blandad träning är svårare — och bättre.** Kunskapsutmaning
+**7.7 Förklara varför blandad träning är svårare, och bättre.** Kunskapsutmaning
 gör redan interleaving. Studenten vet inte att en blandad omgång känns sämre men
 ger mer än en blockad. En mening på sidan gör skillnaden mellan en funktion och
 en metod.
@@ -770,44 +770,44 @@ load. *Lärande:* chunking frigör arbetsminne åt juridiken.
 
 Antag att studenten aldrig läst juridik. Så ser det ut i dag, minut för minut.
 
-**0:00 — Hem.** Läser rubriken "Träna att tänka juridiskt, inte att läsa
+**0:00, Hem.** Läser rubriken "Träna att tänka juridiskt, inte att läsa
 passivt". Bra. Under den, sidans starkaste visuella element: en blå ruta om att
 detta inte är juridisk rådgivning. Först därefter kommer knappen.
 *Friktion:* det första ögat dras till är en brasklapp.
 
-**0:20 — Sidopanelen.** Söker "var börjar jag". Ser START OCH METOD, sedan
+**0:20, Sidopanelen.** Söker "var börjar jag". Ser START OCH METOD, sedan
 OFFENTLIG RÄTT med två gråa oklickbara poster, sedan CIVILRÄTT →
 Förmögenhetsrätt → Kontraktsrätt → Avtalsrätt. Fyra okända ord innan något går
 att klicka på.
 *Friktion:* systematiken kostas ut i sin helhet innan något ges tillbaka.
 
-**0:40 — Klickar CTA:n, hamnar i Juridisk metod.** Möter tre flikar och, i flik
-ett: en svårighetsväljare (Grund/Medel/Avancerad — utan att veta vad något av dem
+**0:40, Klickar CTA:n, hamnar i Juridisk metod.** Möter tre flikar och, i flik
+ett: en svårighetsväljare (Grund/Medel/Avancerad, utan att veta vad något av dem
 innebär), två knappar, en selectbox, ett scenariokort, en stepper, fyra tomma
 fält.
 *Friktion:* sex kontroller före första ordet skrivits; sidans egentliga uppgift
 ligger nedanför dem.
 
-**1:30 — Läser scenariot, skriver i Rättsfrågan.** Vet inte om "Är avtalet
+**1:30, Läser scenariot, skriver i Rättsfrågan.** Vet inte om "Är avtalet
 bindande?" är rätt *form*. Ingenstans finns ett exempel.
 *Friktion:* uppgiften är fri produktion utan förlaga.
 
-**2:00 — Normfältet.** Skriver "avtalslagen". Får en gul varning: inget giltigt
-lagrum, skriv "4 § AvtL". Rättningen är korrekt och snabb — men appens första
+**2:00, Normfältet.** Skriver "avtalslagen". Får en gul varning: inget giltigt
+lagrum, skriv "4 § AvtL". Rättningen är korrekt och snabb, men appens första
 återkoppling gäller formatet, inte tänkandet.
 *Friktion:* första upplevelsen är ett avvisat format.
 
-**3:00 — Trycker på tutorn.** I en publik driftsättning är dagsbudgeten delad,
+**3:00, Trycker på tutorn.** I en publik driftsättning är dagsbudgeten delad,
 så det troliga utfallet är "Tutorn är inte tillgänglig just nu" eller
-dagsbudgetkortet. Fallbacken pekar mot facit, vilket är rätt gjort — men
+dagsbudgetkortet. Fallbacken pekar mot facit, vilket är rätt gjort, men
 studenten har ännu inte sett hur en god analys ser ut.
 *Friktion:* det som marknadsförs som appens kärna kan vara borta vid första
 försöket, och tomheten förklaras inte i förväg.
 
-**4:00 — Öppnar facit.** Läser rättsfråga, lagrumschips, rekvisitpunkter,
-slutsats. Här sker lärandet — men genom jämförelse, inte konstruktion.
+**4:00, Öppnar facit.** Läser rättsfråga, lagrumschips, rekvisitpunkter,
+slutsats. Här sker lärandet, men genom jämförelse, inte konstruktion.
 
-**5:00 — Och nu?** Ett fall till? Quizet? Nästa modul? Ingenting säger det.
+**5:00, Och nu?** Ett fall till? Quizet? Nästa modul? Ingenting säger det.
 Stänger fliken. Allt är borta.
 
 ### Hur gränssnittet ska bära dem i stället
@@ -831,7 +831,7 @@ Stänger fliken. Allt är borta.
 
 ### Hög effekt / låg insats
 
-Etapp 1 är genomförd. Punkterna 1–11 är gjorda som beskrivet nedan; punkt 12
+Etapp 1 är genomförd. Punkterna 1 till 11 är gjorda som beskrivet nedan; punkt 12
 är delvis gjord (mekaniken finns, innehållet återstår). Planen för etappen
 ligger i `docs/superpowers/plans/2026-08-06-ux-omdesign-lag-insats.md`.
 
@@ -840,14 +840,14 @@ ligger i `docs/superpowers/plans/2026-08-06-ux-omdesign-lag-insats.md`.
 | 1 | `cta_mal()` föredrar nästa modul i kursordning, inte senast besökta | Svaghet 1 | Genomfört (commit `944f554`) |
 | 2 | Kapitälrad `TRÄNAR: <RNTS-steg>` över varje aktivitet | Svaghet 2 | Genomfört (commit `71324b2`, placeringen i rättsfallsfliken rättad i `f043044`) |
 | 3 | Flytta facitexpandern ut ur `if st.button("Rätta")` (verklig bugg) | Avsnitt 5 | Genomfört (commit `81e2380`, uppföljning i `5a02f54`) |
-| 4 | Fäll de fyra ikonläckorna; besluta om `page_icon` | Ramen | Genomfört (commit `2665be3`) — sex glyfläckor fälldes, fler än de fyra som var kända vid granskningen, och `page_icon` är dokumenterat som appens enda avsiktliga undantag |
-| 5 | Typ- och spacingtokens som CSS-variabler | Avsnitt 6 | Genomfört (commit `830cacb`). CSS-strängen bröts samtidigt ut ur `utils/ui.py` till en egen modul, `utils/css.py`, eftersom `utils/ui.py` annars hade passerat planens gräns på 800 rader |
+| 4 | Fäll de fyra ikonläckorna; besluta om `page_icon` | Ramen | Genomfört (commit `2665be3`), sex glyfläckor fälldes, fler än de fyra som var kända vid granskningen, och `page_icon` är dokumenterat som appens enda avsiktliga undantag |
+| 5 | Typtokens och spacingtokens som CSS-variabler | Avsnitt 6 | Genomfört (commit `830cacb`). CSS-strängen bröts samtidigt ut ur `utils/ui.py` till en egen modul, `utils/css.py`, eftersom `utils/ui.py` annars hade passerat planens gräns på 800 rader |
 | 6 | Ta bort nedladdningsknappar ur tomt tillstånd | Svaghet 5 | Genomfört (commit `734888e`) |
 | 7 | Statuspanelen till en rad; modellväljaren ut ur sidopanelen | Avsnitt 4 | Genomfört (commit `b155c15`) |
 | 8 | Markera aktiv sidas rubrikkedja (`_jok_aktiv_sida` finns redan) | Avsnitt 4 | Genomfört (commit `b8cf7be`) |
 | 9 | Facit bakom "Jag har försökt" | Avsnitt 7.4 | Genomfört (commit `9c7b13b`), för både rättsfallets och lagrumsjaktens facit |
 | 10 | Säg rent ut att framstegen gäller sessionen; exporten som svar | Svaghet 4 | Genomfört (commit `734888e`) |
-| 11 | Ta bort död kod (`render_kort`, `summary_box`) eller gör den till primitiv | Avsnitt 5 | Genomfört (commit `c86e13d`) — båda borttagna |
+| 11 | Ta bort död kod (`render_kort`, `summary_box`) eller gör den till primitiv | Avsnitt 5 | Genomfört (commit `c86e13d`), båda borttagna |
 | 12 | Modulingressen säger något modulspecifikt, eller tas bort | Avsnitt 5 | Mekaniken byggd och testad (commit `c86e13d`): `Modulscenarier.ingress` läses in och visas i hero om fältet finns. Ingen fil i `data/scenarier` sätter ännu fältet, så reservmeningen i `_ingress()` står kvar på alla tolv modulsidor tills innehållet skrivs |
 
 ### Hög effekt / medelinsats
@@ -855,7 +855,7 @@ ligger i `docs/superpowers/plans/2026-08-06-ux-omdesign-lag-insats.md`.
 | # | Åtgärd | Löser |
 |---|---|---|
 | 13 | RNTS-panelen på startsidan; ARBETSGÅNG utgår | Svaghet 2, 5 |
-| 14 | Sidopanelen i tre plan (`STUDERA` / `SLÅ UPP` / `MINA FRAMSTEG`) | P1–P6 |
+| 14 | Sidopanelen i tre plan (`STUDERA` / `SLÅ UPP` / `MINA FRAMSTEG`) | P1,P6 |
 | 15 | Slå ihop Kunskapstest + Kunskapskarta till *Framsteg och samband* | P3, P4, P5 |
 | 16 | Flikramp i modulen: begrepp → jakt → quiz → fall | Svaghet 3 |
 | 17 | Implementera `render_quizfraga` som §3 redan specificerar | Avsnitt 5 |
@@ -890,7 +890,7 @@ ligger i `docs/superpowers/plans/2026-08-06-ux-omdesign-lag-insats.md`.
 
 Textuella skisser. Där två alternativ finns anges avvägningen.
 
-### 10.1 Startsidan — alternativ A (rekommenderat): en spalt, avtagande vikt
+### 10.1 Startsidan, alternativ A (rekommenderat): en spalt, avtagande vikt
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
@@ -902,8 +902,8 @@ Textuella skisser. Där två alternativ finns anges avvägningen.
 │                                                              │
 │ NÄSTA STEG                                                   │
 │ ┌──────────────────────────────────────────────────────────┐ │
-│ │ Avtalsrätt · kap. 7                                      │ │
-│ │ Tränar Norm och Tillämpning · ca 15 min                   │ │
+│ │ Avtalsrätt: kap. 7                                      │ │
+│ │ Tränar Norm och Tillämpning: ca 15 min                   │ │
 │ │ Kursens första egentliga rättsområde.                    │ │
 │ │ [ Börja: Avtalsrätt → ]     Fortsätt där du var (Arbets…) │ │
 │ └──────────────────────────────────────────────────────────┘ │
@@ -915,7 +915,7 @@ Textuella skisser. Där två alternativ finns anges avvägningen.
 │ Slutsats      Vad blir svaret?                               │
 │                                                              │
 │ FRAMSTEG                                                     │
-│ 2 moduler påbörjade · 3 fall genomförda · 7/9 rätt på quiz   │
+│ 2 moduler påbörjade: 3 fall genomförda: 7/9 rätt på quiz   │
 │ Gäller den här sessionen. → Framsteg och samband             │
 │                                                              │
 │ ─────────────────────────────────────────────────────────────│
@@ -926,7 +926,7 @@ Textuella skisser. Där två alternativ finns anges avvägningen.
 Tomt tillstånd: FRAMSTEG-blocket utgår helt (inte "inga resultat ännu"), METODEN
 flyttar upp direkt under NÄSTA STEG. Första skärmen får då exakt en knapp.
 
-### 10.2 Startsidan — alternativ B: metoden först
+### 10.2 Startsidan, alternativ B: metoden först
 
 Byt plats på NÄSTA STEG och METODEN, så att en förstagångsbesökare möter metoden
 före uppmaningen.
@@ -935,23 +935,23 @@ lässteg före varje besök för den som återkommer. **A är att föredra** eft
 hero redan har krympt vid andra besöket och ordningen då blir naturlig; B kan
 väljas som förstagångsvariant om onboarding (åtgärd 25) inte byggs.
 
-### 10.3 Sidopanelen — alternativ A (rekommenderat): tre plan, allt öppet
+### 10.3 Sidopanelen, alternativ A (rekommenderat): tre plan, allt öppet
 
 Se avsnitt 4. Full höjd, ingen hopfällning, framstegssiffror dämpade höger,
 aktiv rubrikkedja i bläckvikt, statuspanel som en rad längst ner.
 
-### 10.4 Sidopanelen — alternativ B: plan öppna, doktrinära grenar hopfällda
+### 10.4 Sidopanelen, alternativ B: plan öppna, doktrinära grenar hopfällda
 
 Endast `STUDERA`s undergrenar (Kontraktsrätt, Ersättningsrätt, Näringsrätt …)
 kan fällas ihop, med den aktiva grenen alltid öppen.
 *Avvägning:* halverar panelens höjd på liten skärm, men bryter §4.1:s premiss att
 hela systematiken ska vara synlig. Se avsnitt 11.
 
-### 10.5 Modulsidan — alternativ A (rekommenderat): ramp, ett fokus
+### 10.5 Modulsidan, alternativ A (rekommenderat): ramp, ett fokus
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ KAP. 7 · AVTALSRÄTT                                          │
+│ KAP. 7: AVTALSRÄTT                                          │
 │ Avtalsrätt                                                   │
 │ ▸ Så använder du den här sidan                               │
 │                                                              │
@@ -962,7 +962,7 @@ hela systematiken ska vara synlig. Se avsnitt 11.
 │                                                              │
 │ ┌ Rättsfall ───────────────────────────────────────────────┐ │
 │ │ Bilköpet som ångrades                                    │ │
-│ │ Grund · ca 12 min                                        │ │
+│ │ Grund: ca 12 min                                        │ │
 │ │ Anna beställer en bil av Bertil …                        │ │
 │ └──────────────────────────────────────────────────────────┘ │
 │                                                              │
@@ -979,7 +979,7 @@ hela systematiken ska vara synlig. Se avsnitt 11.
 │                                                              │
 │ [ Be tutorn granska min analys ]   ← enda primära knappen    │
 │ Tutorn granskar steg för steg. Den skriver inte lösningen.   │
-│ ▸ Jag har försökt — visa facit                               │
+│ ▸ Jag har försökt, visa facit                               │
 │                                                              │
 │ ▸ Byt fall eller generera ett nytt        ← hopfälld, nedan  │
 └──────────────────────────────────────────────────────────────┘
@@ -990,12 +990,12 @@ knapp; steppern vågrät ovanför formuläret; svårighetsväljare, generering o
 fallval flyttade *under* uppgiften i en hopfälld sektion, eftersom de är
 inställningar och inte uppgiften.
 
-### 10.6 Modulsidan — alternativ B: ett RNTS-steg per skärm
+### 10.6 Modulsidan, alternativ B: ett RNTS-steg per skärm
 
 Scenariokortet stannar överst, under det ett enda fält med "Nästa steg →". Redan
 ifyllda steg sammanfattas i en rad var.
 *Avvägning:* lägst kognitiv belastning, men studenten ser inte hela analysen
-samtidigt — och juridiskt resonemang bygger på att slutsatsen hänger ihop med
+samtidigt, och juridiskt resonemang bygger på att slutsatsen hänger ihop med
 normen. **Rekommendation: erbjud B som val, behåll A som standard.**
 
 ### 10.7 Framsteg och samband
@@ -1005,32 +1005,32 @@ normen. **Rekommendation: erbjud B som val, behåll A som standard.**
 │ MINA FRAMSTEG                                                │
 │ Framsteg och samband                                         │
 │                                                              │
-│ Den här sessionen: 2 moduler · 3 fall · 7/9 rätt på quiz     │
+│ Den här sessionen: 2 moduler: 3 fall: 7/9 rätt på quiz     │
 │                                                              │
 │ PER RNTS-STEG                                                │
 │ Rättsfrågan   3 besvarade                                    │
-│ Norm          3 besvarade · 5 av 6 lagrum verifierade        │
+│ Norm          3 besvarade: 5 av 6 lagrum verifierade        │
 │ Tillämpning   3 besvarade                                    │
 │ Slutsats      2 besvarade                                    │
 │                                                              │
 │ PER MODUL                                                    │
-│ Avtalsrätt              2 fall · 4/5 quiz    → Öva vidare    │
-│ Skadeståndsrätt         1 fall · 3/4 quiz    → Öva vidare    │
+│ Avtalsrätt              2 fall: 4/5 quiz    → Öva vidare    │
+│ Skadeståndsrätt         1 fall: 3/4 quiz    → Öva vidare    │
 │                                                              │
 │ SAMBAND                                                      │
 │ ┌──────────────────────────────────────────────────────────┐ │
 │ │  (grafen: fall ←→ lagrum ←→ modul)                       │ │
 │ └──────────────────────────────────────────────────────────┘ │
-│ Guld = lagrum · blå = rättsfall · mörkblå = modul            │
+│ Guld = lagrum: blå = rättsfall: mörkblå = modul            │
 │                                                              │
 │ TA MED DIG                                                   │
-│ Läs om det du gjort i morgon — då fastnar det.               │
-│ [ Obsidianvalv (zip) ]   Markdown · Excel                    │
+│ Läs om det du gjort i morgon, då fastnar det.               │
+│ [ Obsidianvalv (zip) ]   Markdown: Excel                    │
 └──────────────────────────────────────────────────────────────┘
 ```
 
 Tomt tillstånd: rubrik, en mening om vad sidan kommer att visa, en länk till
-NÄSTA STEG, och Obsidianvalvet — som är värdefullt tomt eftersom Rättskartan
+NÄSTA STEG, och Obsidianvalvet, som är värdefullt tomt eftersom Rättskartan
 alltid följer med.
 
 ### 10.8 Rättskartan
@@ -1040,7 +1040,7 @@ den är appens bäst fungerande sida. Tre justeringar:
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│ SLÅ UPP · RÄTTSKARTAN                                        │
+│ SLÅ UPP: RÄTTSKARTAN                                        │
 │ Kartan över rättssystemet                                    │
 │ ▸ Så använder du den här sidan                               │
 │                                                              │
@@ -1057,7 +1057,7 @@ den är appens bäst fungerande sida. Tre justeringar:
 └──────────────────────────────────────────────────────────────┘
 ```
 
-1. Fliken *Falltypsguide* döps till **Vilken lag gäller?** — studentens fråga,
+1. Fliken *Falltypsguide* döps till **Vilken lag gäller?**, studentens fråga,
    inte datastrukturens namn.
 2. Träfflistan renderas som rader med riktiga lagrumschips i stället för
    `st.dataframe`, så guldregeln gäller även här.
@@ -1074,10 +1074,10 @@ Där ett alternativ är starkare anges det.
 *Norm* går att bedöma deterministiskt (mot lagrumsregistret). Rättsfrågan,
 Tillämpning och Slutsats är fritext, och `_rnts_statusar()` kan i praktiken bara
 mäta att fältet inte är tomt. En panel som säger "din Tillämpning är svag" vore
-härledd ur teckenlängd — precis den sorts falska mätning granskningen kritiserar
+härledd ur teckenlängd, precis den sorts falska mätning granskningen kritiserar
 i avsnitt 5.
-**Alternativ:** redovisa *volym*, inte *kvalitet* — "3 besvarade", aldrig
-"stark/svag" — utom för Norm, där verifieringsandelen är en riktig siffra. Så är
+**Alternativ:** redovisa *volym*, inte *kvalitet*, "3 besvarade", aldrig
+"stark/svag", utom för Norm, där verifieringsandelen är en riktig siffra. Så är
 10.7 skriven. Rekommendationen kvarstår därför i den svagare, sanna formen, och
 förslag 24 bör inte byggas som en kvalitetsmodell.
 
@@ -1087,7 +1087,7 @@ Rättskartan *är* systematiken, och nu ligger den utanför trädet.
 **Alternativ:** behåll ett enda träd och lös P1 enbart genom att göra
 appfunktionsrubrikerna visuellt olika de doktrinära (t.ex. utan versaler och utan
 blått). Billigare och mindre ingripande. **Avvägning:** det löser förvirringen om
-vad rubrikerna *är*, men inte P3–P5 (Kunskapstest som inte testar, framsteg på
+vad rubrikerna *är*, men inte P3,P5 (Kunskapstest som inte testar, framsteg på
 tre ställen, två kartor med samma namn). Tre plan är att föredra, men om bara en
 åtgärd får plats är den visuella differentieringen mest värde per krona.
 
@@ -1096,24 +1096,24 @@ riskerar att det som *är* poängen hamnar bakom tre andra saker, och att studen
 aldrig kommer dit.
 **Alternativ:** behåll Rättsfall först, men lägg en rad ovanför flikarna: "Ny
 här? Börja i Begrepp." **Avvägning:** bevarar tyngdpunkten till priset av att
-nybörjaren måste välja rätt själv — vilket är precis vad de är dåliga på. Rampen
+nybörjaren måste välja rätt själv, vilket är precis vad de är dåliga på. Rampen
 är att föredra, men rekommenderas med en synlig genväg till Rättsfall i flikraden
 så att den vane studenten inte straffas.
 
 **11.4 Skaffoldning på Rättsfrågan urholkar generationseffekten.** Att erbjuda tre
-kandidatformuleringar gör en produktionsuppgift till en igenkänningsuppgift —
+kandidatformuleringar gör en produktionsuppgift till en igenkänningsuppgift ,
 och generationseffekten är appens hela premiss.
 **Avvägning:** därför endast modulens *första* fall, och därför med en motivering
 efter valet i stället för bara rätt/fel. Skaffoldningen ska försvinna av sig
 själv. Skulle den visa sig göra studenter beroende av alternativ är åtgärden att
-i stället visa ett *färdigt* worked example från ett annat fall — man läser någon
+i stället visa ett *färdigt* worked example från ett annat fall, man läser någon
 annans analys, men skriver alltid sin egen.
 
 **11.5 Att avvisa hopfällbar navigering kan vara fel på liten skärm.** §4.1:s
 argument (en panel som måste öppnas döljer kursens struktur) är starkt på
 skrivbordet. På en telefon blir samma träd en lång skrollning före allt innehåll.
 Granskningen behåller §4.1 därför att avsnitt 2 kortar trädet genom att flytta ut
-fyra poster — men om appen faktiskt används mycket på telefon är 10.4 det bättre
+fyra poster, men om appen faktiskt används mycket på telefon är 10.4 det bättre
 valet. **Detta bör avgöras av verklig användning, inte av principen.**
 
 **11.6 "Nästa i kursordning" antar att kursordningen är rätt för alla.** En
@@ -1127,7 +1127,7 @@ val i en rad, så att avvikelse blir ett informerat val och inte ett olydigt.
 Slutsatsen "ingen identitet, alltså ingen lagring" gäller serverlagring. Idén om
 bokmärkbar URL i avsnitt 9 kringgår det utan nya beroenden och utan konton. Den
 är placerad under Framtida idéer på grund av URL-längd och kodningsrisk, men om
-återkommande studenter visar sig vara det viktigaste målet bör den flyttas upp —
+återkommande studenter visar sig vara det viktigaste målet bör den flyttas upp ,
 den vore då den enskilt mest värdefulla åtgärden i hela dokumentet.
 
 ---
@@ -1167,8 +1167,8 @@ Enligt beslutet i inledningen: varje avvikelse namnges.
 | §4 | Sidopanel: modulnavigering + statuspanel + modellväljare | Tre plan; statusrad; ingen modellväljare | Avsnitt 2 och 4 |
 | §4.1 | Ikonförbudet gäller navigeringen | Gäller hela appen; `page_icon` enda dokumenterade undantag | Användarens ram; fyra läckor |
 | §4.3 | "Varje sida inleds med `render_sidhjalp`" | Antingen genomförd eller omformulerad | Följs bara på Rättskartan |
-| §5 | Nytt: en aviseringsuppsättning, fyra roller | — | Två system i dag (avsnitt 5) |
-| Ny §7 | — | Framsteg är sessionsbundet och ska sägas rent ut; exporten är kontinuiteten | Tyst dataförlust (svaghet 4) |
+| §5 | Nytt: en aviseringsuppsättning, fyra roller |, | Två system i dag (avsnitt 5) |
+| Ny §7 |, | Framsteg är sessionsbundet och ska sägas rent ut; exporten är kontinuiteten | Tyst dataförlust (svaghet 4) |
 
 ### Avvisat ur uppdragsbeskrivningen, med skäl
 
@@ -1192,7 +1192,7 @@ Enligt beslutet i inledningen: varje avvikelse namnges.
   provat med skärmläsare eller enbart tangentbord, och Streamlits egna
   komponenter (`st.tabs`, `st.segmented_control`, `st.popover`) sätter ett tak
   som appen inte kan höja. Det som konkret kan sägas: `st.html`-blocken saknar
-  landmärken och rubriksemantik — `.jok-section h2` är en riktig `h2`, men
+  landmärken och rubriksemantik, `.jok-section h2` är en riktig `h2`, men
   kapitäletiketterna är `div`, så en skärmläsare får rubriker utan sina
   etiketter. Klickytor: chips är ~1.4rem höga, under 44px-rekommendationen.
   En riktig genomgång kräver hjälpmedel och står under Framtida idéer.

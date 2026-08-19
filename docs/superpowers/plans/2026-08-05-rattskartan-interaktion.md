@@ -1,8 +1,8 @@
-# Rättskartans grafinteraktion — implementationsplan
+# Rättskartans grafinteraktion, implementationsplan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Gör taxonomigrafen på Rättskartan navigerbar: klick på ett rättsområde fokuserar grenen med nedtonad omgivning och skarp förfäderskedja, utzoomningen får ett golv, och vyn återställs med en knapp i kartan — allt utan sidladdning.
+**Goal:** Gör taxonomigrafen på Rättskartan navigerbar: klick på ett rättsområde fokuserar grenen med nedtonad omgivning och skarp förfäderskedja, utzoomningen får ett golv, och vyn återställs med en knapp i kartan, allt utan sidladdning.
 
 **Architecture:** Grafen lever i en enkelriktad `components.html`-iframe, så all interaktion är JavaScript inuti iframen. JS:en flyttas ut ur f-strängen i `bygg_html` till två filer under `utils/static/`: ett rent logiklager utan DOM-beroende (node-testbart) och ett DOM-lager som kopplar logiken till `vis.Network`. Python bidrar med ett nytt datafält (`foralder`) och ett konfigurationsblock, båda testade med pytest.
 
@@ -10,12 +10,12 @@
 
 ## Global Constraints
 
-- **Språk:** all kod, alla kommentarer, alla docstrings och all UI-text på svenska. Variabel- och funktionsnamn på svenska, som i resten av `utils/`.
+- **Språk:** all kod, alla kommentarer, alla docstrings och all UI-text på svenska. Variabelnamn och funktionsnamn på svenska, som i resten av `utils/`.
 - **Lint:** `ruff check .` måste passera. Regeluppsättningen är `E4, E7, E9, F, I` med `line-length = 88` (`ruff.toml`). Importer ska vara sorterade (I).
 - **Typkontroll:** `mypy --ignore-missing-imports utils` måste passera. Alla nya funktionssignaturer i `utils/` ska ha typannoteringar.
 - **Inga hårdkodade värden:** opacitet, skalfaktorer, färger och animeringstider ligger som namngivna konstanter i `utils/taxonomi_ui.py` och skickas till JS:en via konfigurationsblocket. Inga magiska tal i JS-filerna.
 - **Immutabilitet:** Python-sidan bygger nya dictar, muterar aldrig indata.
-- **Färger:** endast palett ur `design_system.md`. Guld (`#B8860B`) betyder lag eller lagrum och får inte återanvändas för strukturnivåer — undantaget är förfäderskedjans kantmarkering, som är en *kant*, inte en nod.
+- **Färger:** endast palett ur `design_system.md`. Guld (`#B8860B`) betyder lag eller lagrum och får inte återanvändas för strukturnivåer, undantaget är förfäderskedjans kantmarkering, som är en *kant*, inte en nod.
 - **CDN-fallbacken får inte brytas:** utan internet ska grafen fortfarande skriva "Kunde inte ladda grafbiblioteket" och peka på områdesträdet.
 - **Commit-format:** `<type>: <beskrivning>` på svenska (feat, fix, refactor, docs, test, chore).
 
@@ -23,7 +23,7 @@
 
 ### Task 1: Varje nod bär sin förälder
 
-Grafen är redan ett strikt träd, men noderna vet inte om det — släktskapet finns bara i kantlistan. JS:en behöver kunna gå uppåt (förfäder) och nedåt (ättlingar) från en klickad nod. Ett fält per nod räcker; färdiga förfäder- och ättlingslistor per nod skulle få JSON-nyttolasten att växa kvadratiskt.
+Grafen är redan ett strikt träd, men noderna vet inte om det, släktskapet finns bara i kantlistan. JS:en behöver kunna gå uppåt (förfäder) och nedåt (ättlingar) från en klickad nod. Ett fält per nod räcker; färdiga förfäderslistor och ättlingslistor per nod skulle få JSON-nyttolasten att växa kvadratiskt.
 
 **Files:**
 - Modify: `utils/rattssystem_graf.py:62-73` (TypedDict `TaxNod`), `utils/rattssystem_graf.py:109-159` (`bygg_taxonomigraf`)
@@ -31,7 +31,7 @@ Grafen är redan ett strikt träd, men noderna vet inte om det — släktskapet 
 
 **Interfaces:**
 - Consumes: inget (första uppgiften)
-- Produces: `TaxNod` får nyckeln `foralder: str` — förälderns nod-id, tom sträng för roten. Task 2 läser den.
+- Produces: `TaxNod` får nyckeln `foralder: str`, förälderns nod-id, tom sträng för roten. Task 2 läser den.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -67,7 +67,7 @@ def test_alla_noder_bar_faltet(graf):
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `python3.11 -m pytest tests/test_rattssystem_graf.py -k "foralder or faltet" -v`
-Expected: FAIL — `KeyError: 'foralder'` i alla tre.
+Expected: FAIL, `KeyError: 'foralder'` i alla tre.
 
 - [ ] **Step 3: Add the field to the TypedDict**
 
@@ -98,9 +98,9 @@ I `bygg_taxonomigraf`, rotnoden:
     ]
 ```
 
-I `_lagg_till`, grennoden — lägg `"foralder": foralder_id,` direkt efter `"niva": niva,`.
+I `_lagg_till`, grennoden, lägg `"foralder": foralder_id,` direkt efter `"niva": niva,`.
 
-I `_lagg_till`, lagnoden — lägg `"foralder": gid,` direkt efter `"niva": niva + 1,`.
+I `_lagg_till`, lagnoden, lägg `"foralder": gid,` direkt efter `"niva": niva + 1,`.
 
 - [ ] **Step 5: Run the full graph suite**
 
@@ -126,7 +126,7 @@ Alla värden som styr fokus, nedtoning och zoom ska vara namngivna konstanter i 
 
 **Interfaces:**
 - Consumes: `TaxNod["foralder"]` från Task 1.
-- Produces: modulkonstanterna `BAKGRUNDSOPACITET`, `MIN_SKALA_FAKTOR`, `MAX_FOKUS_SKALA`, `FOKUS_ANIMERING_MS`, `KEDJEFARG`, `KEDJEBREDD`, `KANTFARG` och funktionen `grafkonfig() -> dict[str, object]`. `bygg_html` skriver ut den som `const JOK_GRAFKONFIG = {...};`. Task 4–6 läser objektet i JS.
+- Produces: modulkonstanterna `BAKGRUNDSOPACITET`, `MIN_SKALA_FAKTOR`, `MAX_FOKUS_SKALA`, `FOKUS_ANIMERING_MS`, `KEDJEFARG`, `KEDJEBREDD`, `KANTFARG` och funktionen `grafkonfig() -> dict[str, object]`. `bygg_html` skriver ut den som `const JOK_GRAFKONFIG = {...};`. Task 4 till 6 läser objektet i JS.
 
 - [ ] **Step 1: Write the failing tests**
 
@@ -194,12 +194,12 @@ from utils.taxonomi_ui import (
 **Gissa inte ordningen.** ruffs isort-regel (I) sorterar namn inom ett
 importblock efter egna regler för understreck och versaler. Kör
 `ruff check --fix tests/test_taxonomi_ui.py` och behåll den ordning ruff
-skriver — ordningen ovan är inte normerande.
+skriver, ordningen ovan är inte normerande.
 
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `python3.11 -m pytest tests/test_taxonomi_ui.py -q`
-Expected: FAIL — `ImportError: cannot import name 'BAKGRUNDSOPACITET'`.
+Expected: FAIL, `ImportError: cannot import name 'BAKGRUNDSOPACITET'`.
 
 - [ ] **Step 3: Add the constants**
 
@@ -282,7 +282,7 @@ Byt samtidigt den hårdkodade kantfärgen i optionsobjektet mot konfigurationen:
 - [ ] **Step 5: Run tests**
 
 Run: `python3.11 -m pytest tests/test_taxonomi_ui.py -q`
-Expected: PASS, alla, inklusive de befintliga färg- och klickbarhetstesterna.
+Expected: PASS, alla, inklusive de befintliga färgtesterna och klickbarhetstesterna.
 
 - [ ] **Step 6: Commit**
 
@@ -295,7 +295,7 @@ git commit -m "feat: samla grafens interaktionsinställningar i ett konfiguratio
 
 ### Task 3: Flytta ut JavaScripten ur f-strängen
 
-Ren refaktorering — inget beteende ändras. `bygg_html` är i dag en f-sträng på ~55 rader där varje `{` måste dubbleras. Fokus, nedtoning, klampning och kedjemarkering ska inte in där. Efteråt är JS:en riktig JavaScript i en egen fil.
+Ren refaktorering, inget beteende ändras. `bygg_html` är i dag en f-sträng på ~55 rader där varje `{` måste dubbleras. Fokus, nedtoning, klampning och kedjemarkering ska inte in där. Efteråt är JS:en riktig JavaScript i en egen fil.
 
 **Files:**
 - Create: `utils/static/taxonomigraf.js`
@@ -319,7 +319,7 @@ def test_js_filen_finns():
 
 
 def test_js_baddas_in_i_html(html):
-    """Innehållet ska ligga i svaret, inte länkas — iframen är sandboxad."""
+    """Innehållet ska ligga i svaret, inte länkas, iframen är sandboxad."""
     from utils.taxonomi_ui import _las_js
 
     assert _las_js("taxonomigraf.js").strip() in html
@@ -335,7 +335,7 @@ def test_saknad_js_fil_ger_tydligt_fel():
 - [ ] **Step 2: Run tests to verify they fail**
 
 Run: `python3.11 -m pytest tests/test_taxonomi_ui.py -k "js" -v`
-Expected: FAIL — `ImportError: cannot import name '_JS_KATALOG'`.
+Expected: FAIL, `ImportError: cannot import name '_JS_KATALOG'`.
 
 - [ ] **Step 3: Create the JS file with the existing behaviour**
 
@@ -452,7 +452,7 @@ Ersätt hela `<script>`-kroppen efter konfigurationsraden med `{_las_js("taxonom
 - [ ] **Step 5: Run the whole suite**
 
 Run: `python3.11 -m pytest -q`
-Expected: PASS, 766+ tester. De befintliga testerna `test_klickhanterare_oppnar_ny_flik` och `test_fallback_utan_internet` måste fortfarande passera — de bevisar att refaktoreringen inte tappade beteende.
+Expected: PASS, 766+ tester. De befintliga testerna `test_klickhanterare_oppnar_ny_flik` och `test_fallback_utan_internet` måste fortfarande passera, de bevisar att refaktoreringen inte tappade beteende.
 
 - [ ] **Step 6: Lint and typecheck**
 
@@ -556,7 +556,7 @@ test("okänt id ger tom fokus och allt i bakgrunden", () => {
 - [ ] **Step 2: Run it to verify it fails**
 
 Run: `node --test tests/js/`
-Expected: FAIL — `ENOENT: no such file or directory ... taxonomigraf_logik.js`.
+Expected: FAIL, `ENOENT: no such file or directory ... taxonomigraf_logik.js`.
 
 - [ ] **Step 3: Write the logic file**
 
@@ -636,7 +636,7 @@ Expected: PASS, 6 tester.
 
 - [ ] **Step 5: Embed the logic file and assert it in pytest**
 
-I `utils/taxonomi_ui.py`, i `bygg_html`, lägg logikfilen **före** DOM-filen — den senare anropar den:
+I `utils/taxonomi_ui.py`, i `bygg_html`, lägg logikfilen **före** DOM-filen, den senare anropar den:
 
 ```
 <script>
@@ -803,7 +803,7 @@ Byt `hoverNode`-handlern så att alla noder utom roten får handmarkören:
 - [ ] **Step 4: Verify nothing regressed in pytest**
 
 Run: `python3.11 -m pytest tests/test_taxonomi_ui.py -q`
-Expected: PASS. `test_klickhanterare_oppnar_ny_flik` letar efter `network.on("click"` och `window.open(nod.url` — båda finns kvar.
+Expected: PASS. `test_klickhanterare_oppnar_ny_flik` letar efter `network.on("click"` och `window.open(nod.url`, båda finns kvar.
 
 - [ ] **Step 5: Commit**
 
@@ -817,7 +817,7 @@ git commit -m "feat: fokusera grenen vid klick och markera vägen från roten"
 ### Task 6: Zoomgolv, återställningsknapp och Escape
 
 **Files:**
-- Modify: `utils/static/taxonomigraf.js`, `utils/taxonomi_ui.py` (`bygg_html` — knappens markup)
+- Modify: `utils/static/taxonomigraf.js`, `utils/taxonomi_ui.py` (`bygg_html`, knappens markup)
 - Test: `tests/test_taxonomi_ui.py`
 
 **Interfaces:**
@@ -840,7 +840,7 @@ def test_overlayknappen_ligger_inuti_grafcontainern(html):
 - [ ] **Step 2: Run to verify failure**
 
 Run: `python3.11 -m pytest tests/test_taxonomi_ui.py -k overlay -v`
-Expected: FAIL — strängen saknas.
+Expected: FAIL, strängen saknas.
 
 - [ ] **Step 3: Add the button markup**
 
@@ -953,11 +953,11 @@ def test_varje_filterflik_har_sin_egen_rensningsknapp(sida):
 - [ ] **Step 2: Run to verify failure**
 
 Run: `python3.11 -m pytest tests/test_rattskartan_sida.py -k "aterstallning or rensning" -v`
-Expected: FAIL — `"↺ Återställ" not in etiketter` slår, och de två nya saknas.
+Expected: FAIL, `"↺ Återställ" not in etiketter` slår, och de två nya saknas.
 
 - [ ] **Step 3: Remove the page-level block**
 
-Ta bort raderna 77–87 i `sidor/16_Rattskartan.py` (kommentaren, `_RESET_NYCKLAR`, kolumnerna och knappen). Flikraden ska följa direkt efter `render_sidhjalp(...)`.
+Ta bort raderna 77 till 87 i `sidor/16_Rattskartan.py` (kommentaren, `_RESET_NYCKLAR`, kolumnerna och knappen). Flikraden ska följa direkt efter `render_sidhjalp(...)`.
 
 - [ ] **Step 4: Add the Falltypsguide button**
 
@@ -1050,7 +1050,7 @@ Kör appen med nätverket blockerat för `unpkg.com` (eller ändra `_VIS_NETWORK
 
 Fokusera en gren, gå till fliken Falltypsguide, skriv i sökrutan (vilket kör om skriptet), gå tillbaka till Systemet. Notera om fokus och zoom överlevde.
 
-Rapportera utfallet i klartext. Åtgärda **inte** inom detta omfång — specen har det som känd risk. Blev svaret "nollställs", lägg till en rad om det under "Känd risk" i specen.
+Rapportera utfallet i klartext. Åtgärda **inte** inom detta omfång, specen har det som känd risk. Blev svaret "nollställs", lägg till en rad om det under "Känd risk" i specen.
 
 - [ ] **Step 5: Update the documentation**
 
@@ -1064,7 +1064,7 @@ node --test tests/js/
 ruff check .
 mypy --ignore-missing-imports utils
 ```
-Expected: alla fyra gröna. Kör ruff och mypy med de pinnade versionerna (0.16.1 / 2.3.0) — lokal drift är precis vad som sänkte CI tidigare.
+Expected: alla fyra gröna. Kör ruff och mypy med de pinnade versionerna (0.16.1 / 2.3.0), lokal drift är precis vad som sänkte CI tidigare.
 
 - [ ] **Step 7: Commit**
 

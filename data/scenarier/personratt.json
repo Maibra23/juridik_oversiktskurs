@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Personrätt (kap 5). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
   "modul": "Personrätt",
+  "omrade": "Rättslig handlingsförmåga: underårigas rättshandlingar, vårdnad, förmynderskap, god man och förvaltare enligt föräldrabalken, samt framtidsfullmakter enligt lagen om framtidsfullmakter.",
+  "lagar": ["FB", "LFF"],
   "case": [
     {
       "id": "per-case-1",

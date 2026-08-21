@@ -138,3 +138,83 @@ def _kanonisk_etikett(ref: Lagrumsref) -> str:
     if ref.kapitel:
         return f"{ref.kapitel} kap. {ref.paragraf} § {ref.forkortning}"
     return f"{ref.paragraf} § {ref.forkortning}"
+
+
+# Hur många paragrafer ett enskilt lagavsnitt får bidra med. Avsnitten är
+# ojämna: GFL 1-2 §§ är två paragrafer, ABL 7 kap. 1-58 §§ är femtioåtta.
+# Utan tak skulle ett enda avsnitt fylla hela prompten.
+MAX_PARAGRAFER_PER_AVSNITT = 8
+
+
+def _refs_i_avsnitt(forkortning: str, avsnitt: object) -> list[str]:
+    """Alla paragrafer i ett lagavsnitt som faktiskt har lagtext."""
+    kapitel = getattr(avsnitt, "kapitel", None)
+    fran = int(getattr(avsnitt, "paragraf_fran", 0))
+    till = int(getattr(avsnitt, "paragraf_till", 0))
+    refs = []
+    for nummer in range(fran, till + 1):
+        ref = (
+            f"{kapitel} kap. {nummer} § {forkortning}"
+            if kapitel is not None
+            else f"{nummer} § {forkortning}"
+        )
+        if hamta_paragraftext(ref):
+            refs.append(ref)
+    return refs
+
+
+def lagtext_utbud(
+    forkortningar: Iterable[str],
+    antal_avsnitt: int = 1,
+    rng: object = None,
+) -> tuple[str, ...]:
+    """Välj ut ett hanterligt urval paragrafer att bygga ett fall av.
+
+    Finns för att genereringsprompten annars ber modellen citera ordagrant ur
+    lagtext den aldrig fått se. Mätningen var entydig: utan det här urvalet
+    hittade modellen på sina egna "citat" och 427 av 427 citatkontroller föll.
+
+    Hela vitlistans lagtext går inte att skicka med: modulernas lagar rymmer
+    upp till 180 paragrafer. I stället lottas hela LAGAVSNITT ur registret,
+    eftersom varje avsnitt är ett kurerat sammanhängande tema (BrB 8 kap. är
+    tillgreppsbrotten, JB 12 kap. är hyra). Ett lotta-per-paragraf hade gett
+    modellen osammanhängande bitar att bygga ett fall av.
+
+    Rotationen har en andra effekt som är minst lika värdefull: den bryter
+    upp temamonotonin. När 35 av 72 genererade fall handlade om en
+    vitesklausul berodde det på att modellen fick välja fritt varje gång och
+    alltid valde samma sak. Nu avgör lotten vilket område som ligger på
+    bordet.
+
+    Endast paragrafer med lagtext tas med, så en åberopad paragraf alltid går
+    att kontrollera.
+    """
+    import random as _random
+
+    slump = rng if isinstance(rng, _random.Random) else _random.Random()
+    register = lagrum_register()
+
+    pool: list[tuple[str, object]] = []
+    for fk in forkortningar:
+        lag = register.get(fk)
+        if lag is None:
+            continue
+        pool.extend((fk, avsnitt) for avsnitt in lag.lagavsnitt)
+
+    if not pool:
+        return ()
+
+    antal = max(1, min(antal_avsnitt, len(pool)))
+    valda = slump.sample(pool, antal)
+
+    refs: list[str] = []
+    for fk, avsnitt in valda:
+        i_avsnittet = _refs_i_avsnitt(fk, avsnitt)
+        if len(i_avsnittet) > MAX_PARAGRAFER_PER_AVSNITT:
+            # Ett sammanhängande fönster, inte en spridd stickprovsdragning:
+            # angränsande paragrafer hör ihop och går att bygga ett fall av.
+            start = slump.randrange(len(i_avsnittet) - MAX_PARAGRAFER_PER_AVSNITT + 1)
+            i_avsnittet = i_avsnittet[start : start + MAX_PARAGRAFER_PER_AVSNITT]
+        refs.extend(i_avsnittet)
+
+    return tuple(dict.fromkeys(refs))

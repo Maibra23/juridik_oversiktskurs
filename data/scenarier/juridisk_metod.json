@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Juridisk metod (kap 1). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
   "modul": "Juridisk metod",
+  "omrade": "Juridisk metod: att identifiera rättsfrågan, rangordna rättskällorna, hitta och tolka rätt lagrum, tillämpa normen på omständigheterna och dra en motiverad slutsats. Fallet får hämtas ur köprätt, avtalsrätt, straffrätt eller processrätt, men poängen ska vara metoden: det ska belöna noggrann läsning av lagtexten snarare än utantillkunskap om ett rättsområde.",
+  "lagar": ["KöpL", "AvtL", "BrB", "RB"],
   "case": [
     {
       "id": "jm-case-1",

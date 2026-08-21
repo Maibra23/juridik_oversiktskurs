@@ -22,12 +22,15 @@ verkliga Qwen-svar i Dag 3 (uppgift 3.3).
 
 from __future__ import annotations
 
+import random
 from collections.abc import Iterable
 from typing import cast
 
 from utils.lagrum import Lag, lagrum_register
+from utils.lagtext import lagtext_utbud
 from utils.rnts import RNTS_STEG
-from utils.svarighetsgrad import STANDARDNIVA
+from utils.svarighetsgrad import STANDARDNIVA, antal_avsnitt_for
+from utils.svarighetsgrad import forvantan_for as svarighetsforvantan_for
 from utils.svarighetsgrad import instruktion_for as svarighetsinstruktion_for
 from utils.svarighetsgrad import normalisera as normalisera_svarighet
 
@@ -173,24 +176,47 @@ def _lag_vitlisterad(lag: Lag) -> str:
     return f"- {lag.forkortning} = {lag.namn} (SFS {lag.sfs}). Lagavsnitt: {delar}."
 
 
-def vitlista_block(forkortningar: Iterable[str] | None = None) -> str:
+def vitlista_block(
+    forkortningar: Iterable[str] | None = None, strikt: bool = False
+) -> str:
     """Bygg LAGRUMSVITLISTAN ur registret.
 
     Om ``forkortningar`` anges tas endast dessa lagar med (fokuserad vitlista
     för ett visst scenario). Okända förkortningar hoppas tyst över. Utan
     argument tas hela registret med.
+
+    ``strikt`` styr vad som händer när en angiven lista inte matchar någon
+    känd lag. Utan strikt faller vi tillbaka på hela registret, vilket är rätt
+    för tutor, quiz och begreppsfördjupning: där är vitlistan ett tak för vad
+    modellen får citera, och ett för brett tak ger på sin höjd ett mindre
+    fokuserat svar om en uppgift saknar egna lagrum.
+
+    För GENERERING är samma fallback ett hål. Vitlistan är då det enda som
+    håller ett fall inom sidans rättsområde, och ett tomt eller felstavat
+    argument skulle tyst öppna hela registret: Arbetsrättssidan skulle börja
+    generera brottmål utan att något felmeddelande syntes någonstans. Därför
+    anropar utils.generator alltid med ``strikt=True`` och får ett ValueError
+    i stället för ett rättsområde som glider.
     """
     register = lagrum_register()
     if forkortningar is None:
         valda = list(register.values())
     else:
         # Bevara inmatningsordningen men ta bort dubbletter och okända lagar.
+        begarda = list(forkortningar)
         sedda: set[str] = set()
         valda = []
-        for fk in forkortningar:
+        for fk in begarda:
             if fk in register and fk not in sedda:
                 sedda.add(fk)
                 valda.append(register[fk])
+        if strikt and not valda:
+            raise ValueError(
+                "Tom lagrumsvitlista: ingen av förkortningarna "
+                f"{begarda!r} finns i lagrumsregistret. Vägrar falla tillbaka "
+                "på hela registret, eftersom det skulle generera fall utanför "
+                "modulens rättsområde."
+            )
 
     if not valda:
         valda = list(register.values())
@@ -199,6 +225,32 @@ def vitlista_block(forkortningar: Iterable[str] | None = None) -> str:
     return (
         "LAGRUMSVITLISTA (du får ENDAST hänvisa till lagrum i denna lista):\n"
         f"{rader}"
+    )
+
+
+def _utbudsblock(refs: Iterable[str]) -> str:
+    """Rendera de utlottade paragrafernas ordagranna lydelse för generering.
+
+    Skiljer sig från ``utils.lagtext.lagtext_block`` i avslutningen: det
+    blocket säger åt tutorn att BEDÖMA utifrån texten, det här säger åt
+    generatorn att VÄLJA ur den. Rubrikformen är densamma, och det är med
+    flit: modellen ska ha den kanoniska skrivningen framför sig när den
+    skriver lagrum i löptexten.
+    """
+    from utils.lagtext import hamta_paragraftext
+
+    rader = [
+        f"{ref}:\n{text}" for ref in refs if (text := hamta_paragraftext(ref))
+    ]
+    if not rader:
+        return ""
+    return (
+        "PARAGRAFER ATT BYGGA FALLET AV (ordagrann lydelse, hämtad ur "
+        "författningen):\n"
+        + "\n\n".join(rader)
+        + "\n\nVälj de paragrafer fallet ska vila på ur listan ovan, och bara "
+        "därifrån. Påstå aldrig något om vad en paragraf innehåller som inte "
+        "står i dess text. Skriv lagrummen exakt som rubrikerna ovan.\n\n"
     )
 
 
@@ -254,9 +306,16 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
 
     Facit är samtidigt en lösningsnyckel som studenten inte ska få. Prompten
     förbjuder därför uttryckligen att den nämns eller lämnas ut.
+
+    Fallets svårighetsgrad läses av scenariot självt och styr hur hårt svaret
+    bedöms (utils.svarighetsgrad.forvantan_for). Det behövde inget nytt
+    argument: ``scenario`` bär redan fältet. Innan blocket fanns var den här
+    prompten bytesidentisk för ett grundfall och ett avancerat fall, så
+    svårighetsväljaren ändrade uppgiften men aldrig kraven.
     """
     scenariotext = _hamta(scenario, "scenariotext")
     facit = _hamta(scenario, "facit")
+    niva = normalisera_svarighet(str(_hamta(scenario, "svarighetsgrad", default="")))
     facit_lagrum = tuple(
         str(x) for x in cast("Iterable[object]", _hamta(facit, "lagrum", default=()))
     )
@@ -305,11 +364,13 @@ def build_case_prompt(scenario: object, studentens_svar: object) -> tuple[str, s
         "inte tillämpningen och slutsatsen åt studenten.\n"
         "- Svara alltid på svenska, även om studentens svar är på ett annat "
         "språk eller innehåller engelska uttryck.\n\n"
+        f"{svarighetsforvantan_for(niva)}\n\n"
         "STUDENTENS EGET SVAR (RNTS):\n"
         f"{student}\n\n"
         "Granska studentens svar steg för steg enligt RNTS. Peka på vad som är "
-        "rätt, vad som saknas och vad som är fel. Led studenten vidare i "
-        "stället för att skriva om lösningen."
+        "rätt, vad som saknas och vad som är fel, och håll studenten till "
+        "bedömningsnivån ovan. Led studenten vidare i stället för att skriva "
+        "om lösningen."
     )
     return SYSTEM_PROMPT_BASE, user_prompt
 
@@ -361,12 +422,24 @@ def build_generate_prompt(
     striktare: bool = False,
     variation: int | None = None,
     svarighetsgrad: str = STANDARDNIVA,
+    omrade: str = "",
+    aterkoppling: str = "",
 ) -> tuple[str, str]:
     """Bygg (system, user) för att generera ett nytt fiktivt rättsfall.
 
     Modellen ombeds returnera ett JSON-scenario som ENDAST använder lagrum ur
     den bifogade vitlistan. ``striktare`` läggs på vid omförsök efter att ett
     genererat lagrum inte kunnat verifieras.
+
+    ``modul_namn`` ska vara modulens VISNINGSNAMN ("Straffrätt och
+    processrätt"), aldrig scenariofilens namn ("straff_och_processratt").
+    Skillnaden är mätt: med filnamnet skrev modellen 0 av 3 fall inom rätt
+    område för två testade moduler, med visningsnamnet 3 av 3.
+
+    ``omrade`` är modulens egen mening om vad rättsområdet omfattar och vad
+    som inte hör dit (utils.scenarier.Modulscenarier.omrade). Utan den
+    prövade modellen personskador mot regeln om ren förmögenhetsskada och
+    skrev föreningsrätt under handelsbolagslagen.
 
     ``variation`` är ett frö som gör varje förfrågan unik. Det behövs av två
     skäl: det ber modellen om ett annat scenario, och det gör prompten till en
@@ -378,34 +451,68 @@ def build_generate_prompt(
     värde blir grund), ett instruktionsblock injiceras och JSON-schemats
     svarighetsgrad-fält pinnas till den valda nivån så att det studenten bad om
     är det som registreras.
+
+    ``aterkoppling`` är utils.fallkontroll:s konkreta besked om vad som var
+    fel i föregående försök. Ett allmänt "något blev fel" ger modellen inget
+    att rätta; "24 kap. 1 § BrB handlar om nödvärn" gör det.
     """
     niva = normalisera_svarighet(svarighetsgrad)
     svarighetsinstruktion = "\n\n" + svarighetsinstruktion_for(niva)
-    vitlista = vitlista_block(forkortningar)
+    # strikt=True: hellre ett ValueError än ett fall utanför rättsområdet.
+    vitlista = vitlista_block(forkortningar, strikt=True)
+
+    # Paragraferna att bygga fallet av, med sin ordagranna lydelse. Utan dem
+    # ombeds modellen citera text den aldrig fått se, och hittar då på
+    # citaten. Fröet gör urvalet reproducerbart per prompt och roterar det
+    # mellan anrop, vilket också bryter temamonotonin.
+    #
+    # variation=None ger frö 0, inte slumpmässigt frö. Promptbyggarna i den
+    # här modulen är rena funktioner, och det ska gälla även den här: en
+    # prompt som tyst ändrar sig mellan två identiska anrop gör både tester
+    # och cachenycklar opålitliga.
+    utbud = lagtext_utbud(
+        forkortningar if forkortningar is not None else lagrum_register().keys(),
+        antal_avsnitt=antal_avsnitt_for(niva),
+        rng=random.Random(variation if variation is not None else 0),
+    )
+    utbudsblock = _utbudsblock(utbud)
+
+    omradesblock = ""
+    if omrade.strip():
+        omradesblock = (
+            "RÄTTSOMRÅDE (fallet MÅSTE ligga inom detta):\n"
+            f"{omrade.strip()}\n\n"
+        )
 
     variationsrad = ""
     if variation is not None:
         variationsrad = (
             f"\n\nVariationsfrö {variation}: hitta på ett scenario som tydligt "
             "skiljer sig från tidigare fall i samma modul. Variera parter, "
-            "bransch, belopp och vilken tvistefråga som ställs på sin spets."
+            "bransch, belopp och vilken tvistefråga som ställs på sin spets. "
+            "Undvik särskilt att göra ännu ett fall om en vitesklausul: den "
+            "frågan är redan överrepresenterad."
         )
 
     skarpning = ""
     if striktare:
         skarpning = (
-            "\n\nVIKTIGT: Ditt förra försök innehöll ett lagrum som inte fanns i "
-            "vitlistan eller hade fel paragrafnummer. Använd nu ENBART exakta "
-            "lagrum ur vitlistan ovan. Dubbelkolla varje paragrafnummer."
+            "\n\nVIKTIGT: Ditt förra försök underkändes."
+            + (f"\nOrsak: {aterkoppling}" if aterkoppling.strip() else "")
+            + "\nRätta exakt det som anges ovan. Använd ENBART lagrum ur "
+            "vitlistan, dubbelkolla varje paragrafnummer, och välj en paragraf "
+            "vars ordalydelse verkligen avgör den rättsfråga du ställer."
         )
 
     user_prompt = (
-        f"{vitlista}"
-        f"{svarighetsinstruktion}\n\n"
+        f"{vitlista}\n\n"
+        f"{omradesblock}"
+        f"{utbudsblock}"
+        f"{svarighetsinstruktion.lstrip()}\n\n"
         f"Skapa ETT nytt, fiktivt och realistiskt rättsfall för modulen "
-        f"\"{modul_namn}\" på grundnivå. Fallet ska gå att lösa med juridisk metod "
-        "och de lagrum som finns i vitlistan ovan. Kalibrera fallet efter "
-        "svårighetsgraden ovan.\n\n"
+        f"\"{modul_namn}\". Fallet ska gå att lösa med juridisk metod och de "
+        "paragrafer som står med sin lydelse ovan, och det ska ligga inom "
+        "rättsområdet ovan. Kalibrera fallet efter svårighetsgraden ovan.\n\n"
         "Svara med ENBART giltig JSON (ingen kod-markdown, ingen text runt om) "
         "enligt exakt detta schema:\n"
         "{\n"
@@ -417,19 +524,36 @@ def build_generate_prompt(
         '  "facit": {\n'
         '    "rattsfraga": "<den rättsliga frågan>",\n'
         '    "lagrum": ["<lagrum i formatet N § FÖRK ur vitlistan>"],\n'
+        '    "lagrumsstod": [\n'
+        '      {"lagrum": "<samma lagrum>", "citat": "<ordagrant citat ur '
+        'paragrafens lagtext>"}\n'
+        "    ],\n"
         '    "tillampningspunkter": ["<punkt>", "<punkt>"],\n'
         '    "slutsats": "<motiverad slutsats>"\n'
         "  }\n"
         "}\n\n"
         f"Fältet svarighetsgrad MÅSTE vara exakt \"{niva}\". "
-        "Alla lagrum i facit.lagrum MÅSTE finnas i vitlistan och skrivas som "
-        "\"N § FÖRK\" eller \"N kap. M § FÖRK\" (paragrafnummer först). Använd "
-        "aldrig påhittade paragrafer.\n\n"
+        "Alla lagrum i facit.lagrum MÅSTE vara paragrafer som står med sin "
+        "lydelse ovan, skrivna exakt som rubrikerna där (paragrafnummer först). "
+        "Använd aldrig en paragraf vars lydelse inte står ovan.\n\n"
+        "LAGRUMSSTÖD (avgörande): för VARJE lagrum i facit.lagrum ska "
+        "lagrumsstod innehålla en post med ett ORDAGRANT citat på minst 40 "
+        "tecken, kopierat ur just den paragrafens lydelse ovan. Citatet "
+        "kontrolleras maskinellt tecken för tecken mot författningstexten: "
+        "skriv av, formulera inte om. Citera den mening som faktiskt avgör "
+        "rättsfrågan, inte vilken mening som helst. Går ingen av paragraferna "
+        "ovan att citera för din rättsfråga är det frågan som ska bytas, inte "
+        "citatet.\n\n"
         "SPRÅKKVALITET (viktigt): rubrik och scenariotext ska vara på korrekt, "
         "idiomatisk svenska med rätt stavning och grammatik. Korrekturläs texten "
         "innan du svarar. Skriv t.ex. \"ogiltig\" (inte \"ongiltig\"), \"ingick "
         "ett avtal\" (inte \"anlade ett avtal\") och \"vitesklausul\" (inte "
-        "\"penaltiklausul\"). Använd inga engelska eller hemmagjorda ord."
+        "\"penaltiklausul\" eller \"vicesklausul\"). Använd inga engelska, tyska "
+        "eller hemmagjorda ord: skriv \"förskingring\", aldrig \"embezzling\"; "
+        "\"uppsägningstid\", aldrig \"kündigungsperiod\".\n\n"
+        "LAGRUM I LÖPTEXT: skriv lagrum med paragrafnumret först även i "
+        "scenariotext, rättsfråga, tillämpningspunkter och slutsats. "
+        "\"8 kap. 1 § BrB\" är rätt, \"BrB 8 kap. 1 §\" är fel."
         + variationsrad + skarpning
     )
     return SYSTEM_PROMPT_BASE, user_prompt

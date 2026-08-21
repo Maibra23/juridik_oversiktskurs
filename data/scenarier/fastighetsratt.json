@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Fastighetsrätt (kap 9). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
   "modul": "Fastighetsrätt",
+  "omrade": "Jordabalken: köp av fast egendom med dess formkrav och felregler, panträtt och inteckning, samt nyttjanderätt. Hyra av bostad och lokal regleras i 12 kap. Reglerna om fastighetsköp och om pantbrev gäller inte hyresförhållanden och ska inte tillämpas på en hyrestvist.",
+  "lagar": ["JB"],
   "case": [
     {
       "id": "fas-case-1",

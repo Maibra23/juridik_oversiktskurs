@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Associationsrätt (kap 12). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
   "modul": "Associationsrätt",
+  "omrade": "Bolagsformer: handelsbolag och enkla bolag enligt handelsbolagslagen, aktiebolag enligt aktiebolagslagen. Fallet ska handla om bolagsmäns eller aktieägares ansvar för bolagets förpliktelser, om vem som får företräda bolaget, eller om beslutsordningen i bolaget. Ideella och ekonomiska föreningar med medlemmar och medlemsavgifter regleras inte av dessa lagar och får inte förekomma i fallet.",
+  "lagar": ["HBL", "ABL"],
   "case": [
     {
       "id": "ass-case-1",

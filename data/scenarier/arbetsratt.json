@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Arbetsrätt (kap 11). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
   "modul": "Arbetsrätt",
+  "omrade": "Anställningsskydd enligt anställningsskyddslagen: anställningsformer, kravet på sakliga skäl för uppsägning, avskedande, turordning och företrädesrätt till återanställning. Reglerna om uppsägningstidens längd och om lön under uppsägningstiden avgör aldrig om en uppsägning eller ett avskedande var giltigt. Diskriminering regleras i annan lag och ska inte prövas här.",
+  "lagar": ["LAS"],
   "case": [
     {
       "id": "arb-case-1",

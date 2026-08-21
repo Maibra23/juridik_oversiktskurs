@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Allmän förmögenhetsrätt (kap 6). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
   "modul": "Allmän förmögenhetsrätt",
+  "omrade": "Godtrosförvärv och hävd av lösöre: när en förvärvare som varit i god tro får äganderätt till lös egendom som överlåtaren inte ägde, när den ursprungliga ägarens rätt består trots god tro, och ägarens rätt att lösa tillbaka egendomen. Frågor om avtals giltighet, om omyndighet eller om avtalsvillkor hör inte hit och ska inte ställas i fallet.",
+  "lagar": ["GFL"],
   "case": [
     {
       "id": "afr-case-1",

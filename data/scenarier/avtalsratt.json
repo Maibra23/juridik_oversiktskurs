@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Avtalsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (AvtL). Nivå: Juridikverkstan.",
   "modul": "Avtalsrätt",
+  "omrade": "Avtals ingående genom anbud och accept, fullmakt och behörighet, samt ogiltighet och jämkning av avtal och avtalsvillkor enligt avtalslagen. Fallet ska handla om själva avtalsbindningen eller om ett villkors giltighet, inte om fel i en levererad vara.",
+  "lagar": ["AvtL"],
   "case": [
     {
       "id": "avt-case-1",

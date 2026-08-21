@@ -13,6 +13,7 @@ from utils.svarighetsgrad import (
     STANDARDNIVA,
     SVARIGHETSNIVAER,
     etikett_for,
+    forvantan_for,
     instruktion_for,
     normalisera,
 )
@@ -66,3 +67,28 @@ def test_instruktion_ar_distinkt_och_icke_tom_per_niva():
 
 def test_instruktion_for_okand_niva_normaliseras():
     assert instruktion_for("nonsens") == instruktion_for(STANDARDNIVA)
+
+
+# --- Bedömningsnivå (forvantan_for) -----------------------------------------
+
+
+def test_forvantan_ar_distinkt_och_icke_tom_per_niva():
+    texter = [forvantan_for(n) for n in NYCKLAR]
+    assert all(t.strip() for t in texter)
+    assert len(set(texter)) == len(NYCKLAR)
+
+
+def test_forvantan_for_okand_niva_normaliseras():
+    assert forvantan_for("nonsens") == forvantan_for(STANDARDNIVA)
+    assert forvantan_for(None) == forvantan_for(STANDARDNIVA)
+
+
+def test_forvantan_namnger_sin_egen_niva():
+    for nyckel in NYCKLAR:
+        assert nyckel.upper() in forvantan_for(nyckel)
+
+
+def test_forvantan_skiljer_sig_fran_genereringsinstruktionen():
+    """De besvarar olika frågor: hur svår uppgiften är, hur hårt den bedöms."""
+    for nyckel in NYCKLAR:
+        assert forvantan_for(nyckel) != instruktion_for(nyckel)

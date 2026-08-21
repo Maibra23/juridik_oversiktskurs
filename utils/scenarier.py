@@ -17,6 +17,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import cast
 
 from utils.lagrum import STATUS_VERIFIERAD, validera_lagrum
 
@@ -82,7 +83,21 @@ class Modulscenarier:
 
     ``ingress`` är en valfri mening om just den här modulen, som modulsidans
     hero visar. Saknas den faller sidan tillbaka på en generell formulering.
-    Fältet är valfritt så att befintliga scenariofiler läses oförändrat.
+
+    ``lagar`` är modulens DEKLARERADE lagrumsvitlista: de förkortningar ett
+    genererat fall får bygga på. Den härleddes tidigare ur de kuraterade
+    fallens facit, vilket gjorde vitlistan till en bieffekt av vilka fall
+    någon råkat skriva. Straffrätt och processrätt kunde då inte nå RB,
+    familjerätten inte SamboL och köprätten varken KöpL eller MFL, trots att
+    lagarna fanns i registret. Deklarationen gör täckningen till ett val.
+
+    ``omrade`` är en mening om vad rättsområdet faktiskt handlar om, och vad
+    som INTE hör dit. Den går in i genereringsprompten. Mätningen som
+    motiverade fältet: utan den skrev modellen föreningsrättsliga fall under
+    handelsbolagslagen och prövade personskador mot regeln om ren
+    förmögenhetsskada.
+
+    Alla tre fälten är valfria så att en scenariofil utan dem läses oförändrat.
     """
 
     modul: str
@@ -90,6 +105,8 @@ class Modulscenarier:
     flervalsfragor: tuple[Flervalsfraga, ...]
     lagrumsjakt: tuple[Lagrumsjakt, ...]
     ingress: str = ""
+    omrade: str = ""
+    lagar: tuple[str, ...] = ()
 
 
 # --- Inläsning --------------------------------------------------------------
@@ -169,13 +186,56 @@ def ladda_fil(path: Path) -> Modulscenarier:
         f"Fältet 'ingress' i {path} måste vara en sträng, inte {type(ingress).__name__}.",
     )
 
+    omrade = data.get("omrade", "")
+    _krav(
+        isinstance(omrade, str),
+        f"Fältet 'omrade' i {path} måste vara en sträng, inte {type(omrade).__name__}.",
+    )
+
     return Modulscenarier(
         modul=str(data.get("modul", path.stem)),
         case=tuple(_bygg_case(c) for c in data.get("case", [])),
         flervalsfragor=tuple(_bygg_fraga(q) for q in data.get("flervalsfragor", [])),
         lagrumsjakt=tuple(_bygg_lagrumsjakt(lj) for lj in data.get("lagrumsjakt", [])),
         ingress=ingress,
+        omrade=omrade,
+        lagar=_bygg_lagar(data.get("lagar", []), path),
     )
+
+
+def _bygg_lagar(rad: object, path: Path) -> tuple[str, ...]:
+    """Validera modulens deklarerade lagrumsvitlista mot registret.
+
+    Fail fast är hela poängen. En vitlista som tyst tappar en okänd
+    förkortning krymper till något smalare än någon avsåg, och den enda
+    synliga effekten blir att genererade fall slutar handla om delar av
+    rättsområdet. Ett stavfel ska stoppa inläsningen, inte ändra kursplanen.
+    """
+    from utils.lagrum import giltiga_forkortningar
+
+    if not rad:
+        return ()
+    _krav(
+        isinstance(rad, list),
+        f"Fältet 'lagar' i {path} måste vara en lista, inte {type(rad).__name__}.",
+    )
+    poster = cast("list[object]", rad)
+    kanda = giltiga_forkortningar()
+    lagar: list[str] = []
+    for post in poster:
+        _krav(
+            isinstance(post, str),
+            f"Fältet 'lagar' i {path} får bara innehålla strängar, inte {post!r}.",
+        )
+        _krav(
+            post in kanda,
+            f"Okänd lagförkortning {post!r} i 'lagar' i {path}. "
+            f"Kända förkortningar: {', '.join(sorted(kanda))}.",
+        )
+        text = str(post)
+        if text not in lagar:
+            lagar.append(text)
+    return tuple(lagar)
 
 
 def ladda_modul(namn: str) -> Modulscenarier:

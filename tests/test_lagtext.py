@@ -13,13 +13,18 @@ utelämnar lagtexten än hittar på den.
 
 from __future__ import annotations
 
+import random
+import re
+
 import pytest
 
 from utils.lagtext import (
+    MAX_PARAGRAFER_PER_AVSNITT,
     hamta_paragraftext,
     har_lagtext,
     ladda_lagtext,
     lagtext_block,
+    lagtext_utbud,
 )
 
 
@@ -148,3 +153,67 @@ def test_lagtext_block_sager_att_texten_ar_ordagrann():
     """Prompten måste veta att detta är källtext, inte en parafras."""
     block = lagtext_block(["4 § AvtL"])
     assert "ordagrann" in block.lower() or "ordagrant" in block.lower()
+
+
+# --- lagtext_utbud ----------------------------------------------------------
+#
+# Urvalet finns för att genereringsprompten annars ber modellen citera
+# ordagrant ur text den aldrig fått se. I den mätningen föll 427 av 427
+# citatkontroller.
+
+
+def test_utbud_ger_bara_paragrafer_med_lagtext():
+    """En åberopad paragraf måste alltid gå att kontrollera."""
+    refs = lagtext_utbud(["BrB", "RB"], antal_avsnitt=3, rng=random.Random(1))
+    assert refs
+    assert all(har_lagtext(ref) for ref in refs)
+
+
+def test_utbud_haller_sig_inom_de_begarda_lagarna():
+    refs = lagtext_utbud(["GFL"], antal_avsnitt=3, rng=random.Random(2))
+    assert refs
+    assert all(ref.endswith(" GFL") for ref in refs)
+
+
+def test_utbud_ar_reproducerbart_for_samma_fro():
+    a = lagtext_utbud(["JB"], antal_avsnitt=2, rng=random.Random(7))
+    b = lagtext_utbud(["JB"], antal_avsnitt=2, rng=random.Random(7))
+    assert a == b
+
+
+def test_utbud_roterar_mellan_fron():
+    """Rotationen är det som bryter temamonotonin i genererade fall."""
+    utfall = {
+        lagtext_utbud(["BrB"], antal_avsnitt=1, rng=random.Random(fro))
+        for fro in range(12)
+    }
+    assert len(utfall) > 1
+
+
+def test_utbud_skalar_med_antal_avsnitt():
+    ett = lagtext_utbud(["ABL"], antal_avsnitt=1, rng=random.Random(3))
+    tre = lagtext_utbud(["ABL"], antal_avsnitt=3, rng=random.Random(3))
+    assert len(tre) > len(ett)
+
+
+def test_utbud_kapas_per_avsnitt():
+    """ABL 7 kap. rymmer 58 paragrafer; utan tak fyller ett avsnitt prompten."""
+    refs = lagtext_utbud(["ABL"], antal_avsnitt=1, rng=random.Random(5))
+    assert len(refs) <= MAX_PARAGRAFER_PER_AVSNITT
+
+
+def test_utbud_ger_sammanhangande_fonster():
+    """Angränsande paragrafer hör ihop och går att bygga ett fall av."""
+    refs = lagtext_utbud(["FB"], antal_avsnitt=1, rng=random.Random(9))
+    nummer = [int(re.search(r"(\d+) §", ref).group(1)) for ref in refs]
+    assert nummer == sorted(nummer)
+    assert nummer[-1] - nummer[0] < len(nummer) + 4
+
+
+def test_utbud_utan_kanda_lagar_ar_tomt():
+    assert lagtext_utbud(["FINNS-INTE"], antal_avsnitt=2) == ()
+
+
+def test_utbud_utan_dubbletter():
+    refs = lagtext_utbud(["SkL"], antal_avsnitt=7, rng=random.Random(4))
+    assert len(refs) == len(set(refs))

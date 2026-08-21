@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Straffrätt och processrätt (kap 22). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
   "modul": "Straffrätt och processrätt",
+  "omrade": "Straffrätt: brottsbegreppet, uppsåt och oaktsamhet, tillgreppsbrott som stöld och snatteri, bedrägeri, samt ansvarsfrihetsgrunder. Processrätt: rättegångsbalkens regler om bevisning, bevisbörda och rättegångens gång. Nödvärnsreglerna gäller bara ett pågående angrepp och är aldrig normen för att avgöra om en stöld eller ett bedrägeri har begåtts.",
+  "lagar": ["BrB", "RB"],
   "case": [
     {
       "id": "str-case-1",

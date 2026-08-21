@@ -13,6 +13,7 @@ from utils.scenarier import (
     Modulscenarier,
     alla_lagrum,
     fragor_utan_exakt_ett_ratt,
+    ladda_fil,
     ladda_modul,
     lista_moduler,
     ogiltiga_lagrum,
@@ -102,3 +103,78 @@ def test_ingress_lases_in_nar_den_finns(tmp_path, monkeypatch):
     assert scenarier.ladda_modul("testmodul").ingress == (
         "En mening om just den här modulen."
     )
+
+
+# --- Deklarerad vitlista och rättsområde ------------------------------------
+#
+# Tillagt efter mätningen som visade att den härledda vitlistan gjorde
+# rättsområdets täckning till en bieffekt av vilka fall någon råkat skriva.
+
+
+def test_alla_moduler_deklarerar_lagar_och_omrade():
+    """Varje modul ska säga vilka lagar den omfattar och vad området är."""
+    for stem in lista_moduler():
+        modul = ladda_modul(stem)
+        assert modul.lagar, f"{stem} saknar deklarerad lagrumsvitlista"
+        assert modul.omrade.strip(), f"{stem} saknar rättsområdesbeskrivning"
+
+
+def test_deklarerade_lagar_finns_i_registret():
+    from utils.lagrum import giltiga_forkortningar
+
+    kanda = giltiga_forkortningar()
+    for stem in lista_moduler():
+        for fk in ladda_modul(stem).lagar:
+            assert fk in kanda, f"{stem} deklarerar okänd förkortning {fk!r}"
+
+
+def test_kuraterat_facit_ligger_i_modulens_deklarerade_vitlista():
+    """Deklarationen får inte vara smalare än modulens egna rätta svar.
+
+    Prövas mot rättsfallens facit och lagrumsjaktens facit, alltså det som
+    modulen själv utpekar som RÄTT lagrum. Flervalsfrågornas alternativ är
+    med flit undantagna: distraktorerna citerar avsiktligt lagrum från andra
+    rättsområden (36 § AvtL som fel svar i en godtrosförvärvsfråga), och de
+    ska inte kunna vidga vad sidan genererar.
+    """
+    for stem in lista_moduler():
+        modul = ladda_modul(stem)
+        facitlagrum = [ref for c in modul.case for ref in c.facit.lagrum]
+        facitlagrum += [ref for lj in modul.lagrumsjakt for ref in lj.facit_lagrum]
+        for ref in facitlagrum:
+            fk = ref.split()[-1]
+            assert fk in modul.lagar, (
+                f"{stem}: kuraterat facitlagrum {ref!r} ligger utanför den "
+                f"deklarerade vitlistan {modul.lagar}"
+            )
+
+
+def test_okand_forkortning_i_lagar_stoppar_inlasningen(tmp_path):
+    """Ett stavfel ska fälla inläsningen, inte tyst krympa kursplanen."""
+    import json
+
+    fil = tmp_path / "trasig.json"
+    fil.write_text(
+        json.dumps({"modul": "Trasig", "lagar": ["AvtL", "AvtLL"], "case": []}),
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="AvtLL"):
+        ladda_fil(fil)
+
+
+def test_lagar_som_inte_ar_lista_stoppar_inlasningen(tmp_path):
+    import json
+
+    fil = tmp_path / "trasig.json"
+    fil.write_text(
+        json.dumps({"modul": "Trasig", "lagar": "AvtL", "case": []}), encoding="utf-8"
+    )
+    with pytest.raises(ValueError, match="lagar"):
+        ladda_fil(fil)
+
+
+def test_fil_utan_lagar_las_fortfarande():
+    """Bakåtkompatibilitet: fältet är valfritt."""
+    modul = Modulscenarier(modul="Tom", case=(), flervalsfragor=(), lagrumsjakt=())
+    assert modul.lagar == ()
+    assert modul.omrade == ""

@@ -23,6 +23,16 @@ from utils.scenarier import ladda_modul, lista_moduler
 MODUL = "avtalsratt"
 
 
+# Ordagranna citat ur data/lagtext. utils.fallkontroll kräver ett äkta citat
+# per åberopad paragraf, så fixturerna måste bära riktig lagtext: en påhittad
+# mening underkänns med flit.
+CITAT = {
+    "1 § AvtL": "Anbud om slutande av avtal och svar å sådant anbud",
+    "36 § AvtL": "Avtalsvillkor får jämkas eller lämnas utan avseende",
+    "99 § AvtL": "En paragraf som inte finns kan inte citeras",
+}
+
+
 def _case_json(lagrum: list[str]) -> str:
     return json.dumps(
         {
@@ -34,6 +44,9 @@ def _case_json(lagrum: list[str]) -> str:
             "facit": {
                 "rattsfraga": "Är ett bindande avtal slutet?",
                 "lagrum": lagrum,
+                "lagrumsstod": [
+                    {"lagrum": ref, "citat": CITAT[ref]} for ref in lagrum
+                ],
                 "tillampningspunkter": ["Anbud och accept", "Oskälighet"],
                 "slutsats": "Ett bindande avtal har slutits.",
             },

@@ -8,6 +8,8 @@ scenariots relevanta lagar tas med i den fokuserade vitlistan.
 
 from __future__ import annotations
 
+import pytest
+
 from utils.prompts import (
     MAX_SVARSLANGD_ORD,
     RNTS_RUBRIKER,
@@ -276,3 +278,151 @@ def test_generate_prompt_kraver_korrekt_svensk_sprakkvalitet():
     assert "språk" in lag
     assert "korrekt" in lag and "svenska" in lag
     assert "korrekturläs" in lag or "stavning" in lag
+
+
+# --- Svårighetsgrad i bedömningen -------------------------------------------
+#
+# Tillagt efter mätningen som visade att build_case_prompt var bytesidentisk
+# för ett grundfall och ett avancerat fall: väljaren ändrade uppgiften men
+# aldrig kraven på studentens svar.
+
+
+def _case_med_niva(niva: str):
+    import dataclasses
+
+    from utils.scenarier import ladda_modul
+
+    return dataclasses.replace(ladda_modul("avtalsratt").case[0], svarighetsgrad=niva)
+
+
+_STUDENTSVAR = {
+    "rattsfragan": "Är avtal slutet?",
+    "norm": "1 § AvtL",
+    "tillampning": "Anbudet accepterades i tid.",
+    "slutsats": "Ja.",
+}
+
+
+def test_case_prompt_skiljer_sig_mellan_svarighetsgrader():
+    _s1, u_grund = build_case_prompt(_case_med_niva("grund"), _STUDENTSVAR)
+    _s2, u_avancerad = build_case_prompt(_case_med_niva("avancerad"), _STUDENTSVAR)
+    assert u_grund != u_avancerad
+
+
+@pytest.mark.parametrize(
+    ("niva", "rubrik"),
+    [
+        ("grund", "BEDÖMNINGSNIVÅ: GRUND"),
+        ("medel", "BEDÖMNINGSNIVÅ: MEDEL"),
+        ("avancerad", "BEDÖMNINGSNIVÅ: AVANCERAD"),
+    ],
+)
+def test_case_prompt_bar_ratt_bedomningsniva(niva: str, rubrik: str):
+    _system, user = build_case_prompt(_case_med_niva(niva), _STUDENTSVAR)
+    assert rubrik in user
+
+
+def test_okand_svarighetsgrad_faller_till_grund_i_bedomningen():
+    _system, user = build_case_prompt(_case_med_niva("nonsens"), _STUDENTSVAR)
+    assert "BEDÖMNINGSNIVÅ: GRUND" in user
+
+
+def test_avancerad_bedomning_kraver_att_alla_delfragor_behandlas():
+    _system, user = build_case_prompt(_case_med_niva("avancerad"), _STUDENTSVAR)
+    assert "sammanflätade rättsfrågor" in user
+
+
+# --- Genereringsprompten ----------------------------------------------------
+
+
+def test_generate_prompt_bar_modulens_visningsnamn():
+    """Filnamnet är en implementationsdetalj som modellen inte ska tolka."""
+    _system, user = build_generate_prompt("Straffrätt och processrätt", ["BrB"])
+    assert '"Straffrätt och processrätt"' in user
+    assert "straff_och_processratt" not in user
+
+
+def test_generate_prompt_injicerar_rattsomradet():
+    _system, user = build_generate_prompt(
+        "Skadeståndsrätt", ["SkL"], omrade="Ren förmögenhetsskada ersätts bara vid brott."
+    )
+    assert "RÄTTSOMRÅDE" in user
+    assert "Ren förmögenhetsskada ersätts bara vid brott." in user
+
+
+def test_generate_prompt_utan_omrade_far_ingen_tom_rubrik():
+    _system, user = build_generate_prompt("Avtalsrätt", ["AvtL"])
+    assert "RÄTTSOMRÅDE" not in user
+
+
+def test_generate_prompt_kraver_lagrumsstod():
+    _system, user = build_generate_prompt("Avtalsrätt", ["AvtL"])
+    assert "lagrumsstod" in user
+    assert "ORDAGRANT citat" in user
+
+
+def test_generate_prompt_sager_inte_langre_emot_svarighetsgraden():
+    """"på grundnivå" stod tidigare direkt efter SVÅRIGHETSGRAD: AVANCERAD."""
+    _system, user = build_generate_prompt(
+        "Avtalsrätt", ["AvtL"], svarighetsgrad="avancerad"
+    )
+    assert "SVÅRIGHETSGRAD: AVANCERAD" in user
+    assert "på grundnivå" not in user
+
+
+def test_generate_prompt_aterkopplar_konkret_vid_omforsok():
+    _system, user = build_generate_prompt(
+        "Avtalsrätt", ["AvtL"], striktare=True, aterkoppling="36 § AvtL saknar citat."
+    )
+    assert "36 § AvtL saknar citat." in user
+
+
+def test_vitlista_strikt_vagrar_falla_tillbaka_pa_hela_registret():
+    """Utan detta öppnade en tom vitlista tyst hela registret vid generering."""
+    with pytest.raises(ValueError, match="Tom lagrumsvitlista"):
+        vitlista_block(["FINNS-INTE"], strikt=True)
+    with pytest.raises(ValueError, match="Tom lagrumsvitlista"):
+        vitlista_block([], strikt=True)
+
+
+def test_vitlista_utan_strikt_behaller_gamla_beteendet():
+    """Tutor, quiz och begrepp ska inte krascha på en uppgift utan lagrum."""
+    block = vitlista_block(["FINNS-INTE"])
+    assert "AvtL =" in block
+
+
+def test_generate_prompt_kraver_ratt_lagrumsordning_i_loptext():
+    _system, user = build_generate_prompt("Straffrätt och processrätt", ["BrB"])
+    assert "LAGRUM I LÖPTEXT" in user
+
+
+def test_generate_prompt_ar_deterministisk_utan_variationsfro():
+    """Promptbyggarna är rena funktioner. Utan frö ska urvalet inte lotta om."""
+    _s1, u1 = build_generate_prompt("Avtalsrätt", ["AvtL"])
+    _s2, u2 = build_generate_prompt("Avtalsrätt", ["AvtL"])
+    assert u1 == u2
+
+
+def test_generate_prompt_bar_lagtext_att_citera_ur():
+    """Utan lagtexten i prompten hittar modellen på sina citat."""
+    _system, user = build_generate_prompt("Avtalsrätt", ["AvtL"], variation=3)
+    assert "PARAGRAFER ATT BYGGA FALLET AV" in user
+    assert "§ AvtL:" in user
+
+
+def test_generate_prompt_roterar_paragrafurvalet_med_frot():
+    a = build_generate_prompt("Straffrätt och processrätt", ["BrB"], variation=1)[1]
+    b = build_generate_prompt("Straffrätt och processrätt", ["BrB"], variation=2)[1]
+    assert a != b
+
+
+def test_avancerad_far_fler_paragrafer_an_grund():
+    import re
+
+    def antal(niva: str) -> int:
+        _s, u = build_generate_prompt(
+            "Straffrätt och processrätt", ["BrB", "RB"], variation=5, svarighetsgrad=niva
+        )
+        return len(re.findall(r"^\d+ kap\. \d+ § \w+:$", u, re.M))
+
+    assert antal("grund") < antal("avancerad")

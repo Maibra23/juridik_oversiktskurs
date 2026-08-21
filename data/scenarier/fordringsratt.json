@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Fordringsrätt (kap 15 till 17). Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json.",
   "modul": "Fordringsrätt",
+  "omrade": "Skuldebrev och deras överlåtelse, skillnaden mellan enkla och löpande skuldebrev och gäldenärens invändningsrätt enligt skuldebrevslagen; preskription av fordringar och preskriptionsavbrott enligt preskriptionslagen; utmätning och konkurs som sätt att driva in en fordran.",
+  "lagar": ["SkbrL", "PreskL", "UB", "KonkL"],
   "case": [
     {
       "id": "for-case-1",

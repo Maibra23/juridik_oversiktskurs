@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Familjerätt och successionsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (ÄktB och ÄB). Nivå: Juridikverkstan.",
   "modul": "Familjerätt och successionsrätt",
+  "omrade": "Äktenskapets ekonomiska verkningar, giftorättsgods, enskild egendom och bodelning enligt äktenskapsbalken; sambors bodelning enligt sambolagen; arvsordning, testamente och bröstarvinges laglott enligt ärvdabalken.",
+  "lagar": ["ÄktB", "ÄB", "SamboL"],
   "case": [
     {
       "id": "fam-case-1",

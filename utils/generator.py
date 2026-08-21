@@ -1,10 +1,24 @@
 """Generering av nya rättsfall för Kunskapsutmaningen.
 
 Studenten kan be om ett färskt, fiktivt rättsfall att testa sin förmåga på.
-Fallet genereras av LLM men grundas deterministiskt: varje lagrum i facit
-måste verifieras mot lagrumsregistret innan scenariot visas. Klarar inte
-modellen det (påhitt, trasig JSON eller otillgänglig LLM) faller vi tillbaka
-på ett kuraterat statiskt case ur modulen, så appen är alltid användbar.
+Fallet genereras av LLM men grundas deterministiskt innan det visas. Två
+kontroller, inte en:
+
+1. Varje lagrum i facit måste verifieras mot lagrumsregistret (finns
+   paragrafen?).
+2. utils.fallkontroll prövar om fallet bär sin juridik: att lagrummen ligger
+   i modulens vitlista, att modellen kan citera ordagrant ur varje paragraf
+   den åberopar, och att löptexten är skriven på svenska med lagrummen åt
+   rätt håll.
+
+Steg 2 tillkom efter en mätning över 72 genererade fall där alla 72 klarade
+steg 1 men 30 byggde sitt facit på en paragraf som handlar om något annat än
+frågan fallet ställde.
+
+Underkänns ett försök går skälet in i nästa försöks prompt, så att modellen
+får veta vad den ska rätta. Håller inget av försöken (påhitt, trasig JSON
+eller otillgänglig LLM) faller vi tillbaka på ett kuraterat statiskt case ur
+modulen, så appen är alltid användbar.
 
 LLM-klienten injiceras (Protocol ChatKlient) så att logiken kan enhetstestas
 helt utan nätverk.
@@ -18,6 +32,7 @@ import re
 from dataclasses import dataclass
 from typing import Protocol
 
+from utils.fallkontroll import granska_genererat_case
 from utils.lagrum import STATUS_VERIFIERAD, validera_lagrum
 from utils.llm import LLMDailyCapError, LLMSessionCapError, LLMUnavailableError
 from utils.prompts import build_generate_prompt
@@ -31,7 +46,7 @@ from utils.scenarier import (
 from utils.svarighetsgrad import STANDARDNIVA
 from utils.svarighetsgrad import normalisera as normalisera_svarighet
 
-MAX_FORSOK = 2
+MAX_FORSOK = 3
 
 LLM_EJ_TILLGANGLIG_NOTIS = (
     "LLM är inte tillgänglig just nu. Här är ett kuraterat rättsfall i stället."
@@ -66,7 +81,20 @@ class GenereratResultat:
 # --- Hjälpare ---------------------------------------------------------------
 
 def _forkortningar_for_modul(modul: Modulscenarier) -> tuple[str, ...]:
-    """Förkortningarna som modulens kuraterade innehåll faktiskt använder."""
+    """Modulens lagrumsvitlista för generering.
+
+    Deklarationen i scenariofilen (``lagar``) gäller när den finns. Saknas den
+    härleds vitlistan som förut ur de kuraterade fallens facit, så att en ny
+    scenariofil utan fältet fortfarande fungerar.
+
+    Skälet att deklarationen väger tyngst: härledningen gjorde vitlistan till
+    en bieffekt av vilka fall någon råkat skriva. Sidan "Straffrätt och
+    processrätt" kunde därför aldrig generera ett processrättsligt fall,
+    eftersom inget kuraterat fall citerade RB.
+    """
+    if modul.lagar:
+        return modul.lagar
+
     ordnade: list[str] = []
     for case in modul.case:
         for ref in case.facit.lagrum:
@@ -91,17 +119,45 @@ def _case_ar_grundat(case: Case) -> bool:
     return all(validera_lagrum(ref) == STATUS_VERIFIERAD for ref in case.facit.lagrum)
 
 
-def _forsok_bygg_grundat_case(svar: str) -> Case | None:
-    """Parsa svaret till ett grundat Case, eller None vid fel/ogrundat."""
+PARSFEL_NOTIS = (
+    "Svaret var inte giltig JSON enligt det begärda schemat. Svara med enbart "
+    "JSON-objektet, utan kod-markdown och utan text runt omkring."
+)
+
+
+def _forsok_bygg_case(svar: str) -> tuple[Case | None, object, str]:
+    """Parsa svaret till (case, lagrumsstod, felbesked).
+
+    ``lagrumsstod`` är råvärdet av ``facit.lagrumsstod``, som utils.fallkontroll
+    behöver men Case medvetet inte bär (se den modulens docstring). Vid
+    parsfel returneras ``(None, None, besked)`` där beskedet går in i
+    omförsökets prompt.
+    """
     try:
         rad = json.loads(_extrahera_json(svar))
     except (json.JSONDecodeError, ValueError):
-        return None
+        return None, None, PARSFEL_NOTIS
     if not isinstance(rad, dict):
-        return None
+        return None, None, PARSFEL_NOTIS
     try:
         case = bygg_case_fran_dict(rad)
-    except (KeyError, ValueError, TypeError):
+    except (KeyError, ValueError, TypeError) as exc:
+        return None, None, f"{PARSFEL_NOTIS} Fältfel: {exc}."
+
+    facit = rad.get("facit")
+    stod = facit.get("lagrumsstod") if isinstance(facit, dict) else None
+    return case, stod, ""
+
+
+def _forsok_bygg_grundat_case(svar: str) -> Case | None:
+    """Parsa svaret till ett grundat Case, eller None vid fel/ogrundat.
+
+    Kvar som tunn hjälpare för anropare som bara vill ha existenskontrollen.
+    Generatorn själv använder _forsok_bygg_case plus utils.fallkontroll, som
+    också prövar om paragrafen hör till frågan.
+    """
+    case, _stod, _fel = _forsok_bygg_case(svar)
+    if case is None:
         return None
     return case if _case_ar_grundat(case) else None
 
@@ -151,9 +207,14 @@ def generera_case(
 ) -> GenereratResultat:
     """Generera ett grundat rättsfall för modulen, med fallback vid problem.
 
+    ``modul_namn`` är scenariofilens namn ("straff_och_processratt"). Prompten
+    får däremot modulens visningsnamn ("Straffrätt och processrätt"): filnamnet
+    är en implementationsdetalj som modellen inte ska behöva tolka.
+
     Försöker upp till ``MAX_FORSOK`` gånger. Ett scenario returneras endast om
-    varje lagrum i facit verifieras mot registret; annars faller vi tillbaka på
-    ett kuraterat case ur modulen.
+    det passerar både registerkontrollen och utils.fallkontroll; annars faller
+    vi tillbaka på ett kuraterat case ur modulen. Skälet till ett underkännande
+    följer med in i nästa försök.
 
     ``svarighetsgrad`` styr hur svårt det genererade fallet blir och skickas
     vidare till prompten. Nivån normaliseras defensivt (okänt värde blir grund).
@@ -174,14 +235,19 @@ def generera_case(
     # Nytt frö per anrop: annars är prompten identisk för en given modul och
     # cachen i utils.llm.cached_chat returnerar samma rättsfall varje gång.
     variation = rng.randrange(1_000_000)
+    aterkoppling = ""
 
     for forsok in range(MAX_FORSOK):
         system_prompt, user_prompt = build_generate_prompt(
-            modul_namn,
+            # Visningsnamnet, inte filnamnet. Modellen ska få veta att modulen
+            # heter "Straffrätt och processrätt", inte "straff_och_processratt".
+            modul.modul,
             forkortningar,
             striktare=forsok > 0,
             variation=variation + forsok,
             svarighetsgrad=niva,
+            omrade=modul.omrade,
+            aterkoppling=aterkoppling,
         )
         try:
             svar = klient.chat(system_prompt, user_prompt)
@@ -194,9 +260,15 @@ def generera_case(
                 _fallback_case(modul, rng), "fallback", LLM_EJ_TILLGANGLIG_NOTIS
             )
 
-        case = _forsok_bygg_grundat_case(svar)
-        if case is not None:
+        case, stod, parsfel = _forsok_bygg_case(svar)
+        if case is None:
+            aterkoppling = parsfel
+            continue
+
+        granskning = granska_genererat_case(case, forkortningar, stod)
+        if granskning.godkand:
             return GenereratResultat(case, "genererad")
+        aterkoppling = granskning.aterkoppling
 
     return GenereratResultat(
         _fallback_case(modul, rng), "fallback", GRUNDNING_MISSLYCKADES_NOTIS

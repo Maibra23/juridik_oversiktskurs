@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Köprätt och konsumenträtt (kap 8). Läses av utils/scenarier.py. Varje lagrum måste finnas i data/lagrum.json.",
   "modul": "Köprätt och konsumenträtt",
+  "omrade": "Fel i vara, dröjsmål, reklamation och påföljder vid köp. Köp mellan näringsidkare och konsument följer konsumentköplagen; köp mellan näringsidkare eller mellan privatpersoner följer köplagen. Marknadsföringslagen gäller näringsidkarens marknadsföring mot konsument.",
+  "lagar": ["KKöpL", "KöpL", "MFL"],
   "case": [
     {
       "id": "kop-case-1",

@@ -1,6 +1,8 @@
 {
   "_beskrivning": "Deterministiska basscenarier för modulen Skadeståndsrätt. Läses av utils/scenarier.py. Varje lagrum måste verifieras mot data/lagrum.json (SkL). Nivå: Juridikverkstan.",
   "modul": "Skadeståndsrätt",
+  "omrade": "Utomobligatoriskt skadestånd: vållande genom uppsåt eller vårdslöshet, principalansvar för skada som en arbetstagare vållar i tjänsten, och gränsen mellan personskada, sakskada och ren förmögenhetsskada. Ren förmögenhetsskada ersätts som huvudregel bara när den har vållats genom brott; en personskada ska därför aldrig prövas mot den regeln.",
+  "lagar": ["SkL"],
   "case": [
     {
       "id": "ska-case-1",
